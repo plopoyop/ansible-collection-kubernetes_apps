@@ -27,3 +27,9 @@ tasks:
     desc: "Run pre-commit hooks"
     cmds:
       - pre-commit run -a
+
+  lint:
+    desc: "Run lint"
+    cmds:
+      - yamllint .
+      - ansible-lint

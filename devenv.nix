@@ -1,15 +1,22 @@
 { pkgs, lib, config, inputs, ... }:
 
 {
+  env.LOCALE_ARCHIVE="${pkgs.glibcLocales}/lib/locale/locale-archive";
+  env.LANG="en_US.UTF8";
+
+
   packages = [
     pkgs.ansible
     pkgs.ansible-doctor
+    pkgs.ansible-lint
     pkgs.git
+    pkgs.glibcLocales
     pkgs.go-task
     pkgs.pre-commit
     pkgs.python312Packages.kubernetes
     pkgs.python312Packages.molecule
     pkgs.python312Packages.molecule-plugins
+    pkgs.yamllint
  ];
 
   languages.ansible.enable = true;
