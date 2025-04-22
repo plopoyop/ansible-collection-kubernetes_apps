@@ -3,5 +3,29 @@
   "extends": [
     "config:recommended",
     ":disableDependencyDashboard"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["helm"],
+      "matchPackageNames": ["zammad"],
+      "registryUrls": ["https://zammad.github.io/zammad-helm"]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "roles/zammad/defaults/main.yml$",
+        "roles/zammad/README.md$",
+        "^README.md$"
+      ],
+      "matchStrings": [
+        "zammad_helm_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?",
+        "zammad\\s*(?<pipe>\\|)\\s?v(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "zammad",
+      "autoReplaceStringTemplate": "{{#if pipe}}zammad         | v{{newValue}}{{else}}zammad_helm_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}{{/if}}",
+      "datasourceTemplate": "helm"
+    }
   ]
 }
