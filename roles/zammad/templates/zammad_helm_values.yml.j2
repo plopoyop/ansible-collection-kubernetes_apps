@@ -1,0 +1,215 @@
+ingress:
+  enabled: {{ zammad_ingress_enabled }}
+{% if zammad_ingress_enabled %}
+  className: "{{ zammad_ingress_class }}"
+  hosts:
+    - host: "{{ zammad_domain_name }}"
+      paths:
+        - path: /
+          pathType: Prefix
+  annotations:
+    kubernetes.io/ingress.class: "{{ zammad_ingress_class }}"
+{% if zammad_ingress_tls_enabled %}
+    cert-manager.io/cluster-issuer: "{{ zammad_ingress_certmanager_cluster_issuer }}"
+  tls:
+    - secretName: "{{ zammad_tls_certificate_secret_name }}"
+      hosts:
+        - "{{ zammad_domain_name }}"
+{% endif %}
+{% endif %}
+
+secrets:
+  autowizard:
+    useExisting: {{ zammad_secrets_autowizard_use_existing }}
+    secretKey: {{ zammad_secrets_autowizard_secret_key }}
+    secretName: {{ zammad_secrets_autowizard_secret_name }}
+  elasticsearch:
+    useExisting: {{ zammad_secrets_elasticsearch_use_existing }}
+    secretKey: {{ zammad_secrets_elasticsearch_secret_key }}
+    secretName: {{ zammad_secrets_elasticsearch_secret_name }}
+  postgresql:
+    useExisting: {{ zammad_secrets_postgresql_use_existing }}
+    secretKey: {{ zammad_secrets_postgresql_secret_key }}
+    secretName: {{ zammad_secrets_postgresql_secret_name }}
+  redis:
+    useExisting: {{ zammad_secrets_redis_use_existing }}
+    secretKey: {{ zammad_secrets_redis_secret_key }}
+    secretName: {{ zammad_secrets_redis_secret_name }}
+
+securityContext: {{ zammad_security_context }}
+
+zammadConfig:
+  elasticsearch:
+    enabled: {{ zammad_elasticsearch_enabled }}
+{% if not zammad_elasticsearch_enabled %}
+    host: {{ zammad_elasticsearch_host }}
+{% endif %}
+    initialisation: {{ zammad_elasticsearch_initialisation }}
+    pass: "{{ zammad_elasticsearch_password }}"
+    port: {{ zammad_elasticsearch_port }}
+    reindex: {{ zammad_elasticsearch_reindex }}
+    schema: {{ zammad_elasticsearch_schema }}
+    user: "{{ zammad_elasticsearch_user }}"
+
+  memcached:
+    enabled: {{ zammad_memcached_enabled }}
+{% if not zammad_memcached_enabled %}
+    host: {{ zammad_memcached_host }}
+{% endif %}
+    port: {{ zammad_memcached_port }}
+
+  minio:
+    enabled: {{ zammad_minio_enabled }}
+{% if not zammad_minio_enabled and zammad_external_s3_url is defined %}
+    externalS3Url: {{ zammad_external_s3_url }}
+{% endif %}
+
+  nginx:
+    replicas: {{ zammad_nginx_replicas }}
+    trustedProxies: {{ zammad_nginx_trusted_proxies }}
+    extraHeaders: {{ zammad_nginx_extra_headers }}
+    websocketExtraHeaders: {{ zammad_nginx_websocket_extra_headers }}
+    clientMaxBodySize: {{ zammad_nginx_max_client_body_size }}
+    knowledgeBaseUrl: "{{ zammad_nginx_knowledge_base_url }}"
+    startupProbe: {{ zammad_nginx_startup_probe }}
+    livenessProbe: {{ zammad_nginx_liveness_probe }}
+    readinessProbe: {{ zammad_nginx_readiness_probe }}
+    resources: {{ zammad_nginx_resources }}
+    securityContext: {{ zammad_nginx_security_context }}
+    sidecars: {{ zammad_nginx_sidecars }}
+    podLabels: {{ zammad_nginx_pod_labels }}
+    podAnnotations: {{ zammad_nginx_pod_annotations  }}
+
+  postgresql:
+    enabled: {{ zammad_postgresql_enabled }}
+    db: "{{ zammad_postgresql_database }}"
+{% if not zammad_postgresql_enabled %}
+    host: "{{ zammad_postgresql_host }}"
+{% endif %}
+    user: {{ zammad_postgresql_username }}
+    pass: "{{ zammad_postgresql_password }}"
+    port: {{ zammad_postgresql_port }}
+    options: "{{ zammad_postgresql_connection_options }}"
+
+  railsserver:
+    replicas: {{ zammad_railserver_replicas }}
+    startupProbe: {{ zammad_railserver_startup_probe }}
+    livenessProbe: {{ zammad_railserver_liveness_probe }}
+    readinessProbe: {{ zammad_railserver_readiness_probe }}
+    resources: {{ zammad_railserver_resources }}
+    securityContext: {{ zammad_railserver_security_context }}
+    sidecars: {{ zammad_railserver_sidecars }}
+    trustedProxies: "{{ zammad_railserver_trusted_proxies }}"
+    webConcurrency: {{ zammad_railserver_web_concurrency }}
+    tmpdir: "/opt/zammad/tmp"
+    podLabels: {{ zammad_railserver_pod_labels }}
+    podAnnotations: {{ zammad_railserver_pod_annotations }}
+
+  redis:
+    enabled: {{ zammad_redis_enabled }}
+{% if not zammad_redis_enabled %}
+    host: "{{ zammad_redis_host }}"
+{% endif %}
+    pass: {{ zammad_redis_password }}
+    port: {{ zammad_redis_port }}
+
+  scheduler:
+    resources: {{ zammad_scheduler_resources }}
+    securityContext: {{ zammad_scheduler_security_context }}
+    sidecars: {{ zammad_scheduler_sidecars }}
+    podLabels: {{ zammad_scheduler_pod_labels }}
+    podAnnotations: {{ zammad_scheduler_pod_annotations }}
+
+  storageVolume:
+    enabled: {{ zammad_storage_volume_enabled }}
+{% if zammad_storage_volume_enabled %}
+    existingClaim: "{{ zammad_storage_volume_claim_name }}"
+{% endif %}
+
+  tmpDirVolume:
+    emptyDir:
+      sizeLimit: "{{ zammad_tmp_dir_volume_size_limit }}"
+      medium: "{{ zammad_tmp_dir_volume_medium }}"
+
+  websocket:
+    startupProbe: {{ zammad_websocket_startup_probe }}
+    livenessProbe: {{ zammad_websocket_liveness_probe }}
+    readinessProbe: {{ zammad_websocket_readiness_probe }}
+    resources: {{ zammad_websocket_resources }}
+    securityContext: {{ zammad_websocket_security_context }}
+    sidecars: {{ zammad_websocket_sidecars }}
+    podLabels: {{ zammad_websocket_pod_labels }}
+    podAnnotations: {{ zammad_websocket_pod_annotations }}
+
+  initContainers:
+    elasticsearch:
+      resources: {{ zammad_init_containers_elasticsearch_resources }}
+      securityContext: {{ zammad_init_containers_elasticsearch_security_context }}
+    postgresql:
+      resources:  {{ zammad_init_containers_postgresql_resources }}
+      securityContext: {{ zammad_init_containers_postgresql_security_context }}
+    zammad:
+      resources: {{ zammad_init_containers_zammad_resources }}
+      securityContext: {{ zammad_init_containers_zammad_security_context }}
+      customInit: "{{ zammad_init_containers_zammad_custom_init }}"
+
+  initJob:
+    randomName: true
+    annotations: {{ zammad_init_job_annotations }}
+    podLabels: {{ zammad_init_job_pod_labels }}
+    podAnnotations: {{ zammad_init_job_pod_annotations }}
+    podSpec: {{ zammad_init_job_pod_spec }}
+
+autoWizard:
+  enabled: {{ zammad_auto_wizard_enabled }}
+{% if zammad_auto_wizard_enabled %}
+  config: |
+    {
+{% if zammad_auto_wizard_token is defined %}
+      "Token": "{{ zammad_auto_wizard_token }}",
+{% endif %}
+      "TextModuleLocale": {
+        "Locale": "{{ zammad_auto_wizard_locale }}"
+      },
+      "Users": {{ zammad_auto_wizard_users | to_json }},
+      "Settings": {{ zammad_auto_wizard_settings | to_json }},
+      "Organizations": {{ zammad_auto_wizard_organizations | to_json }}
+    }
+{% endif %}
+
+extraEnv: {{ zammad_extra_env }}
+commonLabels: {{ zammad_common_label }}
+commonAnnotations: {{ zammad_common_annotations }}
+podLabels: {{ zammad_pods_label }}
+podAnnotations: {{ zammad_pods_annotations }}
+
+nodeSelector: {{ zammad_node_selector }}
+tolerations: {{ zammad_toloration }}
+affinity: {{ zammad_affinity }}
+
+serviceAccount:
+  create: {{ zammad_service_account_create }}
+  annotations: {{ zammad_service_account_annotations }}
+  name: "{{ zammad_service_account_name }}"
+
+initContainers: {{ zammad_additional_init_containers }}
+
+{% if zammad_elasticsearch_enabled %}
+{% include 'elasticsearch_helm_values.yml.j2' %}
+{% endif %}
+
+{% if zammad_memcached_enabled %}
+{% include 'memcached_helm_values.yml.j2' %}
+{% endif %}
+
+{% if zammad_minio_enabled %}
+{% include 'minio_helm_values.yml.j2' %}
+{% endif %}
+
+{% if zammad_postgresql_enabled %}
+{% include 'postgresql_helm_values.yml.j2' %}
+{% endif %}
+
+{% if zammad_redis_enabled %}
+{% include 'redis_helm_values.yml.j2' %}
+{% endif %}

@@ -1,0 +1,39 @@
+---
+- name: "Include precheck"
+  ansible.builtin.include_tasks: "pre_check.yml"
+
+- name: "Create zammad namespace"
+  kubernetes.core.k8s:
+    name: "{{ zammad_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+
+- name: "Add zammad helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ zammad_helm_repo_name }}"
+    repo_url: "{{ zammad_helm_repo_url }}"
+
+- name: "Install Zammad helm package"
+  kubernetes.core.helm:
+    name: "{{ zammad_deployment_name }}"
+    namespace: "{{ zammad_namespace }}"
+    state: "present"
+    chart_ref: "{{ zammad_helm_chart_ref }}"
+    chart_version: "{{ zammad_helm_version }}"
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'zammad_helm_values.yml.j2') | from_yaml }}"
+    wait: "{{ zammad_wait_install }}"
+
+# - name: "Call Zammad auto wizard"
+#   ansible.builtin.uri:
+#     url: "https://{{ zammad_domain_name }}/#getting_started/auto_wizard/{{ zammad_auto_wizard_token }}"
+#     validate_certs: false
+#     return_content: true
+#   retries: 100
+#   delay: 5
+#   register: uri_output
+#   until:
+#     - uri_output.status == 200
+#     - uri_output.content == '{"auto_wizard":true,"auto_wizard_success":true}'
+#   when: zammad_auto_wizard_enabled

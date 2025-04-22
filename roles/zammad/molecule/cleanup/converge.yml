@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: "Install Zammad"
+      ansible.builtin.import_role:
+        name: "zammad"
+  vars:
+    zammad_enabled: false

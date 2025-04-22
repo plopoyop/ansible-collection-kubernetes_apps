@@ -1,0 +1,6 @@
+---
+# vars file for zammad
+zammad_helm_repo_name: "zammad"
+zammad_helm_chart_ref: "{{ zammad_helm_repo_name }}/zammad"
+zammad_helm_repo_url: "https://zammad.github.io/zammad-helm"
+zammad_secret_key_regex: "^[0-9,a-z,A-Z]{1,64}$"

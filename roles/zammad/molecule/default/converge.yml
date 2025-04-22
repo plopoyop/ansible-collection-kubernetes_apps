@@ -1,0 +1,34 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    zammad_wait_install: true
+
+    zammad_ingress_enabled: false
+    zammad_secrets_autowizard_secret_key: "autowizardsecretkey"
+    zammad_secrets_autowizard_secret_name: "autowizard-secret-name"
+
+    zammad_secrets_elasticsearch_use_existing: false
+    zammad_secrets_elasticsearch_secret_key: "elasticsecretkey"
+    zammad_secrets_elasticsearch_secret_name: "elastic-secret-name"
+
+    zammad_secrets_postgresql_use_existing: false
+    zammad_secrets_postgresql_secret_key: "postgresqlsecretkey"
+    zammad_secrets_postgresql_secret_name: "postgresql-secret-name"
+
+    zammad_secrets_redis_use_existing: false
+    zammad_secrets_redis_secret_key: "redissecretkey"
+    zammad_secrets_redis_secret_name: "redis-secret-name"
+    zammad_redis_password: "zammad"
+
+    zammad_elasticsearch_password: "elastic"
+
+    zammad_postgresql_password: "zammad_passwrd"
+    zammad_postgresql_replication_password: "repl_passwrd"
+
+  tasks:
+    - name: "Install Zammad"
+      ansible.builtin.import_role:
+        name: "zammad"

@@ -1,0 +1,6 @@
+minio:
+  auth:
+    rootUser: "{{ zammad_minio_auth_root_user }}"
+    rootPassword: "{{ zammad_minio_root_password }}"
+  defaultBuckets: "{{ zammad_minio_default_buckets }}"
+  disableWebUI: {{ zammad_minio_disable_web_ui }}
