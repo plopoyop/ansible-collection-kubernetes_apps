@@ -1,16 +1,10 @@
 postgresql:
   auth:
     username: "{{ zammad_postgresql_username }}"
-    replicationUsername: {{ zammad_postgresql_replication_username }}
+    replicationUsername: "{{ zammad_postgresql_replication_username }}"
     database: "{{ zammad_postgresql_database }}"
     postgresPassword: "{{ zammad_postgresql_password }}"
     password: "{{ zammad_postgresql_password }}"
     replicationPassword: "{{ zammad_postgresql_replication_password }}"
   primary:
     resources: {{ zammad_postgresql_primary_resources }}
-      # requests:
-      #   cpu: 250m
-      #   memory: 256Mi
-      # limits:
-      #   cpu: 500m
-      #   memory: 512Mi
