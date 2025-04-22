@@ -1,0 +1,22 @@
+---
+- name: "Remove Zammad instance"
+  kubernetes.core.helm:
+    name: "{{ zammad_deployment_name }}"
+    namespace: "{{ zammad_namespace }}"
+    state: "absent"
+    chart_ref: "{{ zammad_helm_chart_ref }}"
+    chart_version: "{{ zammad_helm_version }}"
+    wait: true
+
+- name: "Remove Zammad helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ zammad_helm_repo_name }}"
+    repo_url: "{{ zammad_helm_repo_url }}"
+    state: "absent"
+
+- name: "Remove Zammad namespace"
+  kubernetes.core.k8s:
+    name: "{{ zammad_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"

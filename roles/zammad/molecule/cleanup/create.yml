@@ -1,0 +1,44 @@
+---
+- name: Create
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    cloud_provider: "{{ lookup('env', 'DEVENV_DOTFILE') }}/bin/cloud-provider-kind"
+    cert_manager_acme_production_enabled: false
+  tasks:
+    - name: Build a kind cluster (wait for control plane).
+      ansible.builtin.command: >-
+        kind create cluster
+        --wait 300s
+        --name molecule-test
+        --kubeconfig {{ kubeconfig }}
+      changed_when: true
+
+    - name: "Install Zammad"
+      ansible.builtin.import_role:
+        name: "zammad"
+      vars:
+        zammad_wait_install: false
+
+        zammad_ingress_enabled: false
+        zammad_secrets_autowizard_secret_key: "autowizardsecretkey"
+        zammad_secrets_autowizard_secret_name: "autowizard-secret-name"
+
+        zammad_secrets_elasticsearch_use_existing: false
+        zammad_secrets_elasticsearch_secret_key: "elasticsecretkey"
+        zammad_secrets_elasticsearch_secret_name: "elastic-secret-name"
+
+        zammad_secrets_postgresql_use_existing: false
+        zammad_secrets_postgresql_secret_key: "postgresqlsecretkey"
+        zammad_secrets_postgresql_secret_name: "postgresql-secret-name"
+
+        zammad_secrets_redis_use_existing: false
+        zammad_secrets_redis_secret_key: "redissecretkey"
+        zammad_secrets_redis_secret_name: "redis-secret-name"
+        zammad_redis_password: "zammad"
+
+        zammad_elasticsearch_password: "elastic"
+
+        zammad_postgresql_password: "zammad_passwrd"
+        zammad_postgresql_replication_password: "repl_passwrd"

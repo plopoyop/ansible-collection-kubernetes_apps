@@ -1,0 +1,14 @@
+elasticsearch:
+  clusterName: "{{ zammad_elasticsearch_cluster_name }}"
+  coordinating:
+    replicaCount: {{ zammad_elasticsearch_coordinating_replica_count }}
+  data:
+    replicaCount: {{ zammad_elasticsearch_data_replica_count }}
+  ingest:
+    replicaCount: {{ zammad_elasticsearch_ingest_replica_count }}
+  master:
+    heapSize: "{{ zammad_elasticsearch_master_heap_size }}"
+    masterOnly: {{ zammad_elasticsearch_master_master_only | bool }}
+    replicaCount: {{ zammad_elasticsearch_master_replica_count }}
+    resourcesPreset: "{{ zammad_elasticsearch_master_resources_preset }}"
+    resources: {{ zammad_elasticsearch_master_resources }}

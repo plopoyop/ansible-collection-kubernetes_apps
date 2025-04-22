@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  description: "Install and configure Zammad application on kubernetes"
+  role_name: "zammad"
+  author: "Clément Hubert"
+
+  license: "MLP2"
+
+  min_ansible_version: "2.1"
+
+  galaxy_tags:
+    - "kubernetes"
+    - "zammad"
+
+dependencies: []

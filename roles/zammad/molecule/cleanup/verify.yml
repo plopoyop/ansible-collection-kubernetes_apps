@@ -1,0 +1,108 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Pause for job to complete."
+      ansible.builtin.pause:
+        seconds: 60
+
+    - name: "Get 'nginx' deployment info."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "zammad-nginx"
+        namespace: "zammad"
+      register: nginx_deployment
+
+    - name: "Assert that 'nginx' is removed"
+      ansible.builtin.assert:
+        that: nginx_deployment['resources'] == []
+
+    - name: "Get 'memcached' deployment info."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "zammad-memcached"
+        namespace: "zammad"
+      register: memcached_deployment
+
+    - name: "Assert that 'memcached' is removed"
+      ansible.builtin.assert:
+        that: memcached_deployment['resources'] == []
+
+    - name: "Get 'railsserver' deployment info."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "zammad-railsserver"
+        namespace: "zammad"
+      register: railsserver_deployment
+
+    - name: "Assert that 'railsserver' is removed"
+      ansible.builtin.assert:
+        that: railsserver_deployment['resources'] == []
+
+    - name: "Get 'scheduler' deployment info."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "zammad-scheduler"
+        namespace: "zammad"
+      register: scheduler_deployment
+
+    - name: "Assert that 'scheduler' is removed"
+      ansible.builtin.assert:
+        that: scheduler_deployment['resources'] == []
+
+    - name: "Get 'websocket' deployment info."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "zammad-websocket"
+        namespace: "zammad"
+      register: websocket_deployment
+
+    - name: "Assert that 'websocket' is removed"
+      ansible.builtin.assert:
+        that: websocket_deployment['resources'] == []
+
+    - name: "Get 'elasticsearch' statefull set info."
+      kubernetes.core.k8s_info:
+        kind: "StatefulSet"
+        name: "zammad-elasticsearch-master"
+        namespace: "zammad"
+      register: elasticsearch_statefullset
+
+    - name: "Assert that 'elasticsearch' is removed"
+      ansible.builtin.assert:
+        that: elasticsearch_statefullset['resources'] == []
+
+    - name: "Get 'postgresql' statefull set info."
+      kubernetes.core.k8s_info:
+        kind: "StatefulSet"
+        name: "zammad-postgresql"
+        namespace: "zammad"
+      register: postgresql_statefullset
+
+    - name: "Assert that 'postgresql' is removed"
+      ansible.builtin.assert:
+        that: postgresql_statefullset['resources'] == []
+
+    - name: "Get 'redis' statefull set info."
+      kubernetes.core.k8s_info:
+        kind: "StatefulSet"
+        name: "zammad-redis-master"
+        namespace: "zammad"
+      register: redis_statefullset
+
+    - name: "Assert that 'redis' is removed"
+      ansible.builtin.assert:
+        that: redis_statefullset['resources'] == []
+
+    - name: "Get 'zammad' namespace info."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "zammad"
+      register: namespace
+
+    - name: Assert that 'zammad' namespace is active
+      ansible.builtin.assert:
+        that: namespace['resources'] == []

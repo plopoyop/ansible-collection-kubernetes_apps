@@ -1,0 +1,12 @@
+---
+- name: "Check passwords do not contain special characters"
+  ansible.builtin.assert:
+    that: secret_key_to_check is match(zammad_secret_key_regex)
+    fail_msg: "Please note that passwords for PostgreSQL, Redis and S3 may not contain special characters which would require URL encoding."
+  loop:
+    - "{{ zammad_secrets_autowizard_secret_key }}"
+    - "{{ zammad_secrets_elasticsearch_secret_key }}"
+    - "{{ zammad_secrets_postgresql_secret_key }}"
+    - "{{ zammad_secrets_redis_secret_key }}"
+  loop_control:
+    loop_var: "secret_key_to_check"

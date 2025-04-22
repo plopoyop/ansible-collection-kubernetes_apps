@@ -1,0 +1,1092 @@
+---
+# defaults file for zammad
+# @var zammad_enabled
+# @var zammad_enabled:type: boolean
+# @var zammad_enabled:description: >
+# Should zammad helm chart be installed
+zammad_enabled: true
+
+# @var zammad_namespace
+# @var zammad_namespace:type: string
+# @var zammad_namespace:description: >
+# K8s namespace to install the zammad chart
+zammad_namespace: "zammad"
+
+# @var zammad_helm_version
+# @var zammad_helm_version:type: string
+# @var zammad_helm_version:description: >
+# Helm chart version to install
+zammad_helm_version: "14.0.1"
+
+# @var zammad_deployment_name
+# @var zammad_deployment_name:type: string
+# @var zammad_deployment_name:description: >
+# Helm chart deployment name
+zammad_deployment_name: "zammad"
+
+# @var zammad_deployment_name
+# @var zammad_deployment_name:type: string
+# @var zammad_deployment_name:description: >
+# Wait for helm install to finish
+zammad_wait_install: true
+
+# @var zammad_ingress_enabled
+# @var zammad_ingress_enabled:type: boolean
+# @var zammad_ingress_enabled:description: >
+# Enable ingress
+zammad_ingress_enabled: true
+
+# @var zammad_ingress_tls_enabled
+# @var zammad_ingress_tls_enabled:type: boolean
+# @var zammad_ingress_tls_enabled:description: >
+# Enable TLS for ingress
+zammad_ingress_tls_enabled: false
+
+# @var zammad_tls_certificate_secret_name
+# @var zammad_tls_certificate_secret_name:type: string
+# @var zammad_tls_certificate_secret_name:description: >
+# Secret name for TLS certificate
+zammad_tls_certificate_secret_name: "zammad-certificate"
+
+# @var zammad_ingress_class
+# @var zammad_ingress_class:type: string
+# @var zammad_ingress_class:description: >
+# Ingress class name
+
+# @var zammad_domain_name
+# @var zammad_domain_name:type: string
+# @var zammad_domain_name:description: >
+# Domain name for ingress
+
+# @var zammad_ingress_certmanager_cluster_issuer
+# @var zammad_ingress_certmanager_cluster_issuer:type: string
+# @var zammad_ingress_certmanager_cluster_issuer:description: >
+# Certmanager Cluster Issuer name
+
+# @var zammad_secrets_autowizard_use_existing
+# @var zammad_secrets_autowizard_use_existing:type: string
+# @var zammad_secrets_autowizard_use_existing:description: >
+# Use existing secret for autowizard
+zammad_secrets_autowizard_use_existing: false
+
+# @var zammad_secrets_autowizard_secret_name
+# @var zammad_secrets_autowizard_secret_name:type: string
+# @var zammad_secrets_autowizard_secret_name:description: >
+# Secret key name for autowizard
+
+# @var zammad_secrets_autowizard_secret_key
+# @var zammad_secrets_autowizard_secret_key:type: string
+# @var zammad_secrets_autowizard_secret_key:description: >
+# Secret key for autowizard
+
+# @var zammad_secrets_elasticsearch_use_existing
+# @var zammad_secrets_elasticsearch_use_existing:type: string
+# @var zammad_secrets_elasticsearch_use_existing:description: >
+# Use existing secret for elasticsearch
+zammad_secrets_elasticsearch_use_existing: false
+
+# @var zammad_secrets_elasticsearch_secret_key
+# @var zammad_secrets_elasticsearch_secret_key:type: string
+# @var zammad_secrets_elasticsearch_secret_key:description: >
+# Secret key name for elasticsearch
+
+# @var zammad_secrets_elasticsearch_secret_name
+# @var zammad_secrets_elasticsearch_secret_name:type: string
+# @var zammad_secrets_elasticsearch_secret_name:description: >
+# Secret key for elasticsearch
+
+# @var zammad_secrets_postgresql_use_existing
+# @var zammad_secrets_postgresql_use_existing:type: string
+# @var zammad_secrets_postgresql_use_existing:description: >
+# Use existing secret for postgresql
+zammad_secrets_postgresql_use_existing: false
+
+# @var zammad_secrets_postgresql_secret_key
+# @var zammad_secrets_postgresql_secret_key:type: string
+# @var zammad_secrets_postgresql_secret_key:description: >
+# Secret key name for postgresql
+
+# @var zammad_secrets_postgresql_secret_name
+# @var zammad_secrets_postgresql_secret_name:type: string
+# @var zammad_secrets_postgresql_secret_name:description: >
+# Secret key for postgresql
+
+# @var zammad_secrets_postgresql_use_existing
+# @var zammad_secrets_postgresql_use_existing:type: string
+# @var zammad_secrets_postgresql_use_existing:description: >
+# Use existing secret for redis
+zammad_secrets_redis_use_existing: false
+
+# @var zammad_secrets_redis_secret_key
+# @var zammad_secrets_redis_secret_key:type: string
+# @var zammad_secrets_redis_secret_key:description: >
+# Secret key name for redis
+
+# @var zammad_secrets_redis_secret_name
+# @var zammad_secrets_redis_secret_name:type: string
+# @var zammad_secrets_redis_secret_name:description: >
+# Secret key for redis
+
+
+# @var zammad_redis_master_persistence_enabled
+# @var zammad_redis_master_persistence_enabled:type: boolean
+# @var zammad_redis_master_persistence_enabled:description: >
+# enable persistence on redis master nodes using PVC
+zammad_redis_master_persistence_enabled: true
+
+# @var zammad_security_context
+# @var zammad_security_context:type: dict
+# @var zammad_security_context:description: >
+# Zammad security context
+zammad_security_context:
+  fsGroup: 1000
+  fsGroupChangePolicy: Always
+  runAsUser: 1000
+  runAsNonRoot: true
+  runAsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
+
+# @var zammad_elasticsearch_enabled
+# @var zammad_elasticsearch_enabled:type: boolean
+# @var zammad_elasticsearch_enabled:description: >
+# enable/disable elasticsearch chart dependency
+zammad_elasticsearch_enabled: true
+
+# @var zammad_elasticsearch_host
+# @var zammad_elasticsearch_host:type: booelan
+# @var zammad_elasticsearch_host:description: >
+# elasticsearch host : only used when zammad_elasticsearch_enabled is false
+
+# @var zammad_elasticsearch_initialisation
+# @var zammad_elasticsearch_initialisation:type: booelan
+# @var zammad_elasticsearch_initialisation:description: >
+# elasticsearch initialisation
+zammad_elasticsearch_initialisation: true
+
+# @var zammad_elasticsearch_port
+# @var zammad_elasticsearch_port:type: int
+# @var zammad_elasticsearch_port:description: >
+# elasticsearch port
+zammad_elasticsearch_port: 9200
+
+# @var zammad_elasticsearch_reindex
+# @var zammad_elasticsearch_reindex:type: boolean
+# @var zammad_elasticsearch_reindex:description: >
+# reindex elasticsearch
+zammad_elasticsearch_reindex: true
+
+# @var zammad_elasticsearch_schema
+# @var zammad_elasticsearch_schema:type: string
+# @var zammad_elasticsearch_schema:description: >
+# elasticsearch connection schema
+zammad_elasticsearch_schema: "http"
+
+# @var zammad_elasticsearch_user
+# @var zammad_elasticsearch_user:type: string
+# @var zammad_elasticsearch_user:description: >
+# elasticsearch user
+zammad_elasticsearch_user: "zammad"
+
+# @var zammad_elasticsearch_password
+# @var zammad_elasticsearch_password:type: string
+# @var zammad_elasticsearch_password:description: >
+# elasticsearch password
+
+# @var zammad_elasticsearch_cluster_name
+# @var zammad_elasticsearch_cluster_name:type: string
+# @var zammad_elasticsearch_cluster_name:description: >
+# elasticsearch cluster name
+zammad_elasticsearch_cluster_name: "zammad"
+
+# @var zammad_elasticsearch_coordinating_replica_count
+# @var zammad_elasticsearch_coordinating_replica_count:type: int
+# @var zammad_elasticsearch_coordinating_replica_count:description: >
+# replica count for elasticsearch coordinator pods
+zammad_elasticsearch_coordinating_replica_count: 0
+
+# @var zammad_elasticsearch_data_replica_count
+# @var zammad_elasticsearch_data_replica_count:type: int
+# @var zammad_elasticsearch_data_replica_count:description: >
+# replica count for elasticsearch data pods
+zammad_elasticsearch_data_replica_count: 0
+
+# @var zammad_elasticsearch_ingest_replica_count
+# @var zammad_elasticsearch_ingest_replica_count:type: int
+# @var zammad_elasticsearch_ingest_replica_count:description: >
+# replica count for elasticsearch ingest pods
+zammad_elasticsearch_ingest_replica_count: 0
+
+# @var zammad_elasticsearch_master_heap_size
+# @var zammad_elasticsearch_master_heap_size:type: string
+# @var zammad_elasticsearch_master_heap_size:description: >
+# heap size for elasticsearch master pods
+zammad_elasticsearch_master_heap_size: "512m"
+
+# @var zammad_elasticsearch_master_master_only
+# @var zammad_elasticsearch_master_master_only:type: boolean
+# @var zammad_elasticsearch_master_master_only:description: >
+# elasticsearch master pods is master only
+zammad_elasticsearch_master_master_only: false
+
+# @var zammad_elasticsearch_master_replica_count
+# @var zammad_elasticsearch_master_replica_count:type: int
+# @var zammad_elasticsearch_master_replica_count:description: >
+# replica count for elasticsearch master pods
+zammad_elasticsearch_master_replica_count: 1
+
+# @var zammad_elasticsearch_master_resources_preset
+# @var zammad_elasticsearch_master_resources_preset:type: string
+# @var zammad_elasticsearch_master_resources_preset:description: >
+# elasticsearch master pods resources preset
+zammad_elasticsearch_master_resources_preset: "medium"
+
+# @var zammad_elasticsearch_master_resources
+# @var zammad_elasticsearch_master_resources:type: string
+# @var zammad_elasticsearch_master_resources:description: >
+# elasticsearch master pods resources requests and limits
+# @var zammad_elasticsearch_master_resources:example: >
+# zammad_elasticsearch_master_resources:
+#   requests:
+#     cpu: 50m
+#     memory: 512Mi
+#   limits:
+#     cpu: 100m
+#     memory: 1024Mi
+zammad_elasticsearch_master_resources: {}
+
+# @var zammad_memcached_enabled
+# @var zammad_memcached_enabled:type: boolean
+# @var zammad_memcached_enabled:description: >
+# enable/disable memcached chart dependency
+zammad_memcached_enabled: true
+
+# @var zammad_memcached_port
+# @var zammad_memcached_port:type: int
+# @var zammad_memcached_port:description: >
+# memcached port
+zammad_memcached_port: 11211
+
+# @var zammad_memcached_replica_count
+# @var zammad_memcached_replica_count:type: int
+# @var zammad_memcached_replica_count:description: >
+# memcached replica count
+zammad_memcached_replica_count: 1
+
+# @var zammad_memcached_resources
+# @var zammad_memcached_resources:type: string
+# @var zammad_memcached_resources:description: >
+# memcached resources requests and limits
+# @var zammad_memcached_resources:example: >
+# zammad_memcached_resources:
+#   requests:
+#     cpu: 50m
+#     memory: 64Mi
+#   limits:
+#     cpu: 100m
+#     memory: 128Mi
+zammad_memcached_resources: {}
+
+# @var zammad_minio_enabled
+# @var zammad_minio_enabled:type: boolean
+# @var zammad_minio_enabled:description: >
+# enable/disable minio chart dependency
+zammad_minio_enabled: false
+
+# @var zammad_minio_auth_root_user
+# @var zammad_minio_auth_root_user:type: string
+# @var zammad_minio_auth_root_user:description: >
+# minio root username
+zammad_minio_auth_root_user: "zammadadmin"
+
+# @var zammad_minio_root_password
+# @var zammad_minio_root_password:type: string
+# @var zammad_minio_root_password:description: >
+# minio root password
+
+# @var zammad_minio_default_buckets
+# @var zammad_minio_default_buckets:type: string
+# @var zammad_minio_default_buckets:description: >
+# minio default bucket name
+zammad_minio_default_buckets: "zammad"
+
+# @var zammad_minio_disable_web_ui
+# @var zammad_minio_disable_web_ui:type: boolean
+# @var zammad_minio_disable_web_ui:description: >
+# enable/disable minio web UI for debugging.
+zammad_minio_disable_web_ui: true
+
+# @var zammad_external_s3_url
+# @var zammad_external_s3_url:type: string
+# @var zammad_external_s3_url:description: >
+# external S3 URL for files
+# @var zammad_external_s3_url:example: >
+# zammad_external_s3_url: "s3://accesskey:secretaccesskey@endpoint/bucket_name"
+
+# @var zammad_nginx_replicas
+# @var zammad_nginx_replicas:type: int
+# @var zammad_nginx_replicas:description: >
+# Number of nginx replicats
+zammad_nginx_replicas: 1
+
+# @var zammad_nginx_trusted_proxies
+# @var zammad_nginx_trusted_proxies:type: list
+# @var zammad_nginx_trusted_proxies:description: >
+# List of nginx trusted proxies
+zammad_nginx_trusted_proxies: []
+
+# @var zammad_nginx_extra_headers
+# @var zammad_nginx_extra_headers:type: list
+# @var zammad_nginx_extra_headers:description: >
+# List of nginx extra headers
+# @var zammad_nginx_extra_headers:example: >
+# zammad_nginx_extra_headers:
+#   - 'HeaderName "Header Value"'
+zammad_nginx_extra_headers: []
+
+# @var zammad_nginx_websocket_extra_headers
+# @var zammad_nginx_websocket_extra_headers:type: list
+# @var zammad_nginx_websocket_extra_headers:description: >
+# List of nginx websocket extra headers
+# @var zammad_nginx_websocket_extra_headers:example: >
+# zammad_nginx_websocket_extra_headers:
+#   - 'HeaderName "Header Value"'
+zammad_nginx_websocket_extra_headers: []
+
+# @var zammad_nginx_max_client_body_size
+# @var zammad_nginx_max_client_body_size:type: string
+# @var zammad_nginx_max_client_body_size:description: >
+# Nginx max client body size
+zammad_nginx_max_client_body_size: "50M"
+
+# @var zammad_nginx_knowledge_base_url
+# @var zammad_nginx_knowledge_base_url:type: string
+# @var zammad_nginx_knowledge_base_url:description: >
+# Url for knowledge base
+zammad_nginx_knowledge_base_url: ""
+
+# @var zammad_nginx_startup_probe
+# @var zammad_nginx_startup_probe:type: dict
+# @var zammad_nginx_startup_probe:description: >
+# Startup probe for nginx
+zammad_nginx_startup_probe:
+  tcpSocket:
+    port: 8080
+  failureThreshold: 20
+  periodSeconds: 4
+
+# @var zammad_nginx_liveness_probe
+# @var zammad_nginx_liveness_probe:type: dict
+# @var zammad_nginx_liveness_probe:description: >
+# Liveness probe for nginx
+zammad_nginx_liveness_probe:
+  tcpSocket:
+    port: 8080
+  failureThreshold: 5
+  timeoutSeconds: 5
+
+# @var zammad_nginx_readiness_probe
+# @var zammad_nginx_readiness_probe:type: dict
+# @var zammad_nginx_readiness_probe:description: >
+# Readiness probe for nginx
+zammad_nginx_readiness_probe:
+  httpGet:
+    path: /
+    port: 8080
+  failureThreshold: 5
+  timeoutSeconds: 5
+
+# @var zammad_nginx_resources
+# @var zammad_nginx_resources:type: dict
+# @var zammad_nginx_resources:description: >
+# nginx resources requests and limits
+# @var zammad_nginx_resources:example: >
+#  zammad_nginx_resources:
+#    requests:
+#      cpu: 50m
+#      memory: 32Mi
+#    limits:
+#      cpu: 100m
+#      memory: 64Mi
+zammad_nginx_resources: {}
+
+# @var zammad_nginx_security_context
+# @var zammad_nginx_security_context:type: dict
+# @var zammad_nginx_security_context:description: >
+# nginx security context
+zammad_nginx_security_context:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  privileged: false
+
+# @var zammad_nginx_sidecars
+# @var zammad_nginx_sidecars:type: list
+# @var zammad_nginx_sidecars:description: >
+# nginx sidecars : can be used to add additional containers / sidecars
+zammad_nginx_sidecars: []
+
+# @var zammad_nginx_pod_labels
+# @var zammad_nginx_pod_labels:type: dict
+# @var zammad_nginx_pod_labels:description: >
+# nginx additionnal pod labels
+# @var zammad_nginx_pod_labels:example: >
+#  zammad_nginx_pod_labels:
+#    my-label: "value"
+zammad_nginx_pod_labels: {}
+
+# @var zammad_nginx_pod_annotations
+# @var zammad_nginx_pod_annotations:type: dict
+# @var zammad_nginx_pod_annotations:description: >
+# nginx additionnal annotations
+# @var zammad_nginx_pod_annotations:example: >
+#  zammad_nginx_pod_annotations:
+#    my-annotation: "value"
+zammad_nginx_pod_annotations: {}
+
+# @var zammad_postgresql_enabled
+# @var zammad_postgresql_enabled:type: boolean
+# @var zammad_postgresql_enabled:description: >
+# enable/disable postgresql chart dependency
+zammad_postgresql_enabled: true
+
+# @var zammad_postgresql_host
+# @var zammad_postgresql_host:type: string
+# @var zammad_postgresql_host:description: >
+# postgresql host : only used when zammad_postgresql_enabled is false
+
+# @var zammad_postgresql_database
+# @var zammad_postgresql_database:type: string
+# @var zammad_postgresql_database:description: >
+# postgresql database name
+zammad_postgresql_database: "zammad_production"
+
+# @var zammad_postgresql_username
+# @var zammad_postgresql_username:type: string
+# @var zammad_postgresql_username:description: >
+# postgresql username
+zammad_postgresql_username: "zammad"
+
+# @var zammad_postgresql_password
+# @var zammad_postgresql_password:type: string
+# @var zammad_postgresql_password:description: >
+# postgresql password
+
+# @var zammad_postgresql_port
+# @var zammad_postgresql_port:type: int
+# @var zammad_postgresql_port:description: >
+# postgresql port
+zammad_postgresql_port: 5432
+
+# @var zammad_postgresql_connection_options
+# @var zammad_postgresql_connection_options:type: string
+# @var zammad_postgresql_connection_options:description: >
+# postgresql additional connection options
+zammad_postgresql_connection_options: "pool=50"
+
+# @var zammad_postgresql_replication_username
+# @var zammad_postgresql_replication_username:type: string
+# @var zammad_postgresql_replication_username:description: >
+# postgresql replication username
+zammad_postgresql_replication_username: "repl_user"
+
+# @var zammad_postgresql_replication_password
+# @var zammad_postgresql_replication_password:type: string
+# @var zammad_postgresql_replication_password:description: >
+# postgresql replication password
+
+# @var zammad_postgresql_primary_resources
+# @var zammad_postgresql_primary_resources:type: dict
+# @var zammad_postgresql_primary_resources:description: >
+# postgresql resources requests and limits
+# @var zammad_postgresql_primary_resources:example: >
+#  zammad_postgresql_primary_resources:
+#   requests:
+#     cpu: 250m
+#     memory: 256Mi
+#   limits:
+#     cpu: 500m
+#     memory: 512Mi
+zammad_postgresql_primary_resources: {}
+
+# @var zammad_railserver_replicas
+# @var zammad_railserver_replicas:type: int
+# @var zammad_railserver_replicas:description: >
+# rail servers replicas
+zammad_railserver_replicas: 1
+
+# @var zammad_railserver_startup_probe
+# @var zammad_railserver_startup_probe:type: dict
+# @var zammad_railserver_startup_probe:description: >
+# rail servers startup probe
+zammad_railserver_startup_probe:
+  tcpSocket:
+    port: 3000
+  failureThreshold: 20
+  periodSeconds: 4
+
+# @var zammad_railserver_liveness_probe
+# @var zammad_railserver_liveness_probe:type: dict
+# @var zammad_railserver_liveness_probe:description: >
+# rail servers liveness probe
+zammad_railserver_liveness_probe:
+  tcpSocket:
+    port: 3000
+  failureThreshold: 5
+  timeoutSeconds: 5
+
+# @var zammad_railserver_readiness_probe
+# @var zammad_railserver_readiness_probe:type: dict
+# @var zammad_railserver_readiness_probe:description: >
+# rail servers readiness probe
+zammad_railserver_readiness_probe:
+  httpGet:
+    path: /
+    port: 3000
+  failureThreshold: 5
+  timeoutSeconds: 5
+
+# @var zammad_railserver_resources
+# @var zammad_railserver_resources:type: dict
+# @var zammad_railserver_resources:description: >
+# rail server resources requests and limits
+# @var zammad_railserver_resources:example: >
+# zammad_railserver_resources:
+#   requests:
+#     cpu: 100m
+#     memory: 512Mi
+#   limits:
+#     cpu: 200m
+#     memory: 1024Mi
+zammad_railserver_resources: {}
+
+# @var zammad_railserver_security_context
+# @var zammad_railserver_security_context:type: dict
+# @var zammad_railserver_security_context:description: >
+# rail server security context
+zammad_railserver_security_context:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  privileged: false
+
+# @var zammad_railserver_sidecars
+# @var zammad_railserver_sidecars:type: list
+# @var zammad_railserver_sidecars:description: >
+# rail server sidecars : can be used to add additional containers / sidecars
+zammad_railserver_sidecars: []
+
+# @var zammad_railserver_trusted_proxies
+# @var zammad_railserver_trusted_proxies:type: list
+# @var zammad_railserver_trusted_proxies:description: >
+# trusted proxies for rail server
+zammad_railserver_trusted_proxies: "['127.0.0.1', '::1']"
+
+# @var zammad_railserver_web_concurrency
+# @var zammad_railserver_web_concurrency:type: int
+# @var zammad_railserver_web_concurrency:description: >
+# web concurrency for rail server
+zammad_railserver_web_concurrency: 0
+
+# @var zammad_railserver_pod_labels
+# @var zammad_railserver_pod_labels:type: dict
+# @var zammad_railserver_pod_labels:description: >
+# rail server additionnal pod labels
+# @var zammad_railserver_pod_labels:example: >
+# zammad_railserver_pod_labels:
+#   my-label: "value"
+zammad_railserver_pod_labels: {}
+
+# @var zammad_railserver_pod_annotations
+# @var zammad_railserver_pod_annotations:type: dict
+# @var zammad_railserver_pod_annotations:description: >
+# rail server additionnal pod annotations
+# @var zammad_railserver_pod_annotations:example: >
+# zammad_railserver_pod_annotations:
+#   my-annotation: "value"
+zammad_railserver_pod_annotations: {}
+
+# @var zammad_redis_enabled
+# @var zammad_redis_enabled:type: boolean
+# @var zammad_redis_enabled:description: >
+# enable/disable redis chart dependency
+zammad_redis_enabled: true
+
+# @var zammad_redis_host
+# @var zammad_redis_host:type: string
+# @var zammad_redis_host:description: >
+# redis host : only used when zammad_redis_enabled is false
+
+# @var zammad_redis_password
+# @var zammad_redis_password:type: string
+# @var zammad_redis_password:description: >
+# password for redis
+
+# @var zammad_redis_port
+# @var zammad_redis_port:type: int
+# @var zammad_redis_port:description: >
+# port for redis
+zammad_redis_port: 6379
+
+# @var zammad_redis_architecture
+# @var zammad_redis_architecture:type: string
+# @var zammad_redis_architecture:description: >
+# redis architecture
+zammad_redis_architecture: "standalone"
+
+# @var zammad_redis_master_resources
+# @var zammad_redis_master_resources:type: dict
+# @var zammad_redis_master_resources:description: >
+# redis resources requests and limits
+# @var zammad_redis_master_resources:example: >
+# zammad_redis_master_resources:
+#   limits:
+#     cpu: 250m
+#     memory: 256Mi
+#   requests:
+#     cpu: 250m
+#     memory: 256Mi
+zammad_redis_master_resources: {}
+
+# @var zammad_scheduler_resources
+# @var zammad_scheduler_resources:type: dict
+# @var zammad_scheduler_resources:description: >
+# scheduler resources requests and limits
+# @var zammad_scheduler_resources:description: >
+# zammad_scheduler_resources:
+#   requests:
+#     cpu: 100m
+#     memory: 256Mi
+#   limits:
+#     cpu: 200m
+#     memory: 512Mi
+zammad_scheduler_resources: {}
+
+# @var zammad_scheduler_security_context
+# @var zammad_scheduler_security_context:type: dict
+# @var zammad_scheduler_security_context:description: >
+# security context for scheduler
+# @var zammad_scheduler_security_context:description: >
+zammad_scheduler_security_context:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  privileged: false
+    # can be used to add additional containers / sidecars
+
+# @var zammad_scheduler_sidecars
+# @var zammad_scheduler_sidecars:type: list
+# @var zammad_scheduler_sidecars:description: >
+# scheduler sidecars : can be used to add additional containers / sidecars
+zammad_scheduler_sidecars: []
+
+# @var zammad_scheduler_pod_labels
+# @var zammad_scheduler_pod_labels:type: dict
+# @var zammad_scheduler_pod_labels:description: >
+# scheduler additionnal pod labels
+# @var zammad_scheduler_pod_labels:example: >
+# zammad_scheduler_pod_labels:
+#   my-label: "value"
+zammad_scheduler_pod_labels: {}
+
+# @var zammad_scheduler_pod_annotations
+# @var zammad_scheduler_pod_annotations:type: dict
+# @var zammad_scheduler_pod_annotations:description: >
+# scheduler additionnal pod labels
+# @var zammad_scheduler_pod_annotations:example: >
+# zammad_scheduler_pod_annotations:
+#   my-annotation: "value"
+zammad_scheduler_pod_annotations: {}
+
+# @var zammad_storage_volume_enabled
+# @var zammad_storage_volume_enabled:type: boolean
+# @var zammad_storage_volume_enabled:description: >
+# Enable this for 'File' based storage in Zammad.
+zammad_storage_volume_enabled: false
+
+# @var zammad_storage_volume_claim_name
+# @var zammad_storage_volume_claim_name:type: string
+# @var zammad_storage_volume_claim_name:description: >
+# existing PVC with 'ReadWriteMany' permisssion for 'File' based storage
+
+# @var zammad_tmp_dir_volume_size_limit
+# @var zammad_tmp_dir_volume_size_limit:type: string
+# @var zammad_tmp_dir_volume_size_limit:description: >
+# size limit for tmp dir
+zammad_tmp_dir_volume_size_limit: "100Mi"
+
+# @var zammad_tmp_dir_volume_medium
+# @var zammad_tmp_dir_volume_medium:type: string
+# @var zammad_tmp_dir_volume_medium:description: >
+# storage medium for tmp dir
+zammad_tmp_dir_volume_medium: "Memory"
+
+# @var zammad_websocket_startup_probe
+# @var zammad_websocket_startup_probe:type: dict
+# @var zammad_websocket_startup_probe:description: >
+# startup probe for websocket
+zammad_websocket_startup_probe:
+  tcpSocket:
+    port: 6042
+  failureThreshold: 20
+  periodSeconds: 4
+
+# @var zammad_websocket_liveness_probe
+# @var zammad_websocket_liveness_probe:type: dict
+# @var zammad_websocket_liveness_probe:description: >
+# liveness probe for websocket
+zammad_websocket_liveness_probe:
+  tcpSocket:
+    port: 6042
+  failureThreshold: 10
+  timeoutSeconds: 5
+
+# @var zammad_websocket_readiness_probe
+# @var zammad_websocket_readiness_probe:type: dict
+# @var zammad_websocket_readiness_probe:description: >
+# readiness probe for websocket
+zammad_websocket_readiness_probe:
+  tcpSocket:
+    port: 6042
+    failureThreshold: 5
+    timeoutSeconds: 5
+
+# @var zammad_websocket_resources
+# @var zammad_websocket_resources:type: dict
+# @var zammad_websocket_resources:description: >
+# websocket resources requests and limits
+# @var zammad_websocket_resources:example: >
+# zammad_websocket_resources:
+#   requests:
+#     cpu: 100m
+#     memory: 256Mi
+#   limits:
+#     cpu: 200m
+#     memory: 512Mi
+zammad_websocket_resources: {}
+
+# @var zammad_websocket_security_context
+# @var zammad_websocket_security_context:type: dict
+# @var zammad_websocket_security_context:description: >
+# security context for websocket
+zammad_websocket_security_context:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  privileged: false
+
+# @var zammad_websocket_sidecars
+# @var zammad_websocket_sidecars:type: list
+# @var zammad_websocket_sidecars:description: >
+# scheduler websocket : can be used to add additional containers / sidecars
+zammad_websocket_sidecars: []
+
+# @var zammad_websocket_pod_labels
+# @var zammad_websocket_pod_labels:type: dict
+# @var zammad_websocket_pod_labels:description: >
+# websocket additionnal pod labels
+# @var zammad_websocket_pod_labels:example: >
+# zammad_websocket_pod_labels:
+#   my-label: "value"
+zammad_websocket_pod_labels: {}
+
+# @var zammad_websocket_pod_annotations
+# @var zammad_websocket_pod_annotations:type: dict
+# @var zammad_websocket_pod_annotations:description: >
+# websocket additionnal pod labels
+# @var zammad_websocket_pod_annotations:example: >
+# zammad_websocket_pod_annotations:
+#   my-annotation: "value"
+zammad_websocket_pod_annotations: {}
+
+# @var zammad_init_containers_elasticsearch_resources
+# @var zammad_init_containers_elasticsearch_resources:type: dict
+# @var zammad_init_containers_elasticsearch_resources:description: >
+# elasticsearch init container resources requests and limits
+# @var zammad_init_containers_elasticsearch_resources:example: >
+# zammad_init_containers_elasticsearch_resources:
+#   requests:
+#     cpu: 100m
+#     memory: 256Mi
+#   limits:
+#     cpu: 200m
+#     memory: 512Mi
+zammad_init_containers_elasticsearch_resources: {}
+
+# @var zammad_init_containers_elasticsearch_security_context
+# @var zammad_init_containers_elasticsearch_security_context:type: dict
+# @var zammad_init_containers_elasticsearch_security_context:description: >
+# security context elasticsearch init container
+zammad_init_containers_elasticsearch_security_context:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  privileged: false
+
+# @var zammad_init_containers_postgresql_resources
+# @var zammad_init_containers_postgresql_resources:type: dict
+# @var zammad_init_containers_postgresql_resources:description: >
+# postgresql init container resources requests and limits
+# @var zammad_init_containers_postgresql_resources:example: >
+# zammad_init_containers_postgresql_resources:
+#   requests:
+#     cpu: 100m
+#     memory: 256Mi
+#   limits:
+#     cpu: 200m
+#     memory: 512Mi
+zammad_init_containers_postgresql_resources: {}
+
+
+# @var zammad_init_containers_postgresql_security_context
+# @var zammad_init_containers_postgresql_security_context:type: dict
+# @var zammad_init_containers_postgresql_security_context:description: >
+# security context postgresql init container
+zammad_init_containers_postgresql_security_context:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  privileged: false
+
+# @var zammad_init_containers_zammad_resources
+# @var zammad_init_containers_zammad_resources:type: dict
+# @var zammad_init_containers_zammad_resources:description: >
+# zammad init container resources requests and limits
+# @var zammad_init_containers_zammad_resources:example: >
+# zammad_init_containers_zammad_resources:
+#   requests:
+#     cpu: 100m
+#     memory: 256Mi
+#   limits:
+#     cpu: 200m
+#     memory: 512Mi
+zammad_init_containers_zammad_resources: {}
+
+# @var zammad_init_containers_zammad_security_context
+# @var zammad_init_containers_zammad_security_context:type: dict
+# @var zammad_init_containers_zammad_security_context:description: >
+# security context zammad init container
+zammad_init_containers_zammad_security_context:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  privileged: false
+
+# @var zammad_init_containers_zammad_custom_init
+# @var zammad_init_containers_zammad_custom_init:type: string
+# @var zammad_init_containers_zammad_custom_init:description: >
+# custom init for zammad
+# @var zammad_init_containers_postgresql_resources:example: >
+# zammad_init_containers_zammad_custom_init: "bundle exec rails runner '…'"
+zammad_init_containers_zammad_custom_init: ""
+
+# @var zammad_init_job_annotations
+# @var zammad_init_job_annotations:type: dict
+# @var zammad_init_job_annotations:description: >
+# init job additionnal annotations
+# @var zammad_init_job_annotations:example: >
+# zammad_init_job_annotations:
+#   my-annotation: "value"
+zammad_init_job_annotations: {}
+
+# @var zammad_init_job_pod_labels
+# @var zammad_init_job_pod_labels:type: dict
+# @var zammad_init_job_pod_labels:description: >
+# init job additionnal pod labels
+# @var zammad_init_job_pod_labels:example: >
+# zammad_init_job_pod_labels:
+#   my-label: "value"
+zammad_init_job_pod_labels: {}
+
+# @var zammad_init_job_pod_annotations
+# @var zammad_init_job_pod_annotations:type: dict
+# @var zammad_init_job_pod_annotations:description: >
+# init job additionnal pod annotations
+# @var zammad_init_job_pod_annotations:example: >
+# zammad_init_job_pod_annotations:
+#   my-annotation: "value"
+zammad_init_job_pod_annotations: {}
+
+# @var zammad_init_job_pod_spec
+# @var zammad_init_job_pod_spec:type: dict
+# @var zammad_init_job_pod_spec:description: >
+# websocket additionnal pod specs
+# @var zammad_init_job_pod_spec:example: >
+# zammad_init_job_pod_spec:
+#   my-podspec: "value"
+zammad_init_job_pod_spec: {}
+
+# @var zammad_auto_wizard_enabled
+# @var zammad_auto_wizard_enabled:type: bolean
+# @var zammad_auto_wizard_enabled:description: >
+# enable auto wizard
+zammad_auto_wizard_enabled: false
+
+# @var zammad_auto_wizard_token
+# @var zammad_auto_wizard_token:type: string
+# @var zammad_auto_wizard_token:description: >
+# secret token for auto wizard. If used the url must look like: http://zammad/#getting_started/auto_wizard/your_token_here
+
+# @var zammad_auto_wizard_locale
+# @var zammad_auto_wizard_locale:type: string
+# @var zammad_auto_wizard_locale:description: >
+# zammad locale to setup
+zammad_auto_wizard_locale: "en-us"
+
+# @var zammad_auto_wizard_users
+# @var zammad_auto_wizard_users:type: list
+# @var zammad_auto_wizard_users:description: >
+# zammad users to create
+# @var zammad_auto_wizard_users:example: >
+# zammad_auto_wizard_users:
+#   - login: "email@example.org"
+#     firstname: "Zammad"
+#     lastname: "Admin"
+#     email: "email@example.org"
+#     organization: "ZammadTest"
+#     password: "..."
+zammad_auto_wizard_users: []
+
+# @var zammad_auto_wizard_settings
+# @var zammad_auto_wizard_settings:type: list
+# @var zammad_auto_wizard_settings:description: >
+# zammad settings for autowizard
+# @var zammad_auto_wizard_settings:example: >
+# zammad_auto_wizard_settings:
+#   - name: "product_name"
+#     value: "ZammadTestSystem"
+#   - name: "system_online_service"
+#     value: true
+zammad_auto_wizard_settings: []
+
+# @var zammad_auto_wizard_organizations
+# @var zammad_auto_wizard_organizations:type: list
+# @var zammad_auto_wizard_organizations:description: >
+# zammad organization to create
+# @var zammad_auto_wizard_organizations:example: >
+# zammad_auto_wizard_organizations:
+#   - name: "ZammadTest"
+zammad_auto_wizard_organizations: []
+
+# @var zammad_extra_env
+# @var zammad_extra_env:type: list
+# @var zammad_extra_env:description: >
+# additional environment vars added to all zammad services
+# @var zammad_extra_env:example: >
+# zammad_extra_env:
+#   - name: FOO_BAR
+#     value: "foobar"
+zammad_extra_env: []
+
+# @var zammad_common_label
+# @var zammad_common_label:type: dict
+# @var zammad_common_label:description: >
+# additional labels added to all zammad services
+# @var zammad_common_label:example: >
+# zammad_common_label:
+#   my-label: "value"
+zammad_common_label: {}
+
+# @var zammad_common_annotations
+# @var zammad_common_annotations:type: dict
+# @var zammad_common_annotations:description: >
+# additional annotations added to all zammad services
+# @var zammad_common_annotations:example: >
+# zammad_common_annotations:
+#   my-annotation: "value"
+zammad_common_annotations: {}
+
+# @var zammad_pods_label
+# @var zammad_pods_label:type: dict
+# @var zammad_pods_label:description: >
+# additional labels added to all pods
+# @var zammad_pods_label:example: >
+# zammad_pods_label:
+#   my-label: "value"
+zammad_pods_label: {}
+
+# @var zammad_pods_annotations
+# @var zammad_pods_annotations:type: dict
+# @var zammad_pods_annotations:description: >
+# additional annotations added pods
+# @var zammad_pods_annotations:example: >
+# zammad_pods_annotations:
+#   my-label: "value"
+zammad_pods_annotations: {}
+
+# @var zammad_node_selector
+# @var zammad_node_selector:type: dict
+# @var zammad_node_selector:description: >
+# kubernetes node selector
+zammad_node_selector: {}
+
+# @var zammad_toloration
+# @var zammad_toloration:type: list
+# @var zammad_toloration:description: >
+# kubernetes toleration
+zammad_toloration: []
+
+# @var zammad_affinity
+# @var zammad_affinity:type: dict
+# @var zammad_affinity:description: >
+# kubernetes affinity
+zammad_affinity: {}
+
+# @var zammad_service_account_create
+# @var zammad_service_account_create:type: boolean
+# @var zammad_service_account_create:description: >
+# create service account for zammad
+zammad_service_account_create: true
+
+# @var zammad_service_account_annotations
+# @var zammad_service_account_annotations:type: dict
+# @var zammad_service_account_annotations:description: >
+# annotations for service account
+# @var zammad_service_account_annotations:example: >
+# zammad_service_account_annotations:
+#   my-annotation: "value"
+zammad_service_account_annotations: {}
+
+# @var zammad_service_account_name
+# @var zammad_service_account_name:type: string
+# @var zammad_service_account_name:description: >
+# service account name
+zammad_service_account_name: ""
+
+# @var zammad_additional_init_containers
+# @var zammad_additional_init_containers:type: dict
+# @var zammad_additional_init_containers:description: >
+# additionnal init containers
+# @var zammad_additional_init_containers:example: >
+# zammad_additional_init_containers:
+#   - name: s3-restore
+#     image: some-aws-s3-restore:latest
+#     env:
+#       - name: AWS_DEFAULT_REGION
+#         value: "eu-central-1"
+#       - name: AWS_ACCESS_KEY_ID
+#         value: "xxxxxxxxxxxx"
+#       - name: AWS_SECRET_ACCESS_KEY
+#         value: "xxxxxxxxxxxx"
+#       - name: SYNC_DIR
+#         value: "/opt/zammad"
+#       - name: AWS_SYNC_BUCKET
+#         value: "some-backup-bucket"
+#     volumeMounts:
+#       - name: help-zammad
+#         mountPath: /opt/zammad
+zammad_additional_init_containers: []
