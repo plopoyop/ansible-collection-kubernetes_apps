@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.0.1) (2025-05-04)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/1.0.0...1.0.1)
+
+**Closed issues:**
+
+- Setup tooling [\#1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/issues/1)
+
 ## [1.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.0.0) (2025-04-22)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/e9185006c832f8ac2545a72af258cdb62bef0df7...1.0.0)
@@ -10,6 +18,12 @@
 - Setup Task [\#4](https://github.com/plopoyop/ansible-collection-kubernetes_apps/issues/4)
 - Setup Pre-Commit [\#3](https://github.com/plopoyop/ansible-collection-kubernetes_apps/issues/3)
 - Setup Devenv [\#2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/issues/2)
+- release [\#15](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/15) ([plopoyop](https://github.com/plopoyop))
+- Feature/add zammad role [\#14](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/14) ([plopoyop](https://github.com/plopoyop))
+- add renovate config & workflow [\#12](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/12) ([plopoyop](https://github.com/plopoyop))
+- Introduce lint and tests [\#11](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/11) ([plopoyop](https://github.com/plopoyop))
+- Pre-commit && task [\#10](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/10) ([plopoyop](https://github.com/plopoyop))
+- Feature/devenv [\#9](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/9) ([plopoyop](https://github.com/plopoyop))
 
 **Closed issues:**
 
