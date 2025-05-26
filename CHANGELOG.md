@@ -1,18 +1,30 @@
 # Changelog
 
-## [1.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.0.1) (2025-05-06)
+## [1.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.1.0) (2025-05-26)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/1.0.0...1.0.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/1.0.0...1.1.0)
+
+## 🚀 New Features
+
+- Update release workflow to have better changelog [\#20](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/20) ([plopoyop](https://github.com/plopoyop))
+
+## ⚙️ Dependencies
+
+- Update renovatebot/github-action action to v42 [\#16](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/16) ([plopoyop](https://github.com/plopoyop))
 
 **Closed issues:**
 
 - Setup tooling [\#1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/issues/1)
 
+**Merged pull requests:**
+
+- Update renovatebot/github-action action to v42.0.1 [\#17](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/17) ([plopoyop](https://github.com/plopoyop))
+
 ## [1.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.0.0) (2025-04-22)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/e9185006c832f8ac2545a72af258cdb62bef0df7...1.0.0)
 
-**Implemented enhancements:**
+## 🚀 New Features
 
 - Add Zammad Role [\#8](https://github.com/plopoyop/ansible-collection-kubernetes_apps/issues/8)
 - Setup Task [\#4](https://github.com/plopoyop/ansible-collection-kubernetes_apps/issues/4)
