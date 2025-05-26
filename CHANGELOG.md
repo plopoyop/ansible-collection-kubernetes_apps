@@ -18,6 +18,7 @@
 
 **Merged pull requests:**
 
+- Update renovatebot/github-action action to v42.0.2 [\#19](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/19) ([plopoyop](https://github.com/plopoyop))
 - Update renovatebot/github-action action to v42.0.1 [\#17](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/17) ([plopoyop](https://github.com/plopoyop))
 
 ## [1.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.0.0) (2025-04-22)
