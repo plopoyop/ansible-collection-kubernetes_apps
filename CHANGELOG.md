@@ -7,6 +7,7 @@
 ## 🚀 New Features
 
 - Update release workflow to have better changelog [\#20](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/20) ([plopoyop](https://github.com/plopoyop))
+- Update Helm release zammad to v14.1.1 [\#18](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/18) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
