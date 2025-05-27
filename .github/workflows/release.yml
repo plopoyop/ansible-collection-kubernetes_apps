@@ -31,7 +31,7 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Generate changelog
-        uses: janheinrichmerker/action-github-changelog-generator@v2.3
+        uses: janheinrichmerker/action-github-changelog-generator@v2.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           configureSections: '{"features": {"prefix":"## 🚀 New Features","labels":["feature", "enhancement", "improvements"]}, "bugs": {"prefix":"## 🐛 Bug Fixes","labels":["fix", "bug", "bugfix"]}, "tests": {"prefix":"## 🧪 Tests","labels":["test"]}, "documentation": {"prefix":"## 📖 Documentation Updates","labels":["docs", "documentation", "doc"]}, "dependency": {"prefix":"## ⚙️ Dependencies","labels":["dependency"]}}' # yamllint disable-line rule:line-length
