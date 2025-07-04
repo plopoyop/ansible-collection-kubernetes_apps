@@ -20,6 +20,7 @@
 
 **Merged pull requests:**
 
+- fix readme format [\#29](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/29) ([plopoyop](https://github.com/plopoyop))
 - Update janheinrichmerker/action-github-changelog-generator action to v2.4 [\#22](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/22) ([plopoyop](https://github.com/plopoyop))
 - Update renovatebot/github-action action to v42.0.4 [\#21](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/21) ([plopoyop](https://github.com/plopoyop))
 - Update renovatebot/github-action action to v42.0.2 [\#19](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/19) ([plopoyop](https://github.com/plopoyop))
