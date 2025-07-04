@@ -1,8 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    ":disableDependencyDashboard"
+    "github>plopoyop/renovate-config",
+    "github>plopoyop/renovate-config:kubernetes-ansible-collection"
   ],
   "packageRules": [
     {
@@ -15,16 +15,26 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "roles/zammad/defaults/main.yml$",
-        "roles/zammad/README.md$",
         "^README.md$"
       ],
       "matchStrings": [
-        "zammad_helm_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?",
-        "zammad\\s*(?<pipe>\\|)\\s?v(?<currentValue>[0-9\\.]+)"
+        "zammad\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
       ],
       "depNameTemplate": "zammad",
-      "autoReplaceStringTemplate": "{{#if pipe}}zammad         | v{{newValue}}{{else}}zammad_helm_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}{{/if}}",
+      "autoReplaceStringTemplate": "zammad         | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "roles/zammad/defaults/main.yml$",
+        "roles/zammad/README.md$"
+      ],
+      "matchStrings": [
+        "zammad_helm_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "zammad",
+      "autoReplaceStringTemplate": "zammad_helm_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
       "datasourceTemplate": "helm"
     }
   ]
