@@ -14,6 +14,7 @@
 
 - chore\(deps\): update pre-commit hook ansible/ansible-lint \(v25.1.3 → v25.6.1\) [\#27](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/27) ([plopoyop](https://github.com/plopoyop))
 - chore\(deps\): update pre-commit hook adrienverge/yamllint \(v1.35.1 → v1.37.1\) [\#26](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/26) ([plopoyop](https://github.com/plopoyop))
+- Update Helm release zammad to v14.1.3 [\#23](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/23) ([plopoyop](https://github.com/plopoyop))
 - Update renovatebot/github-action action to v42 [\#16](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/16) ([plopoyop](https://github.com/plopoyop))
 
 **Closed issues:**
