@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.1.0) (2025-05-26)
+## [1.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.1.0) (2025-07-04)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/1.0.0...1.1.0)
 
@@ -19,6 +19,8 @@
 
 **Merged pull requests:**
 
+- Update janheinrichmerker/action-github-changelog-generator action to v2.4 [\#22](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/22) ([plopoyop](https://github.com/plopoyop))
+- Update renovatebot/github-action action to v42.0.4 [\#21](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/21) ([plopoyop](https://github.com/plopoyop))
 - Update renovatebot/github-action action to v42.0.2 [\#19](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/19) ([plopoyop](https://github.com/plopoyop))
 - Update renovatebot/github-action action to v42.0.1 [\#17](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/17) ([plopoyop](https://github.com/plopoyop))
 
