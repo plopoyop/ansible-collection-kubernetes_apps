@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.1.1) (2025-07-07)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/1.1.0...1.1.1)
+
+**Merged pull requests:**
+
+- Update renovatebot/github-action action to v43 [\#24](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/24) ([plopoyop](https://github.com/plopoyop))
+
 ## [1.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.1.0) (2025-07-04)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/1.0.0...1.1.0)
