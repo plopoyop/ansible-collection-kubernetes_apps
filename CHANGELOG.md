@@ -1,12 +1,17 @@
 # Changelog
 
-## [1.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.1.1) (2025-07-31)
+## [1.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/1.2.0) (2025-07-31)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/1.1.0...1.1.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/1.1.0...1.2.0)
 
 ## 🐛 Bug Fixes
 
 - Fix molecule tests [\#35](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/35) ([plopoyop](https://github.com/plopoyop))
+
+## ⚙️ Dependencies
+
+- feat\(deps\): update pre-commit hook ansible/ansible-lint \(v25.6.1 → v25.7.0\) [\#37](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/37) ([plopoyop](https://github.com/plopoyop))
+- fix\(ci\): update renovatebot/github-action action \(v43.0.2 → v43.0.3\) [\#31](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/31) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
 
