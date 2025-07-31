@@ -17,6 +17,7 @@
 
 **Merged pull requests:**
 
+- chore\(config\): migrate renovate config [\#39](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/39) ([plopoyop](https://github.com/plopoyop))
 - update devenv to 1.8.1 [\#36](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/36) ([plopoyop](https://github.com/plopoyop))
 - Update renovatebot/github-action action to v43 [\#24](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/24) ([plopoyop](https://github.com/plopoyop))
 
