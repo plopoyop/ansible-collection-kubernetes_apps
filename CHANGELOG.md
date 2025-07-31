@@ -12,6 +12,7 @@
 
 - feat\(ci\)!: Update hugo19941994/delete-draft-releases action \(v1.0.1 → v2.0.0\) [\#38](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/38) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update pre-commit hook ansible/ansible-lint \(v25.6.1 → v25.7.0\) [\#37](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/37) ([plopoyop](https://github.com/plopoyop))
+- feat\(helm\)!: Update chart zammad \(14.1.4 → 15.0.0\) [\#34](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/34) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v43.0.2 → v43.0.3\) [\#31](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/31) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
