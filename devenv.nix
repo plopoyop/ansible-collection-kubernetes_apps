@@ -14,9 +14,9 @@
     pkgs.go-task
     pkgs.kind
     pkgs.pre-commit
-    pkgs.python312Packages.kubernetes
-    pkgs.python312Packages.molecule
-    pkgs.python312Packages.molecule-plugins
+    pkgs.python313Packages.kubernetes
+    pkgs.python313Packages.molecule
+    pkgs.python313Packages.molecule-plugins
     pkgs.yamllint
  ];
 
