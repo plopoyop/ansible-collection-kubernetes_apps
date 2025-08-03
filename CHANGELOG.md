@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/1.1.0...2.0.0)
 
+## 🚀 New Features
+
+- Add ingress annotations [\#43](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/43) ([plopoyop](https://github.com/plopoyop))
+
 ## 🐛 Bug Fixes
 
 - Fix Ansible lint [\#42](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/42) ([plopoyop](https://github.com/plopoyop))
