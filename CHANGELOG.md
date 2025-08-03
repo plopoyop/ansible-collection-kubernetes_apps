@@ -6,6 +6,7 @@
 
 ## 🐛 Bug Fixes
 
+- Fix Ansible lint [\#42](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/42) ([plopoyop](https://github.com/plopoyop))
 - Fix molecule tests [\#35](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/35) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
