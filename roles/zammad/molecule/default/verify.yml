@@ -13,11 +13,11 @@
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "zammad"
-      register: namespace
+      register: zammad_namespace
 
     - name: Assert that 'zammad' namespace is active
       ansible.builtin.assert:
-        that: namespace['resources'][0]['status']['phase'] == "Active"
+        that: zammad_namespace['resources'][0]['status']['phase'] == "Active"
 
     - name: "Get 'nginx' deployment info."
       kubernetes.core.k8s_info:
