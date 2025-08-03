@@ -101,8 +101,8 @@
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "zammad"
-      register: namespace
+      register: zammad_namespace
 
     - name: Assert that 'zammad' namespace is active
       ansible.builtin.assert:
-        that: namespace['resources'] == []
+        that: zammad_namespace['resources'] == []
