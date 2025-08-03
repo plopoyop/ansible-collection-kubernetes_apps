@@ -9,6 +9,9 @@ ingress:
           pathType: Prefix
   annotations:
     kubernetes.io/ingress.class: "{{ zammad_ingress_class }}"
+{% if zammad_ingress_annotations is defined %}
+    {{ zammad_ingress_annotations | ansible.builtin.to_nice_yaml | indent(4) }}
+{% endif %}
 {% if zammad_ingress_tls_enabled %}
     cert-manager.io/cluster-issuer: "{{ zammad_ingress_certmanager_cluster_issuer }}"
   tls:
