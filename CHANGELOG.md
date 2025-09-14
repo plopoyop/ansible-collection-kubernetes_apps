@@ -15,6 +15,7 @@
 
 ## ⚙️ Dependencies
 
+- fix\(helm\): update chart zammad \(15.2.0 → 15.2.1\) [\#51](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/51) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.8.1 → v25.8.2\) [\#50](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/50) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v43.0.6 → v43.0.11\) [\#49](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/49) ([plopoyop](https://github.com/plopoyop))
 - feat\(ci\)!: Update actions/checkout action \(v4 → v5\) [\#48](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/48) ([plopoyop](https://github.com/plopoyop))
