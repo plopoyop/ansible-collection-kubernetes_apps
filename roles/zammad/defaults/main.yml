@@ -16,7 +16,7 @@ zammad_namespace: "zammad"
 # @var zammad_helm_version:type: string
 # @var zammad_helm_version:description: >
 # Helm chart version to install
-zammad_helm_version: 15.2.1
+zammad_helm_version: 15.2.2
 
 # @var zammad_deployment_name
 # @var zammad_deployment_name:type: string
