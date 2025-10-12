@@ -546,7 +546,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-zammad_helm_version: 15.2.2
+zammad_helm_version: 15.2.3
 ```
 
 ### zammad_ingress_certmanager_cluster_issuer
