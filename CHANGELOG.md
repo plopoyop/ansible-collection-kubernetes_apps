@@ -1,11 +1,12 @@
 # Changelog
 
-## [2.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/2.1.0) (2025-10-02)
+## [2.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/2.1.0) (2025-11-09)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/2.0.0...2.1.0)
 
 ## ⚙️ Dependencies
 
+- fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.9.0 → v25.9.1\) [\#57](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/57) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart zammad \(15.2.1 → 15.2.2\) [\#55](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/55) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v43.0.12 → v43.0.13\) [\#54](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/54) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update pre-commit hook ansible/ansible-lint \(v25.8.2 → v25.9.0\) [\#53](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/53) ([plopoyop](https://github.com/plopoyop))
