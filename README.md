@@ -46,7 +46,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 
 | Role Name       | Helm Chart Version | README Link                                 |
 | ---------       | ------------------ | ------------------------------------        |
-| zammad         | v15.2.2            | [View README](roles/zammad/README.md)       |
+| zammad         | v15.2.3            | [View README](roles/zammad/README.md)       |
 
 ## Customization
 
