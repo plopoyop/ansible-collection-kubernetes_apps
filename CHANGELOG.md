@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/3.0.1) (2025-11-16)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/3.0.0...3.0.1)
+
+## ⚙️ Dependencies
+
+- feat\(deps\): update pre-commit hook ansible/ansible-lint \(v25.9.1 → v25.11.0\) [\#62](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/62) ([plopoyop](https://github.com/plopoyop))
+- fix\(ci\): update renovatebot/github-action action \(v44.0.0 → v44.0.2\) [\#60](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/60) ([plopoyop](https://github.com/plopoyop))
+
 ## [3.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/3.0.0) (2025-11-09)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/2.0.0...3.0.0)
