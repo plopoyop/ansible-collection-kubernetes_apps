@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-11-23)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/3.0.1...4.0.0)
+
+## ⚙️ Dependencies
+
+- feat\(ci\)!: Update actions/checkout action \(v5 → v6\) [\#64](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/64) ([plopoyop](https://github.com/plopoyop))
+- fix\(ci\): update renovatebot/github-action action \(v44.0.2 → v44.0.3\) [\#63](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/63) ([plopoyop](https://github.com/plopoyop))
+
 ## [3.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/3.0.1) (2025-11-16)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/3.0.0...3.0.1)
