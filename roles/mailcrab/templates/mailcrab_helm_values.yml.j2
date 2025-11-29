@@ -1,0 +1,58 @@
+---
+service:
+  type: {{ mailcrab_service_type }}
+  ports:
+    http: {{ mailcrab_http_port }}
+    smtp: {{ mailcrab_smtp_port }}
+
+autoscaling: {{ mailcrab_autoscaling }}
+
+replicaCount: {{ mailcrab_replica_count }}
+
+image:
+  repository: "{{ mailcrab_image_repository }}"
+  pullPolicy: "{{ mailcrab_image_pull_policy }}"
+  tag: "{{ mailcrab_github_version }}"
+
+ingress:
+  enabled: {{ mailcrab_ingress_enabled }}
+{% if mailcrab_ingress_enabled %}
+{% if mailcrab_ingress_class is defined %}
+  className: {{ mailcrab_ingress_class }}
+{% endif %}
+{% if mailcrab_ingress_annotations is defined %}
+  annotations: {{ mailcrab_ingress_annotations }}
+{% endif %}
+{% if mailcrab_ingress_labels is defined %}
+  labels: {{ mailcrab_ingress_labels }}
+{% endif %}
+{% if mailcrab_ingress_host is defined %}
+  hosts:
+    - paths:
+        - pathType: ImplementationSpecific
+          path: /
+      host: {{ mailcrab_ingress_host }}
+{% endif %}
+{% if mailcrab_ingress_tls_enabled is defined and mailcrab_ingress_host is defined and mailcrab_ingress_tls_secret_name is defined %}
+  tls:
+    - secretName: {{ mailcrab_ingress_tls_secret_name }}
+      hosts:
+        - {{ mailcrab_ingress_host }}
+{% endif %}
+{% endif %}
+
+{% if mailcrab_resources is defined %}
+resources: {{ mailcrab_resources }}
+{% endif %}
+
+{% if mailcrab_node_selector is defined %}
+nodeSelector: {{ mailcrab_node_selector }}
+{% endif %}
+
+{% if mailcrab_tolerations is defined %}
+tolerations: {{ mailcrab_tolerations }}
+{% endif %}
+
+{% if mailcrab_affinity is defined %}
+affinity: {{ mailcrab_affinity }}
+{% endif %}

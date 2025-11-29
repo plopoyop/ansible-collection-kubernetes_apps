@@ -1,0 +1,14 @@
+---
+# cleanup tasks for mailcrab
+- name: "Uninstall Mailcrab helm package"
+  kubernetes.core.helm:
+    name: "{{ mailcrab_deployment_name }}"
+    namespace: "{{ mailcrab_namespace }}"
+    state: "absent"
+
+- name: "Delete mailcrab namespace"
+  kubernetes.core.k8s:
+    name: "{{ mailcrab_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"

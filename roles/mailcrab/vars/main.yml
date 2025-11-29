@@ -1,0 +1,5 @@
+---
+# vars file for mailcrab
+mailcrab_github_repo: "tweedegolf/mailcrab"
+mailcrab_github_url: "https://github.com/{{ mailcrab_github_repo }}"
+mailcrab_chart_path: "charts/mailcrab"

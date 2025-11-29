@@ -1,0 +1,148 @@
+---
+# defaults file for mailcrab
+# @var mailcrab_enabled
+# @var mailcrab_enabled:type: boolean
+# @var mailcrab_enabled:description: >
+# Should mailcrab helm chart be installed
+mailcrab_enabled: true
+
+# @var mailcrab_namespace
+# @var mailcrab_namespace:type: string
+# @var mailcrab_namespace:description: >
+# K8s namespace to install the mailcrab chart
+mailcrab_namespace: "mailcrab"
+
+# @var mailcrab_github_version
+# @var mailcrab_github_version:type: string
+# @var mailcrab_github_version:description: >
+# GitHub release version/tag to download (e.g., "v1.0.0" or "latest")
+mailcrab_github_version: "v1.6.2"
+
+# @var mailcrab_autoscaling
+# @var mailcrab_autoscaling:type: boolean
+# @var mailcrab_autoscaling:description: >
+# Enable autoscaling for the deployment
+# @var mailcrab_autoscaling:example: >
+# mailcrab_autoscaling:
+#   enabled: true
+#   minReplicas: 1
+#   maxReplicas: 100
+#   targetCPUUtilizationPercentage: 80
+mailcrab_autoscaling:
+  enabled: false
+
+# @var mailcrab_replica_count
+# @var mailcrab_replica_count:type: int
+# @var mailcrab_replica_count:description: >
+# Number of replicas to run
+mailcrab_replica_count: 1
+
+# @var mailcrab_deployment_name
+# @var mailcrab_deployment_name:type: string
+# @var mailcrab_deployment_name:description: >
+# Helm release name
+mailcrab_deployment_name: "mailcrab"
+
+# @var mailcrab_wait_install
+# @var mailcrab_wait_install:type: boolean
+# @var mailcrab_wait_install:description: >
+# Wait for helm install to finish
+mailcrab_wait_install: true
+
+# @var mailcrab_image_repository
+# @var mailcrab_image_repository:type: string
+# @var mailcrab_image_repository:description: >
+# Docker image name to use in the chart
+mailcrab_image_repository: "docker.io/marlonb/mailcrab"
+
+# @var mailcrab_image_pull_policy
+# @var mailcrab_image_pull_policy:type: string
+# @var mailcrab_image_pull_policy:description: >
+# Docker image pull policy to use in the chart
+mailcrab_image_pull_policy: "IfNotPresent"
+
+# @var mailcrab_service_type
+# @var mailcrab_service_type:type: string
+# @var mailcrab_service_type:description: >
+# Service type exposed by the chart
+mailcrab_service_type: "ClusterIP"
+
+# @var mailcrab_http_port
+# @var mailcrab_http_port:type: int
+# @var mailcrab_http_port:description: >
+# HTTP/UI port exposed by Mailcrab
+mailcrab_http_port: 1080
+
+# @var mailcrab_smtp_port
+# @var mailcrab_smtp_port:type: int
+# @var mailcrab_smtp_port:description: >
+# SMTP port exposed by Mailcrab
+mailcrab_smtp_port: 1025
+
+# @var mailcrab_ingress_enabled
+# @var mailcrab_ingress_enabled:type: boolean
+# @var mailcrab_ingress_enabled:description: >
+# Enable ingress for the HTTP interface
+mailcrab_ingress_enabled: false
+
+# @var mailcrab_ingress_class
+# @var mailcrab_ingress_class:type: string
+# @var mailcrab_ingress_class:description: >
+# Ingress class name
+
+# @var mailcrab_ingress_annotations:type: dict
+# @var mailcrab_ingress_annotations:description: >
+# Ingress annotations
+# @var mailcrab_ingress_annotations:example: >
+# mailcrab_ingress_annotations:
+#   kubernetes.io/ingress.class: "{{ mailcrab_ingress_class }}"
+#   kubernetes.io/tls-acme: "{{ mailcrab_ingress_tls_enabled }}"
+mailcrab_ingress_annotations: {}
+
+# @var mailcrab_ingress_host
+# @var mailcrab_ingress_host:type: string
+# @var mailcrab_ingress_host:description: >
+# Hostname exposed through the ingress
+
+# @var mailcrab_ingress_tls_enabled
+# @var mailcrab_ingress_tls_enabled:type: boolean
+# @var mailcrab_ingress_tls_enabled:description: >
+# Enable TLS for Mailcrab ingress
+mailcrab_ingress_tls_enabled: false
+
+# @var mailcrab_ingress_tls_secret_name
+# @var mailcrab_ingress_tls_secret_name:type: string
+# @var mailcrab_ingress_tls_secret_name:description: >
+# TLS secret used by the ingress when TLS is enabled
+
+# @var mailcrab_resources
+# @var mailcrab_resources:type: dict
+# @var mailcrab_resources:description: >
+# Resource requests/limits for the main pod
+# @var mailcrab_resources:example: >
+# mailcrab_resources:
+#   requests:
+#     cpu: 100m
+#     memory: 128Mi
+#   limits:
+#     cpu: 200m
+#     memory: 256Mi
+mailcrab_resources: {}
+
+# @var mailcrab_node_selector
+# @var mailcrab_node_selector:type: dict
+# @var mailcrab_node_selector:description: >
+# Node selector for the deployment
+mailcrab_node_selector: {}
+
+# @var mailcrab_tolerations
+# @var mailcrab_tolerations:type: list
+# @var mailcrab_tolerations:description: >
+# Tolerations for the deployment
+mailcrab_tolerations: []
+
+# @var mailcrab_affinity
+# @var mailcrab_affinity:type: dict
+# @var mailcrab_affinity:description: >
+# Affinity rules for the deployment
+mailcrab_affinity: {}

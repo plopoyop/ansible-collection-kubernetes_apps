@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    mailcrab_github_version: "v1.6.2"
+  tasks:
+    - name: "Install Mailcrab"
+      ansible.builtin.import_role:
+        name: "mailcrab"
