@@ -6,6 +6,7 @@
 
 ## 🚀 New Features
 
+- Introduce mailcrab role [\#66](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/66) ([plopoyop](https://github.com/plopoyop))
 - migrate from devenv to devbox [\#65](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/65) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
