@@ -1,0 +1,85 @@
+---
+- name: "Create mailcrab namespace"
+  kubernetes.core.k8s:
+    name: "{{ mailcrab_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+
+- name: "Get latest GitHub release tag if version is 'latest'"
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/{{ mailcrab_github_repo }}/releases/latest"
+    method: GET
+    return_content: true
+  register: mailcrab_github_latest_release
+  when: mailcrab_github_version == "latest"
+  changed_when: false
+
+- name: "Set mailcrab_github_version to latest tag"
+  ansible.builtin.set_fact:
+    mailcrab_github_version: "{{ mailcrab_github_latest_release.json.tag_name }}"
+  when: mailcrab_github_version == "latest"
+
+- name: "Create temporary directory for chart download"
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: mailcrab
+  register: mailcrab_temp_dir
+  changed_when: false
+
+- name: "Download mailcrab release archive from GitHub"
+  ansible.builtin.get_url:
+    url: "{{ mailcrab_github_url }}/archive/refs/tags/{{ mailcrab_github_version }}.tar.gz"
+    dest: "{{ mailcrab_temp_dir.path }}/mailcrab-{{ mailcrab_github_version }}.tar.gz"
+    mode: '0644'
+  changed_when: false
+
+- name: "Extract mailcrab archive"
+  ansible.builtin.unarchive:
+    src: "{{ mailcrab_temp_dir.path }}/mailcrab-{{ mailcrab_github_version }}.tar.gz"
+    dest: "{{ mailcrab_temp_dir.path }}"
+    remote_src: true
+  changed_when: false
+
+- name: "Find extracted directory"
+  ansible.builtin.find:
+    paths: "{{ mailcrab_temp_dir.path }}"
+    file_type: directory
+    patterns: "mailcrab-*"
+    excludes: "*.tar.gz"
+  register: mailcrab_extracted_dirs
+
+- name: "Set chart path fact from extracted directory"
+  ansible.builtin.set_fact:
+    mailcrab_chart_local_path: "{{ mailcrab_extracted_dirs.files[0].path }}/{{ mailcrab_chart_path }}"
+  when: mailcrab_extracted_dirs.files | length > 0
+
+- name: "Fail if extracted directory not found"
+  ansible.builtin.fail:
+    msg: "Could not find extracted directory in {{ mailcrab_temp_dir.path }}"
+  when: mailcrab_extracted_dirs.files | length == 0
+
+- name: "Check if chart directory exists"
+  ansible.builtin.stat:
+    path: "{{ mailcrab_chart_local_path }}"
+  register: mailcrab_chart_dir_stat
+
+- name: "Fail if chart directory does not exist"
+  ansible.builtin.fail:
+    msg: "Chart directory not found at {{ mailcrab_chart_local_path }}"
+  when: not mailcrab_chart_dir_stat.stat.exists
+
+- name: "Install Mailcrab helm package from local chart"
+  kubernetes.core.helm:
+    name: "{{ mailcrab_deployment_name }}"
+    namespace: "{{ mailcrab_namespace }}"
+    state: "present"
+    chart_ref: "{{ mailcrab_chart_local_path }}"
+    values: "{{ lookup('ansible.builtin.template', 'mailcrab_helm_values.yml.j2') | from_yaml }}"
+    wait: "{{ mailcrab_wait_install }}"
+
+- name: "Cleanup temporary directory"
+  ansible.builtin.file:
+    path: "{{ mailcrab_temp_dir.path }}"
+    state: absent
+  changed_when: false

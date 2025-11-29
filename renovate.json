@@ -15,6 +15,14 @@
       "registryUrls": [
         "https://zammad.github.io/zammad-helm"
       ]
+    },
+    {
+      "matchDatasources": [
+        "github-releases"
+      ],
+      "matchPackageNames": [
+        "tweedegolf/mailcrab"
+      ]
     }
   ],
   "customManagers": [
@@ -42,6 +50,31 @@
       "depNameTemplate": "zammad",
       "autoReplaceStringTemplate": "zammad_helm_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
       "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/mailcrab/defaults/main.yml$/",
+        "/roles/mailcrab/README.md$/"
+      ],
+      "matchStrings": [
+        "mailcrab_github_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "tweedegolf/mailcrab",
+      "autoReplaceStringTemplate": "mailcrab_github_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "mailcrab\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "tweedegolf/mailcrab",
+      "autoReplaceStringTemplate": "mailcrab         | v{{newValue}}",
+      "datasourceTemplate": "github-releases"
     }
   ]
 }

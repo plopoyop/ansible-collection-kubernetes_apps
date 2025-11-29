@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  description: "Install and configure Mailcrab on Kubernetes using the official Helm chart"
+  role_name: "mailcrab"
+  author: "Clément Hubert"
+
+  license: "MPL2"
+
+  min_ansible_version: "2.1"
+
+  galaxy_tags:
+    - "kubernetes"
+    - "mail"
+    - "mailhog"
+    - "mailcrab"
+
+dependencies: []
