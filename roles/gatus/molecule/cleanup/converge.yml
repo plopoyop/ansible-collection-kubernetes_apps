@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    gatus_enabled: false
+  tasks:
+    - name: "Remove Gatus"
+      ansible.builtin.import_role:
+        name: "gatus"

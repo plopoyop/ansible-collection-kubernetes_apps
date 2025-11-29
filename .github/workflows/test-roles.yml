@@ -19,6 +19,10 @@ jobs:
     uses: ./.github/workflows/test-role.yaml
     with:
       role_name: "external_dns"
+  gatus:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "gatus"
   mailcrab:
     uses: ./.github/workflows/test-role.yaml
     with:

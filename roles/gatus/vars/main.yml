@@ -1,2 +1,5 @@
 ---
 # vars file for gatus
+gatus_helm_repo_name: "gatus"
+gatus_helm_chart_ref: "{{ gatus_helm_repo_name }}/gatus"
+gatus_helm_repo_url: "https://twin.github.io/helm-charts"
