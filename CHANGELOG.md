@@ -1,8 +1,12 @@
 # Changelog
 
-## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-11-23)
+## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-11-29)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/3.0.1...4.0.0)
+
+## 🚀 New Features
+
+- migrate from devenv to devbox [\#65](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/65) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
