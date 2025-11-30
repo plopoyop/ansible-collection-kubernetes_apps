@@ -11,6 +11,8 @@
 
 ## ⚙️ Dependencies
 
+- feat\(ci\)!: Update actions/checkout action \(v5 → v6\) [\#73](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/73) ([plopoyop](https://github.com/plopoyop))
+- fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.11.0 → v25.11.1\) [\#71](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/71) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update kubectl \(1.34.1 → 1.34.2\) [\#70](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/70) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update go-task \(3.45.4 → 3.45.5\) [\#69](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/69) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update git \(2.51.0 → 2.51.2\) [\#68](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/68) ([plopoyop](https://github.com/plopoyop))
