@@ -44,3 +44,22 @@
     - name: "Assert that 'mailcrab' Service exists"
       ansible.builtin.assert:
         that: mailcrab_service['resources'] | length > 0
+
+    - name: "Get 'mailcrab' basic auth secret info."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "mailcrab-basic-auth-secret"
+        namespace: "mailcrab"
+      register: mailcrab_basic_auth_secret
+
+    - name: "Assert that 'mailcrab' basic auth secret exists"
+      ansible.builtin.assert:
+        that: mailcrab_basic_auth_secret['resources'] | length > 0
+
+    - name: "Assert that 'mailcrab' basic auth secret has username"
+      ansible.builtin.assert:
+        that: (mailcrab_basic_auth_secret['resources'][0]['data']['username'] | ansible.builtin.b64decode)== "admin"
+
+    - name: "Assert that 'mailcrab' basic auth secret has password"
+      ansible.builtin.assert:
+        that: (mailcrab_basic_auth_secret['resources'][0]['data']['password'] | ansible.builtin.b64decode) == "ChangeMe123!"

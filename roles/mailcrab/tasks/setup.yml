@@ -6,6 +6,21 @@
     kind: "Namespace"
     state: "present"
 
+- name: "Create mailcrab secret for basic auth"
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: "v1"
+      kind: "Secret"
+      metadata:
+        name: "{{ mailcrab_basic_auth_secret_name }}"
+        namespace: "{{ mailcrab_namespace }}"
+      type: kubernetes.io/basic-auth
+      stringData:
+        username: "{{ mailcrab_username }}"
+        password: "{{ mailcrab_password }}"
+    state: "present"
+  when: mailcrab_username is defined and mailcrab_password is defined
+
 - name: "Get latest GitHub release tag if version is 'latest'"
   ansible.builtin.uri:
     url: "https://api.github.com/repos/{{ mailcrab_github_repo }}/releases/latest"

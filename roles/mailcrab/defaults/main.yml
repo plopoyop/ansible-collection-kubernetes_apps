@@ -146,3 +146,16 @@ mailcrab_tolerations: []
 # @var mailcrab_affinity:description: >
 # Affinity rules for the deployment
 mailcrab_affinity: {}
+
+# @var mailcrab_secret_name:type: string
+# @var mailcrab_secret_name:description: >
+# Name of the secret for basic auth
+mailcrab_basic_auth_secret_name: "mailcrab-basic-auth-secret"
+
+# @var mailcrab_username:type: string
+# @var mailcrab_username:description: >
+# Username for basic auth
+
+# @var mailcrab_password:type: string
+# @var mailcrab_password:description: >
+# Password for basic auth

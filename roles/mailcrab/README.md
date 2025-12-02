@@ -8,6 +8,7 @@ Install and configure Mailcrab on Kubernetes using the official Helm chart
 - [Default Variables](#default-variables)
   - [mailcrab_affinity](#mailcrab_affinity)
   - [mailcrab_autoscaling](#mailcrab_autoscaling)
+  - [mailcrab_basic_auth_secret_name](#mailcrab_basic_auth_secret_name)
   - [mailcrab_chart_path](#mailcrab_chart_path)
   - [mailcrab_deployment_name](#mailcrab_deployment_name)
   - [mailcrab_enabled](#mailcrab_enabled)
@@ -25,11 +26,14 @@ Install and configure Mailcrab on Kubernetes using the official Helm chart
   - [mailcrab_ingress_tls_secret_name](#mailcrab_ingress_tls_secret_name)
   - [mailcrab_namespace](#mailcrab_namespace)
   - [mailcrab_node_selector](#mailcrab_node_selector)
+  - [mailcrab_password](#mailcrab_password)
   - [mailcrab_replica_count](#mailcrab_replica_count)
   - [mailcrab_resources](#mailcrab_resources)
+  - [mailcrab_secret_name](#mailcrab_secret_name)
   - [mailcrab_service_type](#mailcrab_service_type)
   - [mailcrab_smtp_port](#mailcrab_smtp_port)
   - [mailcrab_tolerations](#mailcrab_tolerations)
+  - [mailcrab_username](#mailcrab_username)
   - [mailcrab_wait_install](#mailcrab_wait_install)
 - [Dependencies](#dependencies)
 - [License](#license)
@@ -76,6 +80,14 @@ mailcrab_autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
+```
+
+### mailcrab_basic_auth_secret_name
+
+#### Default value
+
+```YAML
+mailcrab_basic_auth_secret_name: mailcrab-basic-auth-secret
 ```
 
 ### mailcrab_chart_path
@@ -260,6 +272,12 @@ Node selector for the deployment
 mailcrab_node_selector: {}
 ```
 
+### mailcrab_password
+
+Password for basic auth
+
+**_Type:_** string<br />
+
 ### mailcrab_replica_count
 
 Number of replicas to run
@@ -296,6 +314,12 @@ mailcrab_resources:
     memory: 256Mi
 ```
 
+### mailcrab_secret_name
+
+Name of the secret for basic auth
+
+**_Type:_** string<br />
+
 ### mailcrab_service_type
 
 Service type exposed by the chart
@@ -331,6 +355,12 @@ Tolerations for the deployment
 ```YAML
 mailcrab_tolerations: []
 ```
+
+### mailcrab_username
+
+Username for basic auth
+
+**_Type:_** string<br />
 
 ### mailcrab_wait_install
 
