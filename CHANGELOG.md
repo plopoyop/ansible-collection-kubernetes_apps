@@ -1,11 +1,12 @@
 # Changelog
 
-## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-11-30)
+## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-12-02)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/3.0.1...4.0.0)
 
 ## 🚀 New Features
 
+- Add basic auth secret for mailcrab [\#74](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/74) ([plopoyop](https://github.com/plopoyop))
 - Introduce mailcrab role [\#66](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/66) ([plopoyop](https://github.com/plopoyop))
 - migrate from devenv to devbox [\#65](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/65) ([plopoyop](https://github.com/plopoyop))
 
