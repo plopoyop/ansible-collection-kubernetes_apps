@@ -20,3 +20,14 @@
     - name: Assert that 'mailcrab' namespace does not exist
       ansible.builtin.assert:
         that: namespace_mailcrab['resources'] | length == 0
+
+    - name: "Get 'mailcrab' basic auth secret info."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "mailcrab-basic-auth-secret"
+        namespace: "mailcrab"
+      register: mailcrab_basic_auth_secret
+
+    - name: "Assert that 'mailcrab' basic auth secret exists"
+      ansible.builtin.assert:
+        that: mailcrab_basic_auth_secret['resources'] | length == 0
