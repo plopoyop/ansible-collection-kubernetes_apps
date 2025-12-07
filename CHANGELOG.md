@@ -1,6 +1,6 @@
 # Changelog
 
-## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-12-02)
+## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-12-07)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/3.0.1...4.0.0)
 
@@ -12,6 +12,11 @@
 
 ## ⚙️ Dependencies
 
+- feat\(deps\): update pre-commit hook ansible/ansible-lint \(v25.11.1 → v25.12.0\) [\#79](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/79) ([plopoyop](https://github.com/plopoyop))
+- feat\(deps\): update pre-commit \(4.3.0 → 4.5.0\) [\#78](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/78) ([plopoyop](https://github.com/plopoyop))
+- fix\(helm\): update chart zammad \(15.4.1 → 15.4.2\) [\#77](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/77) ([plopoyop](https://github.com/plopoyop))
+- fix\(deps\): update ansible-doctor \(8.0.0 → 8.0.1\) [\#76](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/76) ([plopoyop](https://github.com/plopoyop))
+- fix\(ci\): update renovatebot/github-action action \(v44.0.4 → v44.0.5\) [\#75](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/75) ([plopoyop](https://github.com/plopoyop))
 - feat\(ci\)!: Update actions/checkout action \(v5 → v6\) [\#73](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/73) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart zammad \(15.2.5 → 15.4.1\) [\#72](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/72) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.11.0 → v25.11.1\) [\#71](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/71) ([plopoyop](https://github.com/plopoyop))
