@@ -6,7 +6,7 @@ This Ansible collection provides a set of roles to install and configure various
 
 ## Contents
 
-This collection includes multiple Ansible roles designed to install and configure applicaiton for a Kubernetes cluster. Each role is designed to be as configurable as possible while providing default settings tailored to my specific usage.
+This collection includes multiple Ansible roles designed to install and configure application for a Kubernetes cluster. Each role is designed to be as configurable as possible while providing default settings tailored to my specific usage.
 
 ## Disclaimer
 
@@ -52,12 +52,13 @@ You can call the roles from this collection in your Ansible playbooks as follows
 ## Customization
 
 Each role exposes variables to adjust the configuration of the installed tools. Refer to each role's documentation for available variables.
-Contributions
 
 Contributions are welcome! Feel free to open issues or submit pull requests to improve the roles and add new features.
 
 ## Tools
-[Devenv.sh](https://devenv.sh/) is used to make developpement onboarding easyer
+[Devbox](https://www.jetify.com/docs/devbox) is used to make reproducible development environments
+[Task](https://taskfile.dev/) as a task runner
+[Renovate](https://github.com/renovatebot/renovate) to update dependencies
 
 ## License
 

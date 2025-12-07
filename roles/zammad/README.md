@@ -160,7 +160,7 @@ Install and configure Zammad application on kubernetes
 
 ### zammad_additional_init_containers
 
-additionnal init containers
+additional init containers
 
 #### Default value
 
@@ -697,7 +697,7 @@ zammad_init_containers_zammad_security_context:
 
 ### zammad_init_job_annotations
 
-init job additionnal annotations
+init job additional annotations
 
 #### Default value
 
@@ -714,7 +714,7 @@ zammad_init_job_annotations:
 
 ### zammad_init_job_pod_annotations
 
-init job additionnal pod annotations
+init job additional pod annotations
 
 #### Default value
 
@@ -731,7 +731,7 @@ zammad_init_job_pod_annotations:
 
 ### zammad_init_job_pod_labels
 
-init job additionnal pod labels
+init job additional pod labels
 
 #### Default value
 
@@ -748,7 +748,7 @@ zammad_init_job_pod_labels:
 
 ### zammad_init_job_pod_spec
 
-websocket additionnal pod specs
+websocket additional pod specs
 
 #### Default value
 
@@ -922,7 +922,7 @@ zammad_nginx_max_client_body_size: 50M
 
 ### zammad_nginx_pod_annotations
 
-nginx additionnal annotations
+nginx additional annotations
 
 #### Default value
 
@@ -939,7 +939,7 @@ zammad_nginx_pod_annotations: {}
 
 ### zammad_nginx_pod_labels
 
-nginx additionnal pod labels
+nginx additional pod labels
 
 #### Default value
 
@@ -1222,7 +1222,7 @@ zammad_railserver_liveness_probe:
 
 ### zammad_railserver_pod_annotations
 
-rail server additionnal pod annotations
+rail server additional pod annotations
 
 #### Default value
 
@@ -1239,7 +1239,7 @@ zammad_railserver_pod_annotations:
 
 ### zammad_railserver_pod_labels
 
-rail server additionnal pod labels
+rail server additional pod labels
 
 #### Default value
 
@@ -1433,7 +1433,7 @@ zammad_redis_port: 6379
 
 ### zammad_scheduler_pod_annotations
 
-scheduler additionnal pod labels
+scheduler additional pod labels
 
 #### Default value
 
@@ -1450,7 +1450,7 @@ zammad_scheduler_pod_annotations:
 
 ### zammad_scheduler_pod_labels
 
-scheduler additionnal pod labels
+scheduler additional pod labels
 
 #### Default value
 
@@ -1707,7 +1707,7 @@ zammad_websocket_liveness_probe:
 
 ### zammad_websocket_pod_annotations
 
-websocket additionnal pod labels
+websocket additional pod labels
 
 #### Default value
 
@@ -1724,7 +1724,7 @@ zammad_websocket_pod_annotations:
 
 ### zammad_websocket_pod_labels
 
-websocket additionnal pod labels
+websocket additional pod labels
 
 #### Default value
 
