@@ -431,7 +431,7 @@ zammad_nginx_sidecars: []
 # @var zammad_nginx_pod_labels
 # @var zammad_nginx_pod_labels:type: dict
 # @var zammad_nginx_pod_labels:description: >
-# nginx additionnal pod labels
+# nginx additional pod labels
 # @var zammad_nginx_pod_labels:example: >
 #  zammad_nginx_pod_labels:
 #    my-label: "value"
@@ -440,7 +440,7 @@ zammad_nginx_pod_labels: {}
 # @var zammad_nginx_pod_annotations
 # @var zammad_nginx_pod_annotations:type: dict
 # @var zammad_nginx_pod_annotations:description: >
-# nginx additionnal annotations
+# nginx additional annotations
 # @var zammad_nginx_pod_annotations:example: >
 #  zammad_nginx_pod_annotations:
 #    my-annotation: "value"
@@ -595,7 +595,7 @@ zammad_railserver_web_concurrency: 0
 # @var zammad_railserver_pod_labels
 # @var zammad_railserver_pod_labels:type: dict
 # @var zammad_railserver_pod_labels:description: >
-# rail server additionnal pod labels
+# rail server additional pod labels
 # @var zammad_railserver_pod_labels:example: >
 # zammad_railserver_pod_labels:
 #   my-label: "value"
@@ -604,7 +604,7 @@ zammad_railserver_pod_labels: {}
 # @var zammad_railserver_pod_annotations
 # @var zammad_railserver_pod_annotations:type: dict
 # @var zammad_railserver_pod_annotations:description: >
-# rail server additionnal pod annotations
+# rail server additional pod annotations
 # @var zammad_railserver_pod_annotations:example: >
 # zammad_railserver_pod_annotations:
 #   my-annotation: "value"
@@ -689,7 +689,7 @@ zammad_scheduler_sidecars: []
 # @var zammad_scheduler_pod_labels
 # @var zammad_scheduler_pod_labels:type: dict
 # @var zammad_scheduler_pod_labels:description: >
-# scheduler additionnal pod labels
+# scheduler additional pod labels
 # @var zammad_scheduler_pod_labels:example: >
 # zammad_scheduler_pod_labels:
 #   my-label: "value"
@@ -698,7 +698,7 @@ zammad_scheduler_pod_labels: {}
 # @var zammad_scheduler_pod_annotations
 # @var zammad_scheduler_pod_annotations:type: dict
 # @var zammad_scheduler_pod_annotations:description: >
-# scheduler additionnal pod labels
+# scheduler additional pod labels
 # @var zammad_scheduler_pod_annotations:example: >
 # zammad_scheduler_pod_annotations:
 #   my-annotation: "value"
@@ -792,7 +792,7 @@ zammad_websocket_sidecars: []
 # @var zammad_websocket_pod_labels
 # @var zammad_websocket_pod_labels:type: dict
 # @var zammad_websocket_pod_labels:description: >
-# websocket additionnal pod labels
+# websocket additional pod labels
 # @var zammad_websocket_pod_labels:example: >
 # zammad_websocket_pod_labels:
 #   my-label: "value"
@@ -801,7 +801,7 @@ zammad_websocket_pod_labels: {}
 # @var zammad_websocket_pod_annotations
 # @var zammad_websocket_pod_annotations:type: dict
 # @var zammad_websocket_pod_annotations:description: >
-# websocket additionnal pod labels
+# websocket additional pod labels
 # @var zammad_websocket_pod_annotations:example: >
 # zammad_websocket_pod_annotations:
 #   my-annotation: "value"
@@ -897,7 +897,7 @@ zammad_init_containers_zammad_custom_init: ""
 # @var zammad_init_job_annotations
 # @var zammad_init_job_annotations:type: dict
 # @var zammad_init_job_annotations:description: >
-# init job additionnal annotations
+# init job additional annotations
 # @var zammad_init_job_annotations:example: >
 # zammad_init_job_annotations:
 #   my-annotation: "value"
@@ -906,7 +906,7 @@ zammad_init_job_annotations: {}
 # @var zammad_init_job_pod_labels
 # @var zammad_init_job_pod_labels:type: dict
 # @var zammad_init_job_pod_labels:description: >
-# init job additionnal pod labels
+# init job additional pod labels
 # @var zammad_init_job_pod_labels:example: >
 # zammad_init_job_pod_labels:
 #   my-label: "value"
@@ -915,7 +915,7 @@ zammad_init_job_pod_labels: {}
 # @var zammad_init_job_pod_annotations
 # @var zammad_init_job_pod_annotations:type: dict
 # @var zammad_init_job_pod_annotations:description: >
-# init job additionnal pod annotations
+# init job additional pod annotations
 # @var zammad_init_job_pod_annotations:example: >
 # zammad_init_job_pod_annotations:
 #   my-annotation: "value"
@@ -924,7 +924,7 @@ zammad_init_job_pod_annotations: {}
 # @var zammad_init_job_pod_spec
 # @var zammad_init_job_pod_spec:type: dict
 # @var zammad_init_job_pod_spec:description: >
-# websocket additionnal pod specs
+# websocket additional pod specs
 # @var zammad_init_job_pod_spec:example: >
 # zammad_init_job_pod_spec:
 #   my-podspec: "value"
@@ -1070,7 +1070,7 @@ zammad_service_account_name: ""
 # @var zammad_additional_init_containers
 # @var zammad_additional_init_containers:type: dict
 # @var zammad_additional_init_containers:description: >
-# additionnal init containers
+# additional init containers
 # @var zammad_additional_init_containers:example: >
 # zammad_additional_init_containers:
 #   - name: s3-restore
