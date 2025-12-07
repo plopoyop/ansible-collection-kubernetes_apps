@@ -24,9 +24,9 @@ zammad_helm_version: 15.4.2
 # Helm chart deployment name
 zammad_deployment_name: "zammad"
 
-# @var zammad_deployment_name
-# @var zammad_deployment_name:type: string
-# @var zammad_deployment_name:description: >
+# @var zammad_wait_install
+# @var zammad_wait_install:type: boolean
+# @var zammad_wait_install:description: >
 # Wait for helm install to finish
 zammad_wait_install: true
 
