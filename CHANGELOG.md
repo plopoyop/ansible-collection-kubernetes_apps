@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.1) (2025-12-07)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/4.0.0...4.0.1)
+
+## 🐛 Bug Fixes
+
+- Multiple coding style fixes [\#82](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/82) ([plopoyop](https://github.com/plopoyop))
+
 ## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-12-07)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/3.0.1...4.0.0)
