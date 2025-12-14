@@ -15,6 +15,10 @@ on:
       - '.github/**'
 
 jobs:
+  external_dns:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "external_dns"
   mailcrab:
     uses: ./.github/workflows/test-role.yaml
     with:
