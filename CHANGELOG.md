@@ -1,12 +1,16 @@
 # Changelog
 
-## [4.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.1) (2025-12-07)
+## [4.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.1) (2025-12-14)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/4.0.0...4.0.1)
 
 ## 🐛 Bug Fixes
 
 - Multiple coding style fixes [\#82](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/82) ([plopoyop](https://github.com/plopoyop))
+
+## ⚙️ Dependencies
+
+- fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.12.0 → v25.12.1\) [\#83](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/83) ([plopoyop](https://github.com/plopoyop))
 
 ## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-12-07)
 
