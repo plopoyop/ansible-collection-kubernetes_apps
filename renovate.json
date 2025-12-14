@@ -24,6 +24,17 @@
       "matchPackageNames": [
         "tweedegolf/mailcrab"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "external-dns"
+      ],
+      "registryUrls": [
+        "https://kubernetes-sigs.github.io/external-dns"
+      ]
     }
   ],
   "customManagers": [
@@ -33,10 +44,10 @@
         "/^README.md$/"
       ],
       "matchStrings": [
-        "zammad\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+        "Zammad\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
       ],
       "depNameTemplate": "zammad",
-      "autoReplaceStringTemplate": "zammad         | v{{newValue}}",
+      "autoReplaceStringTemplate": "Zammad         | v{{newValue}}",
       "datasourceTemplate": "helm"
     },
     {
@@ -71,11 +82,36 @@
         "/^README.md$/"
       ],
       "matchStrings": [
-        "mailcrab\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+        "Mailcrab\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
       ],
       "depNameTemplate": "tweedegolf/mailcrab",
-      "autoReplaceStringTemplate": "mailcrab         | v{{newValue}}",
+      "autoReplaceStringTemplate": "Mailcrab         | v{{newValue}}",
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/external_dns/defaults/main.yml$/",
+        "/roles/external_dns/README.md$/"
+      ],
+      "matchStrings": [
+        "external_dns_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "external-dns",
+      "autoReplaceStringTemplate": "external_dns_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "ExternalDNS\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "external-dns",
+      "autoReplaceStringTemplate": "ExternalDNS         | v{{newValue}}",
+      "datasourceTemplate": "helm"
     }
   ]
 }
