@@ -1,8 +1,12 @@
 # Changelog
 
-## [4.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.1) (2025-12-14)
+## [4.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.1.0) (2025-12-14)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/4.0.0...4.0.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/4.0.0...4.1.0)
+
+## 🚀 New Features
+
+- add automerge for devbox packages [\#85](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/85) ([plopoyop](https://github.com/plopoyop))
 
 ## 🐛 Bug Fixes
 
