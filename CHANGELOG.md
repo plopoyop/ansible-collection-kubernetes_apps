@@ -10,6 +10,7 @@
 
 ## ⚙️ Dependencies
 
+- feat\(ci\): update renovatebot/github-action action \(v44.0.5 → v44.1.0\) [\#84](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/84) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.12.0 → v25.12.1\) [\#83](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/83) ([plopoyop](https://github.com/plopoyop))
 
 ## [4.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.0.0) (2025-12-07)
