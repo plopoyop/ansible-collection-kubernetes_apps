@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: "Install Gatus"
+      ansible.builtin.import_role:
+        name: "gatus"

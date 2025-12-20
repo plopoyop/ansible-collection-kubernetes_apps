@@ -1,0 +1,119 @@
+hostNetwork:
+  enabled: {{ gatus_host_network }}
+
+{% if gatus_annotations is defined %}
+annotations: {{ gatus_annotations }}
+{% endif %}
+
+{% if gatus_labels is defined %}
+labels: {{ gatus_labels }}
+{% endif %}
+
+{% if gatus_pod_annotations is defined %}
+podAnnotations: {{ gatus_pod_annotations }}
+{% endif %}
+
+{% if gatus_pod_labels is defined %}
+podLabels: {{ gatus_pod_labels }}
+{% endif %}
+
+{% if gatus_extra_labels is defined %}
+extraLabels: {{ gatus_extra_labels }}
+{% endif %}
+
+serviceAccount:
+  create: {{ gatus_service_account_create }}
+{% if gatus_service_account_name is defined %}
+  name: {{ gatus_service_account_name }}
+{% endif %}
+{% if gatus_service_account_annotations is defined %}
+  annotations: {{ gatus_service_account_annotations }}
+{% endif %}
+  autoMount: {{ gatus_service_account_auto_mount }}
+
+ingress:
+  enabled: {{ gatus_ingress_enabled }}
+{% if gatus_ingress_enabled %}
+  ingressClassName: "{{ gatus_ingress_class }}"
+  path: {{ gatus_ingress_path }}
+  pathType: {{ gatus_ingress_path_type }}
+{% if gatus_extra_paths is defined %}
+  extraPaths: {{ gatus_extra_paths }}
+{% endif %}
+  hosts:
+    - {{ gatus_domain_name }}
+  annotations:
+    kubernetes.io/ingress.class: "{{ gatus_ingress_class }}"
+{% if gatus_ingress_annotations is defined %}
+    {{ gatus_ingress_annotations | ansible.builtin.to_nice_yaml | indent(4) }}
+{% endif %}
+{% if gatus_ingress_tls_enabled %}
+{% if gatus_ingress_certmanager_cluster_issuer %}
+    cert-manager.io/cluster-issuer: "{{ gatus_ingress_certmanager_cluster_issuer }}"
+{% endif %}
+  tls:
+    - secretName: "{{ gatus_tls_certificate_secret_name }}"
+      hosts:
+        - "{{ gatus_domain_name }}"
+{% endif %}
+{% endif %}
+
+env: {{ gatus_env }}
+
+envFrom: {{ gatus_env_from }}
+
+sidecarContainers: {{ gatus_sidecar_containers }}
+
+extraVolumeMounts: {{ gatus_extra_volume_mounts }}
+
+secrets: {{ gatus_secrets }}
+
+resources: {{ gatus_resources }}
+
+extraInitContainers: {{ gatus_extra_init_containers }}
+
+persistence:
+  enabled: {{ gatus_persistence_enabled | bool }}
+  size: {{ gatus_persistence_size }}
+  mountPath: {{ gatus_persistence_mount_path }}
+{% if gatus_persistence_sub_path | length > 0 %}
+  subPath: {{ gatus_persistence_sub_path }}
+{% endif %}
+  accessModes: {{ gatus_persistence_access_modes }}
+  finalizers: {{ gatus_persistence_finalizers }}
+{% if gatus_persistence_annotations is defined and gatus_persistence_annotations | length > 0 %}
+  annotations: {{ gatus_persistence_annotations }}
+{% endif %}
+{% if gatus_persistence_selector_labels is defined and gatus_persistence_selector_labels | length > 0 %}
+  selectorLabels: {{ gatus_persistence_selector_labels }}
+{% endif %}
+{% if gatus_persistence_existing_claim | length > 0 %}
+  existingClaim: {{ gatus_persistence_existing_claim }}
+{% endif %}
+{% if gatus_persistence_storage_class_name | length > 0 %}
+  storageClassName: {{ gatus_persistence_storage_class_name }}
+{% endif %}
+
+serviceMonitor:
+  enabled: {{ gatus_service_monitor_enabled | bool }}
+{% if gatus_service_monitor_namespace | length > 0 %}
+  namespace: {{ gatus_service_monitor_namespace }}
+{% endif %}
+  interval: {{ gatus_service_monitor_interval }}
+  path: {{ gatus_service_monitor_path }}
+  scheme: {{ gatus_service_monitor_scheme }}
+  tlsConfig: {{ gatus_service_monitor_tls_config }}
+  labels: {{ gatus_service_monitor_labels }}
+  scrapeTimeout: {{ gatus_service_monitor_scrape_timeout }}
+  relabelings: {{ gatus_service_monitor_relabelings }}
+
+networkPolicy:
+  enabled: {{ gatus_network_policy_enabled | bool }}
+  ingress:
+    selectors: {{ gatus_network_policy_ingress_selectors }}
+
+config: {{ gatus_config }}
+
+{% if gatus_additional_helm_values %}
+{{ gatus_additional_helm_values | to_nice_yaml | indent(0) }}
+{% endif %}

@@ -1,0 +1,5 @@
+---
+# vars file for uptime_kuma
+uptime_kuma_helm_repo_name: "uptime-kuma"
+uptime_kuma_helm_chart_ref: "{{ uptime_kuma_helm_repo_name }}/uptime-kuma"
+uptime_kuma_helm_repo_url: "https://dirsigler.github.io/uptime-kuma-helm"

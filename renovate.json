@@ -35,6 +35,17 @@
       "registryUrls": [
         "https://kubernetes-sigs.github.io/external-dns"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "gatus"
+      ],
+      "registryUrls": [
+        "https://twin.github.io/helm-charts"
+      ]
     }
   ],
   "customManagers": [
@@ -111,6 +122,31 @@
       ],
       "depNameTemplate": "external-dns",
       "autoReplaceStringTemplate": "ExternalDNS         | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/gatus/defaults/main.yml$/",
+        "/roles/gatus/README.md$/"
+      ],
+      "matchStrings": [
+        "gatus_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "gatus",
+      "autoReplaceStringTemplate": "gatus_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "Gatus\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "gatus",
+      "autoReplaceStringTemplate": "Gatus         | v{{newValue}}",
       "datasourceTemplate": "helm"
     }
   ]

@@ -1,0 +1,26 @@
+---
+# - name: "Include precheck"
+#   ansible.builtin.include_tasks: "pre_check.yml"
+
+- name: "Create gatus namespace"
+  kubernetes.core.k8s:
+    name: "{{ gatus_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+
+- name: "Add gatus helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ gatus_helm_repo_name }}"
+    repo_url: "{{ gatus_helm_repo_url }}"
+
+- name: "Install gatus helm package"
+  kubernetes.core.helm:
+    name: "{{ gatus_deployment_name }}"
+    namespace: "{{ gatus_namespace }}"
+    state: "present"
+    chart_ref: "{{ gatus_helm_chart_ref }}"
+    chart_version: "{{ gatus_helm_version }}"
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'gatus_helm_values.yml.j2') | from_yaml }}"
+    wait: "{{ gatus_wait_install }}"

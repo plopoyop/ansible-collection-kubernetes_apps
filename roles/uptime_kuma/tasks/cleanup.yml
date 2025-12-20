@@ -1,0 +1,22 @@
+---
+- name: "Remove Uptime Kuma helm package"
+  kubernetes.core.helm:
+    name: "{{ uptime_kuma_release_name }}"
+    namespace: "{{ uptime_kuma_namespace }}"
+    state: "absent"
+    chart_ref: "{{ uptime_kuma_helm_chart_ref }}"
+    chart_version: "{{ uptime_kuma_helm_version }}"
+    wait: "{{ uptime_kuma_wait_install }}"
+
+- name: "Remove Uptime Kuma helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ uptime_kuma_helm_repo_name }}"
+    repo_url: "{{ uptime_kuma_helm_repo_url }}"
+    state: "absent"
+
+- name: "Remove Uptime Kuma namespace"
+  kubernetes.core.k8s:
+    name: "{{ uptime_kuma_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"

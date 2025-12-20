@@ -1,0 +1,349 @@
+---
+# defaults file for gatus
+# @var gatus_enabled
+# @var gatus_enabled:type: boolean
+# @var gatus_enabled:description: >
+# Should gatus helm chart be installed
+gatus_enabled: true
+
+# @var gatus_namespace
+# @var gatus_enabled:type: string
+# @var gatus_namespace:description: >
+# K8s namespace to install the gatus chart
+gatus_namespace: "gatus"
+
+# @var gatus_helm_version
+# @var gatus_helm_version:type: string
+# @var gatus_helm_version:description: >
+# Helm chart version to install
+gatus_helm_version: "1.4.4"
+
+# @var gatus_deployment_name
+# @var gatus_deployment_name:type: string
+# @var gatus_deployment_name:description: >
+# Helm chart deployment name
+gatus_deployment_name: "gatus"
+
+# @var gatus_wait_install
+# @var gatus_wait_install:type: boolean
+# @var gatus_wait_install:description: >
+# Wait for helm install to finish
+gatus_wait_install: true
+
+# Network configuration
+# @var gatus_host_network
+# @var gatus_host_network:type: boolean
+# @var gatus_host_network:description: >
+# Enable host network mode
+gatus_host_network: false
+
+# Annotations and labels
+# @var gatus_annotations
+# @var gatus_annotations:type: dict
+# @var gatus_annotations:description: >
+# Additional deployment annotations
+
+# @var gatus_labels
+# @var gatus_labels:type: dict
+# @var gatus_labels:description: >
+# Additional deployment labels
+
+# @var gatus_pod_annotations
+# @var gatus_pod_annotations:type: dict
+# @var gatus_pod_annotations:description: >
+# Additional pod annotations
+gatus_pod_annotations: {}
+
+# @var gatus_pod_labels
+# @var gatus_pod_labels:type: dict
+# @var gatus_pod_labels:description: >
+# Additional pod labels
+gatus_pod_labels: {}
+
+# @var gatus_extra_labels
+# @var gatus_extra_labels:type: dict
+# @var gatus_extra_labels:description: >
+# Apply extra labels to common labels
+gatus_extra_labels: {}
+
+# Service account configuration
+# @var gatus_service_account_create
+# @var gatus_service_account_create:type: boolean
+# @var gatus_service_account_create:description: >
+# Create service account
+gatus_service_account_create: true
+
+# @var gatus_service_account_name
+# @var gatus_service_account_name:type: string
+# @var gatus_service_account_name:description: >
+# Service account name (empty uses default)
+
+# @var gatus_service_account_annotations
+# @var gatus_service_account_annotations:type: dict
+# @var gatus_service_account_annotations:description: >
+# Service account annotations
+gatus_service_account_annotations: {}
+
+# @var gatus_service_account_auto_mount
+# @var gatus_service_account_auto_mount:type: boolean
+# @var gatus_service_account_auto_mount:description: >
+# Automatically mount service account API credentials
+gatus_service_account_auto_mount: true
+
+# Ingress configuration
+# @var gatus_ingress_enabled
+# @var gatus_ingress_enabled:type: boolean
+# @var gatus_ingress_enabled:description: >
+# Enable ingress
+gatus_ingress_enabled: false
+
+# @var gatus_ingress_class
+# @var gatus_ingress_class:type: string
+# @var gatus_ingress_class:description: >
+# Ingress class name
+gatus_ingress_class: ""
+
+# @var gatus_domain_name
+# @var gatus_domain_name:type: string
+# @var gatus_domain_name:description: >
+# Domain name for ingress
+gatus_domain_name: ""
+
+# @var gatus_ingress_path
+# @var gatus_ingress_path:type: string
+# @var gatus_ingress_path:description: >
+# Ingress path
+gatus_ingress_path: "/"
+
+# @var gatus_ingress_path_type
+# @var gatus_ingress_path_type:type: string
+# @var gatus_ingress_path_type:description: >
+# Ingress path type
+gatus_ingress_path_type: "Prefix"
+
+# @var gatus_extra_paths
+# @var gatus_extra_paths:type: list
+# @var gatus_extra_paths:description: >
+# Extra paths for gatus ingress
+
+# @var gatus_ingress_annotations
+# @var gatus_ingress_annotations:type: dict
+# @var gatus_ingress_annotations:description: >
+# Additional ingress annotations
+gatus_ingress_annotations: {}
+
+# @var gatus_ingress_tls_enabled
+# @var gatus_ingress_tls_enabled:type: boolean
+# @var gatus_ingress_tls_enabled:description: >
+# Enable TLS for ingress
+gatus_ingress_tls_enabled: false
+
+# @var gatus_tls_certificate_secret_name
+# @var gatus_tls_certificate_secret_name:type: string
+# @var gatus_tls_certificate_secret_name:description: >
+# Secret name for TLS certificate
+gatus_tls_certificate_secret_name: "gatus-certificate"
+
+# @var gatus_ingress_certmanager_cluster_issuer
+# @var gatus_ingress_certmanager_cluster_issuer:type: string
+# @var gatus_ingress_certmanager_cluster_issuer:description: >
+# Certmanager Cluster Issuer name
+gatus_ingress_certmanager_cluster_issuer: ""
+
+# Environment variables
+# @var gatus_env
+# @var gatus_env:type: dict
+# @var gatus_env:description: >
+# Extra environment variables that will be passed onto deployment pods
+gatus_env: {}
+
+# @var gatus_env_from
+# @var gatus_env_from:type: list
+# @var gatus_env_from:description: >
+# Environment variables from secrets or configmaps
+gatus_env_from: []
+
+# Sidecars and volumes
+# @var gatus_sidecar_containers
+# @var gatus_sidecar_containers:type: dict
+# @var gatus_sidecar_containers:description: >
+# Sidecar containers in the pod
+gatus_sidecar_containers: {}
+
+# @var gatus_extra_volume_mounts
+# @var gatus_extra_volume_mounts:type: list
+# @var gatus_extra_volume_mounts:description: >
+# Extra volume mounts
+gatus_extra_volume_mounts: []
+
+# @var gatus_secrets
+# @var gatus_secrets:type: boolean
+# @var gatus_secrets:description: >
+# Include secret's content in pods environment
+gatus_secrets: false
+
+# Resources
+# @var gatus_resources
+# @var gatus_resources:type: dict
+# @var gatus_resources:description: >
+# Resource requests and limits
+gatus_resources: {}
+
+# Init containers
+# @var gatus_extra_init_containers
+# @var gatus_extra_init_containers:type: list
+# @var gatus_extra_init_containers:description: >
+# Additional init containers
+gatus_extra_init_containers: []
+
+# Persistence
+# @var gatus_persistence_enabled
+# @var gatus_persistence_enabled:type: boolean
+# @var gatus_persistence_enabled:description: >
+# Enable persistence using Persistent Volume Claims
+gatus_persistence_enabled: true
+
+# @var gatus_persistence_size
+# @var gatus_persistence_size:type: string
+# @var gatus_persistence_size:description: >
+# Size of persistent volume
+gatus_persistence_size: "200Mi"
+
+# @var gatus_persistence_mount_path
+# @var gatus_persistence_mount_path:type: string
+# @var gatus_persistence_mount_path:description: >
+# Mount path for persistent volume
+gatus_persistence_mount_path: "/data"
+
+# @var gatus_persistence_sub_path
+# @var gatus_persistence_sub_path:type: string
+# @var gatus_persistence_sub_path:description: >
+# Sub path for persistent volume
+gatus_persistence_sub_path: ""
+
+# @var gatus_persistence_access_modes
+# @var gatus_persistence_access_modes:type: list
+# @var gatus_persistence_access_modes:description: >
+# Access modes for persistent volume
+gatus_persistence_access_modes:
+  - ReadWriteOnce
+
+# @var gatus_persistence_finalizers
+# @var gatus_persistence_finalizers:type: list
+# @var gatus_persistence_finalizers:description: >
+# Finalizers for persistent volume
+gatus_persistence_finalizers:
+  - kubernetes.io/pvc-protection
+
+# @var gatus_persistence_annotations
+# @var gatus_persistence_annotations:type: dict
+# @var gatus_persistence_annotations:description: >
+# Annotations for persistent volume
+gatus_persistence_annotations: {}
+
+# @var gatus_persistence_selector_labels
+# @var gatus_persistence_selector_labels:type: dict
+# @var gatus_persistence_selector_labels:description: >
+# Selector labels for persistent volume
+gatus_persistence_selector_labels: {}
+
+# @var gatus_persistence_existing_claim
+# @var gatus_persistence_existing_claim:type: string
+# @var gatus_persistence_existing_claim:description: >
+# Existing claim name for persistent volume
+gatus_persistence_existing_claim: ""
+
+# @var gatus_persistence_storage_class_name
+# @var gatus_persistence_storage_class_name:type: string
+# @var gatus_persistence_storage_class_name:description: >
+# Storage class name for persistent volume
+gatus_persistence_storage_class_name: ""
+
+# ServiceMonitor (Prometheus)
+# @var gatus_service_monitor_enabled
+# @var gatus_service_monitor_enabled:type: boolean
+# @var gatus_service_monitor_enabled:description: >
+# Create ServiceMonitor CRD for prometheus operator
+gatus_service_monitor_enabled: false
+
+# @var gatus_service_monitor_namespace
+# @var gatus_service_monitor_namespace:type: string
+# @var gatus_service_monitor_namespace:description: >
+# Namespace for ServiceMonitor (defaults to chart namespace)
+gatus_service_monitor_namespace: ""
+
+# @var gatus_service_monitor_interval
+# @var gatus_service_monitor_interval:type: string
+# @var gatus_service_monitor_interval:description: >
+# Scrape interval for ServiceMonitor
+gatus_service_monitor_interval: "1m"
+
+# @var gatus_service_monitor_path
+# @var gatus_service_monitor_path:type: string
+# @var gatus_service_monitor_path:description: >
+# Metrics path for ServiceMonitor
+gatus_service_monitor_path: "/metrics"
+
+# @var gatus_service_monitor_scheme
+# @var gatus_service_monitor_scheme:type: string
+# @var gatus_service_monitor_scheme:description: >
+# Scheme for ServiceMonitor
+gatus_service_monitor_scheme: "http"
+
+# @var gatus_service_monitor_tls_config
+# @var gatus_service_monitor_tls_config:type: dict
+# @var gatus_service_monitor_tls_config:description: >
+# TLS config for ServiceMonitor
+gatus_service_monitor_tls_config: {}
+
+# @var gatus_service_monitor_labels
+# @var gatus_service_monitor_labels:type: dict
+# @var gatus_service_monitor_labels:description: >
+# Labels for ServiceMonitor
+gatus_service_monitor_labels: {}
+
+# @var gatus_service_monitor_scrape_timeout
+# @var gatus_service_monitor_scrape_timeout:type: string
+# @var gatus_service_monitor_scrape_timeout:description: >
+# Scrape timeout for ServiceMonitor
+gatus_service_monitor_scrape_timeout: "30s"
+
+# @var gatus_service_monitor_relabelings
+# @var gatus_service_monitor_relabelings:type: list
+# @var gatus_service_monitor_relabelings:description: >
+# Relabelings for ServiceMonitor
+gatus_service_monitor_relabelings: []
+
+# Network policy
+# @var gatus_network_policy_enabled
+# @var gatus_network_policy_enabled:type: boolean
+# @var gatus_network_policy_enabled:description: >
+# Enable network policy
+gatus_network_policy_enabled: false
+
+# @var gatus_network_policy_ingress_selectors
+# @var gatus_network_policy_ingress_selectors:type: list
+# @var gatus_network_policy_ingress_selectors:description: >
+# Ingress selectors for network policy
+gatus_network_policy_ingress_selectors: []
+
+# Gatus configuration
+# @var gatus_config
+# @var gatus_config:type: dict
+# @var gatus_config:description: >
+# Gatus configuration (endpoints, alerts, etc.)
+# @var gatus_config:example: >
+# gatus_config:
+#   endpoints:
+#     - name: example
+#       url: https://example.com
+#       interval: 60s
+#       conditions:
+#         - "[STATUS] == 200"
+gatus_config: {}
+
+# @var gatus_additional_helm_values
+# @var gatus_additional_helm_values:type: dict
+# @var gatus_additional_helm_values:description: >
+# Additional helm values to be passed to the chart
+gatus_additional_helm_values: {}

@@ -1,0 +1,22 @@
+---
+- name: "Uninstall gatus helm package"
+  kubernetes.core.helm:
+    name: "{{ gatus_deployment_name }}"
+    namespace: "{{ gatus_namespace }}"
+    state: "absent"
+    chart_ref: "{{ gatus_helm_chart_ref }}"
+    chart_version: "{{ gatus_helm_version }}"
+    wait: true
+
+- name: "Remove gatus helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ gatus_helm_repo_name }}"
+    repo_url: "{{ gatus_helm_repo_url }}"
+    state: "absent"
+
+- name: "Remove gatus namespace"
+  kubernetes.core.k8s:
+    name: "{{ gatus_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"
