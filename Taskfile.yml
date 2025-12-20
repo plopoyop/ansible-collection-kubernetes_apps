@@ -2,7 +2,7 @@
 version: '3'
 
 vars:
-  ROLES_LIST: ["external_dns", "gatus", "mailcrab", "zammad"]
+  ROLES_LIST: ["gatus", "mailcrab", "zammad"]
 
 tasks:
   default:
