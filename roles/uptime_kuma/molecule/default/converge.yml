@@ -1,9 +1,0 @@
----
-- name: Converge
-  hosts: localhost
-  connection: local
-  gather_facts: false
-  tasks:
-    - name: "Install Uptime Kuma"
-      ansible.builtin.import_role:
-        name: "uptime_kuma"

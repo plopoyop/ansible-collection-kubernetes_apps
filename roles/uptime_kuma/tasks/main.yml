@@ -1,9 +1,0 @@
----
-# tasks file for uptime-kuma
-- name: "Include setup when enabled"
-  ansible.builtin.include_tasks: "setup.yml"
-  when: uptime_kuma_enabled
-
-- name: "Include cleanup when disabled"
-  ansible.builtin.include_tasks: "cleanup.yml"
-  when: not uptime_kuma_enabled
