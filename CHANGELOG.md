@@ -9,6 +9,10 @@
 - Add Gatus role [\#87](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/87) ([plopoyop](https://github.com/plopoyop))
 - Add external dns role [\#86](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/86) ([plopoyop](https://github.com/plopoyop))
 
+## ⚙️ Dependencies
+
+- fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.12.1 → v25.12.2\) [\#89](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/89) ([plopoyop](https://github.com/plopoyop))
+
 **Merged pull requests:**
 
 - remove external dns role [\#88](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/88) ([plopoyop](https://github.com/plopoyop))
