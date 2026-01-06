@@ -47,7 +47,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | Role Name       | Helm Chart Version | README Link                                 |
 | ---------       | ------------------ | ------------------------------------        |
 | Gatus         | v1.4.4            | [View README](roles/gatus/README.md)       |
-| Mailcrab         | v1.6.2            | [View README](roles/mailcrab/README.md)       |
+| Mailcrab         | v1.6.4            | [View README](roles/mailcrab/README.md)       |
 | Zammad         | v15.4.2            | [View README](roles/zammad/README.md)       |
 
 ## Customization
