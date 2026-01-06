@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.0) (2026-01-04)
+## [5.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.0) (2026-01-06)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/4.1.0...5.0.0)
 
@@ -15,6 +15,7 @@
 
 **Merged pull requests:**
 
+- feat\(deps\): update python313packages.ansible \(13.0.0 → 13.1.0\) [\#91](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/91) ([plopoyop](https://github.com/plopoyop))
 - remove external dns role [\#88](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/88) ([plopoyop](https://github.com/plopoyop))
 
 ## [4.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/4.1.0) (2025-12-14)
