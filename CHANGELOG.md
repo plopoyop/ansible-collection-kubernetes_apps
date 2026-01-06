@@ -11,6 +11,7 @@
 
 ## ⚙️ Dependencies
 
+- fix\(deps\): update tweedegolf/mailcrab \(v1.6.2 → v1.6.4\) [\#90](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/90) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.12.1 → v25.12.2\) [\#89](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/89) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
