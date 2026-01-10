@@ -12,6 +12,7 @@
 ## ⚙️ Dependencies
 
 - fix\(ci\): update renovatebot/github-action action \(v44.2.2 → v44.2.3\) [\#93](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/93) ([plopoyop](https://github.com/plopoyop))
+- feat\(helm\): update chart zammad \(15.4.2 → 15.6.0\) [\#92](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/92) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update tweedegolf/mailcrab \(v1.6.2 → v1.6.4\) [\#90](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/90) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.12.1 → v25.12.2\) [\#89](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/89) ([plopoyop](https://github.com/plopoyop))
 
