@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.0) (2026-01-06)
+## [5.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.0) (2026-01-10)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/4.1.0...5.0.0)
 
@@ -11,11 +11,13 @@
 
 ## ⚙️ Dependencies
 
+- fix\(ci\): update renovatebot/github-action action \(v44.2.2 → v44.2.3\) [\#93](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/93) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update tweedegolf/mailcrab \(v1.6.2 → v1.6.4\) [\#90](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/90) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update pre-commit hook ansible/ansible-lint \(v25.12.1 → v25.12.2\) [\#89](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/89) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
 
+- feat\(deps\): update ansible-doctor \(8.0.1 → 8.1.1\) [\#94](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/94) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update python313packages.ansible \(13.0.0 → 13.1.0\) [\#91](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/91) ([plopoyop](https://github.com/plopoyop))
 - remove external dns role [\#88](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/88) ([plopoyop](https://github.com/plopoyop))
 
