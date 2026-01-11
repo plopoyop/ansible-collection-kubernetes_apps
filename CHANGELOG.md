@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.1) (2026-01-11)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.0.0...5.0.1)
+
+**Merged pull requests:**
+
+- feat\(deps\): update git \(2.51.2 → 2.52.0\) [\#95](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/95) ([plopoyop](https://github.com/plopoyop))
+
 ## [5.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.0) (2026-01-10)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/4.1.0...5.0.0)
