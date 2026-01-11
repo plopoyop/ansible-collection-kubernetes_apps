@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.0.0...5.0.1)
 
+## ⚙️ Dependencies
+
+- feat\(deps\)!: Update pre-commit hook ansible/ansible-lint \(v25.12.2 → v26.1.0\) [\#96](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/96) ([plopoyop](https://github.com/plopoyop))
+
 **Merged pull requests:**
 
 - feat\(deps\): update git \(2.51.2 → 2.52.0\) [\#95](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/95) ([plopoyop](https://github.com/plopoyop))
