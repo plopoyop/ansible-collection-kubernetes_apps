@@ -1,15 +1,17 @@
 # Changelog
 
-## [5.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.1) (2026-01-11)
+## [5.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.1) (2026-01-18)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.0.0...5.0.1)
 
 ## ⚙️ Dependencies
 
+- fix\(ci\): update renovatebot/github-action action \(v44.2.3 → v44.2.4\) [\#97](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/97) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\)!: Update pre-commit hook ansible/ansible-lint \(v25.12.2 → v26.1.0\) [\#96](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/96) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
 
+- feat\(deps\): update kubectl \(1.34.3 → 1.35.0\) [\#100](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/100) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update git \(2.51.2 → 2.52.0\) [\#95](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/95) ([plopoyop](https://github.com/plopoyop))
 
 ## [5.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.0) (2026-01-10)
