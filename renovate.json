@@ -35,6 +35,9 @@
       "registryUrls": [
         "https://twin.github.io/helm-charts"
       ]
+    },
+    {
+
     }
   ],
   "customManagers": [
@@ -95,10 +98,10 @@
         "/roles/gatus/README.md$/"
       ],
       "matchStrings": [
-        "gatus_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+        "gatus_helm_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
       ],
       "depNameTemplate": "gatus",
-      "autoReplaceStringTemplate": "gatus_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "autoReplaceStringTemplate": "gatus_helm_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
       "datasourceTemplate": "helm"
     },
     {
