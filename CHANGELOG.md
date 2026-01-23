@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.0.0...5.0.1)
 
+## 🐛 Bug Fixes
+
+- fix gatus version variable name in renovate config [\#105](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/105) ([plopoyop](https://github.com/plopoyop))
+
 ## ⚙️ Dependencies
 
 - fix\(ci\): update renovatebot/github-action action \(v44.2.4 → v44.2.5\) [\#102](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/102) ([plopoyop](https://github.com/plopoyop))
