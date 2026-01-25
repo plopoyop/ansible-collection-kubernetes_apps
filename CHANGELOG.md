@@ -13,6 +13,7 @@
 
 - feat\(deps\): update pre-commit hook adrienverge/yamllint \(v1.37.1 → v1.38.0\) [\#106](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/106) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v44.2.4 → v44.2.5\) [\#102](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/102) ([plopoyop](https://github.com/plopoyop))
+- fix\(helm\): update chart zammad \(15.6.0 → 15.6.1\) [\#99](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/99) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update pre-commit hook ansible/ansible-lint \(v26.1.0 → v26.1.1\) [\#98](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/98) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v44.2.3 → v44.2.4\) [\#97](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/97) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\)!: Update pre-commit hook ansible/ansible-lint \(v25.12.2 → v26.1.0\) [\#96](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/96) ([plopoyop](https://github.com/plopoyop))
