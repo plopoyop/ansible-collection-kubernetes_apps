@@ -7,6 +7,7 @@
 ## 🐛 Bug Fixes
 
 - fix gatus version variable name in renovate config [\#105](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/105) ([plopoyop](https://github.com/plopoyop))
+- pin urllib version to 2.5 [\#101](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/101) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
