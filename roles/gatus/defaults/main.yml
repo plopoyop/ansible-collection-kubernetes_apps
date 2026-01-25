@@ -16,7 +16,7 @@ gatus_namespace: "gatus"
 # @var gatus_helm_version:type: string
 # @var gatus_helm_version:description: >
 # Helm chart version to install
-gatus_helm_version: "1.4.4"
+gatus_helm_version: "1.4.5"
 
 # @var gatus_deployment_name
 # @var gatus_deployment_name:type: string
