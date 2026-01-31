@@ -253,7 +253,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-gatus_helm_version: 1.4.4
+gatus_helm_version: 1.4.5
 ```
 
 ### gatus_host_network
