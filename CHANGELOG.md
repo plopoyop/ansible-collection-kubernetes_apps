@@ -6,6 +6,7 @@
 
 ## ⚙️ Dependencies
 
+- feat\(ci\)!: Update renovatebot/github-action action \(v44.2.6 → v46.0.0\) [\#109](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/109) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v44.2.5 → v44.2.6\) [\#107](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/107) ([plopoyop](https://github.com/plopoyop))
 
 ## [5.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.1) (2026-01-25)
