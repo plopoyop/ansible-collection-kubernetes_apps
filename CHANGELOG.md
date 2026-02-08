@@ -6,6 +6,7 @@
 
 ## ⚙️ Dependencies
 
+- fix\(helm\): update chart zammad \(15.6.1 → 15.6.2\) [\#111](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/111) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.0.0 → v46.0.1\) [\#110](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/110) ([plopoyop](https://github.com/plopoyop))
 - feat\(ci\)!: Update renovatebot/github-action action \(v44.2.6 → v46.0.0\) [\#109](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/109) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart gatus \(1.4.4 → 1.4.5\) [\#108](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/108) ([plopoyop](https://github.com/plopoyop))
