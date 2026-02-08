@@ -1,11 +1,12 @@
 # Changelog
 
-## [5.0.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.2) (2026-02-01)
+## [5.0.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.2) (2026-02-08)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.0.1...5.0.2)
 
 ## ⚙️ Dependencies
 
+- fix\(ci\): update renovatebot/github-action action \(v46.0.0 → v46.0.1\) [\#110](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/110) ([plopoyop](https://github.com/plopoyop))
 - feat\(ci\)!: Update renovatebot/github-action action \(v44.2.6 → v46.0.0\) [\#109](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/109) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart gatus \(1.4.4 → 1.4.5\) [\#108](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/108) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v44.2.5 → v44.2.6\) [\#107](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/107) ([plopoyop](https://github.com/plopoyop))
