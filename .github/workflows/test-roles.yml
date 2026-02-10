@@ -31,6 +31,10 @@ jobs:
     uses: ./.github/workflows/test-role.yaml
     with:
       role_name: "mailcrab"
+  mongodb_instance:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "mongodb_instance"
   zammad:
     uses: ./.github/workflows/test-role.yaml
     with:

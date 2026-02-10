@@ -2,7 +2,7 @@
 version: '3'
 
 vars:
-  ROLES_LIST: ["gatus", "mailcrab", "zammad"]
+  ROLES_LIST: ["gatus", "mailcrab", "mongodb_instance", "zammad"]
 
 tasks:
   default:
