@@ -137,8 +137,8 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/roles/mongodb-instance/defaults/main.yml$/",
-        "/roles/mongodb-instance/README.md$/"
+        "/roles/mongodb-operator/defaults/main.yml$/",
+        "/roles/mongodb-operator/README.md$/"
       ],
       "matchStrings": [
         "mongodb_operator_helm_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"

@@ -35,6 +35,10 @@ jobs:
     uses: ./.github/workflows/test-role.yaml
     with:
       role_name: "mongodb_instance"
+  mongodb_operator:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "mongodb_operator"
   zammad:
     uses: ./.github/workflows/test-role.yaml
     with:
