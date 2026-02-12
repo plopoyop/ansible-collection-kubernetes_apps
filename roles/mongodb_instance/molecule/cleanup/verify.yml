@@ -12,7 +12,7 @@
     - name: "Check if 'mongodb' namespace exists."
       kubernetes.core.k8s_info:
         kind: Namespace
-        name: "mongodb"
+        name: "mongodb-instance"
       register: namespace_mongodb
       failed_when: false
       changed_when: false

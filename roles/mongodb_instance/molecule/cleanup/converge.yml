@@ -5,6 +5,7 @@
   gather_facts: false
   vars:
     mongodb_instance_enabled: false
+    mongodb_instance_namespace: "mongodb-instance"
   tasks:
     - name: "Install mongodb operator"
       ansible.builtin.import_role:

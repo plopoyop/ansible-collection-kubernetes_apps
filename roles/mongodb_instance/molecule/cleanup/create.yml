@@ -22,3 +22,4 @@
       vars:
         mongodb_instance_admin_password: "password"
         mongodb_instance_members: 1
+        mongodb_instance_namespace: "mongodb-instance"
