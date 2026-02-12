@@ -1,8 +1,12 @@
 # Changelog
 
-## [5.0.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.0.2) (2026-02-08)
+## [5.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.1.0) (2026-02-12)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.0.1...5.0.2)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.0.1...5.1.0)
+
+## 🚀 New Features
+
+- Add mongodb-instance role [\#112](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/112) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
