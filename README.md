@@ -48,6 +48,8 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | ---------       | ------------------ | ------------------------------------        |
 | Gatus         | v1.4.5            | [View README](roles/gatus/README.md)       |
 | Mailcrab         | v1.6.4            | [View README](roles/mailcrab/README.md)       |
+| MongoDb for Kubernetes | v1.6.1            | [View README](roles/mongodb_instance/README.md) |
+| MongoDb Instance | v0.2.3            | [View README](roles/mongodb_instance/README.md) |
 | Zammad         | v15.6.2            | [View README](roles/zammad/README.md)       |
 
 ## Customization
