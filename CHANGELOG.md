@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.1.1) (2026-02-15)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.1.0...5.1.1)
+
+## ⚙️ Dependencies
+
+- fix\(ci\): update renovatebot/github-action action \(v46.0.1 → v46.0.2\) [\#113](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/113) ([plopoyop](https://github.com/plopoyop))
+
+**Merged pull requests:**
+
+- feat\(deps\): update go-task \(3.45.5 → 3.48.0\) [\#114](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/114) ([plopoyop](https://github.com/plopoyop))
+
 ## [5.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.1.0) (2026-02-12)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.0.1...5.1.0)
