@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.1.0...5.2.0)
 
+## 🐛 Bug Fixes
+
+- fix mongodb operator role path in renovate [\#120](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/120) ([plopoyop](https://github.com/plopoyop))
+
 ## ⚙️ Dependencies
 
 - feat\(ci\)!: Update artis3n/ansible\_galaxy\_collection action \(v2 → v3\) [\#119](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/119) ([plopoyop](https://github.com/plopoyop))
