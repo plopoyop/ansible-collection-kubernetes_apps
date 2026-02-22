@@ -6,6 +6,7 @@
 
 ## ⚙️ Dependencies
 
+- feat\(ci\)!: Update artis3n/ansible\_galaxy\_collection action \(v2 → v3\) [\#119](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/119) ([plopoyop](https://github.com/plopoyop))
 - feat\(ci\): update renovatebot/github-action action \(v46.0.2 → v46.1.1\) [\#115](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/115) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.0.1 → v46.0.2\) [\#113](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/113) ([plopoyop](https://github.com/plopoyop))
 
