@@ -8,6 +8,14 @@
 
 - Add Atlantis role [\#121](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/121) ([plopoyop](https://github.com/plopoyop))
 
+## ⚙️ Dependencies
+
+- fix\(ci\): update renovatebot/github-action action \(v46.1.1 → v46.1.2\) [\#122](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/122) ([plopoyop](https://github.com/plopoyop))
+
+**Merged pull requests:**
+
+- feat\(deps\): update git \(2.52.0 → 2.53.0\) [\#123](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/123) ([plopoyop](https://github.com/plopoyop))
+
 ## [5.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.2.0) (2026-02-22)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.1.0...5.2.0)
