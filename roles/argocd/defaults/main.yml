@@ -15,7 +15,7 @@ argocd_namespace: "argocd"
 # @var argocd_helm_chart_version:type: string
 # @var argocd_helm_chart_version:description: >
 # Helm chart version to install
-argocd_helm_chart_version: "9.4.0"
+argocd_helm_chart_version: 9.4.5
 
 # @var argocd_deployment_name
 # @var argocd_deployment_name:type: string
