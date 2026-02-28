@@ -6,6 +6,7 @@
 
 ## 🚀 New Features
 
+- Add role Argo CD [\#124](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/124) ([plopoyop](https://github.com/plopoyop))
 - Add Atlantis role [\#121](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/121) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
