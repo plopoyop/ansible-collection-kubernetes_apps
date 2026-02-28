@@ -1,0 +1,68 @@
+---
+- name: "Create ArgoCD namespace"
+  kubernetes.core.k8s:
+    name: "{{ argocd_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+
+- name: "Add ArgoCD helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ argocd_helm_repo_name }}"
+    repo_url: "{{ argocd_helm_repo_url }}"
+
+- name: "Install ArgoCD helm package"
+  kubernetes.core.helm:
+    name: "{{ argocd_deployment_name }}"
+    namespace: "{{ argocd_namespace }}"
+    chart_ref: "{{ argocd_helm_chart_ref }}"
+    chart_version: "{{ argocd_helm_chart_version }}"
+    create_namespace: true
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'argocd_helm_values.yml.j2') | from_yaml }}"
+    wait: true
+
+- name: "Create ArgoCD clusters"
+  kubernetes.core.k8s:
+    namespace: "{{ argocd_namespace }}"
+    template: "resources/cluster.yml.j2"
+    state: "{{ argocd_cluster.state | default('present') }}"
+  loop: "{{ argocd_clusters }}"
+  loop_control:
+    loop_var: argocd_cluster
+
+- name: "Create ArgoCD repositories"
+  kubernetes.core.k8s:
+    namespace: "{{ argocd_namespace }}"
+    template: "resources/repository.yml.j2"
+    state: "{{ argocd_repository.state | default('present') }}"
+  loop: "{{ argocd_repositories }}"
+  loop_control:
+    loop_var: argocd_repository
+
+- name: "Create ArgoCD projects"
+  kubernetes.core.k8s:
+    namespace: "{{ argocd_namespace }}"
+    template: "resources/project.yml.j2"
+    state: "{{ argocd_project.state | default('present') }}"
+  loop: "{{ argocd_projects }}"
+  loop_control:
+    loop_var: argocd_project
+
+- name: "Create ArgoCD applications"
+  kubernetes.core.k8s:
+    namespace: "{{ argocd_namespace }}"
+    template: "resources/application.yml.j2"
+    state: "{{ argocd_application.state | default('present') }}"
+  loop: "{{ argocd_applications }}"
+  loop_control:
+    loop_var: argocd_application
+
+- name: "Create ArgoCD application sets"
+  kubernetes.core.k8s:
+    namespace: "{{ argocd_namespace }}"
+    template: "resources/application_set.yml.j2"
+    state: "{{ argocd_application_set.state | default('present') }}"
+  loop: "{{ argocd_application_sets }}"
+  loop_control:
+    loop_var: argocd_application_set

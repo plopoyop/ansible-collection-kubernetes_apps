@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    argocd_enabled: false
+  tasks:
+    - name: "Remove ArgoCD"
+      ansible.builtin.import_role:
+        name: "argocd"

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "{{ argocd_cluster.name }}-cluster-secret"
+  labels:
+    argocd.argoproj.io/secret-type: cluster
+type: Opaque
+stringData:
+  name: "{{ argocd_cluster.name }}"
+  server: "{{ argocd_cluster.server }}"
+  config: |
+    {{ argocd_cluster.config | ansible.builtin.to_json }}

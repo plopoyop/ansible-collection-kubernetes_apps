@@ -1,0 +1,13 @@
+---
+- name: "Uninstall ArgoCD helm package"
+  kubernetes.core.helm:
+    name: "{{ argocd_deployment_name }}"
+    namespace: "{{ argocd_namespace }}"
+    state: "absent"
+
+- name: "Delete ArgoCD namespace"
+  kubernetes.core.k8s:
+    name: "{{ argocd_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"
