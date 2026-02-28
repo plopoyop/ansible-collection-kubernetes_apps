@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.3.0) (2026-02-28)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.2.0...5.3.0)
+
+## 🚀 New Features
+
+- Add Atlantis role [\#121](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/121) ([plopoyop](https://github.com/plopoyop))
+
 ## [5.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.2.0) (2026-02-22)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.1.0...5.2.0)
