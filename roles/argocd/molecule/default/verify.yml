@@ -1,0 +1,150 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Pause for deployment to complete."
+      ansible.builtin.pause:
+        seconds: 120
+
+    - name: "Get 'argocd' namespace info."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "argocd"
+      register: namespace_argocd
+
+    - name: Assert that 'argocd' namespace is active
+      ansible.builtin.assert:
+        that: namespace_argocd['resources'][0]['status']['phase'] == "Active"
+
+    - name: "Get 'argocd-server' Deployment info."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "argocd-server"
+        namespace: "argocd"
+      register: argocd_server_deployment
+
+    - name: "Assert that 'argocd-server' Deployment has ready replicas"
+      ansible.builtin.assert:
+        that: argocd_server_deployment['resources'][0]['status']['readyReplicas'] | default(0) >= 1
+
+    - name: "Get 'argocd-application-controller' StatefulSet info."
+      kubernetes.core.k8s_info:
+        kind: "StatefulSet"
+        name: "argocd-application-controller"
+        namespace: "argocd"
+      register: argocd_controller_statefulset
+
+    - name: "Assert that 'argocd-application-controller' StatefulSet has ready replicas"
+      ansible.builtin.assert:
+        that: argocd_controller_statefulset['resources'][0]['status']['readyReplicas'] | default(0) >= 1
+
+    - name: "Get 'molecule' cluster secret."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "molecule-cluster-secret"
+        namespace: "argocd"
+      register: cluster_secret
+
+    - name: "Assert that 'molecule' cluster secret exists"
+      ansible.builtin.assert:
+        that: cluster_secret['resources'] | length > 0
+
+    - name: "Assert that 'molecule' cluster secret has correct labels"
+      ansible.builtin.assert:
+        that: cluster_secret['resources'][0]['metadata']['labels']['argocd.argoproj.io/secret-type'] == "cluster"
+
+    - name: "Get 'mailcrab' AppProject."
+      kubernetes.core.k8s_info:
+        api_version: "argoproj.io/v1alpha1"
+        kind: "AppProject"
+        name: "mailcrab"
+        namespace: "argocd"
+      register: mailcrab_project
+
+    - name: "Assert that 'mailcrab' AppProject exists"
+      ansible.builtin.assert:
+        that: mailcrab_project['resources'] | length > 0
+
+    - name: "Assert that 'mailcrab' AppProject has correct description"
+      ansible.builtin.assert:
+        that: mailcrab_project['resources'][0]['spec']['description'] == "Mailcrab test project"
+
+    - name: "Get 'mailcrab' repository secret."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "mailcrab-repository-secret"
+        namespace: "argocd"
+      register: repository_secret
+
+    - name: "Assert that 'mailcrab' repository secret exists"
+      ansible.builtin.assert:
+        that: repository_secret['resources'] | length > 0
+
+    - name: "Assert that 'mailcrab' repository secret has correct labels"
+      ansible.builtin.assert:
+        that: repository_secret['resources'][0]['metadata']['labels']['argocd.argoproj.io/secret-type'] == "repository"
+
+    - name: "Get 'mailcrab' Application."
+      kubernetes.core.k8s_info:
+        api_version: "argoproj.io/v1alpha1"
+        kind: "Application"
+        name: "mailcrab"
+        namespace: "argocd"
+      register: mailcrab_application
+
+    - name: "Assert that 'mailcrab' Application exists"
+      ansible.builtin.assert:
+        that: mailcrab_application['resources'] | length > 0
+
+    - name: "Assert that 'mailcrab' Application targets project 'mailcrab'"
+      ansible.builtin.assert:
+        that: mailcrab_application['resources'][0]['spec']['project'] == "mailcrab"
+
+    - name: "Assert that 'mailcrab' Application targets cluster 'molecule'"
+      ansible.builtin.assert:
+        that: mailcrab_application['resources'][0]['spec']['destination']['name'] == "molecule"
+
+    - name: "Assert that 'mailcrab' Application targets namespace 'mailcrab'"
+      ansible.builtin.assert:
+        that: mailcrab_application['resources'][0]['spec']['destination']['namespace'] == "mailcrab"
+
+    - name: "Wait for ArgoCD to sync 'mailcrab' Application"
+      kubernetes.core.k8s_info:
+        api_version: "argoproj.io/v1alpha1"
+        kind: "Application"
+        name: "mailcrab"
+        namespace: "argocd"
+      register: mailcrab_app_sync
+      until: >-
+        mailcrab_app_sync['resources'] | length > 0 and
+        mailcrab_app_sync['resources'][0]['status']['sync']['status'] | default('') == "Synced"
+      retries: 60
+      delay: 10
+
+    - name: "Get 'mailcrab' namespace info."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "mailcrab"
+      register: namespace_mailcrab
+
+    - name: "Assert that 'mailcrab' namespace is active"
+      ansible.builtin.assert:
+        that: namespace_mailcrab['resources'][0]['status']['phase'] == "Active"
+
+    - name: "Wait for 'mailcrab' Deployment to be ready"
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        namespace: "mailcrab"
+      register: mailcrab_deployments
+      until: >-
+        mailcrab_deployments['resources'] | length > 0 and
+        (mailcrab_deployments['resources'] | selectattr('status.readyReplicas', 'defined') | list | length) > 0
+      retries: 30
+      delay: 10
+
+    - name: "Assert that mailcrab has at least one ready Deployment"
+      ansible.builtin.assert:
+        that: (mailcrab_deployments['resources'] | selectattr('status.readyReplicas', 'defined') | list | length) > 0

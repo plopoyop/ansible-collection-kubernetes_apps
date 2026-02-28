@@ -67,6 +67,17 @@
       "registryUrls": [
         "https://runatlantis.github.io/helm-charts"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "argo-cd"
+      ],
+      "registryUrls": [
+        "https://argoproj.github.io/argo-helm"
+      ]
     }
   ],
   "customManagers": [
@@ -218,6 +229,31 @@
       ],
       "depNameTemplate": "atlantis",
       "autoReplaceStringTemplate": "Atlantis | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/argocd/defaults/main.yml$/",
+        "/roles/argocd/README.md$/"
+      ],
+      "matchStrings": [
+        "argocd_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "argo-cd",
+      "autoReplaceStringTemplate": "argocd_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "Argo CD\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "argo-cd",
+      "autoReplaceStringTemplate": "Argo CD | v{{newValue}}",
       "datasourceTemplate": "helm"
     }
   ]

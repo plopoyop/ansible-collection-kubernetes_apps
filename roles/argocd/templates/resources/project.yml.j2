@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: "{{ argocd_project.name }}"
+{% if argocd_project.finalizers is defined %}
+  finalizers: {{ argocd_project.finalizers | ansible.builtin.to_yaml }}
+{% endif %}
+spec:
+  description: "{{ argocd_project.description }}"
+{% if argocd_project.parameters is defined %}
+{% for key, value in argocd_project.parameters.items() %}
+  {{ key }}: {{ value }}
+{% endfor %}
+{% endif %}

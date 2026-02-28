@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "{{ argocd_application.name }}"
+{% if argocd_application.finalizers is defined %}
+  finalizers:
+    {{ argocd_application.finalizers | ansible.builtin.to_nice_yaml(indent=2) | indent(4) }}
+{% endif %}
+{% if argocd_application.labels is defined %}
+  labels: {{ argocd_application.labels | ansible.builtin.to_yaml }}
+{% endif %}
+spec:
+  project: {{ argocd_application.project }}
+
+  sources:
+    {{ argocd_application.sources | ansible.builtin.to_nice_yaml(indent=2) | indent(4) }}
+  destination:
+    {{ argocd_application.destination | ansible.builtin.to_nice_yaml(indent=2) | indent(4) }}
+
+{% if argocd_application.additional_config is defined %}
+  {{ argocd_application.additional_config | ansible.builtin.to_nice_yaml(indent=2) | indent(2) }}
+{% endif %}

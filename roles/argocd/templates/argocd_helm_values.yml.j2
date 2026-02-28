@@ -1,0 +1,55 @@
+global:
+  domain: {{ argocd_server_ingress_hostname }}
+
+configs:
+  cm:
+    helm.valuesFileSchemes: >-
+      secrets+gpg-import, secrets+gpg-import-kubernetes,
+      secrets+age-import, secrets+age-import-kubernetes,
+      secrets, secrets+literal,
+      https
+  params:
+    server.insecure: true
+
+server:
+  resources: {{ argocd_server_resources }}
+  replicas: {{ argocd_server_replicas }}
+  ingress:
+    enabled: {{ argocd_server_ingress_enabled }}
+{% if argocd_server_ingress_enabled %}
+    ingressClassName: "{{ argocd_server_ingress_class_name }}"
+{% if argocd_server_ingress_annotations is defined %}
+    annotations: {{ argocd_server_ingress_annotations }}
+{% endif %}
+{% if argocd_server_ingress_labels is defined %}
+    labels: {{ argocd_server_ingress_labels }}
+{% endif %}
+{% if argocd_server_ingress_hostname is defined %}
+    hostname: "{{ argocd_server_ingress_hostname }}"
+{% endif %}
+    tls: {{ argocd_server_ingress_tls_enabled }}
+{% endif %}
+
+controller:
+  replicas: {{ argocd_controller_replicas }}
+{% if argocd_application_controller_resources is defined %}
+  resources: {{ argocd_application_controller_resources }}
+{% endif %}
+
+repoServer:
+  replicas: {{ argocd_repo_server_replicas }}
+{% if argocd_repo_server_resources %}
+  resources: {{ argocd_repo_server_resources }}
+{% endif %}
+{% if argocd_repo_server_additional_config is defined %}
+{{ argocd_repo_server_additional_config | ansible.builtin.to_nice_yaml() | indent(width=2, first=true) }}
+{% endif %}
+
+{% if argocd_redis_resources is defined %}
+redis:
+  resources: {{ argocd_redis_resources }}
+{% endif %}
+
+{% if argocd_additional_config %}
+{{ argocd_additional_config | ansible.builtin.to_nice_yaml  | indent(0) }}
+{% endif %}

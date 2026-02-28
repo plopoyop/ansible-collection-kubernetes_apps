@@ -1,0 +1,56 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    argocd_server_ingress_hostname: "argocd.local"
+
+    argocd_clusters:
+      - name: "molecule"
+        server: "https://kubernetes.default.svc"
+        config:
+          tlsClientConfig:
+            insecure: true
+
+    argocd_projects:
+      - name: "mailcrab"
+        description: "Mailcrab test project"
+        parameters:
+          sourceRepos:
+            - '*'
+          destinations:
+            - namespace: '*'
+              server: '*'
+          clusterResourceWhitelist:
+            - group: '*'
+              kind: '*'
+
+    argocd_repositories:
+      - name: "mailcrab"
+        type: "git"
+        parameters:
+          url: "https://github.com/tweedegolf/mailcrab"
+
+    argocd_applications:
+      - name: "mailcrab"
+        project: "mailcrab"
+        sources:
+          - repoURL: "https://github.com/tweedegolf/mailcrab"
+            path: "charts/mailcrab"
+            targetRevision: "main"
+        destination:
+          name: "molecule"
+          namespace: "mailcrab"
+        additional_config:
+          syncPolicy:
+            automated:
+              prune: true
+              selfHeal: true
+            syncOptions:
+              - CreateNamespace=true
+
+  tasks:
+    - name: "Install ArgoCD with resources"
+      ansible.builtin.import_role:
+        name: "argocd"
