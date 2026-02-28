@@ -1,0 +1,156 @@
+replicaCount: {{ atlantis_replica_count }}
+
+{% if atlantis_org_allowlist is defined and atlantis_org_allowlist != "" %}
+orgAllowlist: "{{ atlantis_org_allowlist }}"
+{% endif %}
+
+{% if atlantis_url is defined and atlantis_url != "" %}
+atlantisUrl: "{{ atlantis_url }}"
+{% endif %}
+
+{% if atlantis_log_level != "info" %}
+logLevel: "{{ atlantis_log_level }}"
+{% endif %}
+
+{% if atlantis_github_enabled == true %}
+github:
+  user: "{{ atlantis_github_user }}"
+  token: "{{ atlantis_github_token }}"
+  secret: "{{ atlantis_github_secret }}"
+{% endif %}
+
+{% if atlantis_github_app_enabled %}
+githubApp:
+  id: "{{ atlantis_github_app_id }}"
+  installationId: "{{ atlantis_github_app_installation_id }}"
+  slug: "{{ atlantis_github_app_slug }}"
+  key: |
+    {{ atlantis_github_app_key | indent(4) }}
+  secret: "{{ atlantis_github_app_secret }}"
+{% endif %}
+
+{% if atlantis_gitlab_enabled %}
+gitlab:
+  user: "{{ atlantis_gitlab_user }}"
+  token: "{{ atlantis_gitlab_token }}"
+  secret: "{{ atlantis_gitlab_secret }}"
+{% if atlantis_gitlab_hostname != "" %}
+  hostname: "{{ atlantis_gitlab_hostname }}"
+{% endif %}
+{% endif %}
+
+{% if atlantis_gitea_enabled %}
+gitea:
+  user: "{{ atlantis_gitea_user }}"
+  token: "{{ atlantis_gitea_token }}"
+  secret: "{{ atlantis_gitea_secret }}"
+{% if atlantis_gitea_base_url != "" %}
+  baseUrl: "{{ atlantis_gitea_base_url }}"
+{% endif %}
+{% endif %}
+
+{% if atlantis_bitbucket_enabled %}
+bitbucket:
+  user: "{{ atlantis_bitbucket_user }}"
+  token: "{{ atlantis_bitbucket_token }}"
+{% endif %}
+
+{% if atlantis_vcs_secret_name != "" %}
+vcsSecretName: "{{ atlantis_vcs_secret_name }}"
+{% endif %}
+
+allowForkPRs: {{ atlantis_allow_fork_prs | lower }}
+allowDraftPRs: {{ atlantis_allow_draft_prs | lower }}
+disableApply: {{ atlantis_disable_apply | lower }}
+disableApplyAll: {{ atlantis_disable_apply_all | lower }}
+disableRepoLocking: {{ atlantis_disable_repo_locking | lower }}
+hidePrevPlanComments: {{ atlantis_hide_prev_plan_comments | lower }}
+enableDiffMarkdownFormat: {{ atlantis_enable_diff_markdown_format | lower }}
+
+{% if atlantis_default_tf_version != "" %}
+defaultTFVersion: "{{ atlantis_default_tf_version }}"
+{% endif %}
+
+{% if atlantis_default_tf_distribution != "" %}
+defaultTFDistribution: "{{ atlantis_default_tf_distribution }}"
+{% endif %}
+
+
+service:
+  type: "{{ atlantis_service_type }}"
+  port: {{ atlantis_service_port }}
+  targetPort: {{ atlantis_service_target_port }}
+
+ingress:
+  enabled: {{ atlantis_ingress_enabled | lower }}
+{% if atlantis_ingress_enabled %}
+{% if atlantis_ingress_class != "" %}
+  ingressClassName: "{{ atlantis_ingress_class }}"
+{% endif %}
+  path: "{{ atlantis_ingress_path }}"
+  pathType: "{{ atlantis_ingress_path_type }}"
+  host: "{{ atlantis_ingress_host }}"
+  annotations:
+{% if atlantis_ingress_annotations is defined and atlantis_ingress_annotations != "" %}
+    {{ atlantis_ingress_annotations | ansible.builtin.to_nice_yaml | indent(4) }}
+{% endif %}
+{% if atlantis_ingress_certmanager_cluster_issuer != "" %}
+    cert-manager.io/cluster-issuer: "{{ atlantis_ingress_certmanager_cluster_issuer }}"
+{% endif %}
+{% if atlantis_ingress_tls_enabled %}
+  tls:
+    - secretName: "{{ atlantis_ingress_tls_secret_name }}"
+      hosts:
+        - "{{ atlantis_ingress_host }}"
+{% endif %}
+{% endif %}
+
+volumeClaim:
+  enabled: {{ atlantis_volume_claim_enabled | lower }}
+  dataStorage: "{{ atlantis_data_storage }}"
+atlantisDataDirectory: "{{ atlantis_data_directory }}"
+
+resources: {{ atlantis_resources }}
+
+{% if atlantis_environment != {} %}
+environment:
+{{ atlantis_environment | ansible.builtin.to_nice_yaml | ansible.builtin.indent(width=2, first=true) }}
+{% endif %}
+
+{% if atlantis_environment_secrets != [] %}
+environmentSecrets:
+{{ atlantis_environment_secrets | ansible.builtin.to_nice_yaml | ansible.builtin.indent(width=2, first=true) }}
+{% endif %}
+
+{% if atlantis_extra_args != [] %}
+extraArgs:
+{{ atlantis_extra_args | ansible.builtin.to_nice_yaml | ansible.builtin.indent(width=2, first=true) }}
+{% endif %}
+
+{% if atlantis_extra_volumes != [] %}
+extraVolumes:
+{{ atlantis_extra_volumes | ansible.builtin.to_nice_yaml | ansible.builtin.indent(width=2, first=true) }}
+{% endif %}
+
+{% if atlantis_extra_volume_mounts != [] %}
+extraVolumeMounts:
+{{ atlantis_extra_volume_mounts | ansible.builtin.to_nice_yaml | ansible.builtin.indent(width=2, first=true) }}
+{% endif %}
+
+{% if atlantis_extra_manifests != [] %}
+extraManifests:
+{{ atlantis_extra_manifests | ansible.builtin.to_nice_yaml | ansible.builtin.indent(width=2, first=true) }}
+{% endif %}
+
+{% if atlantis_init_containers | length > 0 %}
+initContainers: {{ atlantis_init_containers | ansible.builtin.to_json }}
+{% endif %}
+
+{% if atlantis_repo_config is defined and atlantis_repo_config | length > 0 %}
+repoConfig: |
+{{ atlantis_repo_config | indent(2, first=true) }}
+{% endif %}
+
+{% if atlantis_additional_helm_values %}
+{{ atlantis_additional_helm_values | to_nice_yaml | indent(0) }}
+{% endif %}

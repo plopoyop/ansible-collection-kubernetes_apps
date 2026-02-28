@@ -1,0 +1,26 @@
+---
+- name: Create
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    atlantis_org_allowlist: "localhost/*"
+    atlantis_ingress_enabled: false
+    atlantis_gitea_enabled: true
+    atlantis_gitea_user: "molecule-test"
+    atlantis_gitea_secret: "molecule-secret"
+    atlantis_gitea_token: "molecule-token"
+    atlantis_gitea_base_url: "https://localhost"
+    atlantis_wait_install: false
+  tasks:
+    - name: Build a kind cluster (wait for control plane).
+      ansible.builtin.command: >-
+        kind create cluster
+        --wait 300s
+        --name molecule-test
+        --kubeconfig {{ kubeconfig }}
+      changed_when: true
+
+    - name: "Install Atlantis first"
+      ansible.builtin.import_role:
+        name: "atlantis"

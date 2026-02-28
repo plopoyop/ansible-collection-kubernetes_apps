@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  description: "Install and configure Atlantis on kubernetes"
+  role_name: "atlantis"
+  author: "Clément Hubert"
+
+  license: "MLP2"
+
+  min_ansible_version: "2.1"
+
+  galaxy_tags:
+    - "kubernetes"
+    - "atlantis"
+    - "terraform"
+    - "gitops"
+
+dependencies: []

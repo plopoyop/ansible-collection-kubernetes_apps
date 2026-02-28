@@ -1,0 +1,5 @@
+---
+# vars file for atlantis
+atlantis_helm_repo_name: "runatlantis"
+atlantis_helm_chart_ref: "{{ atlantis_helm_repo_name }}/atlantis"
+atlantis_helm_repo_url: "https://runatlantis.github.io/helm-charts"

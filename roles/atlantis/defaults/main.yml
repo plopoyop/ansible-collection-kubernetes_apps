@@ -1,0 +1,457 @@
+---
+# defaults file for atlantis
+# @var atlantis_enabled
+# @var atlantis_enabled:type: boolean
+# @var atlantis_enabled:description: >
+# Should atlantis helm chart be installed
+atlantis_enabled: true
+
+# @var atlantis_namespace
+# @var atlantis_namespace:type: string
+# @var atlantis_namespace:description: >
+# K8s namespace to install the atlantis chart
+atlantis_namespace: "atlantis"
+
+# @var atlantis_helm_version
+# @var atlantis_helm_version:type: string
+# @var atlantis_helm_version:description: >
+# Helm chart version to install
+atlantis_helm_version: 5.28.0
+
+# @var atlantis_deployment_name
+# @var atlantis_deployment_name:type: string
+# @var atlantis_deployment_name:description: >
+# Helm chart deployment name
+atlantis_deployment_name: "atlantis"
+
+# @var atlantis_wait_install
+# @var atlantis_wait_install:type: boolean
+# @var atlantis_wait_install:description: >
+# Wait for helm install to finish
+atlantis_wait_install: true
+
+
+# VCS Provider: GitHub
+# @var atlantis_github_enabled
+# @var atlantis_github_enabled:type: boolean
+# @var atlantis_github_enabled:description: >
+# Enable GitHub as VCS provider
+atlantis_github_enabled: false
+
+# @var atlantis_github_user
+# @var atlantis_github_user:type: string
+# @var atlantis_github_user:description: >
+# GitHub username for Atlantis
+atlantis_github_user: ""
+
+# @var atlantis_github_token
+# @var atlantis_github_token:type: string
+# @var atlantis_github_token:description: >
+# GitHub token for Atlantis
+atlantis_github_token: ""
+
+# @var atlantis_github_secret
+# @var atlantis_github_secret:type: string
+# @var atlantis_github_secret:description: >
+# GitHub webhook secret for Atlantis
+atlantis_github_secret: ""
+
+# @var atlantis_github_hostname
+# @var atlantis_github_hostname:type: string
+# @var atlantis_github_hostname:description: >
+# GitHub Enterprise hostname (leave empty for github.com)
+atlantis_github_hostname: ""
+
+# VCS Provider: GitHub App
+# @var atlantis_github_app_enabled
+# @var atlantis_github_app_enabled:type: boolean
+# @var atlantis_github_app_enabled:description: >
+# Use GitHub App instead of personal access token
+atlantis_github_app_enabled: false
+
+# @var atlantis_github_app_id
+# @var atlantis_github_app_id:type: string
+# @var atlantis_github_app_id:description: >
+# GitHub App ID
+atlantis_github_app_id: ""
+
+# @var atlantis_github_app_installation_id
+# @var atlantis_github_app_installation_id:type: string
+# @var atlantis_github_app_installation_id:description: >
+# GitHub App installation ID
+atlantis_github_app_installation_id: ""
+
+# @var atlantis_github_app_slug
+# @var atlantis_github_app_slug:type: string
+# @var atlantis_github_app_slug:description: >
+# GitHub App slug
+atlantis_github_app_slug: ""
+
+# @var atlantis_github_app_key
+# @var atlantis_github_app_key:type: string
+# @var atlantis_github_app_key:description: >
+# GitHub App private key (PEM format)
+atlantis_github_app_key: ""
+
+# @var atlantis_github_app_secret
+# @var atlantis_github_app_secret:type: string
+# @var atlantis_github_app_secret:description: >
+# GitHub App webhook secret
+atlantis_github_app_secret: ""
+
+# VCS Provider: GitLab
+# @var atlantis_gitlab_enabled
+# @var atlantis_gitlab_enabled:type: boolean
+# @var atlantis_gitlab_enabled:description: >
+# Enable GitLab as VCS provider
+atlantis_gitlab_enabled: false
+
+# @var atlantis_gitlab_user
+# @var atlantis_gitlab_user:type: string
+# @var atlantis_gitlab_user:description: >
+# GitLab username for Atlantis
+atlantis_gitlab_user: ""
+
+# @var atlantis_gitlab_token
+# @var atlantis_gitlab_token:type: string
+# @var atlantis_gitlab_token:description: >
+# GitLab token for Atlantis
+atlantis_gitlab_token: ""
+
+# @var atlantis_gitlab_secret
+# @var atlantis_gitlab_secret:type: string
+# @var atlantis_gitlab_secret:description: >
+# GitLab webhook secret for Atlantis
+atlantis_gitlab_secret: ""
+
+# @var atlantis_gitlab_hostname
+# @var atlantis_gitlab_hostname:type: string
+# @var atlantis_gitlab_hostname:description: >
+# GitLab hostname for self-hosted instances
+atlantis_gitlab_hostname: ""
+
+# VCS Provider: Gitea
+# @var atlantis_gitea_enabled
+# @var atlantis_gitea_enabled:type: boolean
+# @var atlantis_gitea_enabled:description: >
+# Enable Gitea as VCS provider
+atlantis_gitea_enabled: false
+
+# @var atlantis_gitea_user
+# @var atlantis_gitea_user:type: string
+# @var atlantis_gitea_user:description: >
+# Gitea username for Atlantis
+atlantis_gitea_user: ""
+
+# @var atlantis_gitea_token
+# @var atlantis_gitea_token:type: string
+# @var atlantis_gitea_token:description: >
+# Gitea token for Atlantis
+atlantis_gitea_token: ""
+
+# @var atlantis_gitea_secret
+# @var atlantis_gitea_secret:type: string
+# @var atlantis_gitea_secret:description: >
+# Gitea webhook secret for Atlantis
+atlantis_gitea_secret: ""
+
+# @var atlantis_gitea_base_url
+# @var atlantis_gitea_base_url:type: string
+# @var atlantis_gitea_base_url:description: >
+# Gitea base URL
+atlantis_gitea_base_url: ""
+
+# VCS Provider: Bitbucket Cloud
+# @var atlantis_bitbucket_enabled
+# @var atlantis_bitbucket_enabled:type: boolean
+# @var atlantis_bitbucket_enabled:description: >
+# Enable Bitbucket as VCS provider
+atlantis_bitbucket_enabled: false
+
+# @var atlantis_bitbucket_user
+# @var atlantis_bitbucket_user:type: string
+# @var atlantis_bitbucket_user:description: >
+# Bitbucket Cloud username for Atlantis
+atlantis_bitbucket_user: ""
+
+# @var atlantis_bitbucket_token
+# @var atlantis_bitbucket_token:type: string
+# @var atlantis_bitbucket_token:description: >
+# Bitbucket Cloud app password for Atlantis
+atlantis_bitbucket_token: ""
+
+# Access control
+# @var atlantis_org_allowlist
+# @var atlantis_org_allowlist:type: string
+# @var atlantis_org_allowlist:description: >
+# Allowlist of repositories Atlantis can operate on.
+# @var atlantis_org_allowlist:example: >
+#   atlantis_org_allowlist: "github.com/myorg/*"
+atlantis_org_allowlist: ""
+
+# @var atlantis_url
+# @var atlantis_url:type: string
+# @var atlantis_url:description: >
+# External URL of the Atlantis server (used for webhook callbacks).
+# Required when using ingress.
+# @var atlantis_url:example: >
+#   atlantis_url: "https://atlantis.example.com"
+atlantis_url: ""
+
+# @var atlantis_log_level
+# @var atlantis_log_level:type: string
+# @var atlantis_log_level:description: >
+# Log level for Atlantis. Options: debug, info, warn, error
+atlantis_log_level: "info"
+
+# Behavior flags
+# @var atlantis_allow_fork_prs
+# @var atlantis_allow_fork_prs:type: boolean
+# @var atlantis_allow_fork_prs:description: >
+# Allow Atlantis to run on fork pull requests
+atlantis_allow_fork_prs: false
+
+# @var atlantis_allow_draft_prs
+# @var atlantis_allow_draft_prs:type: boolean
+# @var atlantis_allow_draft_prs:description: >
+# Allow Atlantis to run on draft pull requests
+atlantis_allow_draft_prs: false
+
+# @var atlantis_disable_apply
+# @var atlantis_disable_apply:type: boolean
+# @var atlantis_disable_apply:description: >
+# Disable terraform apply execution
+atlantis_disable_apply: false
+
+# @var atlantis_disable_apply_all
+# @var atlantis_disable_apply_all:type: boolean
+# @var atlantis_disable_apply_all:description: >
+# Disable atlantis apply without flags
+atlantis_disable_apply_all: false
+
+# @var atlantis_disable_repo_locking
+# @var atlantis_disable_repo_locking:type: boolean
+# @var atlantis_disable_repo_locking:description: >
+# Disable repo/project locking
+atlantis_disable_repo_locking: false
+
+# @var atlantis_hide_prev_plan_comments
+# @var atlantis_hide_prev_plan_comments:type: boolean
+# @var atlantis_hide_prev_plan_comments:description: >
+# Hide previous plan comments on updated PRs
+atlantis_hide_prev_plan_comments: false
+
+# @var atlantis_enable_diff_markdown_format
+# @var atlantis_enable_diff_markdown_format:type: boolean
+# @var atlantis_enable_diff_markdown_format:description: >
+# Enable color-coded diff markdown formatting
+atlantis_enable_diff_markdown_format: false
+
+# @var atlantis_default_tf_version
+# @var atlantis_default_tf_version:type: string
+# @var atlantis_default_tf_version:description: >
+# Default Terraform version to use
+atlantis_default_tf_version: ""
+
+# @var atlantis_default_tf_distribution
+# @var atlantis_default_tf_distribution:type: string
+# @var atlantis_default_tf_distribution:description: >
+# Default Terraform distribution. Options: terraform, opentofu
+atlantis_default_tf_distribution: ""
+
+# Ingress configuration
+# @var atlantis_ingress_enabled
+# @var atlantis_ingress_enabled:type: boolean
+# @var atlantis_ingress_enabled:description: >
+# Enable ingress
+atlantis_ingress_enabled: false
+
+# @var atlantis_ingress_class
+# @var atlantis_ingress_class:type: string
+# @var atlantis_ingress_class:description: >
+# Ingress class name
+atlantis_ingress_class: ""
+
+# @var atlantis_ingress_host
+# @var atlantis_ingress_host:type: string
+# @var atlantis_ingress_host:description: >
+# Hostname for ingress
+atlantis_ingress_host: ""
+
+# @var atlantis_ingress_path
+# @var atlantis_ingress_path:type: string
+# @var atlantis_ingress_path:description: >
+# Ingress path
+atlantis_ingress_path: "/"
+
+# @var atlantis_ingress_path_type
+# @var atlantis_ingress_path_type:type: string
+# @var atlantis_ingress_path_type:description: >
+# Ingress path type
+atlantis_ingress_path_type: "ImplementationSpecific"
+
+# @var atlantis_ingress_annotations
+# @var atlantis_ingress_annotations:type: dict
+# @var atlantis_ingress_annotations:description: >
+# Additional ingress annotations
+atlantis_ingress_annotations: {}
+
+# @var atlantis_ingress_tls_enabled
+# @var atlantis_ingress_tls_enabled:type: boolean
+# @var atlantis_ingress_tls_enabled:description: >
+# Enable TLS for ingress
+atlantis_ingress_tls_enabled: false
+
+# @var atlantis_ingress_tls_secret_name
+# @var atlantis_ingress_tls_secret_name:type: string
+# @var atlantis_ingress_tls_secret_name:description: >
+# Secret name for TLS certificate
+atlantis_ingress_tls_secret_name: "atlantis-tls"
+
+# @var atlantis_ingress_certmanager_cluster_issuer
+# @var atlantis_ingress_certmanager_cluster_issuer:type: string
+# @var atlantis_ingress_certmanager_cluster_issuer:description: >
+# Cert-manager ClusterIssuer name
+atlantis_ingress_certmanager_cluster_issuer: ""
+
+# Service configuration
+# @var atlantis_service_type
+# @var atlantis_service_type:type: string
+# @var atlantis_service_type:description: >
+# Kubernetes Service type. Options: ClusterIP, NodePort, LoadBalancer
+atlantis_service_type: "NodePort"
+
+# @var atlantis_service_port
+# @var atlantis_service_port:type: integer
+# @var atlantis_service_port:description: >
+# Service port
+atlantis_service_port: 80
+
+# @var atlantis_service_target_port
+# @var atlantis_service_target_port:type: integer
+# @var atlantis_service_target_port:description: >
+# Target port on the container
+atlantis_service_target_port: 4141
+
+# Storage configuration
+# @var atlantis_volume_claim_enabled
+# @var atlantis_volume_claim_enabled:type: boolean
+# @var atlantis_volume_claim_enabled:description: >
+# Enable PersistentVolumeClaim for Atlantis data
+atlantis_volume_claim_enabled: true
+
+# @var atlantis_data_storage
+# @var atlantis_data_storage:type: string
+# @var atlantis_data_storage:description: >
+# Size of data storage PVC
+atlantis_data_storage: "5Gi"
+
+# @var atlantis_data_directory
+# @var atlantis_data_directory:type: string
+# @var atlantis_data_directory:description: >
+# Mount path for Atlantis data directory
+atlantis_data_directory: "/atlantis-data"
+
+# Resources
+# @var atlantis_resources
+# @var atlantis_resources:type: dict
+# @var atlantis_resources:description: >
+# Resource requests and limits
+# @var atlantis_resources:example: >
+#   atlantis_resources:
+#     requests:
+#       memory: 256Mi
+#       cpu: 100m
+#     limits:
+#       memory: 512Mi
+#       cpu: 200m
+atlantis_resources: {}
+
+# @var atlantis_replica_count
+# @var atlantis_replica_count:type: integer
+# @var atlantis_replica_count:description: >
+# Number of Atlantis replicas
+atlantis_replica_count: 1
+
+# Environment and extra args
+# @var atlantis_environment_secrets
+# @var atlantis_environment:type: dict
+# @var atlantis_environment:description: >
+# Extra environment variables as key-value pairs
+atlantis_environment: {}
+
+# @var atlantis_environment_secrets
+# @var atlantis_environment_secrets:type: list
+# @var atlantis_environment_secrets:description: >
+# Environment variables sourced from Kubernetes secrets
+# @var atlantis_environment_secrets:example: >
+#   atlantis_environment_secrets:
+#     - name: MY_SECRET
+#       secretKeyRef:
+#         name: my-secret
+#         key: secret-key
+atlantis_environment_secrets: []
+
+# @var atlantis_extra_args
+# @var atlantis_extra_args:type: list
+# @var atlantis_extra_args:description: >
+# Additional arguments passed to the Atlantis server
+atlantis_extra_args: []
+
+# @var atlantis_extra_volumes
+# @var atlantis_extra_volumes:type: list
+# @var atlantis_extra_volumes:description: >
+# Extra volumes to mount
+atlantis_extra_volumes: []
+
+# @var atlantis_extra_volume_mounts
+# @var atlantis_extra_volume_mounts:type: list
+# @var atlantis_extra_volume_mounts:description: >
+# Extra volume mounts
+atlantis_extra_volume_mounts: []
+
+# @var atlantis_extra_manifests
+# @var atlantis_extra_manifests:type: list
+# @var atlantis_extra_manifests:description: >
+# Extra Kubernetes manifests to deploy alongside Atlantis
+atlantis_extra_manifests: []
+
+# @var atlantis_init_containers
+# @var atlantis_init_containers:type: list
+# @var atlantis_init_containers:description: >
+# Init containers to run before Atlantis
+atlantis_init_containers: []
+
+# Repo config
+# @var atlantis_repo_config
+# @var atlantis_repo_config:type: dict
+# @var atlantis_repo_config:description: >
+# Server-side repository configuration
+# @var atlantis_repo_config:example: >
+#   atlantis_repo_config:
+#     repos:
+#       - id: "/.*/
+#         allowed_overrides:
+#           - workflow
+#         apply_requirements:
+#           - approved
+atlantis_repo_config: {}
+
+# VCS secret reference
+# @var atlantis_vcs_secret_name
+# @var atlantis_vcs_secret_name:type: string
+# @var atlantis_vcs_secret_name:description: >
+# Name of an existing Kubernetes secret containing VCS credentials.
+# When set, the chart uses this secret instead of creating one from variables.
+atlantis_vcs_secret_name: ""
+
+# @var atlantis_additional_helm_values
+# @var atlantis_additional_helm_values:type: dict
+# @var atlantis_additional_helm_values:description: >
+# Additional helm values to be passed to the chart
+# @var atlantis_additional_helm_values:example: >
+#   atlantis_additional_helm_values:
+#     basicAuth:
+#       username: admin
+#       password: s3cr3t
+atlantis_additional_helm_values: {}

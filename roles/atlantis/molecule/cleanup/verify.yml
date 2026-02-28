@@ -1,0 +1,22 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Pause for cleanup to complete."
+      ansible.builtin.pause:
+        seconds: 30
+
+    - name: "Check if 'atlantis' namespace exists."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "atlantis"
+      register: namespace_atlantis
+      failed_when: false
+      changed_when: false
+
+    - name: Assert that 'atlantis' namespace does not exist
+      ansible.builtin.assert:
+        that: namespace_atlantis['resources'] | length == 0

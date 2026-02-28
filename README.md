@@ -46,6 +46,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 
 | Role Name       | Helm Chart Version | README Link                                 |
 | ---------       | ------------------ | ------------------------------------        |
+| Atlantis         | v5.28.0            | [View README](roles/atlantis/README.md)       |
 | Gatus         | v1.5.0            | [View README](roles/gatus/README.md)       |
 | Mailcrab         | v1.6.4            | [View README](roles/mailcrab/README.md)       |
 | MongoDb for Kubernetes | v1.7.0            | [View README](roles/mongodb_instance/README.md) |
