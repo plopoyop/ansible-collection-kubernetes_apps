@@ -56,6 +56,17 @@
       "registryUrls": [
         "https://plopoyop.github.io/charts"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "atlantis"
+      ],
+      "registryUrls": [
+        "https://runatlantis.github.io/helm-charts"
+      ]
     }
   ],
   "customManagers": [
@@ -182,6 +193,31 @@
       ],
       "depNameTemplate": "mongodb-instance",
       "autoReplaceStringTemplate": "MongoDb Instance | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/atlantis/defaults/main.yml$/",
+        "/roles/atlantis/README.md$/"
+      ],
+      "matchStrings": [
+        "atlantis_helm_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "atlantis",
+      "autoReplaceStringTemplate": "atlantis_helm_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "Atlantis\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "atlantis",
+      "autoReplaceStringTemplate": "Atlantis | v{{newValue}}",
       "datasourceTemplate": "helm"
     }
   ]
