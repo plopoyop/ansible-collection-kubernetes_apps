@@ -1,0 +1,46 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Pause for resources to be created."
+      ansible.builtin.pause:
+        seconds: 15
+
+    - name: "Get 'atlantis' namespace info."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "atlantis"
+      register: namespace_atlantis
+
+    - name: Assert that 'atlantis' namespace is active
+      ansible.builtin.assert:
+        that: namespace_atlantis['resources'][0]['status']['phase'] == "Active"
+
+    - name: "Get 'atlantis' StatefulSet info."
+      kubernetes.core.k8s_info:
+        kind: "StatefulSet"
+        name: "atlantis"
+        namespace: "atlantis"
+      register: atlantis_statefulset
+
+    - name: "Assert that 'atlantis' StatefulSet is deployed"
+      ansible.builtin.assert:
+        that: atlantis_statefulset['resources'] | length > 0
+
+    - name: "Assert that 'atlantis' StatefulSet has correct replicas spec"
+      ansible.builtin.assert:
+        that: atlantis_statefulset['resources'][0]['spec']['replicas'] == 1
+
+    - name: "Get 'atlantis' Service info."
+      kubernetes.core.k8s_info:
+        kind: "Service"
+        name: "atlantis"
+        namespace: "atlantis"
+      register: atlantis_service
+
+    - name: "Assert that 'atlantis' Service exists"
+      ansible.builtin.assert:
+        that: atlantis_service['resources'] | length > 0

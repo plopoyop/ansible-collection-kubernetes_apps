@@ -1,0 +1,22 @@
+---
+- name: "Uninstall atlantis helm package"
+  kubernetes.core.helm:
+    name: "{{ atlantis_deployment_name }}"
+    namespace: "{{ atlantis_namespace }}"
+    state: "absent"
+    chart_ref: "{{ atlantis_helm_chart_ref }}"
+    chart_version: "{{ atlantis_helm_version }}"
+    wait: true
+
+- name: "Remove atlantis helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ atlantis_helm_repo_name }}"
+    repo_url: "{{ atlantis_helm_repo_url }}"
+    state: "absent"
+
+- name: "Remove atlantis namespace"
+  kubernetes.core.k8s:
+    name: "{{ atlantis_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"
