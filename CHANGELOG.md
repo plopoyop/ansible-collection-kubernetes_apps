@@ -11,6 +11,7 @@
 
 ## ⚙️ Dependencies
 
+- feat\(helm\): update chart mongodb-kubernetes \(1.6.1 → 1.7.0\) [\#127](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/127) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.1.1 → v46.1.2\) [\#122](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/122) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
