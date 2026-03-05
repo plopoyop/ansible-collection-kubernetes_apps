@@ -1,12 +1,16 @@
 # Changelog
 
-## [5.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.4.0) (2026-03-05)
+## [6.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/6.0.0) (2026-03-05)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.3.0...5.4.0)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/5.3.0...6.0.0)
 
 ## 🚀 New Features
 
 - Mailcrab extra manifest creation [\#128](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/128) ([plopoyop](https://github.com/plopoyop))
+
+**Merged pull requests:**
+
+- Remove MongoDB roles [\#129](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/129) ([plopoyop](https://github.com/plopoyop))
 
 ## [5.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/5.3.0) (2026-02-28)
 
