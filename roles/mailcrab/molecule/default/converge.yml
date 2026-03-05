@@ -7,6 +7,14 @@
     mailcrab_github_version: "v1.6.2"
     mailcrab_username: "admin"
     mailcrab_password: "ChangeMe123!"
+    mailcrab_extra_manifests:
+      - apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: mailcrab-test-config
+        data:
+          test_key: "test_value"
+          smtp_host: "mailcrab.mailcrab.svc.cluster.local"
   tasks:
     - name: "Install Mailcrab"
       ansible.builtin.import_role:

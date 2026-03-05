@@ -1,5 +1,15 @@
 ---
 # cleanup tasks for mailcrab
+- name: "Remove extra manifests"
+  kubernetes.core.k8s:
+    namespace: "{{ mailcrab_namespace }}"
+    state: "absent"
+    definition: "{{ mailcrab_manifest_to_remove }}"
+  loop: "{{ mailcrab_extra_manifests }}"
+  loop_control:
+    loop_var: mailcrab_manifest_to_remove
+  when: mailcrab_extra_manifests | length > 0
+
 - name: "Uninstall Mailcrab helm package"
   kubernetes.core.helm:
     name: "{{ mailcrab_deployment_name }}"
