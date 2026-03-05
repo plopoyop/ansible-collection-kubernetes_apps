@@ -63,3 +63,20 @@
     - name: "Assert that 'mailcrab' basic auth secret has password"
       ansible.builtin.assert:
         that: (mailcrab_basic_auth_secret['resources'][0]['data']['password'] | ansible.builtin.b64decode) == "ChangeMe123!"
+
+    - name: "Get 'mailcrab-test-config' ConfigMap info."
+      kubernetes.core.k8s_info:
+        kind: "ConfigMap"
+        name: "mailcrab-test-config"
+        namespace: "mailcrab"
+      register: mailcrab_test_configmap
+
+    - name: "Assert that 'mailcrab-test-config' ConfigMap exists"
+      ansible.builtin.assert:
+        that: mailcrab_test_configmap['resources'] | length > 0
+
+    - name: "Assert that 'mailcrab-test-config' ConfigMap has correct data"
+      ansible.builtin.assert:
+        that:
+          - mailcrab_test_configmap['resources'][0]['data']['test_key'] == "test_value"
+          - mailcrab_test_configmap['resources'][0]['data']['smtp_host'] == "mailcrab.mailcrab.svc.cluster.local"

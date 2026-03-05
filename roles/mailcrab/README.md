@@ -12,6 +12,7 @@ Install and configure Mailcrab on Kubernetes using the official Helm chart
   - [mailcrab_chart_path](#mailcrab_chart_path)
   - [mailcrab_deployment_name](#mailcrab_deployment_name)
   - [mailcrab_enabled](#mailcrab_enabled)
+  - [mailcrab_extra_manifests](#mailcrab_extra_manifests)
   - [mailcrab_github_repo](#mailcrab_github_repo)
   - [mailcrab_github_url](#mailcrab_github_url)
   - [mailcrab_github_version](#mailcrab_github_version)
@@ -120,6 +121,32 @@ Should mailcrab helm chart be installed
 
 ```YAML
 mailcrab_enabled: true
+```
+
+### mailcrab_extra_manifests
+
+List of extra Kubernetes manifests to create in the mailcrab namespace.
+Each item is a full Kubernetes resource definition (without namespace,
+it will be set automatically).
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+mailcrab_extra_manifests: []
+```
+
+#### Example usage
+
+```YAML
+mailcrab_extra_manifests:
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: my-config
+    data:
+      key: value
 ```
 
 ### mailcrab_github_repo

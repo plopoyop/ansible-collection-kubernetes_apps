@@ -147,6 +147,22 @@ mailcrab_tolerations: []
 # Affinity rules for the deployment
 mailcrab_affinity: {}
 
+# @var mailcrab_extra_manifests
+# @var mailcrab_extra_manifests:type: list
+# @var mailcrab_extra_manifests:description: >
+# List of extra Kubernetes manifests to create in the mailcrab namespace.
+# Each item is a full Kubernetes resource definition (without namespace,
+# it will be set automatically).
+# @var mailcrab_extra_manifests:example: >
+# mailcrab_extra_manifests:
+#   - apiVersion: v1
+#     kind: ConfigMap
+#     metadata:
+#       name: my-config
+#     data:
+#       key: value
+mailcrab_extra_manifests: []
+
 # @var mailcrab_secret_name:type: string
 # @var mailcrab_secret_name:description: >
 # Name of the secret for basic auth
