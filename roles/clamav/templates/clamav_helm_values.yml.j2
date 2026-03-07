@@ -1,0 +1,62 @@
+---
+replicaCount: {{ clamav_replica_count }}
+
+kind: {{ clamav_kind }}
+
+{% if clamav_priority_class | length > 0 %}
+priorityClassName: "{{ clamav_priority_class }}"
+{% endif %}
+
+podSecurityContext: {{ clamav_pod_security_context }}
+
+securityContext: {{ clamav_security_context }}
+
+service:
+  type: {{ clamav_service_type }}
+  port: {{ clamav_service_port }}
+
+{% if clamav_resources is defined and clamav_resources | length > 0 %}
+resources: {{ clamav_resources }}
+{% endif %}
+
+extraArgs: {{ clamav_extra_args }}
+
+extraEnvVars: {{ clamav_extra_env_vars }}
+
+ingress:
+  enabled: {{ clamav_ingress_enabled | lower }}
+{% if clamav_ingress_enabled %}
+{% if clamav_ingress_class is defined and clamav_ingress_class | length > 0 %}
+  ingressClassName: "{{ clamav_ingress_class }}"
+{% endif %}
+{% if clamav_ingress_annotations is defined %}
+  annotations: {{ clamav_ingress_annotations }}
+{% endif %}
+  hosts: {{ clamav_ingress_hosts }}
+{% if clamav_ingress_tls is defined %}
+  tls: {{ clamav_ingress_tls }}
+{% endif %}
+{% endif %}
+
+clamdConfigDict: {{ clamav_clamd_config }}
+
+freshclamConfigDict: {{ clamav_freshclam_config }}
+
+hpa:
+  enabled: {{ clamav_hpa_enabled | lower }}
+  maxReplicas: {{ clamav_hpa_max_replicas }}
+  cpu: {{ clamav_hpa_cpu }}
+
+persistentVolume:
+  enabled: {{ clamav_persistence_enabled | lower }}
+  size: {{ clamav_persistence_size }}
+  accessModes: {{ clamav_persistence_access_modes }}
+
+metrics:
+  enabled: {{ clamav_metrics_enabled | lower }}
+  serviceMonitor:
+    enabled: {{ clamav_metrics_service_monitor_enabled | lower }}
+
+{% if clamav_additional_helm_values %}
+{{ clamav_additional_helm_values | to_nice_yaml | indent(0) }}
+{% endif %}

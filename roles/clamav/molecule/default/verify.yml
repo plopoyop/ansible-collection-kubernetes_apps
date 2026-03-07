@@ -1,0 +1,31 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Pause for deployment to complete."
+      ansible.builtin.pause:
+        seconds: 60
+
+    - name: "Get 'clamav' namespace info."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "clamav"
+      register: namespace_clamav
+
+    - name: Assert that 'clamav' namespace is active
+      ansible.builtin.assert:
+        that: namespace_clamav['resources'][0]['status']['phase'] == "Active"
+
+    - name: "Get 'clamav' StatefulSet info."
+      kubernetes.core.k8s_info:
+        kind: "StatefulSet"
+        name: "clamav"
+        namespace: "clamav"
+      register: clamav_statefulset
+
+    - name: "Assert that 'clamav' StatefulSet is deployed"
+      ansible.builtin.assert:
+        that: clamav_statefulset['resources'] | length > 0
