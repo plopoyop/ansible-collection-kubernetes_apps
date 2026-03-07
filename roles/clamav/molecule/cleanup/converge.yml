@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    clamav_enabled: false
+  tasks:
+    - name: "Remove ClamAV"
+      ansible.builtin.import_role:
+        name: "clamav"

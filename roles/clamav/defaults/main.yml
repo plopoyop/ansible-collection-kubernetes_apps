@@ -1,0 +1,260 @@
+---
+# @var clamav_enabled
+# @var clamav_enabled:type: boolean
+# @var clamav_enabled:description: >
+# Should ClamAV helm chart be installed
+clamav_enabled: true
+
+# @var clamav_namespace
+# @var clamav_namespace:type: string
+# @var clamav_namespace:description: >
+# K8s namespace to install the clamav chart
+clamav_namespace: "clamav"
+
+# @var clamav_helm_version
+# @var clamav_helm_version:type: string
+# @var clamav_helm_version:description: >
+# Helm chart version to install
+clamav_helm_version: "3.7.1"
+
+# @var clamav_deployment_name
+# @var clamav_deployment_name:type: string
+# @var clamav_deployment_name:description: >
+# Helm chart deployment name
+clamav_deployment_name: "clamav"
+
+# @var clamav_replica_count
+# @var clamav_replica_count:type: int
+# @var clamav_replica_count:description: >
+# Number of ClamAV replicas
+clamav_replica_count: 1
+
+# @var clamav_kind
+# @var clamav_kind:type: string
+# @var clamav_kind:description: >
+# Workload kind for ClamAV (StatefulSet or Deployment)
+clamav_kind: "StatefulSet"
+
+# @var clamav_priority_class
+# @var clamav_priority_class:type: string
+# @var clamav_priority_class:description: >
+# PriorityClass for ClamAV pods
+clamav_priority_class: ""
+
+# @var clamav_pod_security_context
+# @var clamav_pod_security_context:type: dict
+# @var clamav_pod_security_context:description: >
+# Pod security context for ClamAV
+clamav_pod_security_context:
+  runAsNonRoot: true
+  runAsUser: 100
+  runAsGroup: 101
+  fsGroup: 101
+
+# @var clamav_security_context
+# @var clamav_security_context:type: dict
+# @var clamav_security_context:description: >
+# Container security context for ClamAV
+clamav_security_context:
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  privileged: false
+  capabilities:
+    drop:
+      - ALL
+
+# @var clamav_service_type
+# @var clamav_service_type:type: string
+# @var clamav_service_type:description: >
+# Service type for ClamAV
+clamav_service_type: "ClusterIP"
+
+# @var clamav_service_port
+# @var clamav_service_port:type: int
+# @var clamav_service_port:description: >
+# Service port for ClamAV
+clamav_service_port: 3310
+
+# @var clamav_resources
+# @var clamav_resources:type: dict
+# @var clamav_resources:description: >
+# Resource requests and limits for ClamAV
+# @var clamav_resources:example: >
+#  clamav_resources:
+#    limits:
+#      cpu: 1000m
+#      memory: 2Gi
+#    requests:
+#      cpu: 300m
+#      memory: 1Gi
+clamav_resources: {}
+
+# @var clamav_extra_env_vars
+# @var clamav_extra_env_vars:type: list
+# @var clamav_extra_env_vars:description: >
+# Extra environment variables for ClamAV container
+clamav_extra_env_vars: []
+
+# @var clamav_extra_args
+# @var clamav_extra_args:type: list
+# @var clamav_extra_args:description: >
+# Extra arguments for ClamAV container
+clamav_extra_args: []
+
+# Ingress configuration
+
+# @var clamav_ingress_enabled
+# @var clamav_ingress_enabled:type: boolean
+# @var clamav_ingress_enabled:description: >
+# Enable ingress for ClamAV
+clamav_ingress_enabled: false
+
+# @var clamav_ingress_class
+# @var clamav_ingress_class:type: string
+# @var clamav_ingress_class:description: >
+# Ingress class name
+clamav_ingress_class: ""
+
+# @var clamav_ingress_annotations
+# @var clamav_ingress_annotations:type: dict
+# @var clamav_ingress_annotations:description: >
+# Ingress annotations
+clamav_ingress_annotations: {}
+
+# @var clamav_ingress_hosts
+# @var clamav_ingress_hosts:type: list
+# @var clamav_ingress_hosts:description: >
+# Ingress hosts
+clamav_ingress_hosts:
+  - chart-example.local
+
+# @var clamav_ingress_tls
+# @var clamav_ingress_tls:type: list
+# @var clamav_ingress_tls:description: >
+# Ingress TLS configuration
+clamav_ingress_tls: []
+
+# ClamAV configuration
+
+# @var clamav_clamd_config
+# @var clamav_clamd_config:type: dict
+# @var clamav_clamd_config:description: >
+# ClamD configuration dict (overrides default clamd.conf)
+# ref: https://linux.die.net/man/5/clamd.conf
+clamav_clamd_config:
+  DatabaseDirectory: /data
+  TemporaryDirectory: /tmp
+  LogTime: "yes"
+  PidFile: /tmp/clamd.pid
+  LocalSocket: /tmp/clamd.sock
+  TCPSocket: 3310
+  Foreground: "yes"
+  DetectPUA: "yes"
+  ExcludePUA:
+    - NetTool
+    - PWTool
+  HeuristicAlerts: "yes"
+  Bytecode: "yes"
+  ScanPE: "yes"
+  DisableCertCheck: "yes"
+  ScanELF: "yes"
+  AlertBrokenExecutables: "yes"
+  ScanOLE2: "yes"
+  ScanPDF: "yes"
+  ScanSWF: "yes"
+  ScanMail: "yes"
+  PhishingSignatures: "yes"
+  PhishingScanURLs: "yes"
+  ScanHTML: "yes"
+  ScanArchive: "yes"
+  MaxScanSize: 150M
+  MaxFileSize: 30M
+  MaxRecursion: 10
+  MaxFiles: 15000
+  MaxEmbeddedPE: 10M
+  MaxHTMLNormalize: 10M
+  MaxHTMLNoTags: 2M
+  MaxScriptNormalize: 5M
+  MaxZipTypeRcg: 1M
+  MaxPartitions: 128
+  MaxIconsPE: 200
+  PCREMatchLimit: 10000
+  PCRERecMatchLimit: 10000
+
+# @var clamav_freshclam_config
+# @var clamav_freshclam_config:type: dict
+# @var clamav_freshclam_config:description: >
+# FreshClam configuration dict (overrides default freshclam.conf)
+# ref: https://linux.die.net/man/5/freshclam.conf
+clamav_freshclam_config:
+  DatabaseDirectory: /data
+  LogTime: "yes"
+  PidFile: /tmp/freshclam.pid
+  DatabaseOwner: "2000"
+  DatabaseMirror: database.clamav.net
+  ScriptedUpdates: "yes"
+  NotifyClamd: /etc/clamav/clamd.conf
+  Bytecode: "yes"
+
+# HPA configuration
+
+# @var clamav_hpa_enabled
+# @var clamav_hpa_enabled:type: boolean
+# @var clamav_hpa_enabled:description: >
+# Enable Horizontal Pod Autoscaler
+clamav_hpa_enabled: true
+
+# @var clamav_hpa_max_replicas
+# @var clamav_hpa_max_replicas:type: int
+# @var clamav_hpa_max_replicas:description: >
+# Maximum replicas for HPA
+clamav_hpa_max_replicas: 5
+
+# @var clamav_hpa_cpu
+# @var clamav_hpa_cpu:type: int
+# @var clamav_hpa_cpu:description: >
+# Target CPU utilization percentage for HPA
+clamav_hpa_cpu: 80
+
+# Persistence configuration
+
+# @var clamav_persistence_enabled
+# @var clamav_persistence_enabled:type: boolean
+# @var clamav_persistence_enabled:description: >
+# Enable persistence for ClamAV data directory
+clamav_persistence_enabled: false
+
+# @var clamav_persistence_size
+# @var clamav_persistence_size:type: string
+# @var clamav_persistence_size:description: >
+# Persistent volume size
+clamav_persistence_size: "100Mi"
+
+# @var clamav_persistence_access_modes
+# @var clamav_persistence_access_modes:type: list
+# @var clamav_persistence_access_modes:description: >
+# Persistent volume access modes
+clamav_persistence_access_modes:
+  - ReadWriteOnce
+
+# Metrics configuration
+
+# @var clamav_metrics_enabled
+# @var clamav_metrics_enabled:type: boolean
+# @var clamav_metrics_enabled:description: >
+# Enable ClamAV metrics exporter sidecar
+clamav_metrics_enabled: false
+
+# @var clamav_metrics_service_monitor_enabled
+# @var clamav_metrics_service_monitor_enabled:type: boolean
+# @var clamav_metrics_service_monitor_enabled:description: >
+# Enable ServiceMonitor for Prometheus
+clamav_metrics_service_monitor_enabled: false
+
+# @var clamav_additional_helm_values
+# @var clamav_additional_helm_values:type: dict
+# @var clamav_additional_helm_values:description: >
+# Additional helm values to be passed to the chart.
+# Use this to configure any chart option not exposed as a dedicated variable.
+# ref: https://github.com/wiremind/wiremind-helm-charts/blob/main/charts/clamav/values.yaml
+clamav_additional_helm_values: {}

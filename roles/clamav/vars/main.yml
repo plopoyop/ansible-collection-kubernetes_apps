@@ -1,0 +1,4 @@
+---
+clamav_helm_repo_name: "wiremind"
+clamav_helm_chart_ref: "{{ clamav_helm_repo_name }}/clamav"
+clamav_helm_repo_url: "https://wiremind.github.io/wiremind-helm-charts"

@@ -1,0 +1,22 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Pause for cleanup to complete."
+      ansible.builtin.pause:
+        seconds: 30
+
+    - name: "Check if 'clamav' namespace exists."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "clamav"
+      register: namespace_clamav
+      failed_when: false
+      changed_when: false
+
+    - name: Assert that 'clamav' namespace does not exist
+      ansible.builtin.assert:
+        that: namespace_clamav['resources'] | length == 0

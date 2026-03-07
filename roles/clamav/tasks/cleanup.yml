@@ -1,0 +1,22 @@
+---
+- name: "Uninstall clamav helm package"
+  kubernetes.core.helm:
+    name: "{{ clamav_deployment_name }}"
+    namespace: "{{ clamav_namespace }}"
+    state: "absent"
+    chart_ref: "{{ clamav_helm_chart_ref }}"
+    chart_version: "{{ clamav_helm_version }}"
+    wait: true
+
+- name: "Remove clamav helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ clamav_helm_repo_name }}"
+    repo_url: "{{ clamav_helm_repo_url }}"
+    state: "absent"
+
+- name: "Remove clamav namespace"
+  kubernetes.core.k8s:
+    name: "{{ clamav_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"
