@@ -1,12 +1,16 @@
 # Changelog
 
-## [6.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/6.1.0) (2026-03-07)
+## [6.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/6.1.0) (2026-03-08)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/6.0.0...6.1.0)
 
 ## 🚀 New Features
 
 - Add ClamAV role [\#130](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/130) ([plopoyop](https://github.com/plopoyop))
+
+## ⚙️ Dependencies
+
+- fix\(ci\): update renovatebot/github-action action \(v46.1.2 → v46.1.3\) [\#131](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/131) ([plopoyop](https://github.com/plopoyop))
 
 ## [6.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/6.0.0) (2026-03-05)
 
