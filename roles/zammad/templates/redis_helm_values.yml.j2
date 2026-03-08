@@ -1,8 +1,7 @@
 redis:
+  sentinel:
+    enabled: {{ zammad_redis_sentinel_enabled | lower }}
   architecture: "{{ zammad_redis_architecture }}"
   auth:
     password: "{{ zammad_redis_password }}"
-  master:
-    resources: {{ zammad_redis_master_resources }}
-    persistence:
-      enabled: {{ zammad_redis_master_persistence_enabled }}
+  resources: {{ zammad_redis_resources }}

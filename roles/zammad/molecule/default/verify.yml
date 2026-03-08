@@ -99,7 +99,7 @@
     - name: "Get 'redis' statefull set info."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
-        name: "zammad-redis-master"
+        name: "zammad-redis"
         namespace: "zammad"
       register: redis_statefullset
 
