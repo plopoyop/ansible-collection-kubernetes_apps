@@ -2,7 +2,7 @@
 
 Install and configure Zammad application on kubernetes
 
-## Table of content
+## Table of contents
 
 - [Requirements](#requirements)
 - [Default Variables](#default-variables)
@@ -38,6 +38,9 @@ Install and configure Zammad application on kubernetes
   - [zammad_enabled](#zammad_enabled)
   - [zammad_external_s3_url](#zammad_external_s3_url)
   - [zammad_extra_env](#zammad_extra_env)
+  - [zammad_helm_chart_ref](#zammad_helm_chart_ref)
+  - [zammad_helm_repo_name](#zammad_helm_repo_name)
+  - [zammad_helm_repo_url](#zammad_helm_repo_url)
   - [zammad_helm_version](#zammad_helm_version)
   - [zammad_ingress_certmanager_cluster_issuer](#zammad_ingress_certmanager_cluster_issuer)
   - [zammad_ingress_class](#zammad_ingress_class)
@@ -105,15 +108,21 @@ Install and configure Zammad application on kubernetes
   - [zammad_redis_architecture](#zammad_redis_architecture)
   - [zammad_redis_enabled](#zammad_redis_enabled)
   - [zammad_redis_host](#zammad_redis_host)
-  - [zammad_redis_master_persistence_enabled](#zammad_redis_master_persistence_enabled)
-  - [zammad_redis_master_resources](#zammad_redis_master_resources)
   - [zammad_redis_password](#zammad_redis_password)
   - [zammad_redis_port](#zammad_redis_port)
+  - [zammad_redis_resources](#zammad_redis_resources)
+  - [zammad_redis_sentinel_enabled](#zammad_redis_sentinel_enabled)
+  - [zammad_redis_sentinel_master_name](#zammad_redis_sentinel_master_name)
+  - [zammad_redis_sentinel_pass](#zammad_redis_sentinel_pass)
+  - [zammad_redis_sentinel_sentinels](#zammad_redis_sentinel_sentinels)
+  - [zammad_redis_sentinel_username](#zammad_redis_sentinel_username)
+  - [zammad_redis_username](#zammad_redis_username)
   - [zammad_scheduler_pod_annotations](#zammad_scheduler_pod_annotations)
   - [zammad_scheduler_pod_labels](#zammad_scheduler_pod_labels)
   - [zammad_scheduler_resources](#zammad_scheduler_resources)
   - [zammad_scheduler_security_context](#zammad_scheduler_security_context)
   - [zammad_scheduler_sidecars](#zammad_scheduler_sidecars)
+  - [zammad_secret_key_regex](#zammad_secret_key_regex)
   - [zammad_secrets_autowizard_secret_key](#zammad_secrets_autowizard_secret_key)
   - [zammad_secrets_autowizard_secret_name](#zammad_secrets_autowizard_secret_name)
   - [zammad_secrets_autowizard_use_existing](#zammad_secrets_autowizard_use_existing)
@@ -125,6 +134,9 @@ Install and configure Zammad application on kubernetes
   - [zammad_secrets_postgresql_use_existing](#zammad_secrets_postgresql_use_existing)
   - [zammad_secrets_redis_secret_key](#zammad_secrets_redis_secret_key)
   - [zammad_secrets_redis_secret_name](#zammad_secrets_redis_secret_name)
+  - [zammad_secrets_redis_sentinel_secret_key](#zammad_secrets_redis_sentinel_secret_key)
+  - [zammad_secrets_redis_sentinel_secret_name](#zammad_secrets_redis_sentinel_secret_name)
+  - [zammad_secrets_redis_sentinel_use_existing](#zammad_secrets_redis_sentinel_use_existing)
   - [zammad_secrets_redis_use_existing](#zammad_secrets_redis_use_existing)
   - [zammad_security_context](#zammad_security_context)
   - [zammad_service_account_annotations](#zammad_service_account_annotations)
@@ -155,12 +167,13 @@ Install and configure Zammad application on kubernetes
 
 - Minimum Ansible version: `2.1`
 
-
 ## Default Variables
 
 ### zammad_additional_init_containers
 
 additional init containers
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -194,6 +207,8 @@ zammad_additional_init_containers:
 
 kubernetes affinity
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -203,6 +218,8 @@ zammad_affinity: {}
 ### zammad_auto_wizard_enabled
 
 enable auto wizard
+
+**_Type:_** bolean<br />
 
 #### Default value
 
@@ -214,6 +231,8 @@ zammad_auto_wizard_enabled: false
 
 zammad locale to setup
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -223,6 +242,8 @@ zammad_auto_wizard_locale: en-us
 ### zammad_auto_wizard_organizations
 
 zammad organization to create
+
+**_Type:_** list<br />
 
 #### Default value
 
@@ -240,6 +261,8 @@ zammad_auto_wizard_organizations:
 ### zammad_auto_wizard_settings
 
 zammad settings for autowizard
+
+**_Type:_** list<br />
 
 #### Default value
 
@@ -261,9 +284,13 @@ zammad_auto_wizard_settings:
 
 secret token for auto wizard. If used the url must look like: http://zammad/#getting_started/auto_wizard/your_token_here
 
+**_Type:_** string<br />
+
 ### zammad_auto_wizard_users
 
 zammad users to create
+
+**_Type:_** list<br />
 
 #### Default value
 
@@ -287,6 +314,8 @@ zammad_auto_wizard_users:
 
 additional annotations added to all zammad services
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -304,6 +333,8 @@ zammad_common_annotations:
 
 additional labels added to all zammad services
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -319,7 +350,9 @@ zammad_common_label:
 
 ### zammad_deployment_name
 
-Wait for helm install to finish
+Helm chart deployment name
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -331,9 +364,13 @@ zammad_deployment_name: zammad
 
 Domain name for ingress
 
+**_Type:_** string<br />
+
 ### zammad_elasticsearch_cluster_name
 
 elasticsearch cluster name
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -345,6 +382,8 @@ zammad_elasticsearch_cluster_name: zammad
 
 replica count for elasticsearch coordinator pods
 
+**_Type:_** int<br />
+
 #### Default value
 
 ```YAML
@@ -354,6 +393,8 @@ zammad_elasticsearch_coordinating_replica_count: 0
 ### zammad_elasticsearch_data_replica_count
 
 replica count for elasticsearch data pods
+
+**_Type:_** int<br />
 
 #### Default value
 
@@ -365,6 +406,8 @@ zammad_elasticsearch_data_replica_count: 0
 
 enable/disable elasticsearch chart dependency
 
+**_Type:_** boolean<br />
+
 #### Default value
 
 ```YAML
@@ -375,9 +418,13 @@ zammad_elasticsearch_enabled: true
 
 elasticsearch host : only used when zammad_elasticsearch_enabled is false
 
+**_Type:_** booelan<br />
+
 ### zammad_elasticsearch_ingest_replica_count
 
 replica count for elasticsearch ingest pods
+
+**_Type:_** int<br />
 
 #### Default value
 
@@ -389,6 +436,8 @@ zammad_elasticsearch_ingest_replica_count: 0
 
 elasticsearch initialisation
 
+**_Type:_** booelan<br />
+
 #### Default value
 
 ```YAML
@@ -398,6 +447,8 @@ zammad_elasticsearch_initialisation: true
 ### zammad_elasticsearch_master_heap_size
 
 heap size for elasticsearch master pods
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -409,6 +460,8 @@ zammad_elasticsearch_master_heap_size: 512m
 
 elasticsearch master pods is master only
 
+**_Type:_** boolean<br />
+
 #### Default value
 
 ```YAML
@@ -419,6 +472,8 @@ zammad_elasticsearch_master_master_only: false
 
 replica count for elasticsearch master pods
 
+**_Type:_** int<br />
+
 #### Default value
 
 ```YAML
@@ -428,6 +483,8 @@ zammad_elasticsearch_master_replica_count: 1
 ### zammad_elasticsearch_master_resources
 
 elasticsearch master pods resources requests and limits
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -451,6 +508,8 @@ zammad_elasticsearch_master_resources:
 
 elasticsearch master pods resources preset
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -461,9 +520,13 @@ zammad_elasticsearch_master_resources_preset: medium
 
 elasticsearch password
 
+**_Type:_** string<br />
+
 ### zammad_elasticsearch_port
 
 elasticsearch port
+
+**_Type:_** int<br />
 
 #### Default value
 
@@ -475,6 +538,8 @@ zammad_elasticsearch_port: 9200
 
 reindex elasticsearch
 
+**_Type:_** boolean<br />
+
 #### Default value
 
 ```YAML
@@ -484,6 +549,8 @@ zammad_elasticsearch_reindex: true
 ### zammad_elasticsearch_schema
 
 elasticsearch connection schema
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -495,6 +562,8 @@ zammad_elasticsearch_schema: http
 
 elasticsearch user
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -504,6 +573,8 @@ zammad_elasticsearch_user: zammad
 ### zammad_enabled
 
 Should zammad helm chart be installed
+
+**_Type:_** boolean<br />
 
 #### Default value
 
@@ -515,6 +586,8 @@ zammad_enabled: true
 
 external S3 URL for files
 
+**_Type:_** string<br />
+
 #### Example usage
 
 ```YAML
@@ -524,6 +597,8 @@ zammad_external_s3_url: "s3://accesskey:secretaccesskey@endpoint/bucket_name"
 ### zammad_extra_env
 
 additional environment vars added to all zammad services
+
+**_Type:_** list<br />
 
 #### Default value
 
@@ -539,9 +614,35 @@ zammad_extra_env:
     value: "foobar"
 ```
 
+### zammad_helm_chart_ref
+
+#### Default value
+
+```YAML
+zammad_helm_chart_ref: '{{ zammad_helm_repo_name }}/zammad'
+```
+
+### zammad_helm_repo_name
+
+#### Default value
+
+```YAML
+zammad_helm_repo_name: zammad
+```
+
+### zammad_helm_repo_url
+
+#### Default value
+
+```YAML
+zammad_helm_repo_url: https://zammad.github.io/zammad-helm
+```
+
 ### zammad_helm_version
 
 Helm chart version to install
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -553,13 +654,19 @@ zammad_helm_version: 16.0.2
 
 Certmanager Cluster Issuer name
 
+**_Type:_** string<br />
+
 ### zammad_ingress_class
 
 Ingress class name
 
+**_Type:_** string<br />
+
 ### zammad_ingress_enabled
 
 Enable ingress
+
+**_Type:_** boolean<br />
 
 #### Default value
 
@@ -571,6 +678,8 @@ zammad_ingress_enabled: true
 
 Enable TLS for ingress
 
+**_Type:_** boolean<br />
+
 #### Default value
 
 ```YAML
@@ -580,6 +689,8 @@ zammad_ingress_tls_enabled: false
 ### zammad_init_containers_elasticsearch_resources
 
 elasticsearch init container resources requests and limits
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -603,6 +714,8 @@ zammad_init_containers_elasticsearch_resources:
 
 security context elasticsearch init container
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -618,6 +731,8 @@ zammad_init_containers_elasticsearch_security_context:
 ### zammad_init_containers_postgresql_resources
 
 postgresql init container resources requests and limits
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -635,6 +750,8 @@ zammad_init_containers_zammad_custom_init: "bundle exec rails runner '…'"
 
 security context postgresql init container
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -651,6 +768,8 @@ zammad_init_containers_postgresql_security_context:
 
 custom init for zammad
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -660,6 +779,8 @@ zammad_init_containers_zammad_custom_init: ''
 ### zammad_init_containers_zammad_resources
 
 zammad init container resources requests and limits
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -683,6 +804,8 @@ zammad_init_containers_zammad_resources:
 
 security context zammad init container
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -698,6 +821,8 @@ zammad_init_containers_zammad_security_context:
 ### zammad_init_job_annotations
 
 init job additional annotations
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -716,6 +841,8 @@ zammad_init_job_annotations:
 
 init job additional pod annotations
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -732,6 +859,8 @@ zammad_init_job_pod_annotations:
 ### zammad_init_job_pod_labels
 
 init job additional pod labels
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -750,6 +879,8 @@ zammad_init_job_pod_labels:
 
 websocket additional pod specs
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -767,6 +898,8 @@ zammad_init_job_pod_spec:
 
 enable/disable memcached chart dependency
 
+**_Type:_** boolean<br />
+
 #### Default value
 
 ```YAML
@@ -776,6 +909,8 @@ zammad_memcached_enabled: true
 ### zammad_memcached_port
 
 memcached port
+
+**_Type:_** int<br />
 
 #### Default value
 
@@ -787,6 +922,8 @@ zammad_memcached_port: 11211
 
 memcached replica count
 
+**_Type:_** int<br />
+
 #### Default value
 
 ```YAML
@@ -796,6 +933,8 @@ zammad_memcached_replica_count: 1
 ### zammad_memcached_resources
 
 memcached resources requests and limits
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -819,6 +958,8 @@ zammad_memcached_resources:
 
 minio root username
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -828,6 +969,8 @@ zammad_minio_auth_root_user: zammadadmin
 ### zammad_minio_default_buckets
 
 minio default bucket name
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -839,6 +982,8 @@ zammad_minio_default_buckets: zammad
 
 enable/disable minio web UI for debugging.
 
+**_Type:_** boolean<br />
+
 #### Default value
 
 ```YAML
@@ -848,6 +993,8 @@ zammad_minio_disable_web_ui: true
 ### zammad_minio_enabled
 
 enable/disable minio chart dependency
+
+**_Type:_** boolean<br />
 
 #### Default value
 
@@ -859,9 +1006,13 @@ zammad_minio_enabled: false
 
 minio root password
 
+**_Type:_** string<br />
+
 ### zammad_namespace
 
 K8s namespace to install the zammad chart
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -872,6 +1023,8 @@ zammad_namespace: zammad
 ### zammad_nginx_extra_headers
 
 List of nginx extra headers
+
+**_Type:_** list<br />
 
 #### Default value
 
@@ -890,6 +1043,8 @@ zammad_nginx_extra_headers:
 
 Url for knowledge base
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -899,6 +1054,8 @@ zammad_nginx_knowledge_base_url: ''
 ### zammad_nginx_liveness_probe
 
 Liveness probe for nginx
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -914,6 +1071,8 @@ zammad_nginx_liveness_probe:
 
 Nginx max client body size
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -923,6 +1082,8 @@ zammad_nginx_max_client_body_size: 50M
 ### zammad_nginx_pod_annotations
 
 nginx additional annotations
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -941,6 +1102,8 @@ zammad_nginx_pod_annotations: {}
 
 nginx additional pod labels
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -958,6 +1121,8 @@ zammad_nginx_pod_labels: {}
 
 Readiness probe for nginx
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -973,6 +1138,8 @@ zammad_nginx_readiness_probe:
 
 Number of nginx replicats
 
+**_Type:_** int<br />
+
 #### Default value
 
 ```YAML
@@ -982,6 +1149,8 @@ zammad_nginx_replicas: 1
 ### zammad_nginx_resources
 
 nginx resources requests and limits
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1005,6 +1174,8 @@ zammad_nginx_resources: {}
 
 nginx security context
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1021,6 +1192,8 @@ zammad_nginx_security_context:
 
 nginx sidecars : can be used to add additional containers / sidecars
 
+**_Type:_** list<br />
+
 #### Default value
 
 ```YAML
@@ -1030,6 +1203,8 @@ zammad_nginx_sidecars: []
 ### zammad_nginx_startup_probe
 
 Startup probe for nginx
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1045,6 +1220,8 @@ zammad_nginx_startup_probe:
 
 List of nginx trusted proxies
 
+**_Type:_** list<br />
+
 #### Default value
 
 ```YAML
@@ -1054,6 +1231,8 @@ zammad_nginx_trusted_proxies: []
 ### zammad_nginx_websocket_extra_headers
 
 List of nginx websocket extra headers
+
+**_Type:_** list<br />
 
 #### Default value
 
@@ -1072,6 +1251,8 @@ zammad_nginx_websocket_extra_headers:
 
 kubernetes node selector
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1081,6 +1262,8 @@ zammad_node_selector: {}
 ### zammad_pods_annotations
 
 additional annotations added pods
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1099,6 +1282,8 @@ zammad_pods_annotations:
 
 additional labels added to all pods
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1116,6 +1301,8 @@ zammad_pods_label:
 
 postgresql additional connection options
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -1125,6 +1312,8 @@ zammad_postgresql_connection_options: pool=50
 ### zammad_postgresql_database
 
 postgresql database name
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -1136,6 +1325,8 @@ zammad_postgresql_database: zammad_production
 
 enable/disable postgresql chart dependency
 
+**_Type:_** boolean<br />
+
 #### Default value
 
 ```YAML
@@ -1146,13 +1337,19 @@ zammad_postgresql_enabled: true
 
 postgresql host : only used when zammad_postgresql_enabled is false
 
+**_Type:_** string<br />
+
 ### zammad_postgresql_password
 
 postgresql password
 
+**_Type:_** string<br />
+
 ### zammad_postgresql_port
 
 postgresql port
+
+**_Type:_** int<br />
 
 #### Default value
 
@@ -1163,6 +1360,8 @@ zammad_postgresql_port: 5432
 ### zammad_postgresql_primary_resources
 
 postgresql resources requests and limits
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1186,9 +1385,13 @@ zammad_postgresql_primary_resources: {}
 
 postgresql replication password
 
+**_Type:_** string<br />
+
 ### zammad_postgresql_replication_username
 
 postgresql replication username
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -1200,6 +1403,8 @@ zammad_postgresql_replication_username: repl_user
 
 postgresql username
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -1209,6 +1414,8 @@ zammad_postgresql_username: zammad
 ### zammad_railserver_liveness_probe
 
 rail servers liveness probe
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1223,6 +1430,8 @@ zammad_railserver_liveness_probe:
 ### zammad_railserver_pod_annotations
 
 rail server additional pod annotations
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1241,6 +1450,8 @@ zammad_railserver_pod_annotations:
 
 rail server additional pod labels
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1258,6 +1469,8 @@ zammad_railserver_pod_labels:
 
 rail servers readiness probe
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1273,6 +1486,8 @@ zammad_railserver_readiness_probe:
 
 rail servers replicas
 
+**_Type:_** int<br />
+
 #### Default value
 
 ```YAML
@@ -1282,6 +1497,8 @@ zammad_railserver_replicas: 1
 ### zammad_railserver_resources
 
 rail server resources requests and limits
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1305,6 +1522,8 @@ zammad_railserver_resources:
 
 rail server security context
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1321,6 +1540,8 @@ zammad_railserver_security_context:
 
 rail server sidecars : can be used to add additional containers / sidecars
 
+**_Type:_** list<br />
+
 #### Default value
 
 ```YAML
@@ -1330,6 +1551,8 @@ zammad_railserver_sidecars: []
 ### zammad_railserver_startup_probe
 
 rail servers startup probe
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1345,6 +1568,8 @@ zammad_railserver_startup_probe:
 
 trusted proxies for rail server
 
+**_Type:_** list<br />
+
 #### Default value
 
 ```YAML
@@ -1354,6 +1579,8 @@ zammad_railserver_trusted_proxies: "['127.0.0.1', '::1']"
 ### zammad_railserver_web_concurrency
 
 web concurrency for rail server
+
+**_Type:_** int<br />
 
 #### Default value
 
@@ -1365,6 +1592,8 @@ zammad_railserver_web_concurrency: 0
 
 redis architecture
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -1374,6 +1603,8 @@ zammad_redis_architecture: standalone
 ### zammad_redis_enabled
 
 enable/disable redis chart dependency
+
+**_Type:_** boolean<br />
 
 #### Default value
 
@@ -1385,30 +1616,42 @@ zammad_redis_enabled: true
 
 redis host : only used when zammad_redis_enabled is false
 
-### zammad_redis_master_persistence_enabled
+**_Type:_** string<br />
 
-enable persistence on redis master nodes using PVC
+### zammad_redis_password
+
+password for redis
+
+**_Type:_** string<br />
+
+### zammad_redis_port
+
+port for redis
+
+**_Type:_** int<br />
 
 #### Default value
 
 ```YAML
-zammad_redis_master_persistence_enabled: true
+zammad_redis_port: 6379
 ```
 
-### zammad_redis_master_resources
+### zammad_redis_resources
 
 redis resources requests and limits
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
-zammad_redis_master_resources: {}
+zammad_redis_resources: {}
 ```
 
 #### Example usage
 
 ```YAML
-zammad_redis_master_resources:
+zammad_redis_resources:
   limits:
     cpu: 250m
     memory: 256Mi
@@ -1417,23 +1660,90 @@ zammad_redis_master_resources:
     memory: 256Mi
 ```
 
-### zammad_redis_password
+### zammad_redis_sentinel_enabled
 
-password for redis
+enable redis sentinel mode
 
-### zammad_redis_port
-
-port for redis
+**_Type:_** boolean<br />
 
 #### Default value
 
 ```YAML
-zammad_redis_port: 6379
+zammad_redis_sentinel_enabled: false
+```
+
+### zammad_redis_sentinel_master_name
+
+sentinel master name
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_redis_sentinel_master_name: mymaster
+```
+
+### zammad_redis_sentinel_pass
+
+redis sentinel password
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_redis_sentinel_pass: zammad
+```
+
+### zammad_redis_sentinel_sentinels
+
+list of sentinel host:port addresses
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+zammad_redis_sentinel_sentinels: []
+```
+
+#### Example usage
+
+```YAML
+zammad_redis_sentinel_sentinels:
+  - "zammad-redis:26379"
+```
+
+### zammad_redis_sentinel_username
+
+redis sentinel username (leave empty if no username is required)
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_redis_sentinel_username: ''
+```
+
+### zammad_redis_username
+
+redis username (leave empty if no username is required)
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_redis_username: ''
 ```
 
 ### zammad_scheduler_pod_annotations
 
 scheduler additional pod labels
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1451,6 +1761,8 @@ zammad_scheduler_pod_annotations:
 ### zammad_scheduler_pod_labels
 
 scheduler additional pod labels
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1475,6 +1787,8 @@ limits:
 cpu: 200m
 memory: 512Mi
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1482,6 +1796,8 @@ zammad_scheduler_resources: {}
 ```
 
 ### zammad_scheduler_security_context
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1499,23 +1815,39 @@ zammad_scheduler_security_context:
 
 scheduler sidecars : can be used to add additional containers / sidecars
 
+**_Type:_** list<br />
+
 #### Default value
 
 ```YAML
 zammad_scheduler_sidecars: []
 ```
 
+### zammad_secret_key_regex
+
+#### Default value
+
+```YAML
+zammad_secret_key_regex: ^[0-9,a-z,A-Z]{1,64}$
+```
+
 ### zammad_secrets_autowizard_secret_key
 
 Secret key for autowizard
+
+**_Type:_** string<br />
 
 ### zammad_secrets_autowizard_secret_name
 
 Secret key name for autowizard
 
+**_Type:_** string<br />
+
 ### zammad_secrets_autowizard_use_existing
 
 Use existing secret for autowizard
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -1527,13 +1859,19 @@ zammad_secrets_autowizard_use_existing: false
 
 Secret key name for elasticsearch
 
+**_Type:_** string<br />
+
 ### zammad_secrets_elasticsearch_secret_name
 
 Secret key for elasticsearch
 
+**_Type:_** string<br />
+
 ### zammad_secrets_elasticsearch_use_existing
 
 Use existing secret for elasticsearch
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -1545,13 +1883,19 @@ zammad_secrets_elasticsearch_use_existing: false
 
 Secret key name for postgresql
 
+**_Type:_** string<br />
+
 ### zammad_secrets_postgresql_secret_name
 
 Secret key for postgresql
 
+**_Type:_** string<br />
+
 ### zammad_secrets_postgresql_use_existing
 
-Use existing secret for redis
+Use existing secret for postgresql
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -1563,11 +1907,55 @@ zammad_secrets_postgresql_use_existing: false
 
 Secret key name for redis
 
+**_Type:_** string<br />
+
 ### zammad_secrets_redis_secret_name
 
-Secret key for redis
+Secret name for redis
+
+**_Type:_** string<br />
+
+### zammad_secrets_redis_sentinel_secret_key
+
+Secret key name for redis sentinel
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_secrets_redis_sentinel_secret_key: redis-sentinel-password
+```
+
+### zammad_secrets_redis_sentinel_secret_name
+
+Secret name for redis sentinel
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_secrets_redis_sentinel_secret_name: redis-sentinel-pass
+```
+
+### zammad_secrets_redis_sentinel_use_existing
+
+Use existing secret for redis sentinel
+
+**_Type:_** boolean<br />
+
+#### Default value
+
+```YAML
+zammad_secrets_redis_sentinel_use_existing: false
+```
 
 ### zammad_secrets_redis_use_existing
+
+Use existing secret for redis
+
+**_Type:_** boolean<br />
 
 #### Default value
 
@@ -1578,6 +1966,8 @@ zammad_secrets_redis_use_existing: false
 ### zammad_security_context
 
 Zammad security context
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1596,6 +1986,8 @@ zammad_security_context:
 
 annotations for service account
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1613,6 +2005,8 @@ zammad_service_account_annotations:
 
 create service account for zammad
 
+**_Type:_** boolean<br />
+
 #### Default value
 
 ```YAML
@@ -1622,6 +2016,8 @@ zammad_service_account_create: true
 ### zammad_service_account_name
 
 service account name
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -1633,9 +2029,13 @@ zammad_service_account_name: ''
 
 existing PVC with 'ReadWriteMany' permisssion for 'File' based storage
 
+**_Type:_** string<br />
+
 ### zammad_storage_volume_enabled
 
 Enable this for 'File' based storage in Zammad.
+
+**_Type:_** boolean<br />
 
 #### Default value
 
@@ -1647,6 +2047,8 @@ zammad_storage_volume_enabled: false
 
 Secret name for TLS certificate
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -1656,6 +2058,8 @@ zammad_tls_certificate_secret_name: zammad-certificate
 ### zammad_tmp_dir_volume_medium
 
 storage medium for tmp dir
+
+**_Type:_** string<br />
 
 #### Default value
 
@@ -1667,6 +2071,8 @@ zammad_tmp_dir_volume_medium: Memory
 
 size limit for tmp dir
 
+**_Type:_** string<br />
+
 #### Default value
 
 ```YAML
@@ -1677,6 +2083,8 @@ zammad_tmp_dir_volume_size_limit: 100Mi
 
 kubernetes toleration
 
+**_Type:_** list<br />
+
 #### Default value
 
 ```YAML
@@ -1684,6 +2092,10 @@ zammad_toloration: []
 ```
 
 ### zammad_wait_install
+
+Wait for helm install to finish
+
+**_Type:_** boolean<br />
 
 #### Default value
 
@@ -1694,6 +2106,8 @@ zammad_wait_install: true
 ### zammad_websocket_liveness_probe
 
 liveness probe for websocket
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1708,6 +2122,8 @@ zammad_websocket_liveness_probe:
 ### zammad_websocket_pod_annotations
 
 websocket additional pod labels
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1726,6 +2142,8 @@ zammad_websocket_pod_annotations:
 
 websocket additional pod labels
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1743,19 +2161,23 @@ zammad_websocket_pod_labels:
 
 readiness probe for websocket
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
 zammad_websocket_readiness_probe:
   tcpSocket:
     port: 6042
-  failureThreshold: 5
-  timeoutSeconds: 5
+    failureThreshold: 5
+    timeoutSeconds: 5
 ```
 
 ### zammad_websocket_resources
 
 websocket resources requests and limits
+
+**_Type:_** dict<br />
 
 #### Default value
 
@@ -1779,6 +2201,8 @@ zammad_websocket_resources:
 
 security context for websocket
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1795,6 +2219,8 @@ zammad_websocket_security_context:
 
 scheduler websocket : can be used to add additional containers / sidecars
 
+**_Type:_** list<br />
+
 #### Default value
 
 ```YAML
@@ -1805,6 +2231,8 @@ zammad_websocket_sidecars: []
 
 startup probe for websocket
 
+**_Type:_** dict<br />
+
 #### Default value
 
 ```YAML
@@ -1814,8 +2242,6 @@ zammad_websocket_startup_probe:
   failureThreshold: 20
   periodSeconds: 4
 ```
-
-
 
 ## Dependencies
 

@@ -38,6 +38,10 @@ secrets:
     useExisting: {{ zammad_secrets_redis_use_existing }}
     secretKey: {{ zammad_secrets_redis_secret_key }}
     secretName: {{ zammad_secrets_redis_secret_name }}
+    sentinel:
+      useExisting: {{ zammad_secrets_redis_sentinel_use_existing }}
+      secretKey: {{ zammad_secrets_redis_sentinel_secret_key }}
+      secretName: {{ zammad_secrets_redis_sentinel_secret_name }}
 
 securityContext: {{ zammad_security_context }}
 
@@ -113,8 +117,17 @@ zammadConfig:
 {% if not zammad_redis_enabled %}
     host: "{{ zammad_redis_host }}"
 {% endif %}
+    username: "{{ zammad_redis_username }}"
     pass: {{ zammad_redis_password }}
     port: {{ zammad_redis_port }}
+    sentinel:
+      enabled: {{ zammad_redis_sentinel_enabled | lower }}
+{% if zammad_redis_sentinel_sentinels | length > 0 %}
+      sentinels: {{ zammad_redis_sentinel_sentinels | to_json }}
+{% endif %}
+      masterName: "{{ zammad_redis_sentinel_master_name }}"
+      username: "{{ zammad_redis_sentinel_username }}"
+      pass: "{{ zammad_redis_sentinel_pass }}"
 
   scheduler:
     resources: {{ zammad_scheduler_resources }}

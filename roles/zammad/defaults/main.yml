@@ -111,9 +111,9 @@ zammad_secrets_postgresql_use_existing: false
 # @var zammad_secrets_postgresql_secret_name:description: >
 # Secret key for postgresql
 
-# @var zammad_secrets_postgresql_use_existing
-# @var zammad_secrets_postgresql_use_existing:type: string
-# @var zammad_secrets_postgresql_use_existing:description: >
+# @var zammad_secrets_redis_use_existing
+# @var zammad_secrets_redis_use_existing:type: boolean
+# @var zammad_secrets_redis_use_existing:description: >
 # Use existing secret for redis
 zammad_secrets_redis_use_existing: false
 
@@ -125,14 +125,25 @@ zammad_secrets_redis_use_existing: false
 # @var zammad_secrets_redis_secret_name
 # @var zammad_secrets_redis_secret_name:type: string
 # @var zammad_secrets_redis_secret_name:description: >
-# Secret key for redis
+# Secret name for redis
 
+# @var zammad_secrets_redis_sentinel_use_existing
+# @var zammad_secrets_redis_sentinel_use_existing:type: boolean
+# @var zammad_secrets_redis_sentinel_use_existing:description: >
+# Use existing secret for redis sentinel
+zammad_secrets_redis_sentinel_use_existing: false
 
-# @var zammad_redis_master_persistence_enabled
-# @var zammad_redis_master_persistence_enabled:type: boolean
-# @var zammad_redis_master_persistence_enabled:description: >
-# enable persistence on redis master nodes using PVC
-zammad_redis_master_persistence_enabled: true
+# @var zammad_secrets_redis_sentinel_secret_key
+# @var zammad_secrets_redis_sentinel_secret_key:type: string
+# @var zammad_secrets_redis_sentinel_secret_key:description: >
+# Secret key name for redis sentinel
+zammad_secrets_redis_sentinel_secret_key: "redis-sentinel-password"
+
+# @var zammad_secrets_redis_sentinel_secret_name
+# @var zammad_secrets_redis_sentinel_secret_name:type: string
+# @var zammad_secrets_redis_sentinel_secret_name:description: >
+# Secret name for redis sentinel
+zammad_secrets_redis_sentinel_secret_name: "redis-sentinel-pass"
 
 # @var zammad_security_context
 # @var zammad_security_context:type: dict
@@ -621,6 +632,12 @@ zammad_redis_enabled: true
 # @var zammad_redis_host:description: >
 # redis host : only used when zammad_redis_enabled is false
 
+# @var zammad_redis_username
+# @var zammad_redis_username:type: string
+# @var zammad_redis_username:description: >
+# redis username (leave empty if no username is required)
+zammad_redis_username: ""
+
 # @var zammad_redis_password
 # @var zammad_redis_password:type: string
 # @var zammad_redis_password:description: >
@@ -638,19 +655,52 @@ zammad_redis_port: 6379
 # redis architecture
 zammad_redis_architecture: "standalone"
 
-# @var zammad_redis_master_resources
-# @var zammad_redis_master_resources:type: dict
-# @var zammad_redis_master_resources:description: >
+# @var zammad_redis_sentinel_enabled
+# @var zammad_redis_sentinel_enabled:type: boolean
+# @var zammad_redis_sentinel_enabled:description: >
+# enable redis sentinel mode
+zammad_redis_sentinel_enabled: false
+
+# @var zammad_redis_sentinel_sentinels
+# @var zammad_redis_sentinel_sentinels:type: list
+# @var zammad_redis_sentinel_sentinels:description: >
+# list of sentinel host:port addresses
+# @var zammad_redis_sentinel_sentinels:example: >
+# zammad_redis_sentinel_sentinels:
+#   - "zammad-redis:26379"
+zammad_redis_sentinel_sentinels: []
+
+# @var zammad_redis_sentinel_master_name
+# @var zammad_redis_sentinel_master_name:type: string
+# @var zammad_redis_sentinel_master_name:description: >
+# sentinel master name
+zammad_redis_sentinel_master_name: "mymaster"
+
+# @var zammad_redis_sentinel_username
+# @var zammad_redis_sentinel_username:type: string
+# @var zammad_redis_sentinel_username:description: >
+# redis sentinel username (leave empty if no username is required)
+zammad_redis_sentinel_username: ""
+
+# @var zammad_redis_sentinel_pass
+# @var zammad_redis_sentinel_pass:type: string
+# @var zammad_redis_sentinel_pass:description: >
+# redis sentinel password
+zammad_redis_sentinel_pass: "zammad"
+
+# @var zammad_redis_resources
+# @var zammad_redis_resources:type: dict
+# @var zammad_redis_resources:description: >
 # redis resources requests and limits
-# @var zammad_redis_master_resources:example: >
-# zammad_redis_master_resources:
+# @var zammad_redis_resources:example: >
+# zammad_redis_resources:
 #   limits:
 #     cpu: 250m
 #     memory: 256Mi
 #   requests:
 #     cpu: 250m
 #     memory: 256Mi
-zammad_redis_master_resources: {}
+zammad_redis_resources: {}
 
 # @var zammad_scheduler_resources
 # @var zammad_scheduler_resources:type: dict
