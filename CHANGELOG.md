@@ -1,8 +1,8 @@
 # Changelog
 
-## [6.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/6.1.0) (2026-03-08)
+## [7.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/7.0.0) (2026-03-08)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/6.0.0...6.1.0)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/6.0.0...7.0.0)
 
 ## 🚀 New Features
 
@@ -10,6 +10,7 @@
 
 ## ⚙️ Dependencies
 
+- feat\(helm\)!: Update chart zammad \(15.7.0 → 16.0.2\) [\#134](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/134) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update pre-commit hook ansible/ansible-lint \(v26.2.0 → v26.3.0\) [\#133](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/133) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart argo-cd \(9.4.5 → 9.4.7\) [\#132](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/132) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.1.2 → v46.1.3\) [\#131](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/131) ([plopoyop](https://github.com/plopoyop))
