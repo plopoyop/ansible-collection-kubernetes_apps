@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    semaphore_enabled: false
+  tasks:
+    - name: "Remove Semaphore"
+      ansible.builtin.import_role:
+        name: "semaphore"

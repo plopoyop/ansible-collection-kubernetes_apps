@@ -1,0 +1,4 @@
+---
+semaphore_helm_repo_name: "semaphoreui"
+semaphore_helm_chart_ref: "{{ semaphore_helm_repo_name }}/semaphore"
+semaphore_helm_repo_url: "https://semaphoreui.github.io/charts"

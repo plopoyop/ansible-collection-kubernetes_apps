@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    semaphore_wait_install: false
+    semaphore_admin_create: true
+    semaphore_admin_password: "password"
+  tasks:
+    - name: "Install Semaphore"
+      ansible.builtin.import_role:
+        name: "semaphore"

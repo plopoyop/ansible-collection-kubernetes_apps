@@ -2,7 +2,7 @@
 version: '3'
 
 vars:
-  ROLES_LIST: ["argocd", "atlantis", "clamav", "gatus", "mailcrab", "zammad"]
+  ROLES_LIST: ["argocd", "atlantis", "awx", "clamav", "gatus", "mailcrab", "semaphore", "zammad"]
 
 tasks:
   default:

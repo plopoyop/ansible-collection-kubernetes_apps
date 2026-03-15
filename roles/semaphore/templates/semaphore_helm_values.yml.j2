@@ -1,0 +1,247 @@
+---
+replicaCount: {{ semaphore_replica_count }}
+
+image:
+  repository: "{{ semaphore_image_repository }}"
+{% if semaphore_image_tag != "" %}
+  tag: "{{ semaphore_image_tag }}"
+{% endif %}
+  pullPolicy: "{{ semaphore_image_pull_policy }}"
+
+securityContext: {{ semaphore_security_context | to_json }}
+
+general:
+{% if semaphore_general_host != "" %}
+  host: "{{ semaphore_general_host }}"
+{% endif %}
+  gitClient: "{{ semaphore_general_git_client }}"
+  tmpPath: "{{ semaphore_general_tmp_path }}"
+  maxParallelTasks: {{ semaphore_general_max_parallel_tasks }}
+  passwordLoginDisable: {{ semaphore_general_password_login_disable | lower }}
+  nonAdminCanCreateProject: {{ semaphore_general_non_admin_can_create_project | lower }}
+  useRemoteRunner: {{ semaphore_general_use_remote_runner | lower }}
+{% if semaphore_general_ssh_config_path != "" %}
+  sshConfigPath: "{{ semaphore_general_ssh_config_path }}"
+{% endif %}
+
+database:
+  type: "{{ semaphore_database_type }}"
+{% if semaphore_database_host != "" %}
+  host: "{{ semaphore_database_host }}"
+{% endif %}
+{% if semaphore_database_port != "" %}
+  port: {{ semaphore_database_port }}
+{% endif %}
+  name: "{{ semaphore_database_name }}"
+  username: "{{ semaphore_database_username }}"
+{% if semaphore_database_password != "" %}
+  password: "{{ semaphore_database_password }}"
+{% endif %}
+{% if semaphore_database_existing_secret != "" %}
+  existingSecret: "{{ semaphore_database_existing_secret }}"
+{% endif %}
+{% if semaphore_database_options != {} %}
+  options: {{ semaphore_database_options | to_json }}
+{% endif %}
+  persistence:
+    enabled: {{ semaphore_database_persistence_enabled | lower }}
+    size: "{{ semaphore_database_persistence_size }}"
+
+persistence:
+  enabled: {{ semaphore_persistence_enabled | lower }}
+  size: "{{ semaphore_persistence_size }}"
+
+{% if semaphore_secrets_existing_secret != "" or semaphore_secrets_cookie_hash != "" or semaphore_secrets_cookie_encryption != "" or semaphore_secrets_accesskey_encryption != "" %}
+secrets:
+{% if semaphore_secrets_cookie_hash != "" %}
+  cookieHash: "{{ semaphore_secrets_cookie_hash }}"
+{% endif %}
+{% if semaphore_secrets_cookie_encryption != "" %}
+  cookieEncryption: "{{ semaphore_secrets_cookie_encryption }}"
+{% endif %}
+{% if semaphore_secrets_accesskey_encryption != "" %}
+  accesskeyEncryption: "{{ semaphore_secrets_accesskey_encryption }}"
+{% endif %}
+{% if semaphore_secrets_existing_secret != "" %}
+  existingSecret: "{{ semaphore_secrets_existing_secret }}"
+{% endif %}
+{% endif %}
+
+admin:
+  create: {{ semaphore_admin_create | lower }}
+{% if semaphore_admin_create %}
+  fullname: "{{ semaphore_admin_fullname }}"
+  username: "{{ semaphore_admin_username }}"
+  password: "{{ semaphore_admin_password }}"
+  email: "{{ semaphore_admin_email }}"
+{% if semaphore_admin_existing_secret != "" %}
+  existingSecret: "{{ semaphore_admin_existing_secret }}"
+{% endif %}
+{% endif %}
+
+service:
+  type: "{{ semaphore_service_type }}"
+  port: {{ semaphore_service_port }}
+
+ingress:
+  enabled: {{ semaphore_ingress_enabled | lower }}
+{% if semaphore_ingress_enabled %}
+{% if semaphore_ingress_class_name != "" %}
+  className: "{{ semaphore_ingress_class_name }}"
+{% endif %}
+  hosts:
+    - host: "{{ semaphore_ingress_host }}"
+      paths:
+        - path: "{{ semaphore_ingress_path }}"
+          pathType: "{{ semaphore_ingress_path_type }}"
+  annotations:
+{% if semaphore_ingress_annotations != {} %}
+    {{ semaphore_ingress_annotations | to_nice_yaml | indent(4) }}
+{% endif %}
+{% if semaphore_ingress_certmanager_cluster_issuer != "" %}
+    cert-manager.io/cluster-issuer: "{{ semaphore_ingress_certmanager_cluster_issuer }}"
+{% endif %}
+{% if semaphore_ingress_tls | length > 0 %}
+  tls: {{ semaphore_ingress_tls | to_json }}
+{% endif %}
+{% endif %}
+
+{% if semaphore_ldap_enabled %}
+ldap:
+  enable: true
+  server: "{{ semaphore_ldap_server }}"
+  needtls: {{ semaphore_ldap_needtls | lower }}
+  searchdn: "{{ semaphore_ldap_searchdn }}"
+  filter: "{{ semaphore_ldap_filter }}"
+  binddn: "{{ semaphore_ldap_binddn }}"
+  password: "{{ semaphore_ldap_password }}"
+{% if semaphore_ldap_existing_secret != "" %}
+  existingSecret: "{{ semaphore_ldap_existing_secret }}"
+{% endif %}
+  mappings: {{ semaphore_ldap_mappings | to_json }}
+{% endif %}
+
+{% if semaphore_oidc_enabled %}
+oidc:
+  enable: true
+  providers: {{ semaphore_oidc_providers | to_json }}
+{% endif %}
+
+email:
+  alert: {{ semaphore_email_alert | lower }}
+{% if semaphore_email_alert %}
+  sender: "{{ semaphore_email_sender }}"
+  host: "{{ semaphore_email_host }}"
+  port: "{{ semaphore_email_port }}"
+  secure: {{ semaphore_email_secure | lower }}
+  username: "{{ semaphore_email_username }}"
+  password: "{{ semaphore_email_password }}"
+{% if semaphore_email_existing_secret != "" %}
+  existingSecret: "{{ semaphore_email_existing_secret }}"
+{% endif %}
+{% endif %}
+
+telegram:
+  alert: {{ semaphore_telegram_alert | lower }}
+{% if semaphore_telegram_alert %}
+  chat: "{{ semaphore_telegram_chat }}"
+  token: "{{ semaphore_telegram_token }}"
+{% if semaphore_telegram_existing_secret != "" %}
+  existingSecret: "{{ semaphore_telegram_existing_secret }}"
+{% endif %}
+{% endif %}
+
+slack:
+  alert: {{ semaphore_slack_alert | lower }}
+{% if semaphore_slack_alert %}
+  url: "{{ semaphore_slack_url }}"
+{% if semaphore_slack_existing_secret != "" %}
+  existingSecret: "{{ semaphore_slack_existing_secret }}"
+{% endif %}
+{% endif %}
+
+{% if semaphore_runner_token != "" or semaphore_runner_existing_secret != "" %}
+runner:
+{% if semaphore_runner_token != "" %}
+  token: "{{ semaphore_runner_token }}"
+{% endif %}
+{% if semaphore_runner_existing_secret != "" %}
+  existingSecret: "{{ semaphore_runner_existing_secret }}"
+{% endif %}
+{% endif %}
+
+{% if semaphore_custom_certificates_enabled %}
+customCertificates:
+  enabled: true
+{% if semaphore_custom_certificates_existing_secret != "" %}
+  existingSecret: "{{ semaphore_custom_certificates_existing_secret }}"
+{% endif %}
+{% if semaphore_custom_certificates_existing_configmap != "" %}
+  existingConfigMap: "{{ semaphore_custom_certificates_existing_configmap }}"
+{% endif %}
+  key: "{{ semaphore_custom_certificates_key }}"
+{% endif %}
+
+mariadb:
+  enabled: {{ semaphore_mariadb_enabled | lower }}
+{% if semaphore_mariadb_enabled %}
+  fullnameOverride: mariadb
+  architecture: standalone
+  auth:
+    database: "{{ semaphore_mariadb_auth_database }}"
+    username: "{{ semaphore_mariadb_auth_username }}"
+    password: "{{ semaphore_mariadb_auth_password }}"
+{% endif %}
+
+postgresql:
+  enabled: {{ semaphore_postgresql_enabled | lower }}
+{% if semaphore_postgresql_enabled %}
+  fullnameOverride: postgresql
+  architecture: standalone
+  auth:
+    database: "{{ semaphore_postgresql_auth_database }}"
+    username: "{{ semaphore_postgresql_auth_username }}"
+    password: "{{ semaphore_postgresql_auth_password }}"
+{% endif %}
+
+resources: {{ semaphore_resources | to_json }}
+
+{% if semaphore_node_selector != {} %}
+nodeSelector: {{ semaphore_node_selector | to_json }}
+{% endif %}
+
+{% if semaphore_affinity != {} %}
+affinity: {{ semaphore_affinity | to_json }}
+{% endif %}
+
+{% if semaphore_tolerations | length > 0 %}
+tolerations: {{ semaphore_tolerations | to_json }}
+{% endif %}
+
+{% if semaphore_extra_env_variables != {} %}
+extraEnvVariables: {{ semaphore_extra_env_variables | to_json }}
+{% endif %}
+
+{% if semaphore_extra_env_secrets != {} %}
+extraEnvSecrets: {{ semaphore_extra_env_secrets | to_json }}
+{% endif %}
+
+{% if semaphore_extra_volumes | length > 0 %}
+extraVolumes: {{ semaphore_extra_volumes | to_json }}
+{% endif %}
+
+{% if semaphore_extra_volume_mounts | length > 0 %}
+extraVolumeMounts: {{ semaphore_extra_volume_mounts | to_json }}
+{% endif %}
+
+{% if semaphore_extra_init_containers | length > 0 %}
+extraInitContainers: {{ semaphore_extra_init_containers | to_json }}
+{% endif %}
+
+{% if semaphore_extra_sidecar_containers | length > 0 %}
+extraSidecarContainers: {{ semaphore_extra_sidecar_containers | to_json }}
+{% endif %}
+
+{% if semaphore_additional_helm_values %}
+{{ semaphore_additional_helm_values | to_nice_yaml | indent(0) }}
+{% endif %}

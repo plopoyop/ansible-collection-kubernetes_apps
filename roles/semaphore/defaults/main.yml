@@ -1,0 +1,648 @@
+---
+# @var semaphore_enabled
+# @var semaphore_enabled:type: boolean
+# @var semaphore_enabled:description: >
+# Should Semaphore UI helm chart be installed
+semaphore_enabled: true
+
+# @var semaphore_namespace
+# @var semaphore_namespace:type: string
+# @var semaphore_namespace:description: >
+# K8s namespace to install the Semaphore chart
+semaphore_namespace: "semaphore"
+
+# @var semaphore_helm_version
+# @var semaphore_helm_version:type: string
+# @var semaphore_helm_version:description: >
+# Helm chart version to install
+semaphore_helm_version: "16.0.11"
+
+# @var semaphore_deployment_name
+# @var semaphore_deployment_name:type: string
+# @var semaphore_deployment_name:description: >
+# Helm chart deployment name
+semaphore_deployment_name: "semaphore"
+
+# @var semaphore_wait_install
+# @var semaphore_wait_install:type: boolean
+# @var semaphore_wait_install:description: >
+# Wait for helm install to finish
+semaphore_wait_install: true
+
+# Image configuration
+# @var semaphore_image_repository
+# @var semaphore_image_repository:type: string
+# @var semaphore_image_repository:description: >
+# Image repository
+semaphore_image_repository: "semaphoreui/semaphore"
+
+# @var semaphore_image_tag
+# @var semaphore_image_tag:type: string
+# @var semaphore_image_tag:description: >
+# Image tag (defaults to app version if empty)
+semaphore_image_tag: ""
+
+# @var semaphore_image_pull_policy
+# @var semaphore_image_pull_policy:type: string
+# @var semaphore_image_pull_policy:description: >
+# Image pull policy
+semaphore_image_pull_policy: "IfNotPresent"
+
+# @var semaphore_replica_count
+# @var semaphore_replica_count:type: integer
+# @var semaphore_replica_count:description: >
+# Number of replicas
+semaphore_replica_count: 1
+
+# General configuration
+# @var semaphore_general_host
+# @var semaphore_general_host:type: string
+# @var semaphore_general_host:description: >
+# Host to access Semaphore
+semaphore_general_host: ""
+
+# @var semaphore_general_git_client
+# @var semaphore_general_git_client:type: string
+# @var semaphore_general_git_client:description: >
+# Git client implementation
+semaphore_general_git_client: "cmd_git"
+
+# @var semaphore_general_tmp_path
+# @var semaphore_general_tmp_path:type: string
+# @var semaphore_general_tmp_path:description: >
+# Working directory for Semaphore
+semaphore_general_tmp_path: "/tmp/semaphore"
+
+# @var semaphore_general_max_parallel_tasks
+# @var semaphore_general_max_parallel_tasks:type: integer
+# @var semaphore_general_max_parallel_tasks:description: >
+# Maximum parallel tasks (0 = unlimited)
+semaphore_general_max_parallel_tasks: 0
+
+# @var semaphore_general_password_login_disable
+# @var semaphore_general_password_login_disable:type: boolean
+# @var semaphore_general_password_login_disable:description: >
+# Disable password login
+semaphore_general_password_login_disable: false
+
+# @var semaphore_general_non_admin_can_create_project
+# @var semaphore_general_non_admin_can_create_project:type: boolean
+# @var semaphore_general_non_admin_can_create_project:description: >
+# Allow non-admins to create projects
+semaphore_general_non_admin_can_create_project: false
+
+# @var semaphore_general_use_remote_runner
+# @var semaphore_general_use_remote_runner:type: boolean
+# @var semaphore_general_use_remote_runner:description: >
+# Enable usage of remote runners
+semaphore_general_use_remote_runner: false
+
+# @var semaphore_general_ssh_config_path
+# @var semaphore_general_ssh_config_path:type: string
+# @var semaphore_general_ssh_config_path:description: >
+# Path to SSH config
+semaphore_general_ssh_config_path: ""
+
+# Database configuration
+# @var semaphore_database_type
+# @var semaphore_database_type:type: string
+# @var semaphore_database_type:description: >
+# Type of database backend (bolt, mysql, postgres)
+semaphore_database_type: "bolt"
+
+# @var semaphore_database_host
+# @var semaphore_database_host:type: string
+# @var semaphore_database_host:description: >
+# Host for database connection
+semaphore_database_host: ""
+
+# @var semaphore_database_port
+# @var semaphore_database_port:type: string
+# @var semaphore_database_port:description: >
+# Port for database connection
+semaphore_database_port: ""
+
+# @var semaphore_database_name
+# @var semaphore_database_name:type: string
+# @var semaphore_database_name:description: >
+# Name of the database
+semaphore_database_name: "semaphore"
+
+# @var semaphore_database_username
+# @var semaphore_database_username:type: string
+# @var semaphore_database_username:description: >
+# Username for database
+semaphore_database_username: "semaphore"
+
+# @var semaphore_database_password
+# @var semaphore_database_password:type: string
+# @var semaphore_database_password:description: >
+# Password for database
+semaphore_database_password: ""
+
+# @var semaphore_database_existing_secret
+# @var semaphore_database_existing_secret:type: string
+# @var semaphore_database_existing_secret:description: >
+# Existing secret to use for database credentials
+semaphore_database_existing_secret: ""
+
+# @var semaphore_database_options
+# @var semaphore_database_options:type: dict
+# @var semaphore_database_options:description: >
+# Options for database connection
+semaphore_database_options: {}
+
+# @var semaphore_database_persistence_enabled
+# @var semaphore_database_persistence_enabled:type: boolean
+# @var semaphore_database_persistence_enabled:description: >
+# Enable persistence for boltdb
+semaphore_database_persistence_enabled: true
+
+# @var semaphore_database_persistence_size
+# @var semaphore_database_persistence_size:type: string
+# @var semaphore_database_persistence_size:description: >
+# Size for boltdb volume
+semaphore_database_persistence_size: "5G"
+
+# Persistence configuration
+# @var semaphore_persistence_enabled
+# @var semaphore_persistence_enabled:type: boolean
+# @var semaphore_persistence_enabled:description: >
+# Enable persistence for workdir
+semaphore_persistence_enabled: true
+
+# @var semaphore_persistence_size
+# @var semaphore_persistence_size:type: string
+# @var semaphore_persistence_size:description: >
+# Size for workdir volume
+semaphore_persistence_size: "10G"
+
+# Secrets configuration
+# @var semaphore_secrets_cookie_hash
+# @var semaphore_secrets_cookie_hash:type: string
+# @var semaphore_secrets_cookie_hash:description: >
+# Cookie hash secret (generated if not present)
+semaphore_secrets_cookie_hash: ""
+
+# @var semaphore_secrets_cookie_encryption
+# @var semaphore_secrets_cookie_encryption:type: string
+# @var semaphore_secrets_cookie_encryption:description: >
+# Cookie encryption secret (generated if not present)
+semaphore_secrets_cookie_encryption: ""
+
+# @var semaphore_secrets_accesskey_encryption
+# @var semaphore_secrets_accesskey_encryption:type: string
+# @var semaphore_secrets_accesskey_encryption:description: >
+# Access key encryption secret (generated if not present)
+semaphore_secrets_accesskey_encryption: ""
+
+# @var semaphore_secrets_existing_secret
+# @var semaphore_secrets_existing_secret:type: string
+# @var semaphore_secrets_existing_secret:description: >
+# Existing secret to use for secrets
+semaphore_secrets_existing_secret: ""
+
+# Admin user configuration
+# @var semaphore_admin_create
+# @var semaphore_admin_create:type: boolean
+# @var semaphore_admin_create:description: >
+# Create a local admin user
+semaphore_admin_create: false
+
+# @var semaphore_admin_fullname
+# @var semaphore_admin_fullname:type: string
+# @var semaphore_admin_fullname:description: >
+# Fullname for local admin
+semaphore_admin_fullname: "Admin"
+
+# @var semaphore_admin_username
+# @var semaphore_admin_username:type: string
+# @var semaphore_admin_username:description: >
+# Username for local admin
+semaphore_admin_username: "admin"
+
+# @var semaphore_admin_password
+# @var semaphore_admin_password:type: string
+# @var semaphore_admin_password:description: >
+# Password for local admin
+semaphore_admin_password: ""
+
+# @var semaphore_admin_email
+# @var semaphore_admin_email:type: string
+# @var semaphore_admin_email:description: >
+# Email for local admin
+semaphore_admin_email: "admin@localhost"
+
+# @var semaphore_admin_existing_secret
+# @var semaphore_admin_existing_secret:type: string
+# @var semaphore_admin_existing_secret:description: >
+# Existing secret to use for admin credentials
+semaphore_admin_existing_secret: ""
+
+# Ingress configuration
+# @var semaphore_ingress_enabled
+# @var semaphore_ingress_enabled:type: boolean
+# @var semaphore_ingress_enabled:description: >
+# Enable ingress
+semaphore_ingress_enabled: false
+
+# @var semaphore_ingress_class_name
+# @var semaphore_ingress_class_name:type: string
+# @var semaphore_ingress_class_name:description: >
+# Ingress class name
+semaphore_ingress_class_name: ""
+
+# @var semaphore_ingress_host
+# @var semaphore_ingress_host:type: string
+# @var semaphore_ingress_host:description: >
+# Hostname for ingress
+semaphore_ingress_host: "example.local"
+
+# @var semaphore_ingress_path
+# @var semaphore_ingress_path:type: string
+# @var semaphore_ingress_path:description: >
+# Ingress path
+semaphore_ingress_path: "/"
+
+# @var semaphore_ingress_path_type
+# @var semaphore_ingress_path_type:type: string
+# @var semaphore_ingress_path_type:description: >
+# Ingress path type
+semaphore_ingress_path_type: "Prefix"
+
+# @var semaphore_ingress_annotations
+# @var semaphore_ingress_annotations:type: dict
+# @var semaphore_ingress_annotations:description: >
+# Additional ingress annotations
+semaphore_ingress_annotations: {}
+
+# @var semaphore_ingress_tls
+# @var semaphore_ingress_tls:type: list
+# @var semaphore_ingress_tls:description: >
+# TLS configuration for ingress
+# @var semaphore_ingress_tls:example: >
+#   semaphore_ingress_tls:
+#     - secretName: semaphore-tls
+#       hosts:
+#         - semaphore.example.com
+semaphore_ingress_tls: []
+
+# @var semaphore_ingress_certmanager_cluster_issuer
+# @var semaphore_ingress_certmanager_cluster_issuer:type: string
+# @var semaphore_ingress_certmanager_cluster_issuer:description: >
+# Cert-manager ClusterIssuer name
+semaphore_ingress_certmanager_cluster_issuer: ""
+
+# Service configuration
+# @var semaphore_service_type
+# @var semaphore_service_type:type: string
+# @var semaphore_service_type:description: >
+# Kubernetes Service type
+semaphore_service_type: "ClusterIP"
+
+# @var semaphore_service_port
+# @var semaphore_service_port:type: integer
+# @var semaphore_service_port:description: >
+# Service port
+semaphore_service_port: 3000
+
+# LDAP configuration
+# @var semaphore_ldap_enabled
+# @var semaphore_ldap_enabled:type: boolean
+# @var semaphore_ldap_enabled:description: >
+# Enable LDAP authentication
+semaphore_ldap_enabled: false
+
+# @var semaphore_ldap_server
+# @var semaphore_ldap_server:type: string
+# @var semaphore_ldap_server:description: >
+# LDAP server address
+semaphore_ldap_server: ""
+
+# @var semaphore_ldap_needtls
+# @var semaphore_ldap_needtls:type: boolean
+# @var semaphore_ldap_needtls:description: >
+# Enable TLS for LDAP
+semaphore_ldap_needtls: false
+
+# @var semaphore_ldap_searchdn
+# @var semaphore_ldap_searchdn:type: string
+# @var semaphore_ldap_searchdn:description: >
+# Search DN for LDAP
+semaphore_ldap_searchdn: ""
+
+# @var semaphore_ldap_filter
+# @var semaphore_ldap_filter:type: string
+# @var semaphore_ldap_filter:description: >
+# Search filter for LDAP
+semaphore_ldap_filter: ""
+
+# @var semaphore_ldap_binddn
+# @var semaphore_ldap_binddn:type: string
+# @var semaphore_ldap_binddn:description: >
+# BindDN for LDAP authentication
+semaphore_ldap_binddn: ""
+
+# @var semaphore_ldap_password
+# @var semaphore_ldap_password:type: string
+# @var semaphore_ldap_password:description: >
+# Password for LDAP authentication
+semaphore_ldap_password: ""
+
+# @var semaphore_ldap_existing_secret
+# @var semaphore_ldap_existing_secret:type: string
+# @var semaphore_ldap_existing_secret:description: >
+# Existing secret for LDAP credentials
+semaphore_ldap_existing_secret: ""
+
+# @var semaphore_ldap_mappings
+# @var semaphore_ldap_mappings:type: dict
+# @var semaphore_ldap_mappings:description: >
+# Mapping for LDAP attributes
+semaphore_ldap_mappings:
+  dn: "dn"
+  mail: "mail"
+  uid: "uid"
+  cn: "cn"
+
+# OIDC configuration
+# @var semaphore_oidc_enabled
+# @var semaphore_oidc_enabled:type: boolean
+# @var semaphore_oidc_enabled:description: >
+# Enable OIDC authentication
+semaphore_oidc_enabled: false
+
+# @var semaphore_oidc_providers
+# @var semaphore_oidc_providers:type: dict
+# @var semaphore_oidc_providers:description: >
+# Dictionary of OIDC providers
+# @var semaphore_oidc_providers:example: >
+#   semaphore_oidc_providers:
+#     keycloak:
+#       display_name: Keycloak
+#       provider_url: https://keycloak.example.com/realms/myrealm
+#       client_id: semaphore
+#       client_secret: mysecret
+#       redirect_url: https://semaphore.example.com/api/auth/oidc/keycloak/redirect
+semaphore_oidc_providers: {}
+
+# Email alerting configuration
+# @var semaphore_email_alert
+# @var semaphore_email_alert:type: boolean
+# @var semaphore_email_alert:description: >
+# Enable email alerting
+semaphore_email_alert: false
+
+# @var semaphore_email_sender
+# @var semaphore_email_sender:type: string
+# @var semaphore_email_sender:description: >
+# Sender for email alerting
+semaphore_email_sender: ""
+
+# @var semaphore_email_host
+# @var semaphore_email_host:type: string
+# @var semaphore_email_host:description: >
+# SMTP server host
+semaphore_email_host: ""
+
+# @var semaphore_email_port
+# @var semaphore_email_port:type: string
+# @var semaphore_email_port:description: >
+# SMTP server port
+semaphore_email_port: ""
+
+# @var semaphore_email_secure
+# @var semaphore_email_secure:type: boolean
+# @var semaphore_email_secure:description: >
+# Enable secure SMTP connection
+semaphore_email_secure: false
+
+# @var semaphore_email_username
+# @var semaphore_email_username:type: string
+# @var semaphore_email_username:description: >
+# SMTP username
+semaphore_email_username: ""
+
+# @var semaphore_email_password
+# @var semaphore_email_password:type: string
+# @var semaphore_email_password:description: >
+# SMTP password
+semaphore_email_password: ""
+
+# @var semaphore_email_existing_secret
+# @var semaphore_email_existing_secret:type: string
+# @var semaphore_email_existing_secret:description: >
+# Existing secret for email credentials
+semaphore_email_existing_secret: ""
+
+# Telegram alerting
+# @var semaphore_telegram_alert
+# @var semaphore_telegram_alert:type: boolean
+# @var semaphore_telegram_alert:description: >
+# Enable telegram alerting
+semaphore_telegram_alert: false
+
+# @var semaphore_telegram_chat
+# @var semaphore_telegram_chat:type: string
+# @var semaphore_telegram_chat:description: >
+# Chat ID for telegram
+semaphore_telegram_chat: ""
+
+# @var semaphore_telegram_token
+# @var semaphore_telegram_token:type: string
+# @var semaphore_telegram_token:description: >
+# Token for telegram bot
+semaphore_telegram_token: ""
+
+# @var semaphore_telegram_existing_secret
+# @var semaphore_telegram_existing_secret:type: string
+# @var semaphore_telegram_existing_secret:description: >
+# Existing secret for telegram credentials
+semaphore_telegram_existing_secret: ""
+
+# Slack alerting
+# @var semaphore_slack_alert
+# @var semaphore_slack_alert:type: boolean
+# @var semaphore_slack_alert:description: >
+# Enable slack alerting
+semaphore_slack_alert: false
+
+# @var semaphore_slack_url
+# @var semaphore_slack_url:type: string
+# @var semaphore_slack_url:description: >
+# Webhook URL for slack
+semaphore_slack_url: ""
+
+# @var semaphore_slack_existing_secret
+# @var semaphore_slack_existing_secret:type: string
+# @var semaphore_slack_existing_secret:description: >
+# Existing secret for slack webhook
+semaphore_slack_existing_secret: ""
+
+# Runner configuration
+# @var semaphore_runner_token
+# @var semaphore_runner_token:type: string
+# @var semaphore_runner_token:description: >
+# Runner registration token
+semaphore_runner_token: ""
+
+# @var semaphore_runner_existing_secret
+# @var semaphore_runner_existing_secret:type: string
+# @var semaphore_runner_existing_secret:description: >
+# Existing secret for runner token
+semaphore_runner_existing_secret: ""
+
+# Custom CA certificates
+# @var semaphore_custom_certificates_enabled
+# @var semaphore_custom_certificates_enabled:type: boolean
+# @var semaphore_custom_certificates_enabled:description: >
+# Enable appending custom CA bundle
+semaphore_custom_certificates_enabled: false
+
+# @var semaphore_custom_certificates_existing_secret
+# @var semaphore_custom_certificates_existing_secret:type: string
+# @var semaphore_custom_certificates_existing_secret:description: >
+# Existing secret containing the CA bundle
+semaphore_custom_certificates_existing_secret: ""
+
+# @var semaphore_custom_certificates_existing_configmap
+# @var semaphore_custom_certificates_existing_configmap:type: string
+# @var semaphore_custom_certificates_existing_configmap:description: >
+# Existing configmap containing the CA bundle
+semaphore_custom_certificates_existing_configmap: ""
+
+# @var semaphore_custom_certificates_key
+# @var semaphore_custom_certificates_key:type: string
+# @var semaphore_custom_certificates_key:description: >
+# Key in secret/configmap that holds the CA bundle
+semaphore_custom_certificates_key: "ca.crt"
+
+# MariaDB subchart configuration
+# @var semaphore_mariadb_enabled
+# @var semaphore_mariadb_enabled:type: boolean
+# @var semaphore_mariadb_enabled:description: >
+# Enable MariaDB dependency
+semaphore_mariadb_enabled: false
+
+# @var semaphore_mariadb_auth_database
+# @var semaphore_mariadb_auth_database:type: string
+# @var semaphore_mariadb_auth_database:description: >
+# Database name for MariaDB
+semaphore_mariadb_auth_database: "semaphore"
+
+# @var semaphore_mariadb_auth_username
+# @var semaphore_mariadb_auth_username:type: string
+# @var semaphore_mariadb_auth_username:description: >
+# Username for MariaDB
+semaphore_mariadb_auth_username: "semaphore"
+
+# @var semaphore_mariadb_auth_password
+# @var semaphore_mariadb_auth_password:type: string
+# @var semaphore_mariadb_auth_password:description: >
+# Password for MariaDB
+semaphore_mariadb_auth_password: ""
+
+# PostgreSQL subchart configuration
+# @var semaphore_postgresql_enabled
+# @var semaphore_postgresql_enabled:type: boolean
+# @var semaphore_postgresql_enabled:description: >
+# Enable PostgreSQL dependency
+semaphore_postgresql_enabled: false
+
+# @var semaphore_postgresql_auth_database
+# @var semaphore_postgresql_auth_database:type: string
+# @var semaphore_postgresql_auth_database:description: >
+# Database name for PostgreSQL
+semaphore_postgresql_auth_database: "semaphore"
+
+# @var semaphore_postgresql_auth_username
+# @var semaphore_postgresql_auth_username:type: string
+# @var semaphore_postgresql_auth_username:description: >
+# Username for PostgreSQL
+semaphore_postgresql_auth_username: "semaphore"
+
+# @var semaphore_postgresql_auth_password
+# @var semaphore_postgresql_auth_password:type: string
+# @var semaphore_postgresql_auth_password:description: >
+# Password for PostgreSQL
+semaphore_postgresql_auth_password: ""
+
+# Resources
+# @var semaphore_resources
+# @var semaphore_resources:type: dict
+# @var semaphore_resources:description: >
+# Resource requests and limits
+semaphore_resources:
+  limits: {}
+  requests:
+    cpu: 100m
+    memory: 64Mi
+
+# Scheduling
+# @var semaphore_node_selector
+# @var semaphore_node_selector:type: dict
+# @var semaphore_node_selector:description: >
+# Node selector for the deployment
+semaphore_node_selector: {}
+
+# @var semaphore_affinity
+# @var semaphore_affinity:type: dict
+# @var semaphore_affinity:description: >
+# Affinity for the deployment
+semaphore_affinity: {}
+
+# @var semaphore_tolerations
+# @var semaphore_tolerations:type: list
+# @var semaphore_tolerations:description: >
+# Tolerations for the deployment
+semaphore_tolerations: []
+
+# @var semaphore_security_context
+# @var semaphore_security_context:type: dict
+# @var semaphore_security_context:description: >
+# Security context for the deployment
+semaphore_security_context:
+  fsGroup: 1001
+
+# Extra configuration
+# @var semaphore_extra_env_variables
+# @var semaphore_extra_env_variables:type: dict
+# @var semaphore_extra_env_variables:description: >
+# Extra environment variables
+semaphore_extra_env_variables: {}
+
+# @var semaphore_extra_env_secrets
+# @var semaphore_extra_env_secrets:type: dict
+# @var semaphore_extra_env_secrets:description: >
+# Extra environment variables from secrets
+semaphore_extra_env_secrets: {}
+
+# @var semaphore_extra_volumes
+# @var semaphore_extra_volumes:type: list
+# @var semaphore_extra_volumes:description: >
+# Extra volumes
+semaphore_extra_volumes: []
+
+# @var semaphore_extra_volume_mounts
+# @var semaphore_extra_volume_mounts:type: list
+# @var semaphore_extra_volume_mounts:description: >
+# Extra volume mounts
+semaphore_extra_volume_mounts: []
+
+# @var semaphore_extra_init_containers
+# @var semaphore_extra_init_containers:type: list
+# @var semaphore_extra_init_containers:description: >
+# Extra init containers
+semaphore_extra_init_containers: []
+
+# @var semaphore_extra_sidecar_containers
+# @var semaphore_extra_sidecar_containers:type: list
+# @var semaphore_extra_sidecar_containers:description: >
+# Extra sidecar containers
+semaphore_extra_sidecar_containers: []
+
+# @var semaphore_additional_helm_values
+# @var semaphore_additional_helm_values:type: dict
+# @var semaphore_additional_helm_values:description: >
+# Additional helm values to be passed to the chart
+semaphore_additional_helm_values: {}

@@ -1,0 +1,22 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Pause for cleanup to complete."
+      ansible.builtin.pause:
+        seconds: 30
+
+    - name: "Check if 'semaphore' namespace exists."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "semaphore"
+      register: namespace_semaphore
+      failed_when: false
+      changed_when: false
+
+    - name: Assert that 'semaphore' namespace does not exist
+      ansible.builtin.assert:
+        that: namespace_semaphore['resources'] | length == 0

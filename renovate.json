@@ -68,6 +68,28 @@
       "registryUrls": [
         "https://wiremind.github.io/wiremind-helm-charts"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "awx-operator"
+      ],
+      "registryUrls": [
+        "https://ansible-community.github.io/awx-operator-helm"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "semaphore"
+      ],
+      "registryUrls": [
+        "https://semaphoreui.github.io/charts"
+      ]
     }
   ],
   "customManagers": [
@@ -219,6 +241,56 @@
       ],
       "depNameTemplate": "clamav",
       "autoReplaceStringTemplate": "ClamAV         | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/awx/defaults/main.yml$/",
+        "/roles/awx/README.md$/"
+      ],
+      "matchStrings": [
+        "awx_helm_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "awx-operator",
+      "autoReplaceStringTemplate": "awx_helm_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "AWX\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "awx-operator",
+      "autoReplaceStringTemplate": "AWX              | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/semaphore/defaults/main.yml$/",
+        "/roles/semaphore/README.md$/"
+      ],
+      "matchStrings": [
+        "semaphore_helm_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "semaphore",
+      "autoReplaceStringTemplate": "semaphore_helm_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "Semaphore\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "semaphore",
+      "autoReplaceStringTemplate": "Semaphore        | v{{newValue}}",
       "datasourceTemplate": "helm"
     }
   ]

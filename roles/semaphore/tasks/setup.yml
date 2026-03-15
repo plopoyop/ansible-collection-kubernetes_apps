@@ -1,0 +1,23 @@
+---
+- name: "Create Semaphore namespace"
+  kubernetes.core.k8s:
+    name: "{{ semaphore_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+
+- name: "Add Semaphore helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ semaphore_helm_repo_name }}"
+    repo_url: "{{ semaphore_helm_repo_url }}"
+
+- name: "Install Semaphore helm package"
+  kubernetes.core.helm:
+    name: "{{ semaphore_deployment_name }}"
+    namespace: "{{ semaphore_namespace }}"
+    state: "present"
+    chart_ref: "{{ semaphore_helm_chart_ref }}"
+    chart_version: "{{ semaphore_helm_version }}"
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'semaphore_helm_values.yml.j2') | from_yaml }}"
+    wait: "{{ semaphore_wait_install }}"

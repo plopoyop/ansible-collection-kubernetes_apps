@@ -1,0 +1,31 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Pause for resources to be created."
+      ansible.builtin.pause:
+        seconds: 15
+
+    - name: "Get 'semaphore' namespace info."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "semaphore"
+      register: namespace_semaphore
+
+    - name: Assert that 'semaphore' namespace is active
+      ansible.builtin.assert:
+        that: namespace_semaphore['resources'][0]['status']['phase'] == "Active"
+
+    - name: "Get 'semaphore' Deployment info."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "semaphore"
+        namespace: "semaphore"
+      register: semaphore_deployment
+
+    - name: "Assert that 'semaphore' Deployment is deployed"
+      ansible.builtin.assert:
+        that: semaphore_deployment['resources'] | length > 0

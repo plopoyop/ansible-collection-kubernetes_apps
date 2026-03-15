@@ -1,0 +1,22 @@
+---
+- name: "Uninstall Semaphore helm package"
+  kubernetes.core.helm:
+    name: "{{ semaphore_deployment_name }}"
+    namespace: "{{ semaphore_namespace }}"
+    state: "absent"
+    chart_ref: "{{ semaphore_helm_chart_ref }}"
+    chart_version: "{{ semaphore_helm_version }}"
+    wait: true
+
+- name: "Remove Semaphore helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ semaphore_helm_repo_name }}"
+    repo_url: "{{ semaphore_helm_repo_url }}"
+    state: "absent"
+
+- name: "Remove Semaphore namespace"
+  kubernetes.core.k8s:
+    name: "{{ semaphore_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"

@@ -48,9 +48,11 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | ---------       | ------------------ | ------------------------------------        |
 | Argo CD | v9.4.7            | [View README](roles/argocd/README.md)       |
 | Atlantis         | v5.28.0            | [View README](roles/atlantis/README.md)       |
+| AWX              | v3.2.1             | [View README](roles/awx/README.md)            |
 | ClamAV         | v3.7.1            | [View README](roles/clamav/README.md)       |
 | Gatus         | v1.5.0            | [View README](roles/gatus/README.md)       |
 | Mailcrab         | v1.6.4            | [View README](roles/mailcrab/README.md)       |
+| Semaphore        | v16.0.11           | [View README](roles/semaphore/README.md)      |
 | Zammad         | v16.0.2            | [View README](roles/zammad/README.md)       |
 
 ## Customization

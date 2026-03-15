@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  description: "Install and configure Semaphore UI on kubernetes"
+  role_name: "semaphore"
+  author: "Clément Hubert"
+
+  license: "MLP2"
+
+  min_ansible_version: "2.1"
+
+  galaxy_tags:
+    - "kubernetes"
+    - "semaphore"
+    - "ansible"
+    - "automation"
+
+dependencies: []
