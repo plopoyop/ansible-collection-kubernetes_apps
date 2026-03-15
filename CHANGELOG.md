@@ -8,6 +8,7 @@
 
 - feat\(helm\)!: Update chart atlantis \(5.28.0 → 6.0.0\) [\#138](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/138) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart zammad \(16.0.2 → 16.0.4\) [\#137](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/137) ([plopoyop](https://github.com/plopoyop))
+- fix\(helm\): update chart argo-cd \(9.4.7 → 9.4.10\) [\#136](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/136) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.1.3 → v46.1.4\) [\#135](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/135) ([plopoyop](https://github.com/plopoyop))
 
 ## [7.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/7.0.0) (2026-03-08)
