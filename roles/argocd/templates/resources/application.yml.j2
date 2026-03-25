@@ -9,6 +9,9 @@ metadata:
 {% if argocd_application.labels is defined %}
   labels: {{ argocd_application.labels | ansible.builtin.to_yaml }}
 {% endif %}
+{% if argocd_application.annotations is defined %}
+  annotations: {{ argocd_application.annotations | ansible.builtin.to_yaml }}
+{% endif %}
 spec:
   project: {{ argocd_application.project }}
 

@@ -2,14 +2,41 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: "{{ argocd_application_set.name }}"
+{% if argocd_application_set.labels is defined %}
+  labels: {{ argocd_application_set.labels | ansible.builtin.to_yaml }}
+{% endif %}
+{% if argocd_application_set.annotations is defined %}
+  annotations: {{ argocd_application_set.annotations | ansible.builtin.to_yaml }}
+{% endif %}
 spec:
   goTemplate: true
   goTemplateOptions: {{ argocd_application_set.go_template_options | default(argocd_application_sets_default_go_template_options) | ansible.builtin.to_yaml }}
   generators:
     {{ argocd_application_set.generators | ansible.builtin.to_nice_yaml(indent=2) | indent(4) }}
+{% if argocd_application_set.sync_policy is defined %}
+  syncPolicy: {{ argocd_application_set.sync_policy | ansible.builtin.to_yaml }}
+{% endif %}
+{% if argocd_application_set.strategy is defined %}
+  strategy:
+    {{ argocd_application_set.strategy | ansible.builtin.to_nice_yaml(indent=2) | indent(4) }}
+{% endif %}
+{% if argocd_application_set.preserved_fields is defined %}
+  preservedFields:
+    {{ argocd_application_set.preserved_fields | ansible.builtin.to_nice_yaml(indent=2) | indent(4) }}
+{% endif %}
   template:
     metadata:
       name: '{{ argocd_application_set.template.name }}'
+{% if argocd_application_set.template.labels is defined %}
+      labels: {{ argocd_application_set.template.labels | ansible.builtin.to_yaml }}
+{% endif %}
+{% if argocd_application_set.template.annotations is defined %}
+      annotations: {{ argocd_application_set.template.annotations | ansible.builtin.to_yaml }}
+{% endif %}
+{% if argocd_application_set.template.finalizers is defined %}
+      finalizers:
+        {{ argocd_application_set.template.finalizers | ansible.builtin.to_nice_yaml(indent=2) | indent(8) }}
+{% endif %}
     spec:
       project: '{{ argocd_application_set.template.project }}'
       sources:
