@@ -8,6 +8,10 @@
 
 - Add missing metadata and spec fields to ArgoCD resource templates  [\#141](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/141) ([plopoyop](https://github.com/plopoyop))
 
+## 🐛 Bug Fixes
+
+- Remove configuration remnant [\#144](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/144) ([plopoyop](https://github.com/plopoyop))
+
 ## ⚙️ Dependencies
 
 - fix\(ci\): update renovatebot/github-action action \(v46.1.5 → v46.1.6\) [\#142](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/142) ([plopoyop](https://github.com/plopoyop))
