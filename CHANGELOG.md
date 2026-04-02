@@ -1,8 +1,12 @@
 # Changelog
 
-## [8.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.0.1) (2026-03-29)
+## [8.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.1.0) (2026-04-02)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.0.0...8.0.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.0.0...8.1.0)
+
+## 🚀 New Features
+
+- Add missing metadata and spec fields to ArgoCD resource templates  [\#141](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/141) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
