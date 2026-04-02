@@ -2,6 +2,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: "{{ argocd_project.name }}"
+{% if argocd_project.labels is defined %}
+  labels: {{ argocd_project.labels | ansible.builtin.to_yaml }}
+{% endif %}
+{% if argocd_project.annotations is defined %}
+  annotations: {{ argocd_project.annotations | ansible.builtin.to_yaml }}
+{% endif %}
 {% if argocd_project.finalizers is defined %}
   finalizers: {{ argocd_project.finalizers | ansible.builtin.to_yaml }}
 {% endif %}
