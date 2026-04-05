@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.1.0...8.1.1)
 
+## 🐛 Bug Fixes
+
+- Fix mailcrab version update in role [\#150](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/150) ([plopoyop](https://github.com/plopoyop))
+
 ## ⚙️ Dependencies
 
 - feat\(ci\): update jetify-com/devbox-install-action action \(v0.14.0 → v0.15.0\) [\#149](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/149) ([plopoyop](https://github.com/plopoyop))
