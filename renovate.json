@@ -103,10 +103,10 @@
         "/roles/mailcrab/README.md$/"
       ],
       "matchStrings": [
-        "mailcrab_github_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+        "mailcrab_github_version:\\s*(?<quote>\")?v?(?<currentValue>[0-9\\.]+)\"?"
       ],
       "depNameTemplate": "tweedegolf/mailcrab",
-      "autoReplaceStringTemplate": "mailcrab_github_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "autoReplaceStringTemplate": "mailcrab_github_version: {{#if quote}}\"v{{newValue}}\"{{else}}v{{newValue}}{{/if}}",
       "datasourceTemplate": "github-releases"
     },
     {
