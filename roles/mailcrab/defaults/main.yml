@@ -16,7 +16,7 @@ mailcrab_namespace: "mailcrab"
 # @var mailcrab_github_version:type: string
 # @var mailcrab_github_version:description: >
 # GitHub release version/tag to download (e.g., "v1.0.0" or "latest")
-mailcrab_github_version: "v1.6.2"
+mailcrab_github_version: "v1.6.5"
 
 # @var mailcrab_autoscaling
 # @var mailcrab_autoscaling:type: boolean
