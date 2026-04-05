@@ -7,6 +7,7 @@
 ## ⚙️ Dependencies
 
 - feat\(ci\): update jetify-com/devbox-install-action action \(v0.14.0 → v0.15.0\) [\#149](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/149) ([plopoyop](https://github.com/plopoyop))
+- fix\(helm\): update chart zammad \(16.0.4 → 16.0.7\) [\#148](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/148) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart argo-cd \(9.4.10 → 9.4.17\) [\#147](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/147) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
