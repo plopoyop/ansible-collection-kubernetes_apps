@@ -1,5 +1,17 @@
 # Changelog
 
+## [8.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.1.1) (2026-04-05)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.1.0...8.1.1)
+
+## ⚙️ Dependencies
+
+- feat\(ci\): update jetify-com/devbox-install-action action \(v0.14.0 → v0.15.0\) [\#149](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/149) ([plopoyop](https://github.com/plopoyop))
+
+**Merged pull requests:**
+
+- fix\(ci\): update renovatebot/github-action action \(v46.1.6 → v46.1.7\) [\#145](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/145) ([plopoyop](https://github.com/plopoyop))
+
 ## [8.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.1.0) (2026-04-02)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.0.0...8.1.0)
