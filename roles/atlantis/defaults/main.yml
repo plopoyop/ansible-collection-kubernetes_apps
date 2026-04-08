@@ -16,7 +16,7 @@ atlantis_namespace: "atlantis"
 # @var atlantis_helm_version:type: string
 # @var atlantis_helm_version:description: >
 # Helm chart version to install
-atlantis_helm_version: 6.0.0
+atlantis_helm_version: 6.2.0
 
 # @var atlantis_deployment_name
 # @var atlantis_deployment_name:type: string
