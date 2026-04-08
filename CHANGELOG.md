@@ -1,11 +1,12 @@
 # Changelog
 
-## [8.1.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.1.2) (2026-04-08)
+## [8.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.2.0) (2026-04-08)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.1.1...8.1.2)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.1.1...8.2.0)
 
 ## ⚙️ Dependencies
 
+- feat\(helm\): update chart atlantis \(6.0.0 → 6.2.0\) [\#153](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/153) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update pre-commit hook ansible/ansible-lint \(v26.3.0 → v26.4.0\) [\#152](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/152) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.1.1) (2026-04-05)
