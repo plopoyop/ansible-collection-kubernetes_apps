@@ -9,6 +9,7 @@
 - feat\(ci\)!: Update hugo19941994/delete-draft-releases action \(v2.0.0 → v3.0.0\) [\#154](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/154) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart atlantis \(6.0.0 → 6.2.0\) [\#153](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/153) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update pre-commit hook ansible/ansible-lint \(v26.3.0 → v26.4.0\) [\#152](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/152) ([plopoyop](https://github.com/plopoyop))
+- fix\(helm\): update chart zammad \(16.0.7 → 16.0.8\) [\#151](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/151) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.1.1) (2026-04-05)
 
