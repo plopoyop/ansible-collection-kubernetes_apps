@@ -7,6 +7,7 @@
 ## ⚙️ Dependencies
 
 - feat\(helm\): update chart argo-cd \(9.4.17 → 9.5.0\) [\#157](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/157) ([plopoyop](https://github.com/plopoyop))
+- fix\(helm\): update chart zammad \(16.0.8 → 16.0.10\) [\#156](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/156) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.1.7 → v46.1.8\) [\#155](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/155) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.2.0) (2026-04-08)
