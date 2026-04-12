@@ -188,7 +188,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-argocd_helm_chart_version: 9.4.17
+argocd_helm_chart_version: 9.5.0
 ```
 
 ### argocd_helm_repo_name
