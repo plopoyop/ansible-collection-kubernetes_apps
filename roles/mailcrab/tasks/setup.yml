@@ -39,6 +39,7 @@
   register: mailcrab_github_latest_release
   when: mailcrab_github_version == "latest"
   changed_when: false
+  check_mode: false
 
 - name: "Set mailcrab_github_version to latest tag"
   ansible.builtin.set_fact:
@@ -51,6 +52,7 @@
     suffix: mailcrab
   register: mailcrab_temp_dir
   changed_when: false
+  check_mode: false
 
 - name: "Download mailcrab release archive from GitHub"
   ansible.builtin.get_url:
@@ -58,6 +60,7 @@
     dest: "{{ mailcrab_temp_dir.path }}/mailcrab-{{ mailcrab_github_version }}.tar.gz"
     mode: '0644'
   changed_when: false
+  check_mode: false
 
 - name: "Extract mailcrab archive"
   ansible.builtin.unarchive:
@@ -65,6 +68,7 @@
     dest: "{{ mailcrab_temp_dir.path }}"
     remote_src: true
   changed_when: false
+  check_mode: false
 
 - name: "Find extracted directory"
   ansible.builtin.find:
@@ -73,6 +77,7 @@
     patterns: "mailcrab-*"
     excludes: "*.tar.gz"
   register: mailcrab_extracted_dirs
+  check_mode: false
 
 - name: "Set chart path fact from extracted directory"
   ansible.builtin.set_fact:
@@ -88,6 +93,7 @@
   ansible.builtin.stat:
     path: "{{ mailcrab_chart_local_path }}"
   register: mailcrab_chart_dir_stat
+  check_mode: false
 
 - name: "Fail if chart directory does not exist"
   ansible.builtin.fail:
