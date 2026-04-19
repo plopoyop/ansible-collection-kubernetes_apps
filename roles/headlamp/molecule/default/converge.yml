@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    headlamp_wait_install: false
+  tasks:
+    - name: "Install Headlamp"
+      ansible.builtin.import_role:
+        name: "headlamp"

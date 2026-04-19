@@ -1,0 +1,198 @@
+---
+# @var headlamp_enabled
+# @var headlamp_enabled:type: boolean
+# @var headlamp_enabled:description: >
+# Should Headlamp helm chart be installed
+headlamp_enabled: true
+
+# @var headlamp_namespace
+# @var headlamp_namespace:type: string
+# @var headlamp_namespace:description: >
+# K8s namespace to install the Headlamp chart
+headlamp_namespace: "headlamp"
+
+# @var headlamp_helm_chart_version
+# @var headlamp_helm_chart_version:type: string
+# @var headlamp_helm_chart_version:description: >
+# Helm chart version to install
+headlamp_helm_chart_version: "0.41.0"
+
+# @var headlamp_deployment_name
+# @var headlamp_deployment_name:type: string
+# @var headlamp_deployment_name:description: >
+# Deployment name for Headlamp helm chart
+headlamp_deployment_name: "headlamp"
+
+# @var headlamp_wait_install
+# @var headlamp_wait_install:type: boolean
+# @var headlamp_wait_install:description: >
+# Wait for helm install to finish
+headlamp_wait_install: true
+
+# @var headlamp_replica_count
+# @var headlamp_replica_count:type: integer
+# @var headlamp_replica_count:description: >
+# Number of desired pods
+headlamp_replica_count: 1
+
+# @var headlamp_base_url
+# @var headlamp_base_url:type: string
+# @var headlamp_base_url:description: >
+# Base URL path at which Headlamp should run
+headlamp_base_url: ""
+
+# @var headlamp_in_cluster
+# @var headlamp_in_cluster:type: boolean
+# @var headlamp_in_cluster:description: >
+# Run Headlamp in-cluster mode
+headlamp_in_cluster: true
+
+# @var headlamp_in_cluster_context_name
+# @var headlamp_in_cluster_context_name:type: string
+# @var headlamp_in_cluster_context_name:description: >
+# Display name for the local in-cluster context
+headlamp_in_cluster_context_name: "main"
+
+# @var headlamp_enable_helm
+# @var headlamp_enable_helm:type: boolean
+# @var headlamp_enable_helm:description: >
+# Enable Helm integration in Headlamp
+headlamp_enable_helm: false
+
+# Ingress configuration
+# @var headlamp_ingress_enabled
+# @var headlamp_ingress_enabled:type: boolean
+# @var headlamp_ingress_enabled:description: >
+# Enable ingress
+headlamp_ingress_enabled: false
+
+# @var headlamp_ingress_class_name
+# @var headlamp_ingress_class_name:type: string
+# @var headlamp_ingress_class_name:description: >
+# Ingress class name
+headlamp_ingress_class_name: ""
+
+# @var headlamp_ingress_hosts
+# @var headlamp_ingress_hosts:type: list
+# @var headlamp_ingress_hosts:description: >
+# Ingress hosts configuration
+# @var headlamp_ingress_hosts:example: >
+#   headlamp_ingress_hosts:
+#     - host: headlamp.example.com
+#       paths:
+#         - path: /
+#           type: ImplementationSpecific
+headlamp_ingress_hosts: []
+
+# @var headlamp_ingress_tls
+# @var headlamp_ingress_tls:type: list
+# @var headlamp_ingress_tls:description: >
+# Ingress TLS configuration
+headlamp_ingress_tls: []
+
+# @var headlamp_ingress_annotations
+# @var headlamp_ingress_annotations:type: dict
+# @var headlamp_ingress_annotations:description: >
+# Ingress annotations
+headlamp_ingress_annotations: {}
+
+# Service configuration
+# @var headlamp_service_type
+# @var headlamp_service_type:type: string
+# @var headlamp_service_type:description: >
+# Kubernetes Service type
+headlamp_service_type: "ClusterIP"
+
+# @var headlamp_service_port
+# @var headlamp_service_port:type: integer
+# @var headlamp_service_port:description: >
+# Kubernetes Service port
+headlamp_service_port: 80
+
+# OIDC configuration
+# @var headlamp_oidc_client_id
+# @var headlamp_oidc_client_id:type: string
+# @var headlamp_oidc_client_id:description: >
+# OIDC client ID
+headlamp_oidc_client_id: ""
+
+# @var headlamp_oidc_client_secret
+# @var headlamp_oidc_client_secret:type: string
+# @var headlamp_oidc_client_secret:description: >
+# OIDC client secret
+headlamp_oidc_client_secret: ""
+
+# @var headlamp_oidc_issuer_url
+# @var headlamp_oidc_issuer_url:type: string
+# @var headlamp_oidc_issuer_url:description: >
+# OIDC issuer URL
+headlamp_oidc_issuer_url: ""
+
+# @var headlamp_oidc_scopes
+# @var headlamp_oidc_scopes:type: string
+# @var headlamp_oidc_scopes:description: >
+# OIDC scopes
+headlamp_oidc_scopes: ""
+
+# Resources
+# @var headlamp_resources
+# @var headlamp_resources:type: dict
+# @var headlamp_resources:description: >
+# Resource requests and limits
+headlamp_resources: {}
+
+# Scheduling
+# @var headlamp_node_selector
+# @var headlamp_node_selector:type: dict
+# @var headlamp_node_selector:description: >
+# Node selector
+headlamp_node_selector: {}
+
+# @var headlamp_tolerations
+# @var headlamp_tolerations:type: list
+# @var headlamp_tolerations:description: >
+# Tolerations
+headlamp_tolerations: []
+
+# @var headlamp_affinity
+# @var headlamp_affinity:type: dict
+# @var headlamp_affinity:description: >
+# Affinity
+headlamp_affinity: {}
+
+# Service Account token authentication
+# @var headlamp_create_admin_token
+# @var headlamp_create_admin_token:type: boolean
+# @var headlamp_create_admin_token:description: >
+# Create a ServiceAccount with admin token for Headlamp authentication
+headlamp_create_admin_token: true
+
+# @var headlamp_admin_service_account_name
+# @var headlamp_admin_service_account_name:type: string
+# @var headlamp_admin_service_account_name:description: >
+# Name of the admin ServiceAccount
+headlamp_admin_service_account_name: "headlamp-admin"
+
+# @var headlamp_admin_cluster_role
+# @var headlamp_admin_cluster_role:type: string
+# @var headlamp_admin_cluster_role:description: >
+# ClusterRole to bind to the admin ServiceAccount
+headlamp_admin_cluster_role: "cluster-admin"
+
+# Multi-cluster configuration
+# @var headlamp_external_clusters
+# @var headlamp_external_clusters:type: list
+# @var headlamp_external_clusters:description: >
+# List of external clusters to add to Headlamp.
+# Each entry creates a Secret with the kubeconfig annotated for Headlamp.
+# @var headlamp_external_clusters:example: >
+#   headlamp_external_clusters:
+#     - name: "prod"
+#       kubeconfig: "{{ clusters['prod'].kubeconfig }}"
+headlamp_external_clusters: []
+
+# @var headlamp_additional_helm_values
+# @var headlamp_additional_helm_values:type: dict
+# @var headlamp_additional_helm_values:description: >
+# Additional helm values to be passed to the chart
+headlamp_additional_helm_values: {}

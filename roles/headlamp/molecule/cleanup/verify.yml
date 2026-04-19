@@ -1,0 +1,20 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Pause for cleanup to complete."
+      ansible.builtin.pause:
+        seconds: 5
+
+    - name: "Get 'headlamp' namespace info."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "headlamp"
+      register: namespace_headlamp
+
+    - name: "Assert that 'headlamp' namespace is removed"
+      ansible.builtin.assert:
+        that: namespace_headlamp['resources'] | length == 0

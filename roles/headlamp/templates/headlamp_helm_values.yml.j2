@@ -1,0 +1,94 @@
+---
+{% set ext_clusters = headlamp_external_clusters %}
+replicaCount: {{ headlamp_replica_count }}
+
+{% if ext_clusters | length > 0 %}
+podAnnotations:
+  checksum/kubeconfigs: "{{ ext_clusters | ansible.builtin.to_json | ansible.builtin.hash('sha256') }}"
+{% endif %}
+
+config:
+  inCluster: {{ headlamp_in_cluster | ansible.builtin.lower }}
+  inClusterContextName: "{{ headlamp_in_cluster_context_name }}"
+{% if headlamp_base_url != "" %}
+  baseURL: "{{ headlamp_base_url }}"
+{% endif %}
+  enableHelm: {{ headlamp_enable_helm | ansible.builtin.lower }}
+{% if headlamp_oidc_client_id != "" %}
+  oidc:
+    clientID: "{{ headlamp_oidc_client_id }}"
+    clientSecret: "{{ headlamp_oidc_client_secret }}"
+    issuerURL: "{{ headlamp_oidc_issuer_url }}"
+    scopes: "{{ headlamp_oidc_scopes }}"
+{% endif %}
+{% if ext_clusters | length > 0 %}
+  extraArgs:
+    - "-kubeconfig={{ ext_clusters | map(attribute='name') | map('regex_replace', '^(.*)$', '/kubeconfigs/\\1.yaml') | join(':') }}"
+{% endif %}
+
+service:
+  type: "{{ headlamp_service_type }}"
+  port: {{ headlamp_service_port }}
+
+ingress:
+  enabled: {{ headlamp_ingress_enabled | ansible.builtin.lower }}
+{% if headlamp_ingress_enabled %}
+{% if headlamp_ingress_class_name != "" %}
+  ingressClassName: "{{ headlamp_ingress_class_name }}"
+{% endif %}
+{% if headlamp_ingress_hosts | length > 0 %}
+  hosts: {{ headlamp_ingress_hosts | ansible.builtin.to_json }}
+{% endif %}
+{% if headlamp_ingress_annotations != {} %}
+  annotations: {{ headlamp_ingress_annotations | ansible.builtin.to_json }}
+{% endif %}
+{% if headlamp_ingress_tls | length > 0 %}
+  tls: {{ headlamp_ingress_tls | ansible.builtin.to_json }}
+{% endif %}
+{% endif %}
+
+{% if ext_clusters | length > 0 %}
+volumes:
+  - name: kubeconfigs
+    secret:
+      secretName: headlamp-kubeconfigs
+
+volumeMounts:
+  - name: kubeconfigs
+    mountPath: /kubeconfigs
+    readOnly: true
+{% endif %}
+
+{% if headlamp_resources != {} %}
+resources: {{ headlamp_resources | ansible.builtin.to_json }}
+{% endif %}
+
+{% if headlamp_node_selector != {} %}
+nodeSelector: {{ headlamp_node_selector | ansible.builtin.to_json }}
+{% endif %}
+
+{% if headlamp_tolerations | length > 0 %}
+tolerations: {{ headlamp_tolerations | ansible.builtin.to_json }}
+{% endif %}
+
+{% if headlamp_affinity != {} %}
+affinity: {{ headlamp_affinity | ansible.builtin.to_json }}
+{% endif %}
+
+{% if ext_clusters | length > 0 %}
+extraManifests:
+  - |
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: headlamp-kubeconfigs
+    stringData:
+{% for cluster in ext_clusters %}
+      {{ cluster.name }}.yaml: |
+        {{ cluster.kubeconfig | ansible.builtin.from_json | ansible.builtin.to_nice_yaml | ansible.builtin.indent(8) }}
+{% endfor %}
+{% endif %}
+
+{% if headlamp_additional_helm_values %}
+{{ headlamp_additional_helm_values | ansible.builtin.to_nice_yaml }}
+{% endif %}

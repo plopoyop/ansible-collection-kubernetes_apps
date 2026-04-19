@@ -1,0 +1,4 @@
+---
+headlamp_helm_repo_name: "headlamp"
+headlamp_helm_repo_url: "https://kubernetes-sigs.github.io/headlamp/"
+headlamp_helm_chart_ref: "{{ headlamp_helm_repo_name }}/headlamp"
