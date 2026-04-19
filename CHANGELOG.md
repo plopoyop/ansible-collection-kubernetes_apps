@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.3.1) (2026-04-19)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.3.0...8.3.1)
+
+## 🐛 Bug Fixes
+
+- Fix ansible lint pre commit [\#165](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/165) ([plopoyop](https://github.com/plopoyop))
+
 ## [8.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.3.0) (2026-04-19)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.2.0...8.3.0)
