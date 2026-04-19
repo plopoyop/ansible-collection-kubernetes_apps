@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.2.0...8.3.0)
 
+## 🚀 New Features
+
+- Add headlamp role [\#164](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/164) ([plopoyop](https://github.com/plopoyop))
+
 ## 🐛 Bug Fixes
 
 - Revert to official packages after urllib fix [\#163](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/163) ([plopoyop](https://github.com/plopoyop))
