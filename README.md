@@ -51,7 +51,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | ClamAV         | v3.7.1            | [View README](roles/clamav/README.md)       |
 | Gatus         | v1.5.0            | [View README](roles/gatus/README.md)       |
 | Mailcrab         | v1.6.5            | [View README](roles/mailcrab/README.md)       |
-| Zammad         | v16.0.10            | [View README](roles/zammad/README.md)       |
+| Zammad         | v16.0.11            | [View README](roles/zammad/README.md)       |
 
 ## Customization
 
