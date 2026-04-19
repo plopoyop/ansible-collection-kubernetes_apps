@@ -1,11 +1,12 @@
 # Changelog
 
-## [8.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.3.0) (2026-04-12)
+## [8.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.3.0) (2026-04-19)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.2.0...8.3.0)
 
 ## ⚙️ Dependencies
 
+- fix\(ci\): update renovatebot/github-action action \(v46.1.8 → v46.1.9\) [\#159](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/159) ([plopoyop](https://github.com/plopoyop))
 - feat\(ci\)!: Update softprops/action-gh-release action \(v2 → v3\) [\#158](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/158) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart argo-cd \(9.4.17 → 9.5.0\) [\#157](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/157) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart zammad \(16.0.8 → 16.0.10\) [\#156](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/156) ([plopoyop](https://github.com/plopoyop))
