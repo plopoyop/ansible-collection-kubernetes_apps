@@ -39,6 +39,10 @@ jobs:
     uses: ./.github/workflows/test-role.yaml
     with:
       role_name: "gatus"
+  headlamp:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "headlamp"
   mailcrab:
     uses: ./.github/workflows/test-role.yaml
     with:
