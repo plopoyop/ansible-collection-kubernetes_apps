@@ -50,6 +50,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | Atlantis | v6.2.0            | [View README](roles/atlantis/README.md)       |
 | ClamAV         | v3.7.1            | [View README](roles/clamav/README.md)       |
 | Gatus         | v1.5.0            | [View README](roles/gatus/README.md)       |
+| Headlamp         | v0.41.0            | [View README](roles/headlamp/README.md)       |
 | Mailcrab         | v1.6.5            | [View README](roles/mailcrab/README.md)       |
 | Zammad         | v16.0.11            | [View README](roles/zammad/README.md)       |
 

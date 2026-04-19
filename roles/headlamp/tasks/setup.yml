@@ -1,0 +1,83 @@
+---
+- name: "Create Headlamp namespace"
+  kubernetes.core.k8s:
+    name: "{{ headlamp_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+
+- name: "Add Headlamp helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ headlamp_helm_repo_name }}"
+    repo_url: "{{ headlamp_helm_repo_url }}"
+
+- name: "Install Headlamp helm package"
+  kubernetes.core.helm:
+    name: "{{ headlamp_deployment_name }}"
+    namespace: "{{ headlamp_namespace }}"
+    state: "present"
+    chart_ref: "{{ headlamp_helm_chart_ref }}"
+    chart_version: "{{ headlamp_helm_chart_version }}"
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'headlamp_helm_values.yml.j2') | from_yaml }}"
+    wait: "{{ headlamp_wait_install }}"
+
+- name: "Provision admin ServiceAccount and token for Headlamp"
+  when: headlamp_create_admin_token
+  block:
+    - name: "Create admin ServiceAccount for Headlamp"
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: ServiceAccount
+          metadata:
+            name: "{{ headlamp_admin_service_account_name }}"
+            namespace: "{{ headlamp_namespace }}"
+
+    - name: "Create admin ClusterRoleBinding for Headlamp"
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: rbac.authorization.k8s.io/v1
+          kind: ClusterRoleBinding
+          metadata:
+            name: "{{ headlamp_admin_service_account_name }}"
+          roleRef:
+            apiGroup: rbac.authorization.k8s.io
+            kind: ClusterRole
+            name: "{{ headlamp_admin_cluster_role }}"
+          subjects:
+            - kind: ServiceAccount
+              name: "{{ headlamp_admin_service_account_name }}"
+              namespace: "{{ headlamp_namespace }}"
+
+    - name: "Create long-lived token Secret for Headlamp admin"
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: "{{ headlamp_admin_service_account_name }}-token"
+            namespace: "{{ headlamp_namespace }}"
+            annotations:
+              kubernetes.io/service-account.name: "{{ headlamp_admin_service_account_name }}"
+          type: kubernetes.io/service-account-token
+
+    - name: "Retrieve admin token"
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: "{{ headlamp_admin_service_account_name }}-token"
+        namespace: "{{ headlamp_namespace }}"
+      register: headlamp_token_secret
+      until:
+        - headlamp_token_secret.resources | length > 0
+        - headlamp_token_secret.resources[0].data.token is defined
+      retries: 10
+      delay: 2
+
+    - name: "Display Headlamp admin token"
+      ansible.builtin.debug:
+        msg: "Headlamp admin token: {{ headlamp_token_secret.resources[0].data.token | b64decode }}"

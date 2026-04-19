@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    headlamp_enabled: false
+  tasks:
+    - name: "Remove Headlamp"
+      ansible.builtin.import_role:
+        name: "headlamp"

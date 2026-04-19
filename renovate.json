@@ -68,6 +68,17 @@
       "registryUrls": [
         "https://wiremind.github.io/wiremind-helm-charts"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "headlamp"
+      ],
+      "registryUrls": [
+        "https://kubernetes-sigs.github.io/headlamp/"
+      ]
     }
   ],
   "customManagers": [
@@ -219,6 +230,31 @@
       ],
       "depNameTemplate": "clamav",
       "autoReplaceStringTemplate": "ClamAV         | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/headlamp/defaults/main.yml$/",
+        "/roles/headlamp/README.md$/"
+      ],
+      "matchStrings": [
+        "headlamp_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "headlamp",
+      "autoReplaceStringTemplate": "headlamp_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "Headlamp\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "headlamp",
+      "autoReplaceStringTemplate": "Headlamp         | v{{newValue}}",
       "datasourceTemplate": "helm"
     }
   ]
