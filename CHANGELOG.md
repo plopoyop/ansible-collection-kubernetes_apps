@@ -6,6 +6,7 @@
 
 ## 🐛 Bug Fixes
 
+- Revert to official packages after urllib fix [\#163](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/163) ([plopoyop](https://github.com/plopoyop))
 - Fix mailcrab check mode [\#162](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/162) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
