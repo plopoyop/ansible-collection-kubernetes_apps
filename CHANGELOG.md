@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.2.0...8.3.0)
 
+## 🐛 Bug Fixes
+
+- Fix mailcrab check mode [\#162](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/162) ([plopoyop](https://github.com/plopoyop))
+
 ## ⚙️ Dependencies
 
 - fix\(helm\): update chart zammad \(16.0.10 → 16.0.11\) [\#161](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/161) ([plopoyop](https://github.com/plopoyop))
