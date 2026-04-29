@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/HEAD)
+## [8.3.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.3.2) (2026-04-29)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.3.1...HEAD)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.3.1...8.3.2)
 
 ## 🐛 Bug Fixes
 
@@ -14,6 +14,7 @@
 
 **Merged pull requests:**
 
+- feat\(deps\): update kubernetes-helm \(3.19.1 → 3.20.1\) [\#171](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/171) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update prek \(0.3.8 → 0.3.9\) [\#167](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/167) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.3.1) (2026-04-19)
