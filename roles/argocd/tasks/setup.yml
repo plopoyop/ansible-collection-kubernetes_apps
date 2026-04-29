@@ -63,6 +63,7 @@
     namespace: "{{ argocd_namespace }}"
     template: "resources/application_set.yml.j2"
     state: "{{ argocd_application_set.state | default('present') }}"
+    apply: true
   loop: "{{ argocd_application_sets }}"
   loop_control:
     loop_var: argocd_application_set
