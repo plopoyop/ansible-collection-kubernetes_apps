@@ -1,12 +1,12 @@
 # Changelog
 
-## [8.3.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.3.2) (2026-04-29)
+## [Unreleased](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/HEAD)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.3.1...8.3.2)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.3.1...HEAD)
 
 ## 🐛 Bug Fixes
 
-- Feature/argocd enhancements [\#168](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/168) ([plopoyop](https://github.com/plopoyop))
+- Argocd force application set apply [\#168](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/168) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
