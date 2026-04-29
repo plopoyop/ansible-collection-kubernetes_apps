@@ -11,6 +11,7 @@
 ## ⚙️ Dependencies
 
 - feat\(helm\): update chart atlantis \(6.2.0 → 6.3.0\) [\#172](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/172) ([plopoyop](https://github.com/plopoyop))
+- fix\(helm\): update chart zammad \(16.0.11 → 16.0.13\) [\#170](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/170) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.1.9 → v46.1.10\) [\#166](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/166) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
