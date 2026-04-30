@@ -1,0 +1,28 @@
+---
+- name: "Verify"
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'warpgate' namespace to be active."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "warpgate"
+      register: namespace_warpgate
+      until:
+        - namespace_warpgate.resources | length > 0
+        - namespace_warpgate.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 2
+
+    - name: "Wait for 'warpgate' Deployment to be deployed."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        namespace: "warpgate"
+        label_selectors:
+          - "app.kubernetes.io/instance=warpgate"
+      register: warpgate_deployment
+      until: warpgate_deployment.resources | length > 0
+      retries: 30
+      delay: 2

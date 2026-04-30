@@ -1,0 +1,16 @@
+---
+- name: "Verify"
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'warpgate' namespace to be removed."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "warpgate"
+      register: namespace_warpgate
+      until: namespace_warpgate.resources | length == 0
+      retries: 30
+      delay: 2
+      changed_when: false

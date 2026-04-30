@@ -1,0 +1,254 @@
+---
+# @var warpgate_enabled
+# @var warpgate_enabled:type: boolean
+# @var warpgate_enabled:description: >
+# Should Warpgate helm chart be installed
+warpgate_enabled: true
+
+# @var warpgate_namespace
+# @var warpgate_namespace:type: string
+# @var warpgate_namespace:description: >
+# K8s namespace to install the Warpgate chart
+warpgate_namespace: "warpgate"
+
+# @var warpgate_helm_chart_version
+# @var warpgate_helm_chart_version:type: string
+# @var warpgate_helm_chart_version:description: >
+# Helm chart version to install
+warpgate_helm_chart_version: "0.0.4"
+
+# @var warpgate_deployment_name
+# @var warpgate_deployment_name:type: string
+# @var warpgate_deployment_name:description: >
+# Deployment name for Warpgate helm chart
+warpgate_deployment_name: "warpgate"
+
+# @var warpgate_wait_install
+# @var warpgate_wait_install:type: boolean
+# @var warpgate_wait_install:description: >
+# Wait for helm install to finish
+warpgate_wait_install: false
+
+# @var warpgate_service_type
+# @var warpgate_service_type:type: string
+# @var warpgate_service_type:description: >
+# Kubernetes service type for Warpgate
+warpgate_service_type: "ClusterIP"
+
+# @var warpgate_service_annotations
+# @var warpgate_service_annotations:type: dict
+# @var warpgate_service_annotations:description: >
+# Annotations for Warpgate Kubernetes service
+warpgate_service_annotations: {}
+
+# @var warpgate_service_port_ssh
+# @var warpgate_service_port_ssh:type: integer
+# @var warpgate_service_port_ssh:description: >
+# Service port for SSH protocol. Set to 0 to disable.
+warpgate_service_port_ssh: 2222
+
+# @var warpgate_service_port_http
+# @var warpgate_service_port_http:type: integer
+# @var warpgate_service_port_http:description: >
+# Service port for HTTP protocol. Set to 0 to disable.
+warpgate_service_port_http: 8888
+
+# @var warpgate_service_port_mysql
+# @var warpgate_service_port_mysql:type: integer
+# @var warpgate_service_port_mysql:description: >
+# Service port for MySQL protocol. Set to 0 to disable.
+warpgate_service_port_mysql: 33306
+
+# @var warpgate_service_port_pgsql
+# @var warpgate_service_port_pgsql:type: integer
+# @var warpgate_service_port_pgsql:description: >
+# Service port for PostgreSQL protocol. Set to 0 to disable.
+warpgate_service_port_pgsql: 55432
+
+# @var warpgate_service_port_kubernetes
+# @var warpgate_service_port_kubernetes:type: integer
+# @var warpgate_service_port_kubernetes:description: >
+# Service port for Kubernetes proxy protocol. Set to 0 to disable.
+warpgate_service_port_kubernetes: 8443
+
+# @var warpgate_ingress_enabled
+# @var warpgate_ingress_enabled:type: boolean
+# @var warpgate_ingress_enabled:description: >
+# Enable ingress for Warpgate HTTP interface
+warpgate_ingress_enabled: false
+
+# @var warpgate_ingress_class_name
+# @var warpgate_ingress_class_name:type: string
+# @var warpgate_ingress_class_name:description: >
+# Ingress class name for Warpgate ingress
+warpgate_ingress_class_name: null
+
+# @var warpgate_ingress_hostname
+# @var warpgate_ingress_hostname:type: string
+# @var warpgate_ingress_hostname:description: >
+# Hostname for Warpgate ingress
+warpgate_ingress_hostname: null
+
+# @var warpgate_ingress_tls_enabled
+# @var warpgate_ingress_tls_enabled:type: boolean
+# @var warpgate_ingress_tls_enabled:description: >
+# Enable TLS for Warpgate ingress
+warpgate_ingress_tls_enabled: false
+
+# @var warpgate_ingress_tls_secret_name
+# @var warpgate_ingress_tls_secret_name:type: string
+# @var warpgate_ingress_tls_secret_name:description: >
+# Secret name for Warpgate TLS certificate
+warpgate_ingress_tls_secret_name: null
+
+# @var warpgate_ingress_annotations
+# @var warpgate_ingress_annotations:type: dict
+# @var warpgate_ingress_annotations:description: >
+# Annotations for Warpgate ingress
+warpgate_ingress_annotations: {}
+
+# @var warpgate_setup_enabled
+# @var warpgate_setup_enabled:type: boolean
+# @var warpgate_setup_enabled:description: >
+# Enable automatic setup (creates initial admin user)
+warpgate_setup_enabled: true
+
+# @var warpgate_setup_type
+# @var warpgate_setup_type:type: string
+# @var warpgate_setup_type:description: >
+# Setup type: "job" or "podinit"
+warpgate_setup_type: "job"
+
+# @var warpgate_setup_credentials_secret
+# @var warpgate_setup_credentials_secret:type: string
+# @var warpgate_setup_credentials_secret:description: >
+# Name of the secret containing setup credentials (WARPGATE_ADMIN_PASSWORD)
+warpgate_setup_credentials_secret: ""
+
+# @var warpgate_data_pvc_enabled
+# @var warpgate_data_pvc_enabled:type: boolean
+# @var warpgate_data_pvc_enabled:description: >
+# Enable persistent storage for Warpgate data
+warpgate_data_pvc_enabled: true
+
+# @var warpgate_data_pvc_size
+# @var warpgate_data_pvc_size:type: string
+# @var warpgate_data_pvc_size:description: >
+# Size of the persistent volume for Warpgate data
+warpgate_data_pvc_size: "10Gi"
+
+# @var warpgate_data_pvc_storage_class
+# @var warpgate_data_pvc_storage_class:type: string
+# @var warpgate_data_pvc_storage_class:description: >
+# Storage class for the persistent volume
+warpgate_data_pvc_storage_class: null
+
+# @var warpgate_database_url
+# @var warpgate_database_url:type: string
+# @var warpgate_database_url:description: >
+# External database URL (PostgreSQL). Leave empty to use built-in SQLite.
+# Use $ENV_VAR syntax with warpgate_config_env_vars for secret substitution.
+warpgate_database_url: ""
+
+# @var warpgate_config_env_vars
+# @var warpgate_config_env_vars:type: dict
+# @var warpgate_config_env_vars:description: >
+# Environment variables to substitute in Warpgate config (config_env_var_replace).
+# Keys are env var names, values are "secret-name/key" references.
+warpgate_config_env_vars: {}
+
+# @var warpgate_resources
+# @var warpgate_resources:type: dict
+# @var warpgate_resources:description: >
+# Resource requests and limits for Warpgate pod
+warpgate_resources: {}
+
+# @var warpgate_sso_providers
+# @var warpgate_sso_providers:type: list
+# @var warpgate_sso_providers:description: >
+# SSO providers configuration for Warpgate.
+# Each item should have: name, label, provider (type, client_id, client_secret, tenant/issuer_url)
+warpgate_sso_providers: []
+
+# @var warpgate_external_ssh_host
+# @var warpgate_external_ssh_host:type: string
+# @var warpgate_external_ssh_host:description: >
+# External SSH hostname shown in the Warpgate UI connection strings.
+# Leave empty to fall back to the global external host.
+warpgate_external_ssh_host: ""
+
+# @var warpgate_external_ssh_port
+# @var warpgate_external_ssh_port:type: integer
+# @var warpgate_external_ssh_port:description: >
+# External SSH port shown in the Warpgate UI connection strings. 0 = unset.
+warpgate_external_ssh_port: 0
+
+# @var warpgate_external_http_host
+# @var warpgate_external_http_host:type: string
+# @var warpgate_external_http_host:description: >
+# External HTTP hostname shown in the Warpgate UI.
+warpgate_external_http_host: ""
+
+# @var warpgate_external_http_port
+# @var warpgate_external_http_port:type: integer
+# @var warpgate_external_http_port:description: >
+# External HTTP port shown in the Warpgate UI. 0 = unset.
+warpgate_external_http_port: 0
+
+# @var warpgate_external_mysql_host
+# @var warpgate_external_mysql_host:type: string
+# @var warpgate_external_mysql_host:description: >
+# External MySQL hostname shown in the Warpgate UI.
+warpgate_external_mysql_host: ""
+
+# @var warpgate_external_mysql_port
+# @var warpgate_external_mysql_port:type: integer
+# @var warpgate_external_mysql_port:description: >
+# External MySQL port shown in the Warpgate UI. 0 = unset.
+warpgate_external_mysql_port: 0
+
+# @var warpgate_external_postgres_host
+# @var warpgate_external_postgres_host:type: string
+# @var warpgate_external_postgres_host:description: >
+# External PostgreSQL hostname shown in the Warpgate UI.
+warpgate_external_postgres_host: ""
+
+# @var warpgate_external_postgres_port
+# @var warpgate_external_postgres_port:type: integer
+# @var warpgate_external_postgres_port:description: >
+# External PostgreSQL port shown in the Warpgate UI. 0 = unset.
+warpgate_external_postgres_port: 0
+
+# @var warpgate_external_kubernetes_host
+# @var warpgate_external_kubernetes_host:type: string
+# @var warpgate_external_kubernetes_host:description: >
+# External Kubernetes hostname shown in the Warpgate UI.
+warpgate_external_kubernetes_host: ""
+
+# @var warpgate_external_kubernetes_port
+# @var warpgate_external_kubernetes_port:type: integer
+# @var warpgate_external_kubernetes_port:description: >
+# External Kubernetes port shown in the Warpgate UI. 0 = unset.
+warpgate_external_kubernetes_port: 0
+
+# @var warpgate_recordings_enabled
+# @var warpgate_recordings_enabled:type: boolean
+# @var warpgate_recordings_enabled:description: >
+# Enable Warpgate session recording. Disabling avoids known protocol-parser
+# issues on some Kubernetes WebSocket subprotocols (e.g. `base64.binary.k8s.io`
+# used by Headlamp) at the cost of losing audit trails.
+warpgate_recordings_enabled: true
+
+# @var warpgate_additional_config
+# @var warpgate_additional_config:type: dict
+# @var warpgate_additional_config:description: >
+# Additional configuration to merge with the helm values.
+# This allows to add any configuration not explicitly exposed by this role.
+warpgate_additional_config: {}
+
+# @var warpgate_extra_manifests
+# @var warpgate_extra_manifests:type: list
+# @var warpgate_extra_manifests:description: >
+# Extra Kubernetes manifests to apply in the Warpgate namespace
+# (e.g. additional Secrets, ConfigMaps, ExternalSecrets).
+warpgate_extra_manifests: []

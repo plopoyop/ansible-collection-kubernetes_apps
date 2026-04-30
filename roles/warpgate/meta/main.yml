@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  description: "Install and configure Warpgate on kubernetes"
+  role_name: "warpgate"
+  author: "Clément Hubert"
+
+  license: "MPL-2.0"
+
+  min_ansible_version: "2.12"
+
+  galaxy_tags:
+    - "kubernetes"
+    - "warpgate"
+    - "bastion"
+    - "security"
+
+dependencies: []
