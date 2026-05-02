@@ -1,0 +1,42 @@
+---
+- name: "Create GitLab Runner namespace"
+  kubernetes.core.k8s:
+    name: "{{ gitlab_runner_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+
+- name: "Create GitLab Runner authentication secret"
+  kubernetes.core.k8s:
+    state: "present"
+    definition: "{{ lookup('ansible.builtin.template', 'secret-runner-token.yml.j2') | ansible.builtin.from_yaml }}"
+  when:
+    - gitlab_runner_existing_secret | length == 0
+    - gitlab_runner_token | length > 0
+  no_log: true
+
+- name: "Create extra manifests"
+  kubernetes.core.k8s:
+    namespace: "{{ gitlab_runner_namespace }}"
+    state: "present"
+    definition: "{{ gitlab_runner_manifest_to_create }}"
+  loop: "{{ gitlab_runner_extra_manifests }}"
+  loop_control:
+    loop_var: "gitlab_runner_manifest_to_create"
+  when: gitlab_runner_extra_manifests | length > 0
+
+- name: "Add GitLab helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ gitlab_runner_helm_repo_name }}"
+    repo_url: "{{ gitlab_runner_helm_repo_url }}"
+
+- name: "Install GitLab Runner helm package"
+  kubernetes.core.helm:
+    name: "{{ gitlab_runner_deployment_name }}"
+    namespace: "{{ gitlab_runner_namespace }}"
+    state: "present"
+    chart_ref: "{{ gitlab_runner_helm_chart_ref }}"
+    chart_version: "{{ gitlab_runner_helm_chart_version }}"
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'gitlab_runner_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
+    wait: "{{ gitlab_runner_wait_install }}"

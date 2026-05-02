@@ -1,0 +1,34 @@
+---
+- name: "Uninstall GitLab Runner helm package"
+  kubernetes.core.helm:
+    name: "{{ gitlab_runner_deployment_name }}"
+    namespace: "{{ gitlab_runner_namespace }}"
+    state: "absent"
+    chart_ref: "{{ gitlab_runner_helm_chart_ref }}"
+    chart_version: "{{ gitlab_runner_helm_chart_version }}"
+    wait: true
+
+- name: "Remove GitLab Runner extra manifests"
+  kubernetes.core.k8s:
+    namespace: "{{ gitlab_runner_namespace }}"
+    state: "absent"
+    definition: "{{ gitlab_runner_manifest_to_remove }}"
+  loop: "{{ gitlab_runner_extra_manifests }}"
+  loop_control:
+    loop_var: "gitlab_runner_manifest_to_remove"
+  when: gitlab_runner_extra_manifests | length > 0
+
+- name: "Remove GitLab Runner authentication secret"
+  kubernetes.core.k8s:
+    api_version: "v1"
+    kind: "Secret"
+    name: "{{ gitlab_runner_deployment_name }}-credentials"
+    namespace: "{{ gitlab_runner_namespace }}"
+    state: "absent"
+
+- name: "Remove GitLab Runner namespace"
+  kubernetes.core.k8s:
+    api_version: "v1"
+    kind: "Namespace"
+    name: "{{ gitlab_runner_namespace }}"
+    state: "absent"

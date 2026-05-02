@@ -1,0 +1,11 @@
+---
+- name: "Converge"
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    gitlab_runner_enabled: false
+  tasks:
+    - name: "Remove GitLab Runner"
+      ansible.builtin.import_role:
+        name: "gitlab_runner"

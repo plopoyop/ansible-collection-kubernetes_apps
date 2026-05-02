@@ -1,0 +1,272 @@
+{% if gitlab_runner_image_registry | length > 0
+   or gitlab_runner_image_repository | length > 0
+   or gitlab_runner_image_tag | length > 0 %}
+image:
+{% if gitlab_runner_image_registry | length > 0 %}
+  registry: "{{ gitlab_runner_image_registry }}"
+{% endif %}
+{% if gitlab_runner_image_repository | length > 0 %}
+  image: "{{ gitlab_runner_image_repository }}"
+{% endif %}
+{% if gitlab_runner_image_tag | length > 0 %}
+  tag: "{{ gitlab_runner_image_tag }}"
+{% endif %}
+{% endif %}
+
+imagePullPolicy: "{{ gitlab_runner_image_pull_policy }}"
+
+{% if gitlab_runner_image_pull_secrets | length > 0 %}
+imagePullSecrets:
+{% for secret in gitlab_runner_image_pull_secrets %}
+  - name: "{{ secret.name }}"
+{% endfor %}
+{% endif %}
+
+replicas: {{ gitlab_runner_replicas }}
+{% if gitlab_runner_revision_history_limit is defined %}
+revisionHistoryLimit: {{ gitlab_runner_revision_history_limit }}
+{% endif %}
+
+gitlabUrl: "{{ gitlab_runner_gitlab_url }}"
+
+unregisterRunners: {{ gitlab_runner_unregister_runners | lower }}
+terminationGracePeriodSeconds: {{ gitlab_runner_termination_grace_period_seconds }}
+
+{% if gitlab_runner_certs_secret_name | length > 0 %}
+certsSecretName: "{{ gitlab_runner_certs_secret_name }}"
+{% endif %}
+
+concurrent: {{ gitlab_runner_concurrent }}
+checkInterval: {{ gitlab_runner_check_interval }}
+shutdown_timeout: {{ gitlab_runner_shutdown_timeout }}
+
+{% if gitlab_runner_log_level | length > 0 %}
+logLevel: "{{ gitlab_runner_log_level }}"
+{% endif %}
+{% if gitlab_runner_log_format | length > 0 %}
+logFormat: "{{ gitlab_runner_log_format }}"
+{% endif %}
+{% if gitlab_runner_sentry_dsn | length > 0 %}
+sentryDsn: "{{ gitlab_runner_sentry_dsn }}"
+{% endif %}
+{% if gitlab_runner_connection_max_age | length > 0 %}
+connectionMaxAge: "{{ gitlab_runner_connection_max_age }}"
+{% endif %}
+{% if gitlab_runner_pre_entrypoint_script | length > 0 %}
+preEntrypointScript: |
+{{ gitlab_runner_pre_entrypoint_script | indent(2, true) }}
+{% endif %}
+
+{% if gitlab_runner_probe_timeout_seconds | int > 0 %}
+probeTimeoutSeconds: {{ gitlab_runner_probe_timeout_seconds }}
+{% endif %}
+
+{% if gitlab_runner_liveness_probe %}
+livenessProbe: {{ gitlab_runner_liveness_probe | ansible.builtin.to_json }}
+{% endif %}
+{% if gitlab_runner_readiness_probe %}
+readinessProbe: {{ gitlab_runner_readiness_probe | ansible.builtin.to_json }}
+{% endif %}
+
+sessionServer:
+  enabled: {{ gitlab_runner_session_server_enabled | lower }}
+  serviceType: "{{ gitlab_runner_session_server_service_type }}"
+{% if gitlab_runner_session_server_public_ip | length > 0 %}
+  publicIP: "{{ gitlab_runner_session_server_public_ip }}"
+{% endif %}
+{% if gitlab_runner_session_server_internal_port | int > 0 %}
+  internalPort: {{ gitlab_runner_session_server_internal_port }}
+{% endif %}
+{% if gitlab_runner_session_server_external_port | int > 0 %}
+  externalPort: {{ gitlab_runner_session_server_external_port }}
+{% endif %}
+{% if gitlab_runner_session_server_node_port | int > 0 %}
+  nodePort: {{ gitlab_runner_session_server_node_port }}
+{% endif %}
+
+rbac:
+  create: {{ gitlab_runner_rbac_create | lower }}
+  clusterWideAccess: {{ gitlab_runner_rbac_cluster_wide_access | lower }}
+{% if gitlab_runner_rbac_rules | length > 0 %}
+  rules: {{ gitlab_runner_rbac_rules | ansible.builtin.to_json }}
+{% endif %}
+
+serviceAccount:
+{% if gitlab_runner_service_account_name | length > 0 %}
+  name: "{{ gitlab_runner_service_account_name }}"
+{% else %}
+  name: ""
+{% endif %}
+{% if gitlab_runner_service_account_annotations %}
+  annotations:
+{% for key, value in gitlab_runner_service_account_annotations.items() %}
+    "{{ key }}": "{{ value }}"
+{% endfor %}
+{% else %}
+  annotations: {}
+{% endif %}
+{% if gitlab_runner_service_account_image_pull_secrets | length > 0 %}
+  imagePullSecrets:
+{% for secret in gitlab_runner_service_account_image_pull_secrets %}
+    - name: "{{ secret.name }}"
+{% endfor %}
+{% else %}
+  imagePullSecrets: []
+{% endif %}
+
+metrics:
+  enabled: {{ gitlab_runner_metrics_enabled | lower }}
+  port: {{ gitlab_runner_metrics_port }}
+  podMonitor:
+    enabled: {{ gitlab_runner_metrics_pod_monitor_enabled | lower }}
+
+runners:
+{% if gitlab_runner_job_namespace | length > 0 %}
+  jobNamespace: "{{ gitlab_runner_job_namespace }}"
+{% endif %}
+{% if gitlab_runner_executor | length > 0 %}
+  executor: "{{ gitlab_runner_executor }}"
+{% endif %}
+{% if gitlab_runner_runner_name | length > 0 %}
+  name: "{{ gitlab_runner_runner_name }}"
+{% endif %}
+{% if gitlab_runner_existing_secret | length > 0 %}
+  secret: "{{ gitlab_runner_existing_secret }}"
+{% elif gitlab_runner_token | length > 0 %}
+  secret: "{{ gitlab_runner_deployment_name }}-credentials"
+{% endif %}
+{% if gitlab_runner_config_toml | length > 0 %}
+  config: |
+{{ gitlab_runner_config_toml | indent(4, true) }}
+{% endif %}
+{% if gitlab_runner_cache | length > 0 %}
+  cache: {{ gitlab_runner_cache | ansible.builtin.to_json }}
+{% else %}
+  cache: {}
+{% endif %}
+
+securityContext: {{ gitlab_runner_security_context | ansible.builtin.to_json }}
+podSecurityContext: {{ gitlab_runner_pod_security_context | ansible.builtin.to_json }}
+
+{% if gitlab_runner_resources %}
+resources: {{ gitlab_runner_resources | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_affinity %}
+affinity: {{ gitlab_runner_affinity | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_topology_spread_constraints | length > 0 %}
+topologySpreadConstraints: {{ gitlab_runner_topology_spread_constraints | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_node_selector %}
+nodeSelector: {{ gitlab_runner_node_selector | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_tolerations | length > 0 %}
+tolerations: {{ gitlab_runner_tolerations | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_priority_class_name | length > 0 %}
+priorityClassName: "{{ gitlab_runner_priority_class_name }}"
+{% endif %}
+
+{% if gitlab_runner_runtime_class_name | length > 0 %}
+runtimeClassName: "{{ gitlab_runner_runtime_class_name }}"
+{% endif %}
+
+{% if gitlab_runner_scheduler_name | length > 0 %}
+schedulerName: "{{ gitlab_runner_scheduler_name }}"
+{% endif %}
+
+{% if gitlab_runner_strategy %}
+strategy: {{ gitlab_runner_strategy | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_hostname | length > 0 %}
+hostname: "{{ gitlab_runner_hostname }}"
+{% endif %}
+
+{% if gitlab_runner_host_aliases | length > 0 %}
+hostAliases: {{ gitlab_runner_host_aliases | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_pod_annotations %}
+podAnnotations:
+{% for key, value in gitlab_runner_pod_annotations.items() %}
+  "{{ key }}": "{{ value }}"
+{% endfor %}
+{% endif %}
+
+{% if gitlab_runner_pod_labels %}
+podLabels:
+{% for key, value in gitlab_runner_pod_labels.items() %}
+  "{{ key }}": "{{ value }}"
+{% endfor %}
+{% endif %}
+
+{% if gitlab_runner_deployment_annotations %}
+deploymentAnnotations:
+{% for key, value in gitlab_runner_deployment_annotations.items() %}
+  "{{ key }}": "{{ value }}"
+{% endfor %}
+{% endif %}
+
+{% if gitlab_runner_deployment_labels %}
+deploymentLabels:
+{% for key, value in gitlab_runner_deployment_labels.items() %}
+  "{{ key }}": "{{ value }}"
+{% endfor %}
+{% endif %}
+
+{% if gitlab_runner_env_vars | length > 0 %}
+envVars: {{ gitlab_runner_env_vars | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_extra_env %}
+extraEnv:
+{% for key, value in gitlab_runner_extra_env.items() %}
+  "{{ key }}": "{{ value }}"
+{% endfor %}
+{% endif %}
+
+{% if gitlab_runner_extra_env_from %}
+extraEnvFrom: {{ gitlab_runner_extra_env_from | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_extra_env_from_refs | length > 0 %}
+extraEnvFromRefs: {{ gitlab_runner_extra_env_from_refs | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_secrets | length > 0 %}
+secrets: {{ gitlab_runner_secrets | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_config_maps %}
+configMaps: {{ gitlab_runner_config_maps | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_volumes | length > 0 %}
+volumes: {{ gitlab_runner_volumes | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_volume_mounts | length > 0 %}
+volumeMounts: {{ gitlab_runner_volume_mounts | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_extra_objects | length > 0 %}
+extraObjects: {{ gitlab_runner_extra_objects | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_extra_containers | length > 0 %}
+extraContainers: {{ gitlab_runner_extra_containers | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_hpa %}
+hpa: {{ gitlab_runner_hpa | ansible.builtin.to_json }}
+{% endif %}
+
+{% if gitlab_runner_additional_helm_values %}
+{{ gitlab_runner_additional_helm_values | ansible.builtin.to_nice_yaml | indent(0) }}
+{% endif %}
