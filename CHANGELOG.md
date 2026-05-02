@@ -6,6 +6,7 @@
 
 ## 🚀 New Features
 
+- Add Gitlab Runner role [\#174](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/174) ([plopoyop](https://github.com/plopoyop))
 - Add warpgate role [\#173](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/173) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.4.0) (2026-04-29)
