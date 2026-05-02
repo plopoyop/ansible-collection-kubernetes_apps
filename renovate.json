@@ -79,6 +79,15 @@
       "registryUrls": [
         "https://kubernetes-sigs.github.io/headlamp/"
       ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/warp-tech/helm-charts/warpgate",
+        "ghcr.io/warp-tech/warpgate"
+      ]
     }
   ],
   "customManagers": [
@@ -256,6 +265,44 @@
       "depNameTemplate": "headlamp",
       "autoReplaceStringTemplate": "Headlamp         | v{{newValue}}",
       "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/warpgate/defaults/main.yml$/",
+        "/roles/warpgate/README.md$/"
+      ],
+      "matchStrings": [
+        "warpgate_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "ghcr.io/warp-tech/helm-charts/warpgate",
+      "autoReplaceStringTemplate": "warpgate_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "Warpgate\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "ghcr.io/warp-tech/helm-charts/warpgate",
+      "autoReplaceStringTemplate": "Warpgate         | v{{newValue}}",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/warpgate/defaults/main.yml$/",
+        "/roles/warpgate/README.md$/"
+      ],
+      "matchStrings": [
+        "warpgate_image_tag:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "ghcr.io/warp-tech/warpgate",
+      "autoReplaceStringTemplate": "warpgate_image_tag: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "docker"
     }
   ]
 }

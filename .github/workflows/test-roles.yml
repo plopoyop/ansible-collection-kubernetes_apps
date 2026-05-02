@@ -47,6 +47,10 @@ jobs:
     uses: ./.github/workflows/test-role.yaml
     with:
       role_name: "mailcrab"
+  warpgate:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "warpgate"
   zammad:
     uses: ./.github/workflows/test-role.yaml
     with:
