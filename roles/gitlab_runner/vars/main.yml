@@ -1,0 +1,4 @@
+---
+gitlab_runner_helm_repo_name: "gitlab"
+gitlab_runner_helm_chart_ref: "{{ gitlab_runner_helm_repo_name }}/gitlab-runner"
+gitlab_runner_helm_repo_url: "https://charts.gitlab.io"

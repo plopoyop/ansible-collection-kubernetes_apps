@@ -1,0 +1,16 @@
+---
+- name: "Verify"
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'gitlab-runner' namespace to be removed."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "gitlab-runner"
+      register: namespace_gitlab_runner
+      until: namespace_gitlab_runner.resources | length == 0
+      retries: 30
+      delay: 2
+      changed_when: false

@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  description: "Install and configure a GitLab Runner on kubernetes"
+  role_name: "gitlab_runner"
+  author: "Clément Hubert"
+
+  license: "MPL-2.0"
+
+  min_ansible_version: "2.12"
+
+  galaxy_tags:
+    - "kubernetes"
+    - "gitlab"
+    - "gitlabrunner"
+    - "ci"
+    - "cd"
+
+dependencies: []

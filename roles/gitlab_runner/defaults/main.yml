@@ -1,0 +1,570 @@
+---
+# defaults file for gitlab_runner
+
+# @var gitlab_runner_enabled
+# @var gitlab_runner_enabled:type: boolean
+# @var gitlab_runner_enabled:description: >
+# Should GitLab Runner helm chart be installed
+gitlab_runner_enabled: true
+
+# @var gitlab_runner_namespace
+# @var gitlab_runner_namespace:type: string
+# @var gitlab_runner_namespace:description: >
+# K8s namespace to install the GitLab Runner chart
+gitlab_runner_namespace: "gitlab-runner"
+
+# @var gitlab_runner_helm_chart_version
+# @var gitlab_runner_helm_chart_version:type: string
+# @var gitlab_runner_helm_chart_version:description: >
+# Helm chart version to install
+gitlab_runner_helm_chart_version: "0.88.1"
+
+# @var gitlab_runner_deployment_name
+# @var gitlab_runner_deployment_name:type: string
+# @var gitlab_runner_deployment_name:description: >
+# Helm release name for GitLab Runner
+gitlab_runner_deployment_name: "gitlab-runner"
+
+# @var gitlab_runner_wait_install
+# @var gitlab_runner_wait_install:type: boolean
+# @var gitlab_runner_wait_install:description: >
+# Wait for helm install to finish
+gitlab_runner_wait_install: false
+
+# Image
+# @var gitlab_runner_image_registry
+# @var gitlab_runner_image_registry:type: string
+# @var gitlab_runner_image_registry:description: >
+# Container image registry for the runner image. Leave empty to use the chart default.
+gitlab_runner_image_registry: ""
+
+# @var gitlab_runner_image_repository
+# @var gitlab_runner_image_repository:type: string
+# @var gitlab_runner_image_repository:description: >
+# Container image repository for the runner image. Leave empty to use the chart default.
+gitlab_runner_image_repository: ""
+
+# @var gitlab_runner_image_tag
+# @var gitlab_runner_image_tag:type: string
+# @var gitlab_runner_image_tag:description: >
+# Container image tag for the runner image. Leave empty to default to alpine-v{chart-appVersion}.
+gitlab_runner_image_tag: ""
+
+# @var gitlab_runner_image_pull_policy
+# @var gitlab_runner_image_pull_policy:type: string
+# @var gitlab_runner_image_pull_policy:description: >
+# Image pull policy for the runner deployment. Options: Always, IfNotPresent, Never.
+gitlab_runner_image_pull_policy: "IfNotPresent"
+
+# @var gitlab_runner_image_pull_secrets
+# @var gitlab_runner_image_pull_secrets:type: list
+# @var gitlab_runner_image_pull_secrets:description: >
+# List of imagePullSecrets to use for pulling the runner image.
+# @var gitlab_runner_image_pull_secrets:example: >
+#   gitlab_runner_image_pull_secrets:
+#     - name: "image-pull-secret"
+gitlab_runner_image_pull_secrets: []
+
+# Replicas
+# @var gitlab_runner_replicas
+# @var gitlab_runner_replicas:type: integer
+# @var gitlab_runner_replicas:description: >
+# Number of runner manager pods to launch.
+gitlab_runner_replicas: 1
+
+# @var gitlab_runner_revision_history_limit
+# @var gitlab_runner_revision_history_limit:type: integer
+# @var gitlab_runner_revision_history_limit:description: >
+# How many old ReplicaSets for this Deployment to retain.
+
+# GitLab connection
+# @var gitlab_runner_gitlab_url
+# @var gitlab_runner_gitlab_url:type: string
+# @var gitlab_runner_gitlab_url:description: >
+# The GitLab Server URL (with protocol) to register the runner against.
+# @var gitlab_runner_gitlab_url:example: >
+#   gitlab_runner_gitlab_url: "https://gitlab.example.com/"
+gitlab_runner_gitlab_url: "https://gitlab.com/"
+
+# @var gitlab_runner_token
+# @var gitlab_runner_token:type: string
+# @var gitlab_runner_token:description: >
+# Runner authentication token retrieved from the GitLab UI/API.
+# When set (and gitlab_runner_existing_secret is empty), the role creates a Kubernetes
+# secret holding this token and the chart consumes it. Mark this variable as sensitive
+# (e.g. with Ansible Vault or an external secret store).
+gitlab_runner_token: ""
+
+# @var gitlab_runner_existing_secret
+# @var gitlab_runner_existing_secret:type: string
+# @var gitlab_runner_existing_secret:description: >
+# Name of an existing Kubernetes secret containing the key "runner-token".
+# When set, the role does not create a secret and the chart references this one
+# through runners.secret.
+gitlab_runner_existing_secret: ""
+
+# @var gitlab_runner_unregister_runners
+# @var gitlab_runner_unregister_runners:type: boolean
+# @var gitlab_runner_unregister_runners:description: >
+# Unregister all runners before chart termination/upgrade.
+gitlab_runner_unregister_runners: true
+
+# @var gitlab_runner_termination_grace_period_seconds
+# @var gitlab_runner_termination_grace_period_seconds:type: integer
+# @var gitlab_runner_termination_grace_period_seconds:description: >
+# Grace period (in seconds) before pods are forcibly terminated, allowing in-flight
+# jobs to finish.
+gitlab_runner_termination_grace_period_seconds: 3600
+
+# @var gitlab_runner_certs_secret_name
+# @var gitlab_runner_certs_secret_name:type: string
+# @var gitlab_runner_certs_secret_name:description: >
+# Name of a Kubernetes Secret holding custom CA certificates. Used to populate
+# /home/gitlab-runner/.gitlab-runner/certs/ for self-signed GitLab instances.
+gitlab_runner_certs_secret_name: ""
+
+# Runner global behavior
+# @var gitlab_runner_concurrent
+# @var gitlab_runner_concurrent:type: integer
+# @var gitlab_runner_concurrent:description: >
+# Maximum number of concurrent jobs handled by the runner manager.
+gitlab_runner_concurrent: 10
+
+# @var gitlab_runner_check_interval
+# @var gitlab_runner_check_interval:type: integer
+# @var gitlab_runner_check_interval:description: >
+# Interval in seconds between two checks for new builds.
+gitlab_runner_check_interval: 3
+
+# @var gitlab_runner_shutdown_timeout
+# @var gitlab_runner_shutdown_timeout:type: integer
+# @var gitlab_runner_shutdown_timeout:description: >
+# Timeout in seconds for forceful shutdown of the runner process.
+gitlab_runner_shutdown_timeout: 0
+
+# @var gitlab_runner_log_level
+# @var gitlab_runner_log_level:type: string
+# @var gitlab_runner_log_level:description: >
+# Log level. Options: debug, info, warn, error, fatal, panic. Empty = chart default.
+gitlab_runner_log_level: ""
+
+# @var gitlab_runner_log_format
+# @var gitlab_runner_log_format:type: string
+# @var gitlab_runner_log_format:description: >
+# Log format. Options: runner, text, json. Empty = chart default.
+gitlab_runner_log_format: ""
+
+# @var gitlab_runner_sentry_dsn
+# @var gitlab_runner_sentry_dsn:type: string
+# @var gitlab_runner_sentry_dsn:description: >
+# Sentry DSN used by the runner manager to report errors.
+gitlab_runner_sentry_dsn: ""
+
+# @var gitlab_runner_connection_max_age
+# @var gitlab_runner_connection_max_age:type: string
+# @var gitlab_runner_connection_max_age:description: >
+# Maximum connection age for TLS keepalive connections (e.g. "15m"). Empty = chart default.
+gitlab_runner_connection_max_age: ""
+
+# @var gitlab_runner_pre_entrypoint_script
+# @var gitlab_runner_pre_entrypoint_script:type: string
+# @var gitlab_runner_pre_entrypoint_script:description: >
+# Custom bash script executed before the gitlab-runner process starts.
+gitlab_runner_pre_entrypoint_script: ""
+
+# Session server
+# @var gitlab_runner_session_server_enabled
+# @var gitlab_runner_session_server_enabled:type: boolean
+# @var gitlab_runner_session_server_enabled:description: >
+# Enable the runner session server (used for interactive web terminals).
+gitlab_runner_session_server_enabled: false
+
+# @var gitlab_runner_session_server_service_type
+# @var gitlab_runner_session_server_service_type:type: string
+# @var gitlab_runner_session_server_service_type:description: >
+# Service type for the session server. Options: ClusterIP, Headless, NodePort, LoadBalancer.
+gitlab_runner_session_server_service_type: "LoadBalancer"
+
+# @var gitlab_runner_session_server_public_ip
+# @var gitlab_runner_session_server_public_ip:type: string
+# @var gitlab_runner_session_server_public_ip:description: >
+# Public IP or hostname advertised by the session server.
+gitlab_runner_session_server_public_ip: ""
+
+# @var gitlab_runner_session_server_internal_port
+# @var gitlab_runner_session_server_internal_port:type: integer
+# @var gitlab_runner_session_server_internal_port:description: >
+# Session server internal listening port. 0 = chart default.
+gitlab_runner_session_server_internal_port: 0
+
+# @var gitlab_runner_session_server_external_port
+# @var gitlab_runner_session_server_external_port:type: integer
+# @var gitlab_runner_session_server_external_port:description: >
+# Session server external port advertised to GitLab. 0 = chart default.
+gitlab_runner_session_server_external_port: 0
+
+# @var gitlab_runner_session_server_node_port
+# @var gitlab_runner_session_server_node_port:type: integer
+# @var gitlab_runner_session_server_node_port:description: >
+# NodePort assigned to the session server when serviceType is NodePort. 0 = auto.
+gitlab_runner_session_server_node_port: 0
+
+# RBAC
+# @var gitlab_runner_rbac_create
+# @var gitlab_runner_rbac_create:type: boolean
+# @var gitlab_runner_rbac_create:description: >
+# Create Role/RoleBinding (or ClusterRole/ClusterRoleBinding when clusterWideAccess is enabled).
+gitlab_runner_rbac_create: true
+
+# @var gitlab_runner_rbac_cluster_wide_access
+# @var gitlab_runner_rbac_cluster_wide_access:type: boolean
+# @var gitlab_runner_rbac_cluster_wide_access:description: >
+# Allow the runner to manage resources cluster-wide rather than only in its namespace.
+gitlab_runner_rbac_cluster_wide_access: false
+
+# @var gitlab_runner_rbac_rules
+# @var gitlab_runner_rbac_rules:type: list
+# @var gitlab_runner_rbac_rules:description: >
+# Additional RBAC rules to grant to the runner. Empty list lets the chart use its defaults.
+# @var gitlab_runner_rbac_rules:example: >
+#   gitlab_runner_rbac_rules:
+#     - apiGroups: [""]
+#       resources: ["pods"]
+#       verbs: ["create", "delete", "get"]
+gitlab_runner_rbac_rules: []
+
+# Service Account
+# @var gitlab_runner_service_account_name
+# @var gitlab_runner_service_account_name:type: string
+# @var gitlab_runner_service_account_name:description: >
+# ServiceAccount name to use. Empty = chart generates one based on the release name.
+gitlab_runner_service_account_name: ""
+
+# @var gitlab_runner_service_account_annotations
+# @var gitlab_runner_service_account_annotations:type: dict
+# @var gitlab_runner_service_account_annotations:description: >
+# Annotations to apply to the runner ServiceAccount.
+gitlab_runner_service_account_annotations: {}
+
+# @var gitlab_runner_service_account_image_pull_secrets
+# @var gitlab_runner_service_account_image_pull_secrets:type: list
+# @var gitlab_runner_service_account_image_pull_secrets:description: >
+# imagePullSecrets attached to the ServiceAccount.
+gitlab_runner_service_account_image_pull_secrets: []
+
+# Metrics
+# @var gitlab_runner_metrics_enabled
+# @var gitlab_runner_metrics_enabled:type: boolean
+# @var gitlab_runner_metrics_enabled:description: >
+# Enable the integrated Prometheus metrics exporter.
+gitlab_runner_metrics_enabled: false
+
+# @var gitlab_runner_metrics_port
+# @var gitlab_runner_metrics_port:type: integer
+# @var gitlab_runner_metrics_port:description: >
+# Port exposed by the metrics exporter.
+gitlab_runner_metrics_port: 9252
+
+# @var gitlab_runner_metrics_pod_monitor_enabled
+# @var gitlab_runner_metrics_pod_monitor_enabled:type: boolean
+# @var gitlab_runner_metrics_pod_monitor_enabled:description: >
+# Create a prometheus-operator PodMonitor for the runner pods.
+gitlab_runner_metrics_pod_monitor_enabled: false
+
+# Runners (executor configuration)
+# @var gitlab_runner_job_namespace
+# @var gitlab_runner_job_namespace:type: string
+# @var gitlab_runner_job_namespace:description: >
+# Namespace where job pods are scheduled. Empty = same as the runner namespace.
+gitlab_runner_job_namespace: ""
+
+# @var gitlab_runner_executor
+# @var gitlab_runner_executor:type: string
+# @var gitlab_runner_executor:description: >
+# Executor used to run jobs. Empty = chart default (kubernetes).
+gitlab_runner_executor: ""
+
+# @var gitlab_runner_runner_name
+# @var gitlab_runner_runner_name:type: string
+# @var gitlab_runner_runner_name:description: >
+# Runner name reported to GitLab. Empty = chart default.
+gitlab_runner_runner_name: ""
+
+# @var gitlab_runner_config_toml
+# @var gitlab_runner_config_toml:type: string
+# @var gitlab_runner_config_toml:description: >
+# Multi-line TOML snippet rendered by the chart as runners.config. The string is
+# evaluated as a Helm template, so it can reference Helm values directly. Leave
+# empty to keep the chart default (kubernetes executor with the alpine image).
+# @var gitlab_runner_config_toml:example: >
+#   gitlab_runner_config_toml: |
+#     [[runners]]
+#       [runners.kubernetes]
+#         namespace = "{% raw %}{{ default .Release.Namespace .Values.runners.jobNamespace }}{% endraw %}"
+#         image = "alpine"
+gitlab_runner_config_toml: ""
+
+# @var gitlab_runner_cache
+# @var gitlab_runner_cache:type: dict
+# @var gitlab_runner_cache:description: >
+# Distributed cache configuration (passed to runners.cache in the chart values).
+# @var gitlab_runner_cache:example: >
+#   gitlab_runner_cache:
+#     secretName: "s3access"
+gitlab_runner_cache: {}
+
+# Pod scheduling and security
+# @var gitlab_runner_resources
+# @var gitlab_runner_resources:type: dict
+# @var gitlab_runner_resources:description: >
+# Resource requests and limits for the runner manager pod.
+# @var gitlab_runner_resources:example: >
+#   gitlab_runner_resources:
+#     requests:
+#       cpu: "100m"
+#       memory: "128Mi"
+#     limits:
+#       cpu: "200m"
+#       memory: "256Mi"
+gitlab_runner_resources: {}
+
+# @var gitlab_runner_node_selector
+# @var gitlab_runner_node_selector:type: dict
+# @var gitlab_runner_node_selector:description: >
+# nodeSelector applied to the runner manager pod.
+gitlab_runner_node_selector: {}
+
+# @var gitlab_runner_tolerations
+# @var gitlab_runner_tolerations:type: list
+# @var gitlab_runner_tolerations:description: >
+# Tolerations applied to the runner manager pod.
+gitlab_runner_tolerations: []
+
+# @var gitlab_runner_affinity
+# @var gitlab_runner_affinity:type: dict
+# @var gitlab_runner_affinity:description: >
+# Affinity rules applied to the runner manager pod.
+gitlab_runner_affinity: {}
+
+# @var gitlab_runner_topology_spread_constraints
+# @var gitlab_runner_topology_spread_constraints:type: list
+# @var gitlab_runner_topology_spread_constraints:description: >
+# topologySpreadConstraints applied to the runner manager pod.
+gitlab_runner_topology_spread_constraints: []
+
+# @var gitlab_runner_priority_class_name
+# @var gitlab_runner_priority_class_name:type: string
+# @var gitlab_runner_priority_class_name:description: >
+# PriorityClass name applied to the runner manager pod.
+gitlab_runner_priority_class_name: ""
+
+# @var gitlab_runner_runtime_class_name
+# @var gitlab_runner_runtime_class_name:type: string
+# @var gitlab_runner_runtime_class_name:description: >
+# RuntimeClass name applied to the runner manager pod.
+gitlab_runner_runtime_class_name: ""
+
+# @var gitlab_runner_scheduler_name
+# @var gitlab_runner_scheduler_name:type: string
+# @var gitlab_runner_scheduler_name:description: >
+# Custom scheduler used to schedule the runner manager pods.
+gitlab_runner_scheduler_name: ""
+
+# @var gitlab_runner_pod_security_context
+# @var gitlab_runner_pod_security_context:type: dict
+# @var gitlab_runner_pod_security_context:description: >
+# Pod-level securityContext applied to the runner manager pod.
+gitlab_runner_pod_security_context:
+  runAsUser: 100
+  fsGroup: 65533
+
+# @var gitlab_runner_security_context
+# @var gitlab_runner_security_context:type: dict
+# @var gitlab_runner_security_context:description: >
+# Container-level securityContext applied to the runner manager container.
+gitlab_runner_security_context:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  privileged: false
+  capabilities:
+    drop:
+      - "ALL"
+
+# Pod metadata and lifecycle
+# @var gitlab_runner_pod_annotations
+# @var gitlab_runner_pod_annotations:type: dict
+# @var gitlab_runner_pod_annotations:description: >
+# Annotations applied to the runner manager pod.
+gitlab_runner_pod_annotations: {}
+
+# @var gitlab_runner_pod_labels
+# @var gitlab_runner_pod_labels:type: dict
+# @var gitlab_runner_pod_labels:description: >
+# Labels applied to the runner manager pod.
+gitlab_runner_pod_labels: {}
+
+# @var gitlab_runner_deployment_annotations
+# @var gitlab_runner_deployment_annotations:type: dict
+# @var gitlab_runner_deployment_annotations:description: >
+# Annotations applied to the runner Deployment.
+gitlab_runner_deployment_annotations: {}
+
+# @var gitlab_runner_deployment_labels
+# @var gitlab_runner_deployment_labels:type: dict
+# @var gitlab_runner_deployment_labels:description: >
+# Labels applied to the runner Deployment.
+gitlab_runner_deployment_labels: {}
+
+# @var gitlab_runner_strategy
+# @var gitlab_runner_strategy:type: dict
+# @var gitlab_runner_strategy:description: >
+# Update strategy for the runner Deployment.
+# @var gitlab_runner_strategy:example: >
+#   gitlab_runner_strategy:
+#     type: "RollingUpdate"
+#     rollingUpdate:
+#       maxSurge: 1
+#       maxUnavailable: 0
+gitlab_runner_strategy: {}
+
+# @var gitlab_runner_hostname
+# @var gitlab_runner_hostname:type: string
+# @var gitlab_runner_hostname:description: >
+# Custom hostname for the runner manager pod.
+gitlab_runner_hostname: ""
+
+# @var gitlab_runner_host_aliases
+# @var gitlab_runner_host_aliases:type: list
+# @var gitlab_runner_host_aliases:description: >
+# hostAliases injected into the runner manager pod.
+gitlab_runner_host_aliases: []
+
+# Environment
+# @var gitlab_runner_env_vars
+# @var gitlab_runner_env_vars:type: list
+# @var gitlab_runner_env_vars:description: >
+# Environment variables present at runner registration time. Use a list of
+# {name, value} mappings (rendered into envVars).
+# @var gitlab_runner_env_vars:example: >
+#   gitlab_runner_env_vars:
+#     - name: "RUNNER_EXECUTOR"
+#       value: "kubernetes"
+gitlab_runner_env_vars: []
+
+# @var gitlab_runner_extra_env
+# @var gitlab_runner_extra_env:type: dict
+# @var gitlab_runner_extra_env:description: >
+# Additional environment variables as key-value pairs (rendered into extraEnv).
+gitlab_runner_extra_env: {}
+
+# @var gitlab_runner_extra_env_from
+# @var gitlab_runner_extra_env_from:type: dict
+# @var gitlab_runner_extra_env_from:description: >
+# Additional environment variables sourced from secrets/configmaps (rendered into extraEnvFrom).
+# @var gitlab_runner_extra_env_from:example: >
+#   gitlab_runner_extra_env_from:
+#     CACHE_S3_ACCESS_KEY:
+#       secretKeyRef:
+#         name: "s3access"
+#         key: "accesskey"
+gitlab_runner_extra_env_from: {}
+
+# @var gitlab_runner_extra_env_from_refs
+# @var gitlab_runner_extra_env_from_refs:type: list
+# @var gitlab_runner_extra_env_from_refs:description: >
+# envFrom references attached to the runner manager pod.
+# @var gitlab_runner_extra_env_from_refs:example: >
+#   gitlab_runner_extra_env_from_refs:
+#     - secretRef:
+#         name: "gitlab-runner-cache-config"
+gitlab_runner_extra_env_from_refs: []
+
+# Volumes / secrets / configmaps / extra objects
+# @var gitlab_runner_secrets
+# @var gitlab_runner_secrets:type: list
+# @var gitlab_runner_secrets:description: >
+# Secrets mounted into the runner pod (read-only) at /secrets.
+# @var gitlab_runner_secrets:example: >
+#   gitlab_runner_secrets:
+#     - name: "my-secret"
+gitlab_runner_secrets: []
+
+# @var gitlab_runner_config_maps
+# @var gitlab_runner_config_maps:type: dict
+# @var gitlab_runner_config_maps:description: >
+# Additional config files mounted into the runner pod under /configmaps.
+gitlab_runner_config_maps: {}
+
+# @var gitlab_runner_volumes
+# @var gitlab_runner_volumes:type: list
+# @var gitlab_runner_volumes:description: >
+# Additional volumes attached to the runner Deployment.
+gitlab_runner_volumes: []
+
+# @var gitlab_runner_volume_mounts
+# @var gitlab_runner_volume_mounts:type: list
+# @var gitlab_runner_volume_mounts:description: >
+# Additional volume mounts attached to the runner container.
+gitlab_runner_volume_mounts: []
+
+# @var gitlab_runner_extra_objects
+# @var gitlab_runner_extra_objects:type: list
+# @var gitlab_runner_extra_objects:description: >
+# Extra Kubernetes manifests rendered by the chart alongside the runner.
+gitlab_runner_extra_objects: []
+
+# @var gitlab_runner_extra_containers
+# @var gitlab_runner_extra_containers:type: list
+# @var gitlab_runner_extra_containers:description: >
+# Sidecar containers added to the runner pod.
+gitlab_runner_extra_containers: []
+
+# @var gitlab_runner_extra_manifests
+# @var gitlab_runner_extra_manifests:type: list
+# @var gitlab_runner_extra_manifests:description: >
+# Extra Kubernetes manifests created in the runner namespace before installing the chart.
+gitlab_runner_extra_manifests: []
+
+# Probes
+# @var gitlab_runner_probe_timeout_seconds
+# @var gitlab_runner_probe_timeout_seconds:type: integer
+# @var gitlab_runner_probe_timeout_seconds:description: >
+# Timeout in seconds for liveness and readiness probes. 0 = chart default.
+gitlab_runner_probe_timeout_seconds: 0
+
+# @var gitlab_runner_liveness_probe
+# @var gitlab_runner_liveness_probe:type: dict
+# @var gitlab_runner_liveness_probe:description: >
+# Custom livenessProbe for the runner container.
+gitlab_runner_liveness_probe: {}
+
+# @var gitlab_runner_readiness_probe
+# @var gitlab_runner_readiness_probe:type: dict
+# @var gitlab_runner_readiness_probe:description: >
+# Custom readinessProbe for the runner container.
+gitlab_runner_readiness_probe: {}
+
+# HPA
+# @var gitlab_runner_hpa
+# @var gitlab_runner_hpa:type: dict
+# @var gitlab_runner_hpa:description: >
+# HorizontalPodAutoscaler configuration for the runner manager Deployment.
+# @var gitlab_runner_hpa:example: >
+#   gitlab_runner_hpa:
+#     minReplicas: 1
+#     maxReplicas: 10
+#     metrics:
+#       - type: "Pods"
+#         pods:
+#           metricName: "gitlab_runner_jobs"
+#           targetAverageValue: "400m"
+gitlab_runner_hpa: {}
+
+# Escape hatch
+# @var gitlab_runner_additional_helm_values
+# @var gitlab_runner_additional_helm_values:type: dict
+# @var gitlab_runner_additional_helm_values:description: >
+# Free-form helm values merged into the rendered values file. Use this to set
+# any chart parameter not exposed by the role above.
+gitlab_runner_additional_helm_values: {}

@@ -1,0 +1,28 @@
+---
+- name: "Verify"
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'gitlab-runner' namespace to be active."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "gitlab-runner"
+      register: namespace_gitlab_runner
+      until:
+        - namespace_gitlab_runner.resources | length > 0
+        - namespace_gitlab_runner.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 2
+
+    - name: "Wait for 'gitlab-runner' Deployment to be deployed."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        namespace: "gitlab-runner"
+        label_selectors:
+          - "app=gitlab-runner"
+      register: gitlab_runner_deployment
+      until: gitlab_runner_deployment.resources | length > 0
+      retries: 30
+      delay: 2
