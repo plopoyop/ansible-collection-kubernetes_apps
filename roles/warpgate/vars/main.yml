@@ -1,0 +1,2 @@
+---
+warpgate_helm_chart_ref: "oci://ghcr.io/warp-tech/helm-charts/warpgate"

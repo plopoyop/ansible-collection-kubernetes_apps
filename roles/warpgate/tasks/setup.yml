@@ -1,0 +1,34 @@
+---
+- name: "Create Warpgate namespace"
+  kubernetes.core.k8s:
+    name: "{{ warpgate_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+
+- name: "Create Warpgate setup credentials secret"
+  kubernetes.core.k8s:
+    state: "present"
+    definition: "{{ lookup('ansible.builtin.template', 'secret-setup.yml.j2') | from_yaml }}"
+  when: warpgate_setup_enabled and warpgate_admin_password | default('') | length > 0
+  no_log: true
+
+- name: "Create extra manifests"
+  kubernetes.core.k8s:
+    namespace: "{{ warpgate_namespace }}"
+    state: "present"
+    definition: "{{ warpgate_manifest_to_create }}"
+  loop: "{{ warpgate_extra_manifests }}"
+  loop_control:
+    loop_var: warpgate_manifest_to_create
+  when: warpgate_extra_manifests | length > 0
+
+- name: "Install Warpgate helm package"
+  kubernetes.core.helm:
+    name: "{{ warpgate_deployment_name }}"
+    namespace: "{{ warpgate_namespace }}"
+    state: "present"
+    chart_ref: "{{ warpgate_helm_chart_ref }}"
+    chart_version: "{{ warpgate_helm_chart_version }}"
+    values: "{{ lookup('ansible.builtin.template', 'warpgate_helm_values.yml.j2') | from_yaml }}"
+    wait: "{{ warpgate_wait_install }}"

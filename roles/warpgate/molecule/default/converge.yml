@@ -1,0 +1,13 @@
+---
+- name: "Converge"
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    warpgate_admin_password: "molecule-admin-password"
+    warpgate_wait_install: true
+    warpgate_data_pvc_enabled: false
+  tasks:
+    - name: "Install Warpgate"
+      ansible.builtin.import_role:
+        name: "warpgate"

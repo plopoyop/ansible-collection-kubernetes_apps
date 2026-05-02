@@ -1,0 +1,219 @@
+replicaCount: 1
+
+{% if warpgate_image_tag | default('') | length > 0 %}
+image:
+  tag: "{{ warpgate_image_tag }}"
+{% endif %}
+
+service:
+  type: "{{ warpgate_service_type }}"
+{% if warpgate_service_annotations %}
+  annotations:
+{% for key, value in warpgate_service_annotations.items() %}
+    "{{ key }}": "{{ value }}"
+{% endfor %}
+{% endif %}
+  ports:
+    ssh: {{ warpgate_service_port_ssh }}
+    http: {{ warpgate_service_port_http }}
+    mysql: {{ warpgate_service_port_mysql }}
+    pgsql: {{ warpgate_service_port_pgsql }}
+    kubernetes: {{ warpgate_service_port_kubernetes }}
+
+setup:
+  enabled: {{ warpgate_setup_enabled | lower }}
+  type: "{{ warpgate_setup_type }}"
+  envFromSecret:
+{% if warpgate_setup_credentials_secret | length > 0 %}
+    WARPGATE_ADMIN_PASSWORD: "{{ warpgate_setup_credentials_secret }}/admin-password"
+{% elif warpgate_admin_password | default('') | length > 0 %}
+    WARPGATE_ADMIN_PASSWORD: "{{ warpgate_deployment_name }}-setup-credentials/admin-password"
+{% endif %}
+{% for key, value in (warpgate_config_env_vars | default({})).items() %}
+    "{{ key }}": "{{ value }}"
+{% endfor %}
+{% if warpgate_database_url | length > 0 %}
+  databaseUrl: "{{ warpgate_database_url }}"
+{% endif %}
+  ssh: {{ warpgate_service_port_ssh }}
+  http: {{ warpgate_service_port_http }}
+  mysql: {{ warpgate_service_port_mysql }}
+  pgsql: {{ warpgate_service_port_pgsql }}
+  kubernetes: {{ warpgate_service_port_kubernetes }}
+
+data:
+  pvc:
+    enabled: {{ warpgate_data_pvc_enabled | lower }}
+{% if warpgate_data_pvc_enabled %}
+    template:
+      accessModes:
+        - "ReadWriteOnce"
+{% if warpgate_data_pvc_storage_class %}
+      storageClassName: "{{ warpgate_data_pvc_storage_class }}"
+{% endif %}
+      resources:
+        requests:
+          storage: "{{ warpgate_data_pvc_size }}"
+{% endif %}
+
+{% if warpgate_database_url | length > 0 %}
+databaseUrl: "{{ warpgate_database_url }}"
+{% endif %}
+
+{% if warpgate_config_env_vars | default({}) | length > 0 %}
+config_env_var_replace: "{{ warpgate_config_env_vars.keys() | join(' ') }}"
+{% endif %}
+
+overrides_config: |
+{% if warpgate_sso_providers | default([]) | length > 0 %}
+  sso_providers:
+{% for provider in warpgate_sso_providers %}
+    - name: "{{ provider.name }}"
+{% if provider.label is defined %}
+      label: "{{ provider.label }}"
+{% endif %}
+{% if provider.auto_create_users is defined %}
+      auto_create_users: {{ provider.auto_create_users | lower }}
+{% endif %}
+{% if provider.return_url_prefix is defined %}
+      return_url_prefix: "{{ provider.return_url_prefix }}"
+{% endif %}
+      provider:
+        type: "{{ provider.provider.type }}"
+{% if provider.provider.type == 'azure' %}
+        client_id: "{{ provider.provider.client_id }}"
+        client_secret: "{{ provider.provider.client_secret }}"
+        tenant: "{{ provider.provider.tenant }}"
+{% elif provider.provider.type == 'custom' %}
+        client_id: "{{ provider.provider.client_id }}"
+        client_secret: "{{ provider.provider.client_secret }}"
+        issuer_url: "{{ provider.provider.issuer_url }}"
+{% if provider.provider.scopes is defined %}
+        scopes: {{ provider.provider.scopes | to_json }}
+{% endif %}
+{% if provider.provider.role_mappings is defined %}
+        role_mappings:
+{% for claim_value, role_name in provider.provider.role_mappings.items() %}
+          "{{ claim_value }}": "{{ role_name }}"
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+  recordings:
+    enable: {{ warpgate_recordings_enabled | default(true) | lower }}
+{% if warpgate_database_url | length > 0 %}
+    path: "database"
+{% else %}
+    path: "/data/recordings"
+{% endif %}
+{% if warpgate_external_host | default('') | length > 0 %}
+  external_host: "{{ warpgate_external_host }}"
+{% else %}
+  external_host: null
+{% endif %}
+{% if warpgate_database_url | length > 0 %}
+  database_url: "{{ warpgate_database_url }}"
+{% else %}
+  database_url: "sqlite:/data/db"
+{% endif %}
+  ssh:
+    enable: {{ (warpgate_service_port_ssh | int > 0) | lower }}
+    listen: "[::]:{{ warpgate_service_port_ssh }}"
+    keys: "/data/ssh-keys"
+    host_key_verification: "prompt"
+    inactivity_timeout: "5m"
+{% if warpgate_external_ssh_host | default('') | length > 0 %}
+    external_host: "{{ warpgate_external_ssh_host }}"
+{% endif %}
+{% if warpgate_external_ssh_port | default(0) | int > 0 %}
+    external_port: {{ warpgate_external_ssh_port }}
+{% endif %}
+  http:
+    listen: "[::]:{{ warpgate_service_port_http }}"
+    certificate: "/data/tls.certificate.pem"
+    key: "/data/tls.key.pem"
+    trust_x_forwarded_headers: true
+    session_max_age: "30m"
+    cookie_max_age: "1day"
+{% if warpgate_external_http_host | default('') | length > 0 %}
+    external_host: "{{ warpgate_external_http_host }}"
+{% endif %}
+{% if warpgate_external_http_port | default(0) | int > 0 %}
+    external_port: {{ warpgate_external_http_port }}
+{% endif %}
+  kubernetes:
+    enable: {{ (warpgate_service_port_kubernetes | int > 0) | lower }}
+    listen: "[::]:{{ warpgate_service_port_kubernetes }}"
+    certificate: "/data/tls.certificate.pem"
+    key: "/data/tls.key.pem"
+    session_max_age: "30m"
+{% if warpgate_external_kubernetes_host | default('') | length > 0 %}
+    external_host: "{{ warpgate_external_kubernetes_host }}"
+{% endif %}
+{% if warpgate_external_kubernetes_port | default(0) | int > 0 %}
+    external_port: {{ warpgate_external_kubernetes_port }}
+{% endif %}
+  mysql:
+    enable: {{ (warpgate_service_port_mysql | int > 0) | lower }}
+    listen: "[::]:{{ warpgate_service_port_mysql }}"
+    certificate: "/data/tls.certificate.pem"
+    key: "/data/tls.key.pem"
+{% if warpgate_external_mysql_host | default('') | length > 0 %}
+    external_host: "{{ warpgate_external_mysql_host }}"
+{% endif %}
+{% if warpgate_external_mysql_port | default(0) | int > 0 %}
+    external_port: {{ warpgate_external_mysql_port }}
+{% endif %}
+  postgres:
+    enable: {{ (warpgate_service_port_pgsql | int > 0) | lower }}
+    listen: "[::]:{{ warpgate_service_port_pgsql }}"
+    certificate: "/data/tls.certificate.pem"
+    key: "/data/tls.key.pem"
+{% if warpgate_external_postgres_host | default('') | length > 0 %}
+    external_host: "{{ warpgate_external_postgres_host }}"
+{% endif %}
+{% if warpgate_external_postgres_port | default(0) | int > 0 %}
+    external_port: {{ warpgate_external_postgres_port }}
+{% endif %}
+  log:
+    retention: "7days"
+
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
+{% if warpgate_resources %}
+resources: {{ warpgate_resources }}
+{% endif %}
+
+ingress:
+  enabled: {{ warpgate_ingress_enabled | lower }}
+{% if warpgate_ingress_enabled %}
+  className: "{{ warpgate_ingress_class_name }}"
+  annotations:
+    "kubernetes.io/ingress.class": "{{ warpgate_ingress_class_name }}"
+{% if warpgate_ingress_annotations %}
+{% for key, value in warpgate_ingress_annotations.items() %}
+    "{{ key }}": "{{ value }}"
+{% endfor %}
+{% endif %}
+  hosts:
+    - host: "{{ warpgate_ingress_hostname }}"
+      paths:
+        - path: "/"
+          pathType: "Prefix"
+{% if warpgate_ingress_tls_enabled %}
+  tls:
+    - secretName: "{{ warpgate_ingress_tls_secret_name }}"
+      hosts:
+        - "{{ warpgate_ingress_hostname }}"
+{% endif %}
+{% endif %}
+
+{% if warpgate_additional_config %}
+{{ warpgate_additional_config | ansible.builtin.to_nice_yaml | indent(0) }}
+{% endif %}
