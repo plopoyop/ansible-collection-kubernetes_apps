@@ -52,6 +52,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | Gatus         | v1.5.0            | [View README](roles/gatus/README.md)       |
 | Headlamp         | v0.41.0            | [View README](roles/headlamp/README.md)       |
 | Mailcrab         | v1.6.5            | [View README](roles/mailcrab/README.md)       |
+| Warpgate         | v0.0.4            | [View README](roles/warpgate/README.md)       |
 | Zammad         | v16.0.13            | [View README](roles/zammad/README.md)       |
 
 ## Customization
