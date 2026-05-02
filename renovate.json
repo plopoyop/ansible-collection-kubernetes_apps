@@ -88,6 +88,17 @@
         "ghcr.io/warp-tech/helm-charts/warpgate",
         "ghcr.io/warp-tech/warpgate"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "gitlab-runner"
+      ],
+      "registryUrls": [
+        "https://charts.gitlab.io"
+      ]
     }
   ],
   "customManagers": [
@@ -303,6 +314,31 @@
       "depNameTemplate": "ghcr.io/warp-tech/warpgate",
       "autoReplaceStringTemplate": "warpgate_image_tag: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
       "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/gitlab_runner/defaults/main.yml$/",
+        "/roles/gitlab_runner/README.md$/"
+      ],
+      "matchStrings": [
+        "gitlab_runner_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "gitlab-runner",
+      "autoReplaceStringTemplate": "gitlab_runner_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "GitLab Runner\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "gitlab-runner",
+      "autoReplaceStringTemplate": "GitLab Runner         | v{{newValue}}",
+      "datasourceTemplate": "helm"
     }
   ]
 }

@@ -39,6 +39,10 @@ jobs:
     uses: ./.github/workflows/test-role.yaml
     with:
       role_name: "gatus"
+  gitlab_runner:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "gitlab_runner"
   headlamp:
     uses: ./.github/workflows/test-role.yaml
     with:
