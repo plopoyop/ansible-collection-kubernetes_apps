@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-  description: "Install and configure ClamAV on kubernetes"
-  role_name: "clamav"
+  description: "Install and configure Argo CD on kubernetes"
+  role_name: "argocd"
   author: "Clément Hubert"
 
   license: MPL-2.0
@@ -10,8 +10,8 @@ galaxy_info:
 
   galaxy_tags:
     - "kubernetes"
-    - "clamav"
-    - "antivirus"
-    - "security"
+    - "argocd"
+    - "gitops"
+    - "cd"
 
 dependencies: []
