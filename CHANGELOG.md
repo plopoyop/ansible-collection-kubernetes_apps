@@ -1,6 +1,6 @@
 # Changelog
 
-## [8.5.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.5.0) (2026-05-02)
+## [8.5.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.5.0) (2026-05-03)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.4.0...8.5.0)
 
@@ -8,6 +8,14 @@
 
 - Add Gitlab Runner role [\#174](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/174) ([plopoyop](https://github.com/plopoyop))
 - Add warpgate role [\#173](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/173) ([plopoyop](https://github.com/plopoyop))
+
+## ⚙️ Dependencies
+
+- fix\(ci\): update renovatebot/github-action action \(v46.1.10 → v46.1.12\) [\#175](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/175) ([plopoyop](https://github.com/plopoyop))
+
+**Merged pull requests:**
+
+- fix\(deps\): update kubectl \(1.35.3 → 1.35.4\) [\#176](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/176) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.4.0) (2026-04-29)
 
