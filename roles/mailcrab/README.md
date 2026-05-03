@@ -9,12 +9,9 @@ Install and configure Mailcrab on Kubernetes using the official Helm chart
   - [mailcrab_affinity](#mailcrab_affinity)
   - [mailcrab_autoscaling](#mailcrab_autoscaling)
   - [mailcrab_basic_auth_secret_name](#mailcrab_basic_auth_secret_name)
-  - [mailcrab_chart_path](#mailcrab_chart_path)
   - [mailcrab_deployment_name](#mailcrab_deployment_name)
   - [mailcrab_enabled](#mailcrab_enabled)
   - [mailcrab_extra_manifests](#mailcrab_extra_manifests)
-  - [mailcrab_github_repo](#mailcrab_github_repo)
-  - [mailcrab_github_url](#mailcrab_github_url)
   - [mailcrab_github_version](#mailcrab_github_version)
   - [mailcrab_http_port](#mailcrab_http_port)
   - [mailcrab_image_pull_policy](#mailcrab_image_pull_policy)
@@ -44,7 +41,7 @@ Install and configure Mailcrab on Kubernetes using the official Helm chart
 
 ## Requirements
 
-- Minimum Ansible version: `2.1`
+- Minimum Ansible version: `2.17`
 
 ## Default Variables
 
@@ -89,14 +86,6 @@ mailcrab_autoscaling:
 
 ```YAML
 mailcrab_basic_auth_secret_name: mailcrab-basic-auth-secret
-```
-
-### mailcrab_chart_path
-
-#### Default value
-
-```YAML
-mailcrab_chart_path: charts/mailcrab
 ```
 
 ### mailcrab_deployment_name
@@ -147,22 +136,6 @@ mailcrab_extra_manifests:
       name: my-config
     data:
       key: value
-```
-
-### mailcrab_github_repo
-
-#### Default value
-
-```YAML
-mailcrab_github_repo: tweedegolf/mailcrab
-```
-
-### mailcrab_github_url
-
-#### Default value
-
-```YAML
-mailcrab_github_url: https://github.com/{{ mailcrab_github_repo }}
 ```
 
 ### mailcrab_github_version
@@ -407,7 +380,7 @@ None.
 
 ## License
 
-MPL2
+MPL-2.0
 
 ## Author
 

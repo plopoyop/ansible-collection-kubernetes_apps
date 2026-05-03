@@ -13,9 +13,6 @@ Install and configure ClamAV on kubernetes
   - [clamav_extra_args](#clamav_extra_args)
   - [clamav_extra_env_vars](#clamav_extra_env_vars)
   - [clamav_freshclam_config](#clamav_freshclam_config)
-  - [clamav_helm_chart_ref](#clamav_helm_chart_ref)
-  - [clamav_helm_repo_name](#clamav_helm_repo_name)
-  - [clamav_helm_repo_url](#clamav_helm_repo_url)
   - [clamav_helm_version](#clamav_helm_version)
   - [clamav_hpa_cpu](#clamav_hpa_cpu)
   - [clamav_hpa_enabled](#clamav_hpa_enabled)
@@ -47,7 +44,7 @@ Install and configure ClamAV on kubernetes
 
 ## Requirements
 
-- Minimum Ansible version: `2.1`
+- Minimum Ansible version: `2.17`
 
 ## Default Variables
 
@@ -183,30 +180,6 @@ clamav_freshclam_config:
   ScriptedUpdates: yes
   NotifyClamd: /etc/clamav/clamd.conf
   Bytecode: yes
-```
-
-### clamav_helm_chart_ref
-
-#### Default value
-
-```YAML
-clamav_helm_chart_ref: '{{ clamav_helm_repo_name }}/clamav'
-```
-
-### clamav_helm_repo_name
-
-#### Default value
-
-```YAML
-clamav_helm_repo_name: wiremind
-```
-
-### clamav_helm_repo_url
-
-#### Default value
-
-```YAML
-clamav_helm_repo_url: https://wiremind.github.io/wiremind-helm-charts
 ```
 
 ### clamav_helm_version
@@ -515,7 +488,7 @@ None.
 
 ## License
 
-MLP2
+MPL-2.0
 
 ## Author
 

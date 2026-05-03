@@ -55,7 +55,7 @@ Install and configure Warpgate on kubernetes
 
 ## Requirements
 
-- Minimum Ansible version: `2.12`
+- Minimum Ansible version: `2.17`
 
 ## Default Variables
 

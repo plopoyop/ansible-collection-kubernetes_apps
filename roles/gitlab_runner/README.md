@@ -93,7 +93,7 @@ Install and configure a GitLab Runner on kubernetes
 
 ## Requirements
 
-- Minimum Ansible version: `2.12`
+- Minimum Ansible version: `2.17`
 
 ## Default Variables
 

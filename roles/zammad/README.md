@@ -38,9 +38,6 @@ Install and configure Zammad application on kubernetes
   - [zammad_enabled](#zammad_enabled)
   - [zammad_external_s3_url](#zammad_external_s3_url)
   - [zammad_extra_env](#zammad_extra_env)
-  - [zammad_helm_chart_ref](#zammad_helm_chart_ref)
-  - [zammad_helm_repo_name](#zammad_helm_repo_name)
-  - [zammad_helm_repo_url](#zammad_helm_repo_url)
   - [zammad_helm_version](#zammad_helm_version)
   - [zammad_ingress_certmanager_cluster_issuer](#zammad_ingress_certmanager_cluster_issuer)
   - [zammad_ingress_class](#zammad_ingress_class)
@@ -122,7 +119,6 @@ Install and configure Zammad application on kubernetes
   - [zammad_scheduler_resources](#zammad_scheduler_resources)
   - [zammad_scheduler_security_context](#zammad_scheduler_security_context)
   - [zammad_scheduler_sidecars](#zammad_scheduler_sidecars)
-  - [zammad_secret_key_regex](#zammad_secret_key_regex)
   - [zammad_secrets_autowizard_secret_key](#zammad_secrets_autowizard_secret_key)
   - [zammad_secrets_autowizard_secret_name](#zammad_secrets_autowizard_secret_name)
   - [zammad_secrets_autowizard_use_existing](#zammad_secrets_autowizard_use_existing)
@@ -165,7 +161,7 @@ Install and configure Zammad application on kubernetes
 
 ## Requirements
 
-- Minimum Ansible version: `2.1`
+- Minimum Ansible version: `2.17`
 
 ## Default Variables
 
@@ -612,30 +608,6 @@ zammad_extra_env: []
 zammad_extra_env:
   - name: FOO_BAR
     value: "foobar"
-```
-
-### zammad_helm_chart_ref
-
-#### Default value
-
-```YAML
-zammad_helm_chart_ref: '{{ zammad_helm_repo_name }}/zammad'
-```
-
-### zammad_helm_repo_name
-
-#### Default value
-
-```YAML
-zammad_helm_repo_name: zammad
-```
-
-### zammad_helm_repo_url
-
-#### Default value
-
-```YAML
-zammad_helm_repo_url: https://zammad.github.io/zammad-helm
 ```
 
 ### zammad_helm_version
@@ -1823,14 +1795,6 @@ scheduler sidecars : can be used to add additional containers / sidecars
 zammad_scheduler_sidecars: []
 ```
 
-### zammad_secret_key_regex
-
-#### Default value
-
-```YAML
-zammad_secret_key_regex: ^[0-9,a-z,A-Z]{1,64}$
-```
-
 ### zammad_secrets_autowizard_secret_key
 
 Secret key for autowizard
@@ -2249,7 +2213,7 @@ None.
 
 ## License
 
-MLP2
+MPL-2.0
 
 ## Author
 

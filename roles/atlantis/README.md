@@ -49,9 +49,6 @@ Install and configure Atlantis on kubernetes
   - [atlantis_gitlab_secret](#atlantis_gitlab_secret)
   - [atlantis_gitlab_token](#atlantis_gitlab_token)
   - [atlantis_gitlab_user](#atlantis_gitlab_user)
-  - [atlantis_helm_chart_ref](#atlantis_helm_chart_ref)
-  - [atlantis_helm_repo_name](#atlantis_helm_repo_name)
-  - [atlantis_helm_repo_url](#atlantis_helm_repo_url)
   - [atlantis_helm_version](#atlantis_helm_version)
   - [atlantis_hide_prev_plan_comments](#atlantis_hide_prev_plan_comments)
   - [atlantis_ingress_annotations](#atlantis_ingress_annotations)
@@ -85,7 +82,7 @@ Install and configure Atlantis on kubernetes
 
 ## Requirements
 
-- Minimum Ansible version: `2.1`
+- Minimum Ansible version: `2.17`
 
 ## Default Variables
 
@@ -624,30 +621,6 @@ GitLab username for Atlantis
 atlantis_gitlab_user: ''
 ```
 
-### atlantis_helm_chart_ref
-
-#### Default value
-
-```YAML
-atlantis_helm_chart_ref: '{{ atlantis_helm_repo_name }}/atlantis'
-```
-
-### atlantis_helm_repo_name
-
-#### Default value
-
-```YAML
-atlantis_helm_repo_name: runatlantis
-```
-
-### atlantis_helm_repo_url
-
-#### Default value
-
-```YAML
-atlantis_helm_repo_url: https://runatlantis.github.io/helm-charts
-```
-
 ### atlantis_helm_version
 
 Helm chart version to install
@@ -992,7 +965,7 @@ None.
 
 ## License
 
-MLP2
+MPL-2.0
 
 ## Author
 
