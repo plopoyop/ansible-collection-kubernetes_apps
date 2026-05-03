@@ -5,104 +5,136 @@
   gather_facts: true
 
   tasks:
-    - name: "Pause for job to complete."
-      ansible.builtin.pause:
-        seconds: 60
-
-    - name: "Get 'nginx' deployment info."
+    - name: "Wait for 'nginx' deployment to be removed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-nginx"
         namespace: "zammad"
       register: nginx_deployment
+      until: nginx_deployment.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'nginx' is removed"
+    - name: "Assert that 'nginx' is removed."
       ansible.builtin.assert:
-        that: nginx_deployment['resources'] == []
+        that: nginx_deployment.resources | length == 0
+        fail_msg: "Deployment 'zammad-nginx' is still present."
 
-    - name: "Get 'memcached' deployment info."
+    - name: "Wait for 'memcached' deployment to be removed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-memcached"
         namespace: "zammad"
       register: memcached_deployment
+      until: memcached_deployment.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'memcached' is removed"
+    - name: "Assert that 'memcached' is removed."
       ansible.builtin.assert:
-        that: memcached_deployment['resources'] == []
+        that: memcached_deployment.resources | length == 0
+        fail_msg: "Deployment 'zammad-memcached' is still present."
 
-    - name: "Get 'railsserver' deployment info."
+    - name: "Wait for 'railsserver' deployment to be removed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-railsserver"
         namespace: "zammad"
       register: railsserver_deployment
+      until: railsserver_deployment.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'railsserver' is removed"
+    - name: "Assert that 'railsserver' is removed."
       ansible.builtin.assert:
-        that: railsserver_deployment['resources'] == []
+        that: railsserver_deployment.resources | length == 0
+        fail_msg: "Deployment 'zammad-railsserver' is still present."
 
-    - name: "Get 'scheduler' deployment info."
+    - name: "Wait for 'scheduler' deployment to be removed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-scheduler"
         namespace: "zammad"
       register: scheduler_deployment
+      until: scheduler_deployment.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'scheduler' is removed"
+    - name: "Assert that 'scheduler' is removed."
       ansible.builtin.assert:
-        that: scheduler_deployment['resources'] == []
+        that: scheduler_deployment.resources | length == 0
+        fail_msg: "Deployment 'zammad-scheduler' is still present."
 
-    - name: "Get 'websocket' deployment info."
+    - name: "Wait for 'websocket' deployment to be removed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-websocket"
         namespace: "zammad"
       register: websocket_deployment
+      until: websocket_deployment.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'websocket' is removed"
+    - name: "Assert that 'websocket' is removed."
       ansible.builtin.assert:
-        that: websocket_deployment['resources'] == []
+        that: websocket_deployment.resources | length == 0
+        fail_msg: "Deployment 'zammad-websocket' is still present."
 
-    - name: "Get 'elasticsearch' statefull set info."
+    - name: "Wait for 'elasticsearch' StatefulSet to be removed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
         name: "zammad-elasticsearch-master"
         namespace: "zammad"
       register: elasticsearch_statefullset
+      until: elasticsearch_statefullset.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'elasticsearch' is removed"
+    - name: "Assert that 'elasticsearch' is removed."
       ansible.builtin.assert:
-        that: elasticsearch_statefullset['resources'] == []
+        that: elasticsearch_statefullset.resources | length == 0
+        fail_msg: "StatefulSet 'zammad-elasticsearch-master' is still present."
 
-    - name: "Get 'postgresql' statefull set info."
+    - name: "Wait for 'postgresql' StatefulSet to be removed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
         name: "zammad-postgresql"
         namespace: "zammad"
       register: postgresql_statefullset
+      until: postgresql_statefullset.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'postgresql' is removed"
+    - name: "Assert that 'postgresql' is removed."
       ansible.builtin.assert:
-        that: postgresql_statefullset['resources'] == []
+        that: postgresql_statefullset.resources | length == 0
+        fail_msg: "StatefulSet 'zammad-postgresql' is still present."
 
-    - name: "Get 'redis' statefull set info."
+    - name: "Wait for 'redis' StatefulSet to be removed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
         name: "zammad-redis-master"
         namespace: "zammad"
       register: redis_statefullset
+      until: redis_statefullset.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'redis' is removed"
+    - name: "Assert that 'redis' is removed."
       ansible.builtin.assert:
-        that: redis_statefullset['resources'] == []
+        that: redis_statefullset.resources | length == 0
+        fail_msg: "StatefulSet 'zammad-redis-master' is still present."
 
-    - name: "Get 'zammad' namespace info."
+    - name: "Wait for 'zammad' namespace to be removed."
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "zammad"
       register: zammad_namespace
+      until: zammad_namespace.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: Assert that 'zammad' namespace is active
+    - name: "Assert that 'zammad' namespace is removed."
       ansible.builtin.assert:
-        that: zammad_namespace['resources'] == []
+        that: zammad_namespace.resources | length == 0
+        fail_msg: "Namespace 'zammad' is still present."

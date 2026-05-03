@@ -5,27 +5,35 @@
   gather_facts: true
 
   tasks:
-    - name: "Pause for deployment to complete."
-      ansible.builtin.pause:
-        seconds: 60
-
-    - name: "Get 'clamav' namespace info."
+    - name: "Wait for 'clamav' namespace to be active."
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "clamav"
       register: namespace_clamav
+      until:
+        - namespace_clamav.resources | length > 0
+        - namespace_clamav.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 5
 
-    - name: Assert that 'clamav' namespace is active
+    - name: "Assert that 'clamav' namespace is active."
       ansible.builtin.assert:
-        that: namespace_clamav['resources'][0]['status']['phase'] == "Active"
+        that:
+          - namespace_clamav.resources | length > 0
+          - namespace_clamav.resources[0].status.phase == "Active"
+        fail_msg: "Namespace 'clamav' is not active."
 
-    - name: "Get 'clamav' StatefulSet info."
+    - name: "Wait for 'clamav' StatefulSet to be deployed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
         name: "clamav"
         namespace: "clamav"
       register: clamav_statefulset
+      until: clamav_statefulset.resources | length > 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'clamav' StatefulSet is deployed"
+    - name: "Assert that 'clamav' StatefulSet is deployed."
       ansible.builtin.assert:
-        that: clamav_statefulset['resources'] | length > 0
+        that: clamav_statefulset.resources | length > 0
+        fail_msg: "StatefulSet 'clamav' is not deployed."

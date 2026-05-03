@@ -14,3 +14,8 @@
       retries: 30
       delay: 2
       changed_when: false
+
+    - name: "Assert that 'warpgate' namespace is removed."
+      ansible.builtin.assert:
+        that: namespace_warpgate.resources | length == 0
+        fail_msg: "Namespace 'warpgate' is still present."

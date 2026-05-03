@@ -5,29 +5,32 @@
   gather_facts: true
 
   tasks:
-    - name: "Pause for cleanup to complete."
-      ansible.builtin.pause:
-        seconds: 30
-
-    - name: "Check if 'mailcrab' namespace exists."
+    - name: "Wait for 'mailcrab' namespace to be removed."
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "mailcrab"
       register: namespace_mailcrab
-      failed_when: false
+      until: namespace_mailcrab.resources | length == 0
+      retries: 30
+      delay: 5
       changed_when: false
 
-    - name: Assert that 'mailcrab' namespace does not exist
+    - name: "Assert that 'mailcrab' namespace is removed."
       ansible.builtin.assert:
-        that: namespace_mailcrab['resources'] | length == 0
+        that: namespace_mailcrab.resources | length == 0
+        fail_msg: "Namespace 'mailcrab' is still present."
 
-    - name: "Get 'mailcrab' basic auth secret info."
+    - name: "Wait for 'mailcrab' basic auth secret to be removed."
       kubernetes.core.k8s_info:
         kind: "Secret"
         name: "mailcrab-basic-auth-secret"
         namespace: "mailcrab"
       register: mailcrab_basic_auth_secret
+      until: mailcrab_basic_auth_secret.resources | length == 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'mailcrab' basic auth secret exists"
+    - name: "Assert that 'mailcrab' basic auth secret is removed."
       ansible.builtin.assert:
-        that: mailcrab_basic_auth_secret['resources'] | length == 0
+        that: mailcrab_basic_auth_secret.resources | length == 0
+        fail_msg: "Secret 'mailcrab-basic-auth-secret' is still present."

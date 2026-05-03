@@ -5,18 +5,17 @@
   gather_facts: true
 
   tasks:
-    - name: "Pause for cleanup to complete."
-      ansible.builtin.pause:
-        seconds: 30
-
-    - name: "Check if 'atlantis' namespace exists."
+    - name: "Wait for 'atlantis' namespace to be removed."
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "atlantis"
       register: namespace_atlantis
-      failed_when: false
+      until: namespace_atlantis.resources | length == 0
+      retries: 30
+      delay: 5
       changed_when: false
 
-    - name: Assert that 'atlantis' namespace does not exist
+    - name: "Assert that 'atlantis' namespace is removed."
       ansible.builtin.assert:
-        that: namespace_atlantis['resources'] | length == 0
+        that: namespace_atlantis.resources | length == 0
+        fail_msg: "Namespace 'atlantis' is still present."

@@ -5,104 +5,140 @@
   gather_facts: true
 
   tasks:
-    - name: "Pause for job to complete."
-      ansible.builtin.pause:
-        seconds: 5
-
-    - name: "Get 'zammad' namespace info."
+    - name: "Wait for 'zammad' namespace to be active."
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "zammad"
       register: zammad_namespace
+      until:
+        - zammad_namespace.resources | length > 0
+        - zammad_namespace.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 5
 
-    - name: Assert that 'zammad' namespace is active
+    - name: "Assert that 'zammad' namespace is active."
       ansible.builtin.assert:
-        that: zammad_namespace['resources'][0]['status']['phase'] == "Active"
+        that:
+          - zammad_namespace.resources | length > 0
+          - zammad_namespace.resources[0].status.phase == "Active"
+        fail_msg: "Namespace 'zammad' is not active."
 
-    - name: "Get 'nginx' deployment info."
+    - name: "Wait for 'nginx' deployment to be deployed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-nginx"
         namespace: "zammad"
       register: nginx_deployment
+      until: nginx_deployment.resources[0].status.availableReplicas | default(0) == 1
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'nginx' is deployed"
+    - name: "Assert that 'nginx' is deployed."
       ansible.builtin.assert:
-        that: nginx_deployment['resources'][0]['status']['availableReplicas'] == 1
+        that: nginx_deployment.resources[0].status.availableReplicas | default(0) == 1
+        fail_msg: "Deployment 'zammad-nginx' is not deployed."
 
-    - name: "Get 'memcached' deployment info."
+    - name: "Wait for 'memcached' deployment to be deployed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-memcached"
         namespace: "zammad"
       register: memcached_deployment
+      until: memcached_deployment.resources[0].status.availableReplicas | default(0) == 1
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'memcached' is deployed"
+    - name: "Assert that 'memcached' is deployed."
       ansible.builtin.assert:
-        that: memcached_deployment['resources'][0]['status']['availableReplicas'] == 1
+        that: memcached_deployment.resources[0].status.availableReplicas | default(0) == 1
+        fail_msg: "Deployment 'zammad-memcached' is not deployed."
 
-    - name: "Get 'railsserver' deployment info."
+    - name: "Wait for 'railsserver' deployment to be deployed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-railsserver"
         namespace: "zammad"
       register: railsserver_deployment
+      until: railsserver_deployment.resources[0].status.availableReplicas | default(0) == 1
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'railsserver' is deployed"
+    - name: "Assert that 'railsserver' is deployed."
       ansible.builtin.assert:
-        that: railsserver_deployment['resources'][0]['status']['availableReplicas'] == 1
+        that: railsserver_deployment.resources[0].status.availableReplicas | default(0) == 1
+        fail_msg: "Deployment 'zammad-railsserver' is not deployed."
 
-    - name: "Get 'scheduler' deployment info."
+    - name: "Wait for 'scheduler' deployment to be deployed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-scheduler"
         namespace: "zammad"
       register: scheduler_deployment
+      until: scheduler_deployment.resources[0].status.availableReplicas | default(0) == 1
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'scheduler' is deployed"
+    - name: "Assert that 'scheduler' is deployed."
       ansible.builtin.assert:
-        that: scheduler_deployment['resources'][0]['status']['availableReplicas'] == 1
+        that: scheduler_deployment.resources[0].status.availableReplicas | default(0) == 1
+        fail_msg: "Deployment 'zammad-scheduler' is not deployed."
 
-    - name: "Get 'websocket' deployment info."
+    - name: "Wait for 'websocket' deployment to be deployed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "zammad-websocket"
         namespace: "zammad"
       register: websocket_deployment
+      until: websocket_deployment.resources[0].status.availableReplicas | default(0) == 1
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'websocket' is deployed"
+    - name: "Assert that 'websocket' is deployed."
       ansible.builtin.assert:
-        that: websocket_deployment['resources'][0]['status']['availableReplicas'] == 1
+        that: websocket_deployment.resources[0].status.availableReplicas | default(0) == 1
+        fail_msg: "Deployment 'zammad-websocket' is not deployed."
 
-    - name: "Get 'elasticsearch' statefull set info."
+    - name: "Wait for 'elasticsearch' StatefulSet to be deployed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
         name: "zammad-elasticsearch-master"
         namespace: "zammad"
       register: elasticsearch_statefullset
+      until: elasticsearch_statefullset.resources[0].status.availableReplicas | default(0) == 1
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'elasticsearch' is deployed"
+    - name: "Assert that 'elasticsearch' is deployed."
       ansible.builtin.assert:
-        that: elasticsearch_statefullset['resources'][0]['status']['availableReplicas'] == 1
+        that: elasticsearch_statefullset.resources[0].status.availableReplicas | default(0) == 1
+        fail_msg: "StatefulSet 'zammad-elasticsearch-master' is not deployed."
 
-    - name: "Get 'postgresql' statefull set info."
+    - name: "Wait for 'postgresql' StatefulSet to be deployed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
         name: "zammad-postgresql"
         namespace: "zammad"
       register: postgresql_statefullset
+      until: postgresql_statefullset.resources[0].status.availableReplicas | default(0) == 1
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'postgresql' is deployed"
+    - name: "Assert that 'postgresql' is deployed."
       ansible.builtin.assert:
-        that: postgresql_statefullset['resources'][0]['status']['availableReplicas'] == 1
+        that: postgresql_statefullset.resources[0].status.availableReplicas | default(0) == 1
+        fail_msg: "StatefulSet 'zammad-postgresql' is not deployed."
 
-    - name: "Get 'redis' statefull set info."
+    - name: "Wait for 'redis' StatefulSet to be deployed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
         name: "zammad-redis"
         namespace: "zammad"
       register: redis_statefullset
+      until: redis_statefullset.resources[0].status.availableReplicas | default(0) == 1
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'redis' is deployed"
+    - name: "Assert that 'redis' is deployed."
       ansible.builtin.assert:
-        that: redis_statefullset['resources'][0]['status']['availableReplicas'] == 1
+        that: redis_statefullset.resources[0].status.availableReplicas | default(0) == 1
+        fail_msg: "StatefulSet 'zammad-redis' is not deployed."

@@ -16,6 +16,13 @@
       retries: 30
       delay: 2
 
+    - name: "Assert that 'warpgate' namespace is active."
+      ansible.builtin.assert:
+        that:
+          - namespace_warpgate.resources | length > 0
+          - namespace_warpgate.resources[0].status.phase == "Active"
+        fail_msg: "Namespace 'warpgate' is not active."
+
     - name: "Wait for 'warpgate' Deployment to be deployed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
@@ -26,3 +33,8 @@
       until: warpgate_deployment.resources | length > 0
       retries: 30
       delay: 2
+
+    - name: "Assert that 'warpgate' Deployment is deployed."
+      ansible.builtin.assert:
+        that: warpgate_deployment.resources | length > 0
+        fail_msg: "Deployment 'warpgate' is not deployed."
