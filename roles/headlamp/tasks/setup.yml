@@ -19,7 +19,7 @@
     chart_ref: "{{ headlamp_helm_chart_ref }}"
     chart_version: "{{ headlamp_helm_chart_version }}"
     update_repo_cache: true
-    values: "{{ lookup('ansible.builtin.template', 'headlamp_helm_values.yml.j2') | from_yaml }}"
+    values: "{{ lookup('ansible.builtin.template', 'headlamp_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ headlamp_wait_install }}"
 
 - name: "Provision admin ServiceAccount and token for Headlamp"
@@ -80,4 +80,4 @@
 
     - name: "Display Headlamp admin token"
       ansible.builtin.debug:
-        msg: "Headlamp admin token: {{ headlamp_token_secret.resources[0].data.token | b64decode }}"
+        msg: "Headlamp admin token: {{ headlamp_token_secret.resources[0].data.token | ansible.builtin.b64decode }}"

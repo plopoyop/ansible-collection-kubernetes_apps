@@ -152,5 +152,5 @@ repoConfig: |
 {% endif %}
 
 {% if atlantis_additional_helm_values %}
-{{ atlantis_additional_helm_values | to_nice_yaml | indent(0) }}
+{{ atlantis_additional_helm_values | ansible.builtin.to_nice_yaml | indent(0) }}
 {% endif %}

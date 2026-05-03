@@ -22,5 +22,5 @@
     chart_ref: "{{ gatus_helm_chart_ref }}"
     chart_version: "{{ gatus_helm_version }}"
     update_repo_cache: true
-    values: "{{ lookup('ansible.builtin.template', 'gatus_helm_values.yml.j2') | from_yaml }}"
+    values: "{{ lookup('ansible.builtin.template', 'gatus_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ gatus_wait_install }}"

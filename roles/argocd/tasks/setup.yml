@@ -17,9 +17,8 @@
     namespace: "{{ argocd_namespace }}"
     chart_ref: "{{ argocd_helm_chart_ref }}"
     chart_version: "{{ argocd_helm_chart_version }}"
-    create_namespace: true
     update_repo_cache: true
-    values: "{{ lookup('ansible.builtin.template', 'argocd_helm_values.yml.j2') | from_yaml }}"
+    values: "{{ lookup('ansible.builtin.template', 'argocd_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: true
 
 - name: "Create ArgoCD clusters"

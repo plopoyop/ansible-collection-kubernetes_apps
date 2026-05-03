@@ -123,7 +123,7 @@ zammadConfig:
     sentinel:
       enabled: {{ zammad_redis_sentinel_enabled | lower }}
 {% if zammad_redis_sentinel_sentinels | length > 0 %}
-      sentinels: {{ zammad_redis_sentinel_sentinels | to_json }}
+      sentinels: {{ zammad_redis_sentinel_sentinels | ansible.builtin.to_json }}
 {% endif %}
       masterName: "{{ zammad_redis_sentinel_master_name }}"
       username: "{{ zammad_redis_sentinel_username }}"
@@ -187,9 +187,9 @@ autoWizard:
       "TextModuleLocale": {
         "Locale": "{{ zammad_auto_wizard_locale }}"
       },
-      "Users": {{ zammad_auto_wizard_users | to_json }},
-      "Settings": {{ zammad_auto_wizard_settings | to_json }},
-      "Organizations": {{ zammad_auto_wizard_organizations | to_json }}
+      "Users": {{ zammad_auto_wizard_users | ansible.builtin.to_json }},
+      "Settings": {{ zammad_auto_wizard_settings | ansible.builtin.to_json }},
+      "Organizations": {{ zammad_auto_wizard_organizations | ansible.builtin.to_json }}
     }
 {% endif %}
 

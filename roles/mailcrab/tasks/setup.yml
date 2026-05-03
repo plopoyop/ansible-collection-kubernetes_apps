@@ -106,7 +106,7 @@
     namespace: "{{ mailcrab_namespace }}"
     state: "present"
     chart_ref: "{{ mailcrab_chart_local_path }}"
-    values: "{{ lookup('ansible.builtin.template', 'mailcrab_helm_values.yml.j2') | from_yaml }}"
+    values: "{{ lookup('ansible.builtin.template', 'mailcrab_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ mailcrab_wait_install }}"
 
 - name: "Cleanup temporary directory"

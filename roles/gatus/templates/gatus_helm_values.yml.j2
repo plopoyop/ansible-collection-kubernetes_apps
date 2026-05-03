@@ -115,5 +115,5 @@ networkPolicy:
 config: {{ gatus_config }}
 
 {% if gatus_additional_helm_values %}
-{{ gatus_additional_helm_values | to_nice_yaml | indent(0) }}
+{{ gatus_additional_helm_values | ansible.builtin.to_nice_yaml | indent(0) }}
 {% endif %}

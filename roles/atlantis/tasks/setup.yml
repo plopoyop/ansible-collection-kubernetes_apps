@@ -19,5 +19,5 @@
     chart_ref: "{{ atlantis_helm_chart_ref }}"
     chart_version: "{{ atlantis_helm_version }}"
     update_repo_cache: true
-    values: "{{ lookup('ansible.builtin.template', 'atlantis_helm_values.yml.j2') | from_yaml }}"
+    values: "{{ lookup('ansible.builtin.template', 'atlantis_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ atlantis_wait_install }}"
