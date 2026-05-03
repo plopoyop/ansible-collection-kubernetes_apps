@@ -5,42 +5,55 @@
   gather_facts: true
 
   tasks:
-    - name: "Pause for resources to be created."
-      ansible.builtin.pause:
-        seconds: 15
-
-    - name: "Get 'atlantis' namespace info."
+    - name: "Wait for 'atlantis' namespace to be active."
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "atlantis"
       register: namespace_atlantis
+      until:
+        - namespace_atlantis.resources | length > 0
+        - namespace_atlantis.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 5
 
-    - name: Assert that 'atlantis' namespace is active
+    - name: "Assert that 'atlantis' namespace is active."
       ansible.builtin.assert:
-        that: namespace_atlantis['resources'][0]['status']['phase'] == "Active"
+        that:
+          - namespace_atlantis.resources | length > 0
+          - namespace_atlantis.resources[0].status.phase == "Active"
+        fail_msg: "Namespace 'atlantis' is not active."
 
-    - name: "Get 'atlantis' StatefulSet info."
+    - name: "Wait for 'atlantis' StatefulSet to be deployed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
         name: "atlantis"
         namespace: "atlantis"
       register: atlantis_statefulset
+      until: atlantis_statefulset.resources | length > 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'atlantis' StatefulSet is deployed"
+    - name: "Assert that 'atlantis' StatefulSet is deployed."
       ansible.builtin.assert:
-        that: atlantis_statefulset['resources'] | length > 0
+        that: atlantis_statefulset.resources | length > 0
+        fail_msg: "StatefulSet 'atlantis' is not deployed."
 
-    - name: "Assert that 'atlantis' StatefulSet has correct replicas spec"
+    - name: "Assert that 'atlantis' StatefulSet has correct replicas spec."
       ansible.builtin.assert:
-        that: atlantis_statefulset['resources'][0]['spec']['replicas'] == 1
+        that: atlantis_statefulset.resources[0].spec.replicas == 1
+        fail_msg: "StatefulSet 'atlantis' does not have 1 replica configured."
 
-    - name: "Get 'atlantis' Service info."
+    - name: "Wait for 'atlantis' Service to exist."
       kubernetes.core.k8s_info:
         kind: "Service"
         name: "atlantis"
         namespace: "atlantis"
       register: atlantis_service
+      until: atlantis_service.resources | length > 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'atlantis' Service exists"
+    - name: "Assert that 'atlantis' Service exists."
       ansible.builtin.assert:
-        that: atlantis_service['resources'] | length > 0
+        that: atlantis_service.resources | length > 0
+        fail_msg: "Service 'atlantis' does not exist."

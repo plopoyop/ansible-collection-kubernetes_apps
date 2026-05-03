@@ -5,78 +5,101 @@
   gather_facts: true
 
   tasks:
-    - name: "Pause for deployment to complete."
-      ansible.builtin.pause:
-        seconds: 60
-
-    - name: "Get 'mailcrab' namespace info."
+    - name: "Wait for 'mailcrab' namespace to be active."
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "mailcrab"
       register: namespace_mailcrab
+      until:
+        - namespace_mailcrab.resources | length > 0
+        - namespace_mailcrab.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 5
 
-    - name: Assert that 'mailcrab' namespace is active
+    - name: "Assert that 'mailcrab' namespace is active."
       ansible.builtin.assert:
-        that: namespace_mailcrab['resources'][0]['status']['phase'] == "Active"
+        that:
+          - namespace_mailcrab.resources | length > 0
+          - namespace_mailcrab.resources[0].status.phase == "Active"
+        fail_msg: "Namespace 'mailcrab' is not active."
 
-    - name: "Get 'mailcrab' Deployment info."
+    - name: "Wait for 'mailcrab' Deployment to be deployed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "mailcrab"
         namespace: "mailcrab"
       register: mailcrab_deployment
+      until:
+        - mailcrab_deployment.resources | length > 0
+        - mailcrab_deployment.resources[0].status.readyReplicas | default(0) >= 1
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'mailcrab' Deployment is deployed"
+    - name: "Assert that 'mailcrab' Deployment is deployed."
       ansible.builtin.assert:
-        that: mailcrab_deployment['resources'] | length > 0
+        that:
+          - mailcrab_deployment.resources | length > 0
+          - mailcrab_deployment.resources[0].status.readyReplicas | default(0) >= 1
+        fail_msg: "Deployment 'mailcrab' is not deployed with ready replicas."
 
-    - name: "Assert that 'mailcrab' Deployment has ready replicas"
-      ansible.builtin.assert:
-        that: mailcrab_deployment['resources'][0]['status']['readyReplicas'] | default(0) >= 1
-
-    - name: "Get 'mailcrab' Service info."
+    - name: "Wait for 'mailcrab' Service to exist."
       kubernetes.core.k8s_info:
         kind: "Service"
         name: "mailcrab"
         namespace: "mailcrab"
       register: mailcrab_service
+      until: mailcrab_service.resources | length > 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'mailcrab' Service exists"
+    - name: "Assert that 'mailcrab' Service exists."
       ansible.builtin.assert:
-        that: mailcrab_service['resources'] | length > 0
+        that: mailcrab_service.resources | length > 0
+        fail_msg: "Service 'mailcrab' does not exist."
 
-    - name: "Get 'mailcrab' basic auth secret info."
+    - name: "Wait for 'mailcrab' basic auth secret to exist."
       kubernetes.core.k8s_info:
         kind: "Secret"
         name: "mailcrab-basic-auth-secret"
         namespace: "mailcrab"
       register: mailcrab_basic_auth_secret
+      until: mailcrab_basic_auth_secret.resources | length > 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'mailcrab' basic auth secret exists"
+    - name: "Assert that 'mailcrab' basic auth secret exists."
       ansible.builtin.assert:
-        that: mailcrab_basic_auth_secret['resources'] | length > 0
+        that: mailcrab_basic_auth_secret.resources | length > 0
+        fail_msg: "Secret 'mailcrab-basic-auth-secret' does not exist."
 
-    - name: "Assert that 'mailcrab' basic auth secret has username"
+    - name: "Assert that 'mailcrab' basic auth secret has username."
       ansible.builtin.assert:
-        that: (mailcrab_basic_auth_secret['resources'][0]['data']['username'] | ansible.builtin.b64decode)== "admin"
+        that: (mailcrab_basic_auth_secret.resources[0].data.username | ansible.builtin.b64decode) == "admin"
+        fail_msg: "Secret 'mailcrab-basic-auth-secret' has incorrect username."
 
-    - name: "Assert that 'mailcrab' basic auth secret has password"
+    - name: "Assert that 'mailcrab' basic auth secret has password."
       ansible.builtin.assert:
-        that: (mailcrab_basic_auth_secret['resources'][0]['data']['password'] | ansible.builtin.b64decode) == "ChangeMe123!"
+        that: (mailcrab_basic_auth_secret.resources[0].data.password | ansible.builtin.b64decode) == "ChangeMe123!"
+        fail_msg: "Secret 'mailcrab-basic-auth-secret' has incorrect password."
 
-    - name: "Get 'mailcrab-test-config' ConfigMap info."
+    - name: "Wait for 'mailcrab-test-config' ConfigMap to exist."
       kubernetes.core.k8s_info:
         kind: "ConfigMap"
         name: "mailcrab-test-config"
         namespace: "mailcrab"
       register: mailcrab_test_configmap
+      until: mailcrab_test_configmap.resources | length > 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'mailcrab-test-config' ConfigMap exists"
+    - name: "Assert that 'mailcrab-test-config' ConfigMap exists."
       ansible.builtin.assert:
-        that: mailcrab_test_configmap['resources'] | length > 0
+        that: mailcrab_test_configmap.resources | length > 0
+        fail_msg: "ConfigMap 'mailcrab-test-config' does not exist."
 
-    - name: "Assert that 'mailcrab-test-config' ConfigMap has correct data"
+    - name: "Assert that 'mailcrab-test-config' ConfigMap has correct data."
       ansible.builtin.assert:
         that:
-          - mailcrab_test_configmap['resources'][0]['data']['test_key'] == "test_value"
-          - mailcrab_test_configmap['resources'][0]['data']['smtp_host'] == "mailcrab.mailcrab.svc.cluster.local"
+          - mailcrab_test_configmap.resources[0].data.test_key == "test_value"
+          - mailcrab_test_configmap.resources[0].data.smtp_host == "mailcrab.mailcrab.svc.cluster.local"
+        fail_msg: "ConfigMap 'mailcrab-test-config' has incorrect data."

@@ -18,9 +18,6 @@ Install and configure Gatus on kubernetes
   - [gatus_extra_labels](#gatus_extra_labels)
   - [gatus_extra_paths](#gatus_extra_paths)
   - [gatus_extra_volume_mounts](#gatus_extra_volume_mounts)
-  - [gatus_helm_chart_ref](#gatus_helm_chart_ref)
-  - [gatus_helm_repo_name](#gatus_helm_repo_name)
-  - [gatus_helm_repo_url](#gatus_helm_repo_url)
   - [gatus_helm_version](#gatus_helm_version)
   - [gatus_host_network](#gatus_host_network)
   - [gatus_ingress_annotations](#gatus_ingress_annotations)
@@ -72,7 +69,7 @@ Install and configure Gatus on kubernetes
 
 ## Requirements
 
-- Minimum Ansible version: `2.1`
+- Minimum Ansible version: `2.17`
 
 ## Default Variables
 
@@ -218,30 +215,6 @@ Extra volume mounts
 
 ```YAML
 gatus_extra_volume_mounts: []
-```
-
-### gatus_helm_chart_ref
-
-#### Default value
-
-```YAML
-gatus_helm_chart_ref: '{{ gatus_helm_repo_name }}/gatus'
-```
-
-### gatus_helm_repo_name
-
-#### Default value
-
-```YAML
-gatus_helm_repo_name: gatus
-```
-
-### gatus_helm_repo_url
-
-#### Default value
-
-```YAML
-gatus_helm_repo_url: https://twin.github.io/helm-charts
 ```
 
 ### gatus_helm_version
@@ -754,7 +727,7 @@ None.
 
 ## License
 
-MLP2
+MPL-2.0
 
 ## Author
 

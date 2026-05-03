@@ -1,5 +1,7 @@
 # argocd
 
+Install and configure Argo CD on kubernetes
+
 ## Table of contents
 
 - [Requirements](#requirements)
@@ -14,10 +16,7 @@
   - [argocd_default_finalizers](#argocd_default_finalizers)
   - [argocd_deployment_name](#argocd_deployment_name)
   - [argocd_enabled](#argocd_enabled)
-  - [argocd_helm_chart_ref](#argocd_helm_chart_ref)
   - [argocd_helm_chart_version](#argocd_helm_chart_version)
-  - [argocd_helm_repo_name](#argocd_helm_repo_name)
-  - [argocd_helm_repo_url](#argocd_helm_repo_url)
   - [argocd_namespace](#argocd_namespace)
   - [argocd_projects](#argocd_projects)
   - [argocd_redis_resources](#argocd_redis_resources)
@@ -41,7 +40,7 @@
 
 ## Requirements
 
-None.
+- Minimum Ansible version: `2.17`
 
 ## Default Variables
 
@@ -171,14 +170,6 @@ Should ArgoCD helm chart be installed
 argocd_enabled: true
 ```
 
-### argocd_helm_chart_ref
-
-#### Default value
-
-```YAML
-argocd_helm_chart_ref: '{{ argocd_helm_repo_name }}/argo-cd'
-```
-
 ### argocd_helm_chart_version
 
 Helm chart version to install
@@ -189,22 +180,6 @@ Helm chart version to install
 
 ```YAML
 argocd_helm_chart_version: 9.5.7
-```
-
-### argocd_helm_repo_name
-
-#### Default value
-
-```YAML
-argocd_helm_repo_name: argo
-```
-
-### argocd_helm_repo_url
-
-#### Default value
-
-```YAML
-argocd_helm_repo_url: https://argoproj.github.io/argo-helm
 ```
 
 ### argocd_namespace
@@ -403,3 +378,11 @@ argocd_server_resources: {}
 ## Dependencies
 
 None.
+
+## License
+
+MPL-2.0
+
+## Author
+
+Clément Hubert

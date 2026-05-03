@@ -14,3 +14,8 @@
       retries: 30
       delay: 2
       changed_when: false
+
+    - name: "Assert that 'gitlab-runner' namespace is removed."
+      ansible.builtin.assert:
+        that: namespace_gitlab_runner.resources | length == 0
+        fail_msg: "Namespace 'gitlab-runner' is still present."

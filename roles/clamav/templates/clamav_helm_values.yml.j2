@@ -58,5 +58,5 @@ metrics:
     enabled: {{ clamav_metrics_service_monitor_enabled | lower }}
 
 {% if clamav_additional_helm_values %}
-{{ clamav_additional_helm_values | to_nice_yaml | indent(0) }}
+{{ clamav_additional_helm_values | ansible.builtin.to_nice_yaml | indent(0) }}
 {% endif %}

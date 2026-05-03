@@ -5,31 +5,40 @@
   gather_facts: true
 
   tasks:
-    - name: "Pause for resources to be created."
-      ansible.builtin.pause:
-        seconds: 5
-
-    - name: "Get 'headlamp' namespace info."
+    - name: "Wait for 'headlamp' namespace to be active."
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "headlamp"
       register: namespace_headlamp
+      until:
+        - namespace_headlamp.resources | length > 0
+        - namespace_headlamp.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'headlamp' namespace is active"
+    - name: "Assert that 'headlamp' namespace is active."
       ansible.builtin.assert:
-        that: namespace_headlamp['resources'][0]['status']['phase'] == "Active"
+        that:
+          - namespace_headlamp.resources | length > 0
+          - namespace_headlamp.resources[0].status.phase == "Active"
+        fail_msg: "Namespace 'headlamp' is not active."
 
-    - name: "Get 'headlamp' Deployment info."
+    - name: "Wait for 'headlamp' Deployment to be deployed."
       kubernetes.core.k8s_info:
         kind: "Deployment"
         name: "headlamp"
         namespace: "headlamp"
       register: headlamp_deployment
+      until: headlamp_deployment.resources | length > 0
+      retries: 30
+      delay: 5
 
-    - name: "Assert that 'headlamp' Deployment is deployed"
+    - name: "Assert that 'headlamp' Deployment is deployed."
       ansible.builtin.assert:
-        that: headlamp_deployment['resources'] | length > 0
+        that: headlamp_deployment.resources | length > 0
+        fail_msg: "Deployment 'headlamp' is not deployed."
 
-    - name: "Assert that 'headlamp' Deployment has correct replicas spec"
+    - name: "Assert that 'headlamp' Deployment has correct replicas spec."
       ansible.builtin.assert:
-        that: headlamp_deployment['resources'][0]['spec']['replicas'] == 1
+        that: headlamp_deployment.resources[0].spec.replicas == 1
+        fail_msg: "Deployment 'headlamp' does not have 1 replica configured."

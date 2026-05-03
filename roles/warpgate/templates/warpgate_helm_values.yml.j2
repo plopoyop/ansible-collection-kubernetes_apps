@@ -89,7 +89,7 @@ overrides_config: |
         client_secret: "{{ provider.provider.client_secret }}"
         issuer_url: "{{ provider.provider.issuer_url }}"
 {% if provider.provider.scopes is defined %}
-        scopes: {{ provider.provider.scopes | to_json }}
+        scopes: {{ provider.provider.scopes | ansible.builtin.to_json }}
 {% endif %}
 {% if provider.provider.role_mappings is defined %}
         role_mappings:

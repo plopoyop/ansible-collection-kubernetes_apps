@@ -22,7 +22,7 @@
     chart_ref: "{{ zammad_helm_chart_ref }}"
     chart_version: "{{ zammad_helm_version }}"
     update_repo_cache: true
-    values: "{{ lookup('ansible.builtin.template', 'zammad_helm_values.yml.j2') | from_yaml }}"
+    values: "{{ lookup('ansible.builtin.template', 'zammad_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ zammad_wait_install }}"
 
 # - name: "Call Zammad auto wizard"

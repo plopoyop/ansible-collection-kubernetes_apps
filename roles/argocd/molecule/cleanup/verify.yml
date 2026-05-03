@@ -5,18 +5,17 @@
   gather_facts: true
 
   tasks:
-    - name: "Pause for cleanup to complete."
-      ansible.builtin.pause:
-        seconds: 30
-
-    - name: "Check if 'argocd' namespace exists."
+    - name: "Wait for 'argocd' namespace to be removed."
       kubernetes.core.k8s_info:
         kind: Namespace
         name: "argocd"
       register: namespace_argocd
-      failed_when: false
+      until: namespace_argocd.resources | length == 0
+      retries: 30
+      delay: 5
       changed_when: false
 
-    - name: Assert that 'argocd' namespace does not exist
+    - name: "Assert that 'argocd' namespace is removed."
       ansible.builtin.assert:
-        that: namespace_argocd['resources'] | length == 0
+        that: namespace_argocd.resources | length == 0
+        fail_msg: "Namespace 'argocd' is still present."

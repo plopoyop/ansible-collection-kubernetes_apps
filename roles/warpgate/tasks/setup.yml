@@ -9,7 +9,7 @@
 - name: "Create Warpgate setup credentials secret"
   kubernetes.core.k8s:
     state: "present"
-    definition: "{{ lookup('ansible.builtin.template', 'secret-setup.yml.j2') | from_yaml }}"
+    definition: "{{ lookup('ansible.builtin.template', 'secret-setup.yml.j2') | ansible.builtin.from_yaml }}"
   when: warpgate_setup_enabled and warpgate_admin_password | default('') | length > 0
   no_log: true
 
@@ -30,5 +30,5 @@
     state: "present"
     chart_ref: "{{ warpgate_helm_chart_ref }}"
     chart_version: "{{ warpgate_helm_chart_version }}"
-    values: "{{ lookup('ansible.builtin.template', 'warpgate_helm_values.yml.j2') | from_yaml }}"
+    values: "{{ lookup('ansible.builtin.template', 'warpgate_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ warpgate_wait_install }}"
