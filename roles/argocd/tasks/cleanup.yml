@@ -4,6 +4,8 @@
     name: "{{ argocd_deployment_name }}"
     namespace: "{{ argocd_namespace }}"
     state: "absent"
+  tags:
+    - "helm_chart"
 
 - name: "Delete ArgoCD namespace"
   kubernetes.core.k8s:
@@ -11,3 +13,5 @@
     api_version: "v1"
     kind: "Namespace"
     state: "absent"
+  tags:
+    - "namespace"

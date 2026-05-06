@@ -8,11 +8,15 @@
     api_version: "v1"
     kind: "Namespace"
     state: "present"
+  tags:
+    - "namespace"
 
 - name: "Add zammad helm repo"
   kubernetes.core.helm_repository:
     name: "{{ zammad_helm_repo_name }}"
     repo_url: "{{ zammad_helm_repo_url }}"
+  tags:
+    - "helm_repository"
 
 - name: "Install Zammad helm package"
   kubernetes.core.helm:
@@ -24,6 +28,8 @@
     update_repo_cache: true
     values: "{{ lookup('ansible.builtin.template', 'zammad_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ zammad_wait_install }}"
+  tags:
+    - "helm_chart"
 
 # - name: "Call Zammad auto wizard"
 #   ansible.builtin.uri:

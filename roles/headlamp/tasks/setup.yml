@@ -5,11 +5,15 @@
     api_version: "v1"
     kind: "Namespace"
     state: "present"
+  tags:
+    - "namespace"
 
 - name: "Add Headlamp helm repo"
   kubernetes.core.helm_repository:
     name: "{{ headlamp_helm_repo_name }}"
     repo_url: "{{ headlamp_helm_repo_url }}"
+  tags:
+    - "helm_repository"
 
 - name: "Install Headlamp helm package"
   kubernetes.core.helm:
@@ -21,6 +25,8 @@
     update_repo_cache: true
     values: "{{ lookup('ansible.builtin.template', 'headlamp_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ headlamp_wait_install }}"
+  tags:
+    - "helm_chart"
 
 - name: "Provision admin ServiceAccount and token for Headlamp"
   when: headlamp_create_admin_token
@@ -34,6 +40,8 @@
           metadata:
             name: "{{ headlamp_admin_service_account_name }}"
             namespace: "{{ headlamp_namespace }}"
+      tags:
+        - "manifest"
 
     - name: "Create admin ClusterRoleBinding for Headlamp"
       kubernetes.core.k8s:
@@ -51,6 +59,8 @@
             - kind: ServiceAccount
               name: "{{ headlamp_admin_service_account_name }}"
               namespace: "{{ headlamp_namespace }}"
+      tags:
+        - "manifest"
 
     - name: "Create long-lived token Secret for Headlamp admin"
       kubernetes.core.k8s:
@@ -64,6 +74,8 @@
             annotations:
               kubernetes.io/service-account.name: "{{ headlamp_admin_service_account_name }}"
           type: kubernetes.io/service-account-token
+      tags:
+        - "manifest"
 
     - name: "Retrieve admin token"
       kubernetes.core.k8s_info:
