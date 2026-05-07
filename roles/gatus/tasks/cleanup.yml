@@ -7,12 +7,16 @@
     chart_ref: "{{ gatus_helm_chart_ref }}"
     chart_version: "{{ gatus_helm_version }}"
     wait: true
+  tags:
+    - "helm_chart"
 
 - name: "Remove gatus helm repo"
   kubernetes.core.helm_repository:
     name: "{{ gatus_helm_repo_name }}"
     repo_url: "{{ gatus_helm_repo_url }}"
     state: "absent"
+  tags:
+    - "helm_repository"
 
 - name: "Remove gatus namespace"
   kubernetes.core.k8s:
@@ -20,3 +24,5 @@
     api_version: "v1"
     kind: "Namespace"
     state: "absent"
+  tags:
+    - "namespace"

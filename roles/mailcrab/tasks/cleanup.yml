@@ -9,12 +9,16 @@
   loop_control:
     loop_var: mailcrab_manifest_to_remove
   when: mailcrab_extra_manifests | length > 0
+  tags:
+    - "manifest"
 
 - name: "Uninstall Mailcrab helm package"
   kubernetes.core.helm:
     name: "{{ mailcrab_deployment_name }}"
     namespace: "{{ mailcrab_namespace }}"
     state: "absent"
+  tags:
+    - "helm_chart"
 
 - name: "Remove mailcrab secret for basic auth"
   kubernetes.core.k8s:
@@ -25,6 +29,8 @@
         name: "{{ mailcrab_basic_auth_secret_name }}"
         namespace: "{{ mailcrab_namespace }}"
     state: "absent"
+  tags:
+    - "manifest"
 
 - name: "Delete mailcrab namespace"
   kubernetes.core.k8s:
@@ -32,3 +38,5 @@
     api_version: "v1"
     kind: "Namespace"
     state: "absent"
+  tags:
+    - "namespace"

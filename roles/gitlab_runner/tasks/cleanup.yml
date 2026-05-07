@@ -7,6 +7,8 @@
     chart_ref: "{{ gitlab_runner_helm_chart_ref }}"
     chart_version: "{{ gitlab_runner_helm_chart_version }}"
     wait: true
+  tags:
+    - "helm_chart"
 
 - name: "Remove GitLab Runner extra manifests"
   kubernetes.core.k8s:
@@ -17,6 +19,8 @@
   loop_control:
     loop_var: "gitlab_runner_manifest_to_remove"
   when: gitlab_runner_extra_manifests | length > 0
+  tags:
+    - "manifest"
 
 - name: "Remove GitLab Runner authentication secret"
   kubernetes.core.k8s:
@@ -25,6 +29,8 @@
     name: "{{ gitlab_runner_deployment_name }}-credentials"
     namespace: "{{ gitlab_runner_namespace }}"
     state: "absent"
+  tags:
+    - "manifest"
 
 - name: "Remove GitLab Runner namespace"
   kubernetes.core.k8s:
@@ -32,3 +38,5 @@
     kind: "Namespace"
     name: "{{ gitlab_runner_namespace }}"
     state: "absent"
+  tags:
+    - "namespace"

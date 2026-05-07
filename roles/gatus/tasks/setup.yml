@@ -8,11 +8,15 @@
     api_version: "v1"
     kind: "Namespace"
     state: "present"
+  tags:
+    - "namespace"
 
 - name: "Add gatus helm repo"
   kubernetes.core.helm_repository:
     name: "{{ gatus_helm_repo_name }}"
     repo_url: "{{ gatus_helm_repo_url }}"
+  tags:
+    - "helm_repository"
 
 - name: "Install gatus helm package"
   kubernetes.core.helm:
@@ -24,3 +28,5 @@
     update_repo_cache: true
     values: "{{ lookup('ansible.builtin.template', 'gatus_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ gatus_wait_install }}"
+  tags:
+    - "helm_chart"

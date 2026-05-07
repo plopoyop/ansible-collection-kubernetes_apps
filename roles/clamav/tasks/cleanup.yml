@@ -7,12 +7,16 @@
     chart_ref: "{{ clamav_helm_chart_ref }}"
     chart_version: "{{ clamav_helm_version }}"
     wait: true
+  tags:
+    - "helm_chart"
 
 - name: "Remove clamav helm repo"
   kubernetes.core.helm_repository:
     name: "{{ clamav_helm_repo_name }}"
     repo_url: "{{ clamav_helm_repo_url }}"
     state: "absent"
+  tags:
+    - "helm_repository"
 
 - name: "Remove clamav namespace"
   kubernetes.core.k8s:
@@ -20,3 +24,5 @@
     api_version: "v1"
     kind: "Namespace"
     state: "absent"
+  tags:
+    - "namespace"

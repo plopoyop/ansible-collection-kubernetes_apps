@@ -5,6 +5,8 @@
     api_version: "v1"
     kind: "Namespace"
     state: "present"
+  tags:
+    - "namespace"
 
 - name: "Create mailcrab secret for basic auth"
   kubernetes.core.k8s:
@@ -20,6 +22,8 @@
         password: "{{ mailcrab_password }}"
     state: "present"
   when: mailcrab_username is defined and mailcrab_password is defined
+  tags:
+    - "manifest"
 
 - name: "Create extra manifests"
   kubernetes.core.k8s:
@@ -30,6 +34,8 @@
   loop_control:
     loop_var: mailcrab_manifest_to_create
   when: mailcrab_extra_manifests | length > 0
+  tags:
+    - "manifest"
 
 - name: "Get latest GitHub release tag if version is 'latest'"
   ansible.builtin.uri:
@@ -108,6 +114,8 @@
     chart_ref: "{{ mailcrab_chart_local_path }}"
     values: "{{ lookup('ansible.builtin.template', 'mailcrab_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ mailcrab_wait_install }}"
+  tags:
+    - "helm_chart"
 
 - name: "Cleanup temporary directory"
   ansible.builtin.file:

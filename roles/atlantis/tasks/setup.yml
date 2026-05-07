@@ -5,11 +5,15 @@
     api_version: "v1"
     kind: "Namespace"
     state: "present"
+  tags:
+    - "namespace"
 
 - name: "Add atlantis helm repo"
   kubernetes.core.helm_repository:
     name: "{{ atlantis_helm_repo_name }}"
     repo_url: "{{ atlantis_helm_repo_url }}"
+  tags:
+    - "helm_repository"
 
 - name: "Install atlantis helm package"
   kubernetes.core.helm:
@@ -21,3 +25,5 @@
     update_repo_cache: true
     values: "{{ lookup('ansible.builtin.template', 'atlantis_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: "{{ atlantis_wait_install }}"
+  tags:
+    - "helm_chart"

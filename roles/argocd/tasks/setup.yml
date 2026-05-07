@@ -5,11 +5,15 @@
     api_version: "v1"
     kind: "Namespace"
     state: "present"
+  tags:
+    - "namespace"
 
 - name: "Add ArgoCD helm repo"
   kubernetes.core.helm_repository:
     name: "{{ argocd_helm_repo_name }}"
     repo_url: "{{ argocd_helm_repo_url }}"
+  tags:
+    - "helm_repository"
 
 - name: "Install ArgoCD helm package"
   kubernetes.core.helm:
@@ -20,6 +24,8 @@
     update_repo_cache: true
     values: "{{ lookup('ansible.builtin.template', 'argocd_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
     wait: true
+  tags:
+    - "helm_chart"
 
 - name: "Create ArgoCD clusters"
   kubernetes.core.k8s:
@@ -29,6 +35,8 @@
   loop: "{{ argocd_clusters }}"
   loop_control:
     loop_var: argocd_cluster
+  tags:
+    - "manifest"
 
 - name: "Create ArgoCD repositories"
   kubernetes.core.k8s:
@@ -38,6 +46,8 @@
   loop: "{{ argocd_repositories }}"
   loop_control:
     loop_var: argocd_repository
+  tags:
+    - "manifest"
 
 - name: "Create ArgoCD projects"
   kubernetes.core.k8s:
@@ -47,6 +57,8 @@
   loop: "{{ argocd_projects }}"
   loop_control:
     loop_var: argocd_project
+  tags:
+    - "manifest"
 
 - name: "Create ArgoCD applications"
   kubernetes.core.k8s:
@@ -56,6 +68,8 @@
   loop: "{{ argocd_applications }}"
   loop_control:
     loop_var: argocd_application
+  tags:
+    - "manifest"
 
 - name: "Create ArgoCD application sets"
   kubernetes.core.k8s:
@@ -66,3 +80,5 @@
   loop: "{{ argocd_application_sets }}"
   loop_control:
     loop_var: argocd_application_set
+  tags:
+    - "manifest"
