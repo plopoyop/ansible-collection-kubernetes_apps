@@ -1,6 +1,6 @@
 # Changelog
 
-## [8.6.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.0) (2026-05-10)
+## [8.6.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.0) (2026-05-17)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.5.1...8.6.0)
 
@@ -10,10 +10,12 @@
 
 ## ⚙️ Dependencies
 
+- fix\(ci\): update renovatebot/github-action action \(v46.1.13 → v46.1.14\) [\#181](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/181) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.1.12 → v46.1.13\) [\#179](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/179) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
 
+- fix\(deps\): update prek \(0.3.9 → 0.3.11\) [\#182](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/182) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update kubernetes-helm \(3.20.1 → 3.20.2\) [\#180](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/180) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.5.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.5.1) (2026-05-03)
