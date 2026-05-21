@@ -29,6 +29,35 @@
   tags:
     - "manifest"
 
+- name: "Check for existing Warpgate setup job"
+  kubernetes.core.k8s_info:
+    api_version: "batch/v1"
+    kind: "Job"
+    name: "{{ warpgate_deployment_name }}-setup-job"
+    namespace: "{{ warpgate_namespace }}"
+  register: warpgate_existing_setup_job
+  check_mode: false
+  failed_when: false
+  when: warpgate_setup_enabled and warpgate_setup_type == "job"
+  tags:
+    - "helm_chart"
+
+- name: "Delete existing Warpgate setup job"
+  kubernetes.core.k8s:
+    api_version: "batch/v1"
+    kind: "Job"
+    name: "{{ warpgate_deployment_name }}-setup-job"
+    namespace: "{{ warpgate_namespace }}"
+    state: "absent"
+    wait: true
+  when:
+    - warpgate_setup_enabled
+    - warpgate_setup_type == "job"
+    - warpgate_force_upgrade | default(false)
+    - (warpgate_existing_setup_job.resources | default([])) | length > 0
+  tags:
+    - "helm_chart"
+
 - name: "Install Warpgate helm package"
   kubernetes.core.helm:
     name: "{{ warpgate_deployment_name }}"
