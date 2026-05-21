@@ -1,12 +1,16 @@
 # Changelog
 
-## [8.6.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.0) (2026-05-17)
+## [8.6.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.0) (2026-05-21)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.5.1...8.6.0)
 
 ## 🚀 New Features
 
 - Add tags on tasks [\#178](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/178) ([plopoyop](https://github.com/plopoyop))
+
+## 🐛 Bug Fixes
+
+- Remove setup job before upgrade [\#183](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/183) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
