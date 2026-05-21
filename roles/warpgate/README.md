@@ -25,6 +25,7 @@ Install and configure Warpgate on kubernetes
   - [warpgate_external_ssh_host](#warpgate_external_ssh_host)
   - [warpgate_external_ssh_port](#warpgate_external_ssh_port)
   - [warpgate_extra_manifests](#warpgate_extra_manifests)
+  - [warpgate_force_upgrade](#warpgate_force_upgrade)
   - [warpgate_helm_chart_version](#warpgate_helm_chart_version)
   - [warpgate_ingress_annotations](#warpgate_ingress_annotations)
   - [warpgate_ingress_class_name](#warpgate_ingress_class_name)
@@ -47,6 +48,7 @@ Install and configure Warpgate on kubernetes
   - [warpgate_setup_type](#warpgate_setup_type)
   - [warpgate_sso_providers](#warpgate_sso_providers)
   - [warpgate_wait_install](#warpgate_wait_install)
+- [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
 - [License](#license)
 - [Author](#author)
@@ -290,6 +292,18 @@ Extra Kubernetes manifests to apply in the Warpgate namespace
 
 ```YAML
 warpgate_extra_manifests: []
+```
+
+### warpgate_force_upgrade
+
+Delete the immutable Warpgate setup Job before running `helm upgrade`.
+
+**_Type:_** boolean<br />
+
+#### Default value
+
+```YAML
+warpgate_force_upgrade: false
 ```
 
 ### warpgate_helm_chart_version
@@ -558,6 +572,20 @@ Wait for helm install to finish
 ```YAML
 warpgate_wait_install: false
 ```
+
+## Discovered Tags
+
+**_helm_chart_**
+
+**_install_**
+
+**_manifest_**
+
+**_namespace_**
+
+**_uninstall_**
+
+**_warpgate_**
 
 ## Dependencies
 

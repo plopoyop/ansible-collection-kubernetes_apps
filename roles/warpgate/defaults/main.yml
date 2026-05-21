@@ -29,6 +29,12 @@ warpgate_deployment_name: "warpgate"
 # Wait for helm install to finish
 warpgate_wait_install: false
 
+# @var warpgate_force_upgrade
+# @var warpgate_force_upgrade:type: boolean
+# @var warpgate_force_upgrade:description: >
+# Delete the immutable Warpgate setup Job before running `helm upgrade`.
+warpgate_force_upgrade: false
+
 # @var warpgate_service_type
 # @var warpgate_service_type:type: string
 # @var warpgate_service_type:description: >
