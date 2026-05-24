@@ -1,5 +1,14 @@
 # Changelog
 
+## [8.6.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.1) (2026-05-24)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.0...8.6.1)
+
+**Merged pull requests:**
+
+- feat\(deps\): update kubectl \(1.35.4 → 1.36.1\) [\#186](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/186) ([plopoyop](https://github.com/plopoyop))
+- fix\(deps\): update ansible-doctor \(8.3.0 → 8.3.1\) [\#184](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/184) ([plopoyop](https://github.com/plopoyop))
+
 ## [8.6.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.0) (2026-05-21)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.5.1...8.6.0)
