@@ -1,8 +1,12 @@
 # Changelog
 
-## [8.6.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.1) (2026-05-24)
+## [8.6.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.1) (2026-05-25)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.0...8.6.1)
+
+## 🐛 Bug Fixes
+
+- fix\(warpgate\): switch molecule setup\_type to podinit [\#187](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/187) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
 
