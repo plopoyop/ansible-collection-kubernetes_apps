@@ -8,6 +8,10 @@
 
 - fix\(warpgate\): switch molecule setup\_type to podinit [\#187](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/187) ([plopoyop](https://github.com/plopoyop))
 
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart argo-cd \(9.5.7 → 9.5.15\) [\#185](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/185) ([plopoyop](https://github.com/plopoyop))
+
 **Merged pull requests:**
 
 - feat\(deps\): update kubectl \(1.35.4 → 1.36.1\) [\#186](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/186) ([plopoyop](https://github.com/plopoyop))
