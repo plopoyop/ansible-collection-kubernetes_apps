@@ -100,6 +100,17 @@
       "registryUrls": [
         "https://charts.gitlab.io"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "oauth2-proxy"
+      ],
+      "registryUrls": [
+        "https://oauth2-proxy.github.io/manifests"
+      ]
     }
   ],
   "customManagers": [
@@ -339,6 +350,31 @@
       ],
       "depNameTemplate": "gitlab-runner",
       "autoReplaceStringTemplate": "GitLab Runner         | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/oauth2_proxy/defaults/main.yml$/",
+        "/roles/oauth2_proxy/README.md$/"
+      ],
+      "matchStrings": [
+        "oauth2_proxy_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "oauth2-proxy",
+      "autoReplaceStringTemplate": "oauth2_proxy_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "OAuth2 Proxy\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "oauth2-proxy",
+      "autoReplaceStringTemplate": "OAuth2 Proxy         | v{{newValue}}",
       "datasourceTemplate": "helm"
     }
   ]

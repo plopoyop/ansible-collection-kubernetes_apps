@@ -1,0 +1,5 @@
+---
+# vars file for oauth2_proxy
+oauth2_proxy_helm_repo_name: "oauth2-proxy"
+oauth2_proxy_helm_repo_url: "https://oauth2-proxy.github.io/manifests"
+oauth2_proxy_helm_chart_ref: "{{ oauth2_proxy_helm_repo_name }}/oauth2-proxy"
