@@ -1,0 +1,224 @@
+---
+# @var kargo_enabled
+# @var kargo_enabled:type: boolean
+# @var kargo_enabled:description: >
+# Should Kargo helm chart be installed
+kargo_enabled: true
+
+# @var kargo_namespace
+# @var kargo_namespace:type: string
+# @var kargo_namespace:description: >
+# K8s namespace to install the Kargo chart
+kargo_namespace: "kargo"
+
+# @var kargo_helm_chart_version
+# @var kargo_helm_chart_version:type: string
+# @var kargo_helm_chart_version:description: >
+# Helm chart version to install
+kargo_helm_chart_version: "1.10.4"
+
+# @var kargo_deployment_name
+# @var kargo_deployment_name:type: string
+# @var kargo_deployment_name:description: >
+# Deployment name for Kargo helm chart
+kargo_deployment_name: "kargo"
+
+# @var kargo_wait_install
+# @var kargo_wait_install:type: boolean
+# @var kargo_wait_install:description: >
+# Wait for helm install to finish
+kargo_wait_install: true
+
+# @var kargo_crds_install
+# @var kargo_crds_install:type: boolean
+# @var kargo_crds_install:description: >
+# Indicates if Custom Resource Definitions should be installed and
+# upgraded as part of the release. If false, CRDs are only installed
+# when missing.
+kargo_crds_install: true
+
+# @var kargo_crds_keep
+# @var kargo_crds_keep:type: boolean
+# @var kargo_crds_keep:description: >
+# Indicates if Custom Resource Definitions should be kept when a
+# release is uninstalled.
+kargo_crds_keep: true
+
+# @var kargo_api_enabled
+# @var kargo_api_enabled:type: boolean
+# @var kargo_api_enabled:description: >
+# Whether the Kargo API server is enabled
+kargo_api_enabled: true
+
+# @var kargo_api_host
+# @var kargo_api_host:type: string
+# @var kargo_api_host:description: >
+# Domain name where the Kargo API server will be accessible. Used to
+# generate the Ingress, certificates and OpenID Connect callback URLs
+# when applicable.
+kargo_api_host: "localhost"
+
+# @var kargo_api_log_level
+# @var kargo_api_log_level:type: string
+# @var kargo_api_log_level:description: >
+# Log level for the API server. One of ERROR, INFO, DEBUG, TRACE.
+kargo_api_log_level: "INFO"
+
+# @var kargo_api_admin_account_enabled
+# @var kargo_api_admin_account_enabled:type: boolean
+# @var kargo_api_admin_account_enabled:description: >
+# Whether to enable the built-in admin account
+kargo_api_admin_account_enabled: true
+
+# @var kargo_api_admin_password_hash
+# @var kargo_api_admin_password_hash:type: string
+# @var kargo_api_admin_password_hash:description: >
+# Bcrypt password hash for the admin account. Required unless
+# `kargo_api_secret_name` references an existing secret.
+kargo_api_admin_password_hash: ""
+
+# @var kargo_api_admin_token_signing_key
+# @var kargo_api_admin_token_signing_key:type: string
+# @var kargo_api_admin_token_signing_key:description: >
+# Key used to sign ID tokens (JWTs) for the admin account. Required
+# unless `kargo_api_secret_name` references an existing secret. Can
+# be generated with:
+# `openssl rand -base64 29 | tr -d "=+/" | cut -c1-32`.
+kargo_api_admin_token_signing_key: ""
+
+# @var kargo_api_admin_token_ttl
+# @var kargo_api_admin_token_ttl:type: string
+# @var kargo_api_admin_token_ttl:description: >
+# Validity duration of admin account ID tokens (e.g. "24h", "1h").
+kargo_api_admin_token_ttl: "24h"
+
+# @var kargo_api_secret_name
+# @var kargo_api_secret_name:type: string
+# @var kargo_api_secret_name:description: >
+# Name of an existing Secret holding the `ADMIN_ACCOUNT_PASSWORD_HASH`
+# and `ADMIN_ACCOUNT_TOKEN_SIGNING_KEY` values. When set, those values
+# will not be generated from the role variables above.
+kargo_api_secret_name: ""
+
+# @var kargo_api_service_type
+# @var kargo_api_service_type:type: string
+# @var kargo_api_service_type:description: >
+# Kubernetes service type for the Kargo API server
+kargo_api_service_type: "ClusterIP"
+
+# @var kargo_api_ingress_enabled
+# @var kargo_api_ingress_enabled:type: boolean
+# @var kargo_api_ingress_enabled:description: >
+# Enable ingress for the Kargo API server
+kargo_api_ingress_enabled: false
+
+# @var kargo_api_ingress_class_name
+# @var kargo_api_ingress_class_name:type: string
+# @var kargo_api_ingress_class_name:description: >
+# Ingress class name for the Kargo API server ingress
+kargo_api_ingress_class_name: null
+
+# @var kargo_api_ingress_annotations
+# @var kargo_api_ingress_annotations:type: dict
+# @var kargo_api_ingress_annotations:description: >
+# Annotations to add to the Kargo API server ingress
+kargo_api_ingress_annotations: {}
+
+# @var kargo_api_ingress_tls_enabled
+# @var kargo_api_ingress_tls_enabled:type: boolean
+# @var kargo_api_ingress_tls_enabled:description: >
+# Enable TLS on the Kargo API server ingress
+kargo_api_ingress_tls_enabled: true
+
+# @var kargo_api_ingress_tls_self_signed_cert
+# @var kargo_api_ingress_tls_self_signed_cert:type: boolean
+# @var kargo_api_ingress_tls_self_signed_cert:description: >
+# Generate a self-signed certificate via cert-manager for the API
+# ingress. When false, a Secret named by
+# `kargo_api_ingress_tls_secret_name` must already exist in the Kargo
+# namespace.
+kargo_api_ingress_tls_self_signed_cert: true
+
+# @var kargo_api_ingress_tls_secret_name
+# @var kargo_api_ingress_tls_secret_name:type: string
+# @var kargo_api_ingress_tls_secret_name:description: >
+# Name of the cert Secret bound to the API ingress
+kargo_api_ingress_tls_secret_name: "kargo-api-ingress-cert"
+
+# @var kargo_api_oidc_enabled
+# @var kargo_api_oidc_enabled:type: boolean
+# @var kargo_api_oidc_enabled:description: >
+# Enable OIDC authentication on the Kargo API server
+kargo_api_oidc_enabled: false
+
+# @var kargo_api_oidc_issuer_url
+# @var kargo_api_oidc_issuer_url:type: string
+# @var kargo_api_oidc_issuer_url:description: >
+# OIDC issuer URL (ignored when Dex is enabled by the chart)
+kargo_api_oidc_issuer_url: ""
+
+# @var kargo_api_oidc_client_id
+# @var kargo_api_oidc_client_id:type: string
+# @var kargo_api_oidc_client_id:description: >
+# OIDC client ID used by the Kargo UI/CLI
+kargo_api_oidc_client_id: ""
+
+# @var kargo_api_oidc_cli_client_id
+# @var kargo_api_oidc_cli_client_id:type: string
+# @var kargo_api_oidc_cli_client_id:description: >
+# OIDC client ID used by the Kargo CLI when the provider requires a
+# distinct client for localhost callbacks.
+kargo_api_oidc_cli_client_id: ""
+
+# @var kargo_api_oidc_additional_scopes
+# @var kargo_api_oidc_additional_scopes:type: list
+# @var kargo_api_oidc_additional_scopes:description: >
+# Additional scopes to request from the OIDC provider on top of
+# `openid`, `profile` and `email`.
+kargo_api_oidc_additional_scopes:
+  - "groups"
+
+# @var kargo_api_oidc_username_claim
+# @var kargo_api_oidc_username_claim:type: string
+# @var kargo_api_oidc_username_claim:description: >
+# OIDC claim to use as the username
+kargo_api_oidc_username_claim: "email"
+
+# @var kargo_controller_enabled
+# @var kargo_controller_enabled:type: boolean
+# @var kargo_controller_enabled:description: >
+# Whether the Kargo controller is enabled
+kargo_controller_enabled: true
+
+# @var kargo_management_controller_enabled
+# @var kargo_management_controller_enabled:type: boolean
+# @var kargo_management_controller_enabled:description: >
+# Whether the Kargo management controller is enabled
+kargo_management_controller_enabled: true
+
+# @var kargo_garbage_collector_enabled
+# @var kargo_garbage_collector_enabled:type: boolean
+# @var kargo_garbage_collector_enabled:description: >
+# Whether the Kargo garbage collector CronJob is enabled
+kargo_garbage_collector_enabled: true
+
+# @var kargo_webhooks_register
+# @var kargo_webhooks_register:type: boolean
+# @var kargo_webhooks_register:description: >
+# Whether to register ValidatingWebhookConfiguration and
+# MutatingWebhookConfiguration resources.
+kargo_webhooks_register: true
+
+# @var kargo_additional_config
+# @var kargo_additional_config:type: dict
+# @var kargo_additional_config:description: >
+# Additional configuration merged with the rendered helm values.
+# Use it to set any chart option not explicitly exposed by this role.
+kargo_additional_config: {}
+
+# @var kargo_extra_manifests
+# @var kargo_extra_manifests:type: list
+# @var kargo_extra_manifests:description: >
+# Extra Kubernetes manifests to apply in the Kargo namespace
+# (e.g. additional Secrets, Projects, ServiceAccounts).
+kargo_extra_manifests: []
