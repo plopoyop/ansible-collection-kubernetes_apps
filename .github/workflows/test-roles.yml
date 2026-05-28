@@ -6,8 +6,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'roles/**'
-      - '.github/**'
+      - "roles/**"
+      - ".github/**"
       - devbox.json
       - devbox.lock
       - flake.nix
@@ -15,8 +15,8 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'roles/**'
-      - '.github/**'
+      - "roles/**"
+      - ".github/**"
       - devbox.json
       - devbox.lock
       - flake.nix
@@ -51,6 +51,10 @@ jobs:
     uses: ./.github/workflows/test-role.yaml
     with:
       role_name: "mailcrab"
+  oauth2_proxy:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "oauth2_proxy"
   warpgate:
     uses: ./.github/workflows/test-role.yaml
     with:

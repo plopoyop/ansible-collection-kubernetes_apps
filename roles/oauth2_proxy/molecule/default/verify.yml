@@ -1,0 +1,56 @@
+---
+- name: "Verify"
+  hosts: "localhost"
+  connection: "local"
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'oauth2-proxy' namespace to be active."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "oauth2-proxy"
+      register: namespace_oauth2_proxy
+      until:
+        - namespace_oauth2_proxy.resources | length > 0
+        - namespace_oauth2_proxy.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 5
+
+    - name: "Assert that 'oauth2-proxy' namespace is active."
+      ansible.builtin.assert:
+        that:
+          - namespace_oauth2_proxy.resources | length > 0
+          - namespace_oauth2_proxy.resources[0].status.phase == "Active"
+        fail_msg: "Namespace 'oauth2-proxy' is not active."
+
+    - name: "Wait for 'oauth2-proxy' Deployment to be created."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        namespace: "oauth2-proxy"
+        label_selectors:
+          - "app.kubernetes.io/instance=oauth2-proxy"
+      register: oauth2_proxy_deployment
+      until: oauth2_proxy_deployment.resources | length > 0
+      retries: 30
+      delay: 5
+
+    - name: "Assert that OAuth2 Proxy Deployment is created."
+      ansible.builtin.assert:
+        that: oauth2_proxy_deployment.resources | length > 0
+        fail_msg: "OAuth2 Proxy Deployment is not created."
+
+    - name: "Wait for 'oauth2-proxy' Service to exist."
+      kubernetes.core.k8s_info:
+        kind: "Service"
+        namespace: "oauth2-proxy"
+        label_selectors:
+          - "app.kubernetes.io/instance=oauth2-proxy"
+      register: oauth2_proxy_service
+      until: oauth2_proxy_service.resources | length > 0
+      retries: 30
+      delay: 5
+
+    - name: "Assert that OAuth2 Proxy Service exists."
+      ansible.builtin.assert:
+        that: oauth2_proxy_service.resources | length > 0
+        fail_msg: "OAuth2 Proxy Service does not exist."

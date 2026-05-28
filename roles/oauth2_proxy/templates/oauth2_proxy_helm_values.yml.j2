@@ -1,0 +1,78 @@
+replicaCount: {{ oauth2_proxy_replica_count }}
+
+{% if oauth2_proxy_image_tag | length > 0 %}
+image:
+  tag: "{{ oauth2_proxy_image_tag }}"
+{% endif %}
+
+config:
+{% if oauth2_proxy_existing_secret | length > 0 %}
+  existingSecret: "{{ oauth2_proxy_existing_secret }}"
+{% else %}
+  clientID: "{{ oauth2_proxy_client_id }}"
+  clientSecret: "{{ oauth2_proxy_client_secret }}"
+  cookieSecret: "{{ oauth2_proxy_cookie_secret }}"
+{% endif %}
+{% if oauth2_proxy_cookie_name | length > 0 %}
+  cookieName: "{{ oauth2_proxy_cookie_name }}"
+{% endif %}
+{% if oauth2_proxy_config_file | length > 0 %}
+  configFile: |
+{{ oauth2_proxy_config_file | indent(4, true) }}
+{% endif %}
+
+extraArgs: {{ oauth2_proxy_extra_args | ansible.builtin.to_json }}
+{% if oauth2_proxy_extra_env | length > 0 %}
+extraEnv: {{ oauth2_proxy_extra_env | ansible.builtin.to_json }}
+{% endif %}
+
+resources: {{ oauth2_proxy_resources | ansible.builtin.to_json }}
+
+service:
+  type: "{{ oauth2_proxy_service_type }}"
+  portNumber: {{ oauth2_proxy_service_port }}
+
+ingress:
+  enabled: {{ oauth2_proxy_ingress_enabled | ansible.builtin.to_json }}
+{% if oauth2_proxy_ingress_enabled %}
+{% if oauth2_proxy_ingress_class_name is defined and oauth2_proxy_ingress_class_name | length > 0 %}
+  className: "{{ oauth2_proxy_ingress_class_name }}"
+{% endif %}
+  path: "{{ oauth2_proxy_ingress_path }}"
+  pathType: "{{ oauth2_proxy_ingress_path_type }}"
+  hostname: "{{ oauth2_proxy_ingress_hostname }}"
+  annotations: {{ oauth2_proxy_ingress_annotations | ansible.builtin.to_json }}
+{% if oauth2_proxy_ingress_tls_enabled %}
+  tls:
+    - secretName: "{{ oauth2_proxy_ingress_tls_secret_name }}"
+      hosts:
+        - "{{ oauth2_proxy_ingress_hostname }}"
+{% endif %}
+{% endif %}
+
+sessionStorage:
+  type: "{{ oauth2_proxy_session_storage_type }}"
+
+redis-ha:
+  enabled: {{ oauth2_proxy_redis_ha_enabled | ansible.builtin.to_json }}
+
+metrics:
+  enabled: {{ oauth2_proxy_metrics_enabled | ansible.builtin.to_json }}
+  serviceMonitor:
+    enabled: {{ oauth2_proxy_service_monitor_enabled | ansible.builtin.to_json }}
+
+podAnnotations: {{ oauth2_proxy_pod_annotations | ansible.builtin.to_json }}
+podLabels: {{ oauth2_proxy_pod_labels | ansible.builtin.to_json }}
+
+nodeSelector: {{ oauth2_proxy_node_selector | ansible.builtin.to_json }}
+tolerations: {{ oauth2_proxy_tolerations | ansible.builtin.to_json }}
+affinity: {{ oauth2_proxy_affinity | ansible.builtin.to_json }}
+
+autoscaling:
+  enabled: {{ oauth2_proxy_autoscaling_enabled | ansible.builtin.to_json }}
+  minReplicas: {{ oauth2_proxy_autoscaling_min_replicas }}
+  maxReplicas: {{ oauth2_proxy_autoscaling_max_replicas }}
+
+{% if oauth2_proxy_additional_helm_values %}
+{{ oauth2_proxy_additional_helm_values | ansible.builtin.to_nice_yaml | indent(0) }}
+{% endif %}

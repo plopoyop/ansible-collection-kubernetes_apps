@@ -53,6 +53,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | GitLab Runner         | v0.88.1            | `gitlab_runner`  | [View README](roles/gitlab_runner/README.md)       |
 | Headlamp         | v0.41.0            | `headlamp`       | [View README](roles/headlamp/README.md)       |
 | Mailcrab         | v1.6.5            | `mailcrab`       | [View README](roles/mailcrab/README.md)       |
+| OAuth2 Proxy         | v10.4.3            | `oauth2_proxy`   | [View README](roles/oauth2_proxy/README.md)       |
 | Warpgate         | v0.0.4            | `warpgate`       | [View README](roles/warpgate/README.md)       |
 | Zammad         | v16.0.13            | `zammad`         | [View README](roles/zammad/README.md)       |
 
@@ -62,7 +63,7 @@ Every role in this collection ships tagged tasks so you can selectively run only
 
 Three kinds of tags are exposed:
 
-- **Role tag** — named after the role itself (e.g. `argocd`, `atlantis`, `clamav`, `gatus`, `gitlab_runner`, `headlamp`, `mailcrab`, `warpgate`, `zammad`). Use it to scope a run to a single application.
+- **Role tag** — named after the role itself (e.g. `argocd`, `atlantis`, `clamav`, `gatus`, `gitlab_runner`, `headlamp`, `mailcrab`, `oauth2_proxy`, `warpgate`, `zammad`). Use it to scope a run to a single application.
 - **Action tag** — `install` or `uninstall`. The role's `*_enabled` variable controls which one runs:
   - When `<role>_enabled: true`, the setup tasks (tagged `install`) are executed.
   - When `<role>_enabled: false`, the cleanup tasks (tagged `uninstall`) are executed.

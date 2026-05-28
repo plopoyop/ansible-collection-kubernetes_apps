@@ -1,0 +1,24 @@
+---
+- name: "Create"
+  hosts: "localhost"
+  connection: "local"
+  gather_facts: false
+  vars:
+    oauth2_proxy_wait_install: false
+    oauth2_proxy_client_id: "molecule-client-id"
+    oauth2_proxy_client_secret: "molecule-client-secret"
+    oauth2_proxy_cookie_secret: "molecule-cookie-secret-32-bytes!"
+    oauth2_proxy_extra_args:
+      provider: "google"
+  tasks:
+    - name: "Build a kind cluster (wait for control plane)."
+      ansible.builtin.command: >-
+        kind create cluster
+        --wait 300s
+        --name molecule-test
+        --kubeconfig {{ kubeconfig }}
+      changed_when: true
+
+    - name: "Install OAuth2 Proxy first"
+      ansible.builtin.import_role:
+        name: "oauth2_proxy"
