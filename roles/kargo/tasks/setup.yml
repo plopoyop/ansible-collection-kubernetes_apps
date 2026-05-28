@@ -1,0 +1,33 @@
+---
+- name: "Create Kargo namespace"
+  kubernetes.core.k8s:
+    name: "{{ kargo_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+  tags:
+    - "namespace"
+
+- name: "Create extra manifests"
+  kubernetes.core.k8s:
+    namespace: "{{ kargo_namespace }}"
+    state: "present"
+    definition: "{{ kargo_manifest_to_create }}"
+  loop: "{{ kargo_extra_manifests }}"
+  loop_control:
+    loop_var: kargo_manifest_to_create
+  when: kargo_extra_manifests | length > 0
+  tags:
+    - "manifest"
+
+- name: "Install Kargo helm package"
+  kubernetes.core.helm:
+    name: "{{ kargo_deployment_name }}"
+    namespace: "{{ kargo_namespace }}"
+    state: "present"
+    chart_ref: "{{ kargo_helm_chart_ref }}"
+    chart_version: "{{ kargo_helm_chart_version }}"
+    values: "{{ lookup('ansible.builtin.template', 'kargo_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
+    wait: "{{ kargo_wait_install }}"
+  tags:
+    - "helm_chart"
