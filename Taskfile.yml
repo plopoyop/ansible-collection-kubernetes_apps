@@ -2,7 +2,7 @@
 version: '3'
 
 vars:
-  ROLES_LIST: ["argocd", "atlantis", "clamav", "gatus", "gitlab_runner", "headlamp", "mailcrab", "warpgate", "zammad"]
+  ROLES_LIST: ["argocd", "atlantis", "clamav", "gatus", "gitlab_runner", "headlamp", "mailcrab", "oauth2_proxy", "warpgate", "zammad"]
 
 tasks:
   default:

@@ -1,0 +1,21 @@
+---
+- name: "Verify"
+  hosts: "localhost"
+  connection: "local"
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'oauth2-proxy' namespace to be removed."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "oauth2-proxy"
+      register: namespace_oauth2_proxy
+      until: namespace_oauth2_proxy.resources | length == 0
+      retries: 30
+      delay: 5
+      changed_when: false
+
+    - name: "Assert that 'oauth2-proxy' namespace is removed."
+      ansible.builtin.assert:
+        that: namespace_oauth2_proxy.resources | length == 0
+        fail_msg: "Namespace 'oauth2-proxy' is still present."

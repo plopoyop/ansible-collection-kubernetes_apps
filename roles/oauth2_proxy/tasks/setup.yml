@@ -1,0 +1,29 @@
+---
+- name: "Create OAuth2 Proxy namespace"
+  kubernetes.core.k8s:
+    name: "{{ oauth2_proxy_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+  tags:
+    - "namespace"
+
+- name: "Add oauth2-proxy helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ oauth2_proxy_helm_repo_name }}"
+    repo_url: "{{ oauth2_proxy_helm_repo_url }}"
+  tags:
+    - "helm_repository"
+
+- name: "Install OAuth2 Proxy helm package"
+  kubernetes.core.helm:
+    name: "{{ oauth2_proxy_deployment_name }}"
+    namespace: "{{ oauth2_proxy_namespace }}"
+    state: "present"
+    chart_ref: "{{ oauth2_proxy_helm_chart_ref }}"
+    chart_version: "{{ oauth2_proxy_helm_chart_version }}"
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'oauth2_proxy_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
+    wait: "{{ oauth2_proxy_wait_install }}"
+  tags:
+    - "helm_chart"

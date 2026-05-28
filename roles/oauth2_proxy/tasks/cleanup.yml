@@ -1,0 +1,28 @@
+---
+- name: "Uninstall OAuth2 Proxy helm package"
+  kubernetes.core.helm:
+    name: "{{ oauth2_proxy_deployment_name }}"
+    namespace: "{{ oauth2_proxy_namespace }}"
+    state: "absent"
+    chart_ref: "{{ oauth2_proxy_helm_chart_ref }}"
+    chart_version: "{{ oauth2_proxy_helm_chart_version }}"
+    wait: true
+  tags:
+    - "helm_chart"
+
+- name: "Remove oauth2-proxy helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ oauth2_proxy_helm_repo_name }}"
+    repo_url: "{{ oauth2_proxy_helm_repo_url }}"
+    state: "absent"
+  tags:
+    - "helm_repository"
+
+- name: "Remove OAuth2 Proxy namespace"
+  kubernetes.core.k8s:
+    name: "{{ oauth2_proxy_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"
+  tags:
+    - "namespace"
