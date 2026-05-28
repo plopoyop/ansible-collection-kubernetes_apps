@@ -1,0 +1,65 @@
+---
+crds:
+  install: {{ kargo_crds_install | lower }}
+  keep: {{ kargo_crds_keep | lower }}
+
+webhooks:
+  register: {{ kargo_webhooks_register | lower }}
+
+api:
+  enabled: {{ kargo_api_enabled | lower }}
+  host: "{{ kargo_api_host }}"
+  logLevel: "{{ kargo_api_log_level }}"
+{% if kargo_api_secret_name | length > 0 %}
+  secret:
+    name: "{{ kargo_api_secret_name }}"
+{% endif %}
+  adminAccount:
+    enabled: {{ kargo_api_admin_account_enabled | lower }}
+{% if kargo_api_admin_password_hash | length > 0 %}
+    passwordHash: "{{ kargo_api_admin_password_hash }}"
+{% endif %}
+{% if kargo_api_admin_token_signing_key | length > 0 %}
+    tokenSigningKey: "{{ kargo_api_admin_token_signing_key }}"
+{% endif %}
+    tokenTTL: "{{ kargo_api_admin_token_ttl }}"
+  service:
+    type: "{{ kargo_api_service_type }}"
+  ingress:
+    enabled: {{ kargo_api_ingress_enabled | lower }}
+{% if kargo_api_ingress_enabled %}
+{% if kargo_api_ingress_class_name %}
+    ingressClassName: "{{ kargo_api_ingress_class_name }}"
+{% endif %}
+{% if kargo_api_ingress_annotations | length > 0 %}
+    annotations: {{ kargo_api_ingress_annotations | ansible.builtin.to_json }}
+{% endif %}
+    tls:
+      enabled: {{ kargo_api_ingress_tls_enabled | lower }}
+      selfSignedCert: {{ kargo_api_ingress_tls_self_signed_cert | lower }}
+      secretName: "{{ kargo_api_ingress_tls_secret_name }}"
+{% endif %}
+  oidc:
+    enabled: {{ kargo_api_oidc_enabled | lower }}
+{% if kargo_api_oidc_enabled %}
+    issuerURL: "{{ kargo_api_oidc_issuer_url }}"
+    clientID: "{{ kargo_api_oidc_client_id }}"
+{% if kargo_api_oidc_cli_client_id | length > 0 %}
+    cliClientID: "{{ kargo_api_oidc_cli_client_id }}"
+{% endif %}
+    additionalScopes: {{ kargo_api_oidc_additional_scopes | ansible.builtin.to_json }}
+    usernameClaim: "{{ kargo_api_oidc_username_claim }}"
+{% endif %}
+
+controller:
+  enabled: {{ kargo_controller_enabled | lower }}
+
+managementController:
+  enabled: {{ kargo_management_controller_enabled | lower }}
+
+garbageCollector:
+  enabled: {{ kargo_garbage_collector_enabled | lower }}
+
+{% if kargo_additional_config | default({}) != {} %}
+{{ kargo_additional_config | ansible.builtin.to_nice_yaml | indent(0) }}
+{% endif %}

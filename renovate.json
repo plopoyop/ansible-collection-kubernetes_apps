@@ -91,6 +91,14 @@
     },
     {
       "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/akuity/kargo-charts/kargo"
+      ]
+    },
+    {
+      "matchDatasources": [
         "helm"
       ],
       "matchPackageNames": [
@@ -339,6 +347,31 @@
       "depNameTemplate": "gitlab-runner",
       "autoReplaceStringTemplate": "GitLab Runner         | v{{newValue}}",
       "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/kargo/defaults/main.yml$/",
+        "/roles/kargo/README.md$/"
+      ],
+      "matchStrings": [
+        "kargo_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "ghcr.io/akuity/kargo-charts/kargo",
+      "autoReplaceStringTemplate": "kargo_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "Kargo\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "ghcr.io/akuity/kargo-charts/kargo",
+      "autoReplaceStringTemplate": "Kargo         | v{{newValue}}",
+      "datasourceTemplate": "docker"
     }
   ]
 }

@@ -1,0 +1,21 @@
+---
+- name: "Verify"
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'kargo' namespace to be removed."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "kargo"
+      register: namespace_kargo
+      until: namespace_kargo.resources | length == 0
+      retries: 30
+      delay: 5
+      changed_when: false
+
+    - name: "Assert that 'kargo' namespace is removed."
+      ansible.builtin.assert:
+        that: namespace_kargo.resources | length == 0
+        fail_msg: "Namespace 'kargo' is still present."

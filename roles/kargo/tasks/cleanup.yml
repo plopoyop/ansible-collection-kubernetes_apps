@@ -1,0 +1,45 @@
+---
+- name: "Uninstall Kargo helm package"
+  kubernetes.core.helm:
+    name: "{{ kargo_deployment_name }}"
+    namespace: "{{ kargo_namespace }}"
+    state: "absent"
+  tags:
+    - "helm_chart"
+
+- name: "List leftover ServiceAccounts holding the Kargo finalizer"
+  kubernetes.core.k8s_info:
+    api_version: "v1"
+    kind: "ServiceAccount"
+    namespace: "{{ kargo_namespace }}"
+  register: kargo_leftover_serviceaccounts
+  failed_when: false
+  tags:
+    - "manifest"
+
+- name: "Strip Kargo finalizer from leftover ServiceAccounts"
+  kubernetes.core.k8s_json_patch:
+    api_version: "v1"
+    kind: "ServiceAccount"
+    namespace: "{{ kargo_namespace }}"
+    name: "{{ kargo_leftover_sa.metadata.name }}"
+    patch:
+      - op: "replace"
+        path: "/metadata/finalizers"
+        value: []
+  loop: "{{ kargo_leftover_serviceaccounts.resources | default([]) }}"
+  loop_control:
+    loop_var: "kargo_leftover_sa"
+    label: "{{ kargo_leftover_sa.metadata.name }}"
+  when: "'kargo.akuity.io/finalizer' in (kargo_leftover_sa.metadata.finalizers | default([]))"
+  tags:
+    - "manifest"
+
+- name: "Remove Kargo namespace"
+  kubernetes.core.k8s:
+    name: "{{ kargo_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"
+  tags:
+    - "namespace"

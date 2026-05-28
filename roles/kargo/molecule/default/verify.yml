@@ -1,0 +1,62 @@
+---
+- name: "Verify"
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'kargo' namespace to be active."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "kargo"
+      register: namespace_kargo
+      until:
+        - namespace_kargo.resources | length > 0
+        - namespace_kargo.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 5
+
+    - name: "Assert that 'kargo' namespace is active."
+      ansible.builtin.assert:
+        that:
+          - namespace_kargo.resources | length > 0
+          - namespace_kargo.resources[0].status.phase == "Active"
+        fail_msg: "Namespace 'kargo' is not active."
+
+    - name: "Wait for 'kargo-api' Deployment to be ready."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "kargo-api"
+        namespace: "kargo"
+      register: kargo_api_deployment
+      until:
+        - kargo_api_deployment.resources | length > 0
+        - kargo_api_deployment.resources[0].status.readyReplicas | default(0) >= 1
+      retries: 60
+      delay: 5
+
+    - name: "Assert that 'kargo-api' Deployment is ready."
+      ansible.builtin.assert:
+        that:
+          - kargo_api_deployment.resources | length > 0
+          - kargo_api_deployment.resources[0].status.readyReplicas | default(0) >= 1
+        fail_msg: "Deployment 'kargo-api' is not ready."
+
+    - name: "Wait for 'kargo-controller' Deployment to be ready."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "kargo-controller"
+        namespace: "kargo"
+      register: kargo_controller_deployment
+      until:
+        - kargo_controller_deployment.resources | length > 0
+        - kargo_controller_deployment.resources[0].status.readyReplicas | default(0) >= 1
+      retries: 60
+      delay: 5
+
+    - name: "Assert that 'kargo-controller' Deployment is ready."
+      ansible.builtin.assert:
+        that:
+          - kargo_controller_deployment.resources | length > 0
+          - kargo_controller_deployment.resources[0].status.readyReplicas | default(0) >= 1
+        fail_msg: "Deployment 'kargo-controller' is not ready."
