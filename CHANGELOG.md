@@ -1,5 +1,14 @@
 # Changelog
 
+## [8.6.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.2) (2026-05-31)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.1...8.6.2)
+
+**Merged pull requests:**
+
+- feat\(deps\): update python313packages.ansible \(13.5.0 → 13.6.0\) [\#192](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/192) ([plopoyop](https://github.com/plopoyop))
+- feat\(deps\): update git \(2.53.0 → 2.54.0\) [\#191](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/191) ([plopoyop](https://github.com/plopoyop))
+
 ## [8.6.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.1) (2026-05-25)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.0...8.6.1)
