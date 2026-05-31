@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.1...8.6.2)
 
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart argo-cd \(9.5.15 → 9.5.17\) [\#190](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/190) ([plopoyop](https://github.com/plopoyop))
+
 **Merged pull requests:**
 
 - feat\(deps\): update python313packages.ansible \(13.5.0 → 13.6.0\) [\#192](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/192) ([plopoyop](https://github.com/plopoyop))
