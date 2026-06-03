@@ -1,11 +1,16 @@
 # Changelog
 
-## [8.6.3](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.3) (2026-06-03)
+## [8.7.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.7.0) (2026-06-03)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.2...8.6.3)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.2...8.7.0)
+
+## ⛵ Helm Charts
+
+- feat\(helm\): update chart gitlab-runner \(0.88.1 → 0.89.1\) [\#196](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/196) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
+- feat\(deps\): update tweedegolf/mailcrab \(v1.6.5 → v1.7.0\) [\#194](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/194) ([plopoyop](https://github.com/plopoyop))
 - fix\(container\): update image ghcr.io/warp-tech/helm-charts/warpgate \(0.0.4 → 0.0.5\) [\#193](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/193) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.6.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.2) (2026-05-31)
