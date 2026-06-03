@@ -7,6 +7,7 @@
 ## ⛵ Helm Charts
 
 - feat\(helm\): update chart gitlab-runner \(0.88.1 → 0.89.1\) [\#196](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/196) ([plopoyop](https://github.com/plopoyop))
+- feat\(helm\): update chart atlantis \(6.3.0 → 6.5.1\) [\#195](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/195) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
