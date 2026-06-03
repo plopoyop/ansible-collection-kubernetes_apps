@@ -16,6 +16,10 @@
 - feat\(deps\): update tweedegolf/mailcrab \(v1.6.5 → v1.7.0\) [\#194](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/194) ([plopoyop](https://github.com/plopoyop))
 - fix\(container\): update image ghcr.io/warp-tech/helm-charts/warpgate \(0.0.4 → 0.0.5\) [\#193](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/193) ([plopoyop](https://github.com/plopoyop))
 
+**Merged pull requests:**
+
+- feat\(deps\)!: Update python313Packages.molecule \(25.12.0 → 26.4.0\) [\#199](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/199) ([plopoyop](https://github.com/plopoyop))
+
 ## [8.6.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.2) (2026-05-31)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.1...8.6.2)
