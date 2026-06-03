@@ -147,7 +147,7 @@ GitHub release version/tag to download (e.g., "v1.0.0" or "latest")
 #### Default value
 
 ```YAML
-mailcrab_github_version: v1.6.5
+mailcrab_github_version: v1.7.0
 ```
 
 ### mailcrab_http_port
