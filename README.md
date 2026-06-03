@@ -54,7 +54,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | Headlamp         | v0.41.0            | `headlamp`       | [View README](roles/headlamp/README.md)       |
 | Mailcrab         | v1.7.0            | `mailcrab`       | [View README](roles/mailcrab/README.md)       |
 | Warpgate         | v0.0.5            | `warpgate`       | [View README](roles/warpgate/README.md)       |
-| Zammad         | v16.0.13            | `zammad`         | [View README](roles/zammad/README.md)       |
+| Zammad         | v16.2.2            | `zammad`         | [View README](roles/zammad/README.md)       |
 
 ### Tags
 
