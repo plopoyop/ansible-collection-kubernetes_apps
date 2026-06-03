@@ -315,7 +315,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-warpgate_helm_chart_version: 0.0.4
+warpgate_helm_chart_version: 0.0.5
 ```
 
 ### warpgate_ingress_annotations
