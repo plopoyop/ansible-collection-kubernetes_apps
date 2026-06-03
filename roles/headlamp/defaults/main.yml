@@ -15,7 +15,7 @@ headlamp_namespace: "headlamp"
 # @var headlamp_helm_chart_version:type: string
 # @var headlamp_helm_chart_version:description: >
 # Helm chart version to install
-headlamp_helm_chart_version: "0.41.0"
+headlamp_helm_chart_version: 0.42.0
 
 # @var headlamp_deployment_name
 # @var headlamp_deployment_name:type: string

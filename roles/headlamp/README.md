@@ -186,7 +186,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-headlamp_helm_chart_version: 0.41.0
+headlamp_helm_chart_version: 0.42.0
 ```
 
 ### headlamp_in_cluster
