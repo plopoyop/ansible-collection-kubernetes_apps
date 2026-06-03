@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.6.3](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.3) (2026-06-03)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.2...8.6.3)
+
+## ⚙️ Dependencies
+
+- fix\(container\): update image ghcr.io/warp-tech/helm-charts/warpgate \(0.0.4 → 0.0.5\) [\#193](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/193) ([plopoyop](https://github.com/plopoyop))
+
 ## [8.6.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.2) (2026-05-31)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.1...8.6.2)
