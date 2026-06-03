@@ -51,7 +51,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | ClamAV         | v3.7.1            | `clamav`         | [View README](roles/clamav/README.md)       |
 | Gatus         | v1.5.0            | `gatus`          | [View README](roles/gatus/README.md)       |
 | GitLab Runner         | v0.89.1            | `gitlab_runner`  | [View README](roles/gitlab_runner/README.md)       |
-| Headlamp         | v0.41.0            | `headlamp`       | [View README](roles/headlamp/README.md)       |
+| Headlamp         | v0.42.0            | `headlamp`       | [View README](roles/headlamp/README.md)       |
 | Mailcrab         | v1.7.0            | `mailcrab`       | [View README](roles/mailcrab/README.md)       |
 | Warpgate         | v0.0.5            | `warpgate`       | [View README](roles/warpgate/README.md)       |
 | Zammad         | v16.2.2            | `zammad`         | [View README](roles/zammad/README.md)       |
