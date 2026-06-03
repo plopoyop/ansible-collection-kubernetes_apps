@@ -7,6 +7,7 @@
     warpgate_admin_password: "molecule-admin-password"
     warpgate_wait_install: true
     warpgate_data_pvc_enabled: false
+    warpgate_setup_type: "podinit"
   tasks:
     - name: "Build a kind cluster (wait for control plane)."
       ansible.builtin.command: >-
