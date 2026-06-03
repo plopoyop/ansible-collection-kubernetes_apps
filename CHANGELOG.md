@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.2...8.7.0)
 
+## 🚀 New Features
+
+- chore\(renovate\): Update schedule [\#200](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/200) ([plopoyop](https://github.com/plopoyop))
+
 ## ⛵ Helm Charts
 
 - feat\(helm\): update chart zammad \(16.0.13 → 16.2.2\) [\#198](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/198) ([plopoyop](https://github.com/plopoyop))
