@@ -1,12 +1,16 @@
 # Changelog
 
+## [8.7.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.7.1) (2026-06-04)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.7.0...8.7.1)
+
+**Merged pull requests:**
+
+- feat\(deps\): update python313packages.ansible \(13.6.0 → 13.7.0\) [\#202](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/202) ([plopoyop](https://github.com/plopoyop))
+
 ## [8.7.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.7.0) (2026-06-03)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.6.2...8.7.0)
-
-## 🚀 New Features
-
-- chore\(renovate\): Update schedule [\#200](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/200) ([plopoyop](https://github.com/plopoyop))
 
 ## ⛵ Helm Charts
 
@@ -22,6 +26,7 @@
 
 **Merged pull requests:**
 
+- chore\(renovate\): Update schedule [\#200](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/200) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\)!: Update python313Packages.molecule \(25.12.0 → 26.4.0\) [\#199](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/199) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.6.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.6.2) (2026-05-31)
