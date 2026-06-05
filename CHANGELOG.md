@@ -1,8 +1,12 @@
 # Changelog
 
-## [8.7.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.7.1) (2026-06-04)
+## [8.7.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.7.1) (2026-06-05)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.7.0...8.7.1)
+
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart argo-cd \(9.5.17 → 9.5.18\) [\#201](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/201) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
 
