@@ -1,8 +1,12 @@
 # Changelog
 
-## [8.7.4](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.7.4) (2026-06-11)
+## [8.8.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.8.0) (2026-06-11)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.7.3...8.7.4)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.7.3...8.8.0)
+
+## ⛵ Helm Charts
+
+- feat\(helm\): update chart atlantis \(6.5.1 → 6.6.0\) [\#208](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/208) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
