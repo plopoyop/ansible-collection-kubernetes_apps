@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.8.1...8.8.2)
 
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart zammad \(16.2.4 → 16.2.5\) [\#210](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/210) ([plopoyop](https://github.com/plopoyop))
+
 **Merged pull requests:**
 
 - feat\(deps\)!: Update python313Packages.molecule-plugins \(23.5.3 → 25.8.12\) [\#212](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/212) ([plopoyop](https://github.com/plopoyop))
