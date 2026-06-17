@@ -804,8 +804,8 @@ zammad_websocket_liveness_probe:
 zammad_websocket_readiness_probe:
   tcpSocket:
     port: 6042
-    failureThreshold: 5
-    timeoutSeconds: 5
+  failureThreshold: 5
+  timeoutSeconds: 5
 
 # @var zammad_websocket_resources
 # @var zammad_websocket_resources:type: dict
