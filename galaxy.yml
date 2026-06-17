@@ -1,6 +1,6 @@
 namespace: plopoyop
 name: kubernetes_apps
-version: 8.8.1
+version: 8.8.2
 readme: README.md
 authors:
   - Clément Hubert <clement@plopoyop.me>
@@ -12,7 +12,7 @@ tags:
   - cluster
   - infrastructure
 dependencies:
-  kubernetes.core: ">=6.4.0"
-repository: "https://github.com/plopoyop/ansible-collection-kubernetes_apps"
-issues: "https://github.com/plopoyop/ansible-collection-kubernetes_apps/issues"
+  kubernetes.core: '>=6.4.0'
+repository: 'https://github.com/plopoyop/ansible-collection-kubernetes_apps'
+issues: 'https://github.com/plopoyop/ansible-collection-kubernetes_apps/issues'
 build_ignore: []
