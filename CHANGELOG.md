@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.9.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.9.0) (2026-06-18)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.8.2...8.9.0)
+
+## ⛵ Helm Charts
+
+- feat\(helm\): update chart headlamp \(0.42.0 → 0.43.0\) [\#213](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/213) ([plopoyop](https://github.com/plopoyop))
+
 ## [8.8.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.8.2) (2026-06-17)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.8.1...8.8.2)
