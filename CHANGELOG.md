@@ -6,6 +6,7 @@
 
 ## ⛵ Helm Charts
 
+- feat\(helm\): update chart zammad \(16.2.5 → 16.4.1\) [\#214](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/214) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart headlamp \(0.42.0 → 0.43.0\) [\#213](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/213) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.8.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.8.2) (2026-06-17)
