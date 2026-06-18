@@ -1,6 +1,6 @@
 namespace: plopoyop
 name: kubernetes_apps
-version: 8.8.2
+version: 8.9.0
 readme: README.md
 authors:
   - Clément Hubert <clement@plopoyop.me>
