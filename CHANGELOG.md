@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.10.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.10.0) (2026-06-19)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.9.0...8.10.0)
+
+## ⛵ Helm Charts
+
+- feat\(helm\): update chart gitlab-runner \(0.89.1 → 0.90.0\) [\#215](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/215) ([plopoyop](https://github.com/plopoyop))
+
 ## [8.9.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.9.0) (2026-06-18)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.8.2...8.9.0)
