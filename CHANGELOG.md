@@ -1,11 +1,12 @@
 # Changelog
 
-## [8.10.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.10.0) (2026-06-19)
+## [8.10.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.10.0) (2026-06-20)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.9.0...8.10.0)
 
 ## ⛵ Helm Charts
 
+- fix\(helm\): update chart argo-cd \(9.5.21 → 9.5.22\) [\#217](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/217) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart gitlab-runner \(0.89.1 → 0.90.0\) [\#215](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/215) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
