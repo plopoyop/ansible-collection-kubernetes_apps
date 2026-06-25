@@ -46,7 +46,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 
 | Role Name       | Helm Chart Version | Role Tag         | README Link                                 |
 | ---------       | ------------------ | ---------------- | ------------------------------------        |
-| Argo CD | v9.6.0            | `argocd`         | [View README](roles/argocd/README.md)       |
+| Argo CD | v9.7.0            | `argocd`         | [View README](roles/argocd/README.md)       |
 | Atlantis | v6.6.0            | `atlantis`       | [View README](roles/atlantis/README.md)       |
 | ClamAV         | v3.7.1            | `clamav`         | [View README](roles/clamav/README.md)       |
 | Gatus         | v1.5.0            | `gatus`          | [View README](roles/gatus/README.md)       |
