@@ -15,6 +15,7 @@
 
 **Merged pull requests:**
 
+- fix\(deps\): update kubernetes-helm \(4.2.0 → 4.2.1\) [\#225](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/225) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update kubectl \(1.36.1 → 1.36.2\) [\#224](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/224) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update ansible-doctor \(8.3.1 → 8.3.2\) [\#223](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/223) ([plopoyop](https://github.com/plopoyop))
 
