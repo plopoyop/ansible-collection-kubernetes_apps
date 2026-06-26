@@ -1,6 +1,6 @@
 # Changelog
 
-## [8.11.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.11.0) (2026-06-25)
+## [8.11.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.11.0) (2026-06-26)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.10.0...8.11.0)
 
@@ -12,6 +12,11 @@
 ## ⚙️ Dependencies
 
 - fix\(ci\): update renovatebot/github-action action \(v46.1.15 → v46.1.16\) [\#221](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/221) ([plopoyop](https://github.com/plopoyop))
+
+**Merged pull requests:**
+
+- fix\(deps\): update kubectl \(1.36.1 → 1.36.2\) [\#224](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/224) ([plopoyop](https://github.com/plopoyop))
+- fix\(deps\): update ansible-doctor \(8.3.1 → 8.3.2\) [\#223](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/223) ([plopoyop](https://github.com/plopoyop))
 
 ## [8.10.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/8.10.0) (2026-06-21)
 
