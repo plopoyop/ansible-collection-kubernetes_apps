@@ -630,7 +630,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-atlantis_helm_version: 6.6.0
+atlantis_helm_version: 6.7.1
 ```
 
 ### atlantis_hide_prev_plan_comments
