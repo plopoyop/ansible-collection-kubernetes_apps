@@ -40,7 +40,8 @@ ingress:
 {% endif %}
   path: "{{ oauth2_proxy_ingress_path }}"
   pathType: "{{ oauth2_proxy_ingress_path_type }}"
-  hostname: "{{ oauth2_proxy_ingress_hostname }}"
+  hosts:
+    - "{{ oauth2_proxy_ingress_hostname }}"
   annotations: {{ oauth2_proxy_ingress_annotations | ansible.builtin.to_json }}
 {% if oauth2_proxy_ingress_tls_enabled %}
   tls:
