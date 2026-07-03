@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.10.0...9.0.0)
 
+## 🚀 New Features
+
+- Add OAuth2 proxy role [\#188](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/188) ([plopoyop](https://github.com/plopoyop))
+
 ## ⛵ Helm Charts
 
 - feat\(helm\): update chart argo-cd \(10.0.0 → 10.1.0\) [\#234](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/234) ([plopoyop](https://github.com/plopoyop))
