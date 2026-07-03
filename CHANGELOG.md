@@ -22,6 +22,7 @@
 
 **Merged pull requests:**
 
+- feat\(deps\)!: Update python313Packages.ansible \(13.7.0 → 14.0.0\) [\#232](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/232) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update kubernetes-helm \(4.2.1 → 4.2.2\) [\#230](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/230) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update ansible-doctor \(8.3.2 → 8.3.3\) [\#229](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/229) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update kubernetes-helm \(4.2.0 → 4.2.1\) [\#225](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/225) ([plopoyop](https://github.com/plopoyop))
