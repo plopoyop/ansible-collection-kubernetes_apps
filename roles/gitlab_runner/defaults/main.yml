@@ -17,7 +17,7 @@ gitlab_runner_namespace: "gitlab-runner"
 # @var gitlab_runner_helm_chart_version:type: string
 # @var gitlab_runner_helm_chart_version:description: >
 # Helm chart version to install
-gitlab_runner_helm_chart_version: 0.90.0
+gitlab_runner_helm_chart_version: 0.90.1
 
 # @var gitlab_runner_deployment_name
 # @var gitlab_runner_deployment_name:type: string
