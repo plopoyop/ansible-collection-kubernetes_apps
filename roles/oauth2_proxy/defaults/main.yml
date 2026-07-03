@@ -1,0 +1,262 @@
+---
+# defaults file for oauth2_proxy
+# @var oauth2_proxy_enabled
+# @var oauth2_proxy_enabled:type: boolean
+# @var oauth2_proxy_enabled:description: >
+# Install OAuth2 Proxy chart
+oauth2_proxy_enabled: true
+
+# @var oauth2_proxy_namespace
+# @var oauth2_proxy_namespace:type: string
+# @var oauth2_proxy_namespace:description: >
+# K8s namespace to install OAuth2 Proxy chart
+oauth2_proxy_namespace: "oauth2-proxy"
+
+# @var oauth2_proxy_helm_chart_version
+# @var oauth2_proxy_helm_chart_version:type: string
+# @var oauth2_proxy_helm_chart_version:description: >
+# OAuth2 Proxy helm chart version
+oauth2_proxy_helm_chart_version: "10.4.3"
+
+# @var oauth2_proxy_deployment_name
+# @var oauth2_proxy_deployment_name:type: string
+# @var oauth2_proxy_deployment_name:description: >
+# OAuth2 Proxy helm release name
+oauth2_proxy_deployment_name: "oauth2-proxy"
+
+# @var oauth2_proxy_wait_install
+# @var oauth2_proxy_wait_install:type: boolean
+# @var oauth2_proxy_wait_install:description: >
+# Wait for helm install to finish
+oauth2_proxy_wait_install: true
+
+# @var oauth2_proxy_replica_count
+# @var oauth2_proxy_replica_count:type: int
+# @var oauth2_proxy_replica_count:description: >
+# Number of OAuth2 Proxy replicas
+oauth2_proxy_replica_count: 1
+
+# @var oauth2_proxy_image_tag
+# @var oauth2_proxy_image_tag:type: string
+# @var oauth2_proxy_image_tag:description: >
+# Override the OAuth2 Proxy image tag (empty uses the chart default)
+oauth2_proxy_image_tag: ""
+
+# @var oauth2_proxy_resources
+# @var oauth2_proxy_resources:type: dict
+# @var oauth2_proxy_resources:description: >
+# Resource requests and limits for OAuth2 Proxy
+# @var oauth2_proxy_resources:example: >
+# oauth2_proxy_resources:
+#   requests:
+#     cpu: "50m"
+#     memory: "64Mi"
+#   limits:
+#     cpu: "200m"
+#     memory: "256Mi"
+oauth2_proxy_resources: {}
+
+# @var oauth2_proxy_client_id
+# @var oauth2_proxy_client_id:type: string
+# @var oauth2_proxy_client_id:description: >
+# OAuth provider client ID
+oauth2_proxy_client_id: ""
+
+# @var oauth2_proxy_client_secret
+# @var oauth2_proxy_client_secret:type: string
+# @var oauth2_proxy_client_secret:description: >
+# OAuth provider client secret
+oauth2_proxy_client_secret: ""
+
+# @var oauth2_proxy_cookie_secret
+# @var oauth2_proxy_cookie_secret:type: string
+# @var oauth2_proxy_cookie_secret:description: >
+# Cookie secret used to encrypt session cookies (16, 24 or 32 bytes base64-encoded)
+oauth2_proxy_cookie_secret: ""
+
+# @var oauth2_proxy_cookie_name
+# @var oauth2_proxy_cookie_name:type: string
+# @var oauth2_proxy_cookie_name:description: >
+# Cookie name (empty uses the chart default)
+oauth2_proxy_cookie_name: ""
+
+# @var oauth2_proxy_existing_secret
+# @var oauth2_proxy_existing_secret:type: string
+# @var oauth2_proxy_existing_secret:description: >
+# Existing secret holding client-id, client-secret and cookie-secret keys
+oauth2_proxy_existing_secret: ""
+
+# @var oauth2_proxy_config_file
+# @var oauth2_proxy_config_file:type: string
+# @var oauth2_proxy_config_file:description: >
+# Raw oauth2_proxy.cfg content rendered into the chart configFile value
+# @var oauth2_proxy_config_file:example: >
+# oauth2_proxy_config_file: |
+#   provider = "oidc"
+#   oidc_issuer_url = "https://auth.example.com"
+oauth2_proxy_config_file: ""
+
+# @var oauth2_proxy_email_domains
+# @var oauth2_proxy_email_domains:type: list
+# @var oauth2_proxy_email_domains:description: >
+# Email domains allowed to authenticate (use ["*"] for any domain)
+oauth2_proxy_email_domains:
+  - "*"
+
+# @var oauth2_proxy_upstreams
+# @var oauth2_proxy_upstreams:type: list
+# @var oauth2_proxy_upstreams:description: >
+# Upstreams forwarded to after authentication
+oauth2_proxy_upstreams:
+  - "file:///dev/null"
+
+# @var oauth2_proxy_extra_args
+# @var oauth2_proxy_extra_args:type: dict
+# @var oauth2_proxy_extra_args:description: >
+# Extra command-line flags passed to oauth2-proxy
+# @var oauth2_proxy_extra_args:example: >
+# oauth2_proxy_extra_args:
+#   provider: "oidc"
+#   oidc-issuer-url: "https://auth.example.com"
+oauth2_proxy_extra_args: {}
+
+# @var oauth2_proxy_extra_env
+# @var oauth2_proxy_extra_env:type: list
+# @var oauth2_proxy_extra_env:description: >
+# Additional environment variables passed to the OAuth2 Proxy container
+oauth2_proxy_extra_env: []
+
+# @var oauth2_proxy_service_type
+# @var oauth2_proxy_service_type:type: string
+# @var oauth2_proxy_service_type:description: >
+# Service type for OAuth2 Proxy
+oauth2_proxy_service_type: "ClusterIP"
+
+# @var oauth2_proxy_service_port
+# @var oauth2_proxy_service_port:type: int
+# @var oauth2_proxy_service_port:description: >
+# Service port for OAuth2 Proxy
+oauth2_proxy_service_port: 80
+
+# @var oauth2_proxy_ingress_enabled
+# @var oauth2_proxy_ingress_enabled:type: boolean
+# @var oauth2_proxy_ingress_enabled:description: >
+# Enable ingress for OAuth2 Proxy
+oauth2_proxy_ingress_enabled: false
+
+# @var oauth2_proxy_ingress_class_name
+# @var oauth2_proxy_ingress_class_name:type: string
+# @var oauth2_proxy_ingress_class_name:description: >
+# Ingress class name for OAuth2 Proxy
+
+# @var oauth2_proxy_ingress_hostname
+# @var oauth2_proxy_ingress_hostname:type: string
+# @var oauth2_proxy_ingress_hostname:description: >
+# Hostname for the OAuth2 Proxy ingress
+
+# @var oauth2_proxy_ingress_path
+# @var oauth2_proxy_ingress_path:type: string
+# @var oauth2_proxy_ingress_path:description: >
+# Path for the OAuth2 Proxy ingress
+oauth2_proxy_ingress_path: "/oauth2"
+
+# @var oauth2_proxy_ingress_path_type
+# @var oauth2_proxy_ingress_path_type:type: string
+# @var oauth2_proxy_ingress_path_type:description: >
+# Path type for the OAuth2 Proxy ingress
+oauth2_proxy_ingress_path_type: "Prefix"
+
+# @var oauth2_proxy_ingress_annotations
+# @var oauth2_proxy_ingress_annotations:type: dict
+# @var oauth2_proxy_ingress_annotations:description: >
+# Annotations applied to the OAuth2 Proxy ingress
+oauth2_proxy_ingress_annotations: {}
+
+# @var oauth2_proxy_ingress_tls_enabled
+# @var oauth2_proxy_ingress_tls_enabled:type: boolean
+# @var oauth2_proxy_ingress_tls_enabled:description: >
+# Enable TLS for the OAuth2 Proxy ingress
+oauth2_proxy_ingress_tls_enabled: false
+
+# @var oauth2_proxy_ingress_tls_secret_name
+# @var oauth2_proxy_ingress_tls_secret_name:type: string
+# @var oauth2_proxy_ingress_tls_secret_name:description: >
+# Secret name for the OAuth2 Proxy TLS certificate
+
+# @var oauth2_proxy_session_storage_type
+# @var oauth2_proxy_session_storage_type:type: string
+# @var oauth2_proxy_session_storage_type:description: >
+# Session storage backend: cookie or redis
+oauth2_proxy_session_storage_type: "cookie"
+
+# @var oauth2_proxy_redis_ha_enabled
+# @var oauth2_proxy_redis_ha_enabled:type: boolean
+# @var oauth2_proxy_redis_ha_enabled:description: >
+# Deploy the bundled redis-ha subchart for session storage
+oauth2_proxy_redis_ha_enabled: false
+
+# @var oauth2_proxy_metrics_enabled
+# @var oauth2_proxy_metrics_enabled:type: boolean
+# @var oauth2_proxy_metrics_enabled:description: >
+# Expose the OAuth2 Proxy /metrics endpoint
+oauth2_proxy_metrics_enabled: true
+
+# @var oauth2_proxy_service_monitor_enabled
+# @var oauth2_proxy_service_monitor_enabled:type: boolean
+# @var oauth2_proxy_service_monitor_enabled:description: >
+# Create a Prometheus-operator ServiceMonitor for OAuth2 Proxy
+oauth2_proxy_service_monitor_enabled: false
+
+# @var oauth2_proxy_pod_annotations
+# @var oauth2_proxy_pod_annotations:type: dict
+# @var oauth2_proxy_pod_annotations:description: >
+# Annotations applied to the OAuth2 Proxy pods
+oauth2_proxy_pod_annotations: {}
+
+# @var oauth2_proxy_pod_labels
+# @var oauth2_proxy_pod_labels:type: dict
+# @var oauth2_proxy_pod_labels:description: >
+# Labels applied to the OAuth2 Proxy pods
+oauth2_proxy_pod_labels: {}
+
+# @var oauth2_proxy_node_selector
+# @var oauth2_proxy_node_selector:type: dict
+# @var oauth2_proxy_node_selector:description: >
+# Node selector for OAuth2 Proxy pods
+oauth2_proxy_node_selector: {}
+
+# @var oauth2_proxy_tolerations
+# @var oauth2_proxy_tolerations:type: list
+# @var oauth2_proxy_tolerations:description: >
+# Tolerations for OAuth2 Proxy pods
+oauth2_proxy_tolerations: []
+
+# @var oauth2_proxy_affinity
+# @var oauth2_proxy_affinity:type: dict
+# @var oauth2_proxy_affinity:description: >
+# Affinity rules for OAuth2 Proxy pods
+oauth2_proxy_affinity: {}
+
+# @var oauth2_proxy_autoscaling_enabled
+# @var oauth2_proxy_autoscaling_enabled:type: boolean
+# @var oauth2_proxy_autoscaling_enabled:description: >
+# Enable Horizontal Pod Autoscaler for OAuth2 Proxy
+oauth2_proxy_autoscaling_enabled: false
+
+# @var oauth2_proxy_autoscaling_min_replicas
+# @var oauth2_proxy_autoscaling_min_replicas:type: int
+# @var oauth2_proxy_autoscaling_min_replicas:description: >
+# Minimum replicas when autoscaling is enabled
+oauth2_proxy_autoscaling_min_replicas: 1
+
+# @var oauth2_proxy_autoscaling_max_replicas
+# @var oauth2_proxy_autoscaling_max_replicas:type: int
+# @var oauth2_proxy_autoscaling_max_replicas:description: >
+# Maximum replicas when autoscaling is enabled
+oauth2_proxy_autoscaling_max_replicas: 10
+
+# @var oauth2_proxy_additional_helm_values
+# @var oauth2_proxy_additional_helm_values:type: dict
+# @var oauth2_proxy_additional_helm_values:description: >
+# Additional helm values merged on top of the rendered chart values
+oauth2_proxy_additional_helm_values: {}

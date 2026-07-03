@@ -1,0 +1,11 @@
+---
+- name: "Converge"
+  hosts: "localhost"
+  connection: "local"
+  gather_facts: false
+  vars:
+    oauth2_proxy_enabled: false
+  tasks:
+    - name: "Remove OAuth2 Proxy"
+      ansible.builtin.import_role:
+        name: "oauth2_proxy"

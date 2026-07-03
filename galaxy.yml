@@ -11,6 +11,8 @@ tags:
   - kubernetes
   - cluster
   - infrastructure
+  - oauth2proxy
+  - authentication
 dependencies:
   kubernetes.core: '>=6.4.0'
 repository: 'https://github.com/plopoyop/ansible-collection-kubernetes_apps'
