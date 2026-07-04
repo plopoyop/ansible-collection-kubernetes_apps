@@ -16,7 +16,7 @@ oauth2_proxy_namespace: "oauth2-proxy"
 # @var oauth2_proxy_helm_chart_version:type: string
 # @var oauth2_proxy_helm_chart_version:description: >
 # OAuth2 Proxy helm chart version
-oauth2_proxy_helm_chart_version: "10.4.3"
+oauth2_proxy_helm_chart_version: 10.7.0
 
 # @var oauth2_proxy_deployment_name
 # @var oauth2_proxy_deployment_name:type: string

@@ -278,7 +278,7 @@ OAuth2 Proxy helm chart version
 #### Default value
 
 ```YAML
-oauth2_proxy_helm_chart_version: 10.4.3
+oauth2_proxy_helm_chart_version: 10.7.0
 ```
 
 ### oauth2_proxy_image_tag
