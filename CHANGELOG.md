@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.0.1) (2026-07-09)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/9.0.0...9.0.1)
+
+## ⚙️ Dependencies
+
+- fix\(ci\): update renovatebot/github-action action \(v46.1.17 → v46.1.18\) [\#239](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/239) ([plopoyop](https://github.com/plopoyop))
+
+**Merged pull requests:**
+
+- feat\(deps\): update python313packages.molecule \(26.4.0 → 26.6.0\) [\#240](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/240) ([plopoyop](https://github.com/plopoyop))
+
 ## [9.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.0.0) (2026-07-04)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/8.10.0...9.0.0)
