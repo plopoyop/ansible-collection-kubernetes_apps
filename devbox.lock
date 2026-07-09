@@ -701,67 +701,67 @@
         }
       }
     },
-    "python313Packages.molecule@26.4.0": {
-      "last_modified": "2026-05-24T03:33:00Z",
-      "resolved": "github:NixOS/nixpkgs/d849bb215dcdf71bce3e686839ccdb4219e84b2f#python313Packages.molecule",
+    "python313Packages.molecule@26.6.0": {
+      "last_modified": "2026-07-03T16:41:56Z",
+      "resolved": "github:NixOS/nixpkgs/0c190cd98e1f30cdbeff0ca149b2b17564a4a30e#python313Packages.molecule",
       "source": "devbox-search",
-      "version": "26.4.0",
+      "version": "26.6.0",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/bd5fhkjxdjr0bwz39py763pclj8qwpxa-python3.13-molecule-26.4.0",
+              "path": "/nix/store/hcffwhxi7ar3smj7pd84bag5sia3dg1f-python3.13-molecule-26.6.0",
               "default": true
             },
             {
               "name": "dist",
-              "path": "/nix/store/jlb5lq4qq73968m65mj81rll4amj9i61-python3.13-molecule-26.4.0-dist"
+              "path": "/nix/store/pk37mldxc8gfmg9gwynalbbz49xz43nd-python3.13-molecule-26.6.0-dist"
             }
           ],
-          "store_path": "/nix/store/bd5fhkjxdjr0bwz39py763pclj8qwpxa-python3.13-molecule-26.4.0"
+          "store_path": "/nix/store/hcffwhxi7ar3smj7pd84bag5sia3dg1f-python3.13-molecule-26.6.0"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/nbz37ddpx3h87kv7gk5rk1qb5jqsjb3p-python3.13-molecule-26.4.0",
+              "path": "/nix/store/0wfj1h8sh7sfb90mqyhnac575j2vkalg-python3.13-molecule-26.6.0",
               "default": true
             },
             {
               "name": "dist",
-              "path": "/nix/store/jjbn1qarcp2gwankxhw18wfyd5y25mpd-python3.13-molecule-26.4.0-dist"
+              "path": "/nix/store/yb6kc12hgjzn39fpkbcaz17chdp610hg-python3.13-molecule-26.6.0-dist"
             }
           ],
-          "store_path": "/nix/store/nbz37ddpx3h87kv7gk5rk1qb5jqsjb3p-python3.13-molecule-26.4.0"
+          "store_path": "/nix/store/0wfj1h8sh7sfb90mqyhnac575j2vkalg-python3.13-molecule-26.6.0"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/g43qwfxdh4qfa51kf1ziv34rw5ik9nir-python3.13-molecule-26.4.0",
+              "path": "/nix/store/3k7v1bwv4hsanfv7q5fhhwrk0jvq4fmm-python3.13-molecule-26.6.0",
               "default": true
             },
             {
               "name": "dist",
-              "path": "/nix/store/za2ypz1iw5nm526pb6pn2z9cy7317a11-python3.13-molecule-26.4.0-dist"
+              "path": "/nix/store/gjf592qaqh8i53gwz3x6h868lzxa5xkh-python3.13-molecule-26.6.0-dist"
             }
           ],
-          "store_path": "/nix/store/g43qwfxdh4qfa51kf1ziv34rw5ik9nir-python3.13-molecule-26.4.0"
+          "store_path": "/nix/store/3k7v1bwv4hsanfv7q5fhhwrk0jvq4fmm-python3.13-molecule-26.6.0"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/5qp7zw1dl3r5q229dd9kb2i4l8ffgfn6-python3.13-molecule-26.4.0",
+              "path": "/nix/store/0nkq8ijy6xff53snr42562724hd1v2i8-python3.13-molecule-26.6.0",
               "default": true
             },
             {
               "name": "dist",
-              "path": "/nix/store/cxabrwvbl6dpgswcix1wg369svi1xcx8-python3.13-molecule-26.4.0-dist"
+              "path": "/nix/store/fy558xd451dsnqhzdx268c06rbncvfpg-python3.13-molecule-26.6.0-dist"
             }
           ],
-          "store_path": "/nix/store/5qp7zw1dl3r5q229dd9kb2i4l8ffgfn6-python3.13-molecule-26.4.0"
+          "store_path": "/nix/store/0nkq8ijy6xff53snr42562724hd1v2i8-python3.13-molecule-26.6.0"
         }
       }
     },
