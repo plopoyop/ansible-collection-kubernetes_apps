@@ -8,6 +8,10 @@
 
 - chore\(ci\): Add username & author for renovate automerge [\#241](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/241) ([plopoyop](https://github.com/plopoyop))
 
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart argo-cd \(10.1.1 → 10.1.3\) [\#238](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/238) ([plopoyop](https://github.com/plopoyop))
+
 ## ⚙️ Dependencies
 
 - fix\(ci\): update renovatebot/github-action action \(v46.1.17 → v46.1.18\) [\#239](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/239) ([plopoyop](https://github.com/plopoyop))
