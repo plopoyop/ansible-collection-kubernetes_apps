@@ -1,8 +1,12 @@
 # Changelog
 
-## [9.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.0.1) (2026-07-09)
+## [9.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.1.0) (2026-07-12)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/9.0.0...9.0.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/9.0.0...9.1.0)
+
+## 🚀 New Features
+
+- chore\(ci\): Add username & author for renovate automerge [\#241](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/241) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
