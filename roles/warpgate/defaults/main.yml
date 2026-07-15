@@ -15,7 +15,7 @@ warpgate_namespace: "warpgate"
 # @var warpgate_helm_chart_version:type: string
 # @var warpgate_helm_chart_version:description: >
 # Helm chart version to install
-warpgate_helm_chart_version: 0.0.5
+warpgate_helm_chart_version: 0.0.6
 
 # @var warpgate_deployment_name
 # @var warpgate_deployment_name:type: string
