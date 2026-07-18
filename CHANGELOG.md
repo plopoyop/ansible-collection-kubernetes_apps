@@ -1,6 +1,6 @@
 # Changelog
 
-## [9.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.1.0) (2026-07-16)
+## [9.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.1.0) (2026-07-18)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/9.0.0...9.1.0)
 
@@ -19,6 +19,8 @@
 
 **Merged pull requests:**
 
+- feat\(deps\): update prek \(0.3.11 → 0.4.4\) [\#246](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/246) ([plopoyop](https://github.com/plopoyop))
+- fix\(deps\): update kubernetes-helm \(4.2.2 → 4.2.3\) [\#244](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/244) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update python313packages.molecule \(26.4.0 → 26.6.0\) [\#240](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/240) ([plopoyop](https://github.com/plopoyop))
 
 ## [9.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.0.0) (2026-07-04)
