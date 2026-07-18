@@ -8,6 +8,10 @@
 
 - chore\(ci\): Add username & author for renovate automerge [\#241](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/241) ([plopoyop](https://github.com/plopoyop))
 
+## 🐛 Bug Fixes
+
+- Fix tag propagation to imported tasks [\#247](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/247) ([plopoyop](https://github.com/plopoyop))
+
 ## ⛵ Helm Charts
 
 - fix\(helm\): update chart argo-cd \(10.1.3 → 10.1.4\) [\#245](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/245) ([plopoyop](https://github.com/plopoyop))
