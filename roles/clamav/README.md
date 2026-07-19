@@ -191,7 +191,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-clamav_helm_version: 3.7.1
+clamav_helm_version: 3.7.2
 ```
 
 ### clamav_hpa_cpu

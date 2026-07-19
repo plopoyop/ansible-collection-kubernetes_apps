@@ -15,7 +15,7 @@ clamav_namespace: "clamav"
 # @var clamav_helm_version:type: string
 # @var clamav_helm_version:description: >
 # Helm chart version to install
-clamav_helm_version: "3.7.1"
+clamav_helm_version: 3.7.2
 
 # @var clamav_deployment_name
 # @var clamav_deployment_name:type: string
