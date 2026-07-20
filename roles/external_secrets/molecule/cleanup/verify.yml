@@ -1,0 +1,21 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'external-secrets' namespace to be removed."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "external-secrets"
+      register: namespace_eso
+      until: namespace_eso.resources | length == 0
+      retries: 30
+      delay: 5
+      changed_when: false
+
+    - name: "Assert that 'external-secrets' namespace is removed."
+      ansible.builtin.assert:
+        that: namespace_eso.resources | length == 0
+        fail_msg: "Namespace 'external-secrets' is still present."

@@ -1,0 +1,21 @@
+---
+- name: "Validate CRD URL"
+  ansible.builtin.uri:
+    url: "{{ external_secrets_current_crd }}"
+    method: "HEAD"
+    return_content: false
+    status_code: 200
+  changed_when: false
+
+- name: "Apply CRD"
+  kubernetes.core.k8s:
+    state: "patched"
+    force: true
+    apply: true
+    definition: "{{ lookup('ansible.builtin.url', external_secrets_current_crd, split_lines=false) }}"
+  register: "external_secrets_current_crd_apply_results"
+  retries: 3
+  delay: 5
+  until: external_secrets_current_crd_apply_results is succeeded
+  tags:
+    - "crds"
