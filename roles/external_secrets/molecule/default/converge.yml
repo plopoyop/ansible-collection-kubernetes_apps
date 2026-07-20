@@ -1,0 +1,39 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    external_secrets_upgrade_crd: true
+
+    external_secrets_secret_stores:
+      - name: "fake-backend"
+        namespace: "external-secrets"
+        spec:
+          provider:
+            fake:
+              data:
+                - key: "/molecule/password"
+                  value: "s3cr3t"
+                  version: "v1"
+
+    external_secrets_external_secrets:
+      - name: "molecule-secret"
+        namespace: "external-secrets"
+        spec:
+          refreshInterval: "1h"
+          secretStoreRef:
+            name: "fake-backend"
+            kind: "SecretStore"
+          target:
+            name: "molecule-secret"
+            creationPolicy: "Owner"
+          data:
+            - secretKey: "password"
+              remoteRef:
+                key: "/molecule/password"
+
+  tasks:
+    - name: "Install External Secrets Operator with resources"
+      ansible.builtin.import_role:
+        name: "external_secrets"
