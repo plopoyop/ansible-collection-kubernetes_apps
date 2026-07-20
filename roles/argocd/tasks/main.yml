@@ -2,23 +2,11 @@
 - name: "Include setup when enabled"
   ansible.builtin.include_tasks:
     file: "setup.yml"
-    apply:
-      tags:
-        - "argocd"
-        - "install"
   when: argocd_enabled
-  tags:
-    - "argocd"
-    - "install"
+  tags: ["always"]
 
 - name: "Include cleanup when disabled"
   ansible.builtin.include_tasks:
     file: "cleanup.yml"
-    apply:
-      tags:
-        - "argocd"
-        - "uninstall"
   when: not argocd_enabled
-  tags:
-    - "argocd"
-    - "uninstall"
+  tags: ["always"]
