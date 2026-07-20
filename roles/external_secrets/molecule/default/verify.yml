@@ -1,0 +1,106 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'external-secrets' namespace to be active."
+      kubernetes.core.k8s_info:
+        kind: Namespace
+        name: "external-secrets"
+      register: namespace_eso
+      until:
+        - namespace_eso.resources | length > 0
+        - namespace_eso.resources[0].status.phase == "Active"
+      retries: 30
+      delay: 5
+
+    - name: "Assert that 'external-secrets' namespace is active."
+      ansible.builtin.assert:
+        that:
+          - namespace_eso.resources | length > 0
+          - namespace_eso.resources[0].status.phase == "Active"
+        fail_msg: "Namespace 'external-secrets' is not active."
+
+    - name: "Wait for 'external-secrets' Deployment to have ready replicas."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "external-secrets"
+        namespace: "external-secrets"
+      register: eso_deployment
+      until: eso_deployment.resources[0].status.readyReplicas | default(0) >= 1
+      retries: 30
+      delay: 5
+
+    - name: "Assert that 'external-secrets' Deployment has ready replicas."
+      ansible.builtin.assert:
+        that: eso_deployment.resources[0].status.readyReplicas | default(0) >= 1
+        fail_msg: "Deployment 'external-secrets' has no ready replicas."
+
+    - name: "Assert that the 'externalsecrets' CRD is registered."
+      kubernetes.core.k8s_info:
+        api_version: "apiextensions.k8s.io/v1"
+        kind: "CustomResourceDefinition"
+        name: "externalsecrets.external-secrets.io"
+      register: eso_crd
+      until: eso_crd.resources | length > 0
+      retries: 30
+      delay: 5
+
+    - name: "Wait for 'fake-backend' SecretStore to be ready."
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1"
+        kind: "SecretStore"
+        name: "fake-backend"
+        namespace: "external-secrets"
+      register: fake_store
+      until:
+        - fake_store.resources | length > 0
+        - (fake_store.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0
+      retries: 30
+      delay: 5
+
+    - name: "Assert that 'fake-backend' SecretStore is ready."
+      ansible.builtin.assert:
+        that:
+          - fake_store.resources | length > 0
+          - (fake_store.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0
+        fail_msg: "SecretStore 'fake-backend' is not ready."
+
+    - name: "Wait for 'molecule-secret' ExternalSecret to be synced."
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1"
+        kind: "ExternalSecret"
+        name: "molecule-secret"
+        namespace: "external-secrets"
+      register: molecule_external_secret
+      until:
+        - molecule_external_secret.resources | length > 0
+        - (molecule_external_secret.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0
+      retries: 30
+      delay: 5
+
+    - name: "Assert that 'molecule-secret' ExternalSecret is synced."
+      ansible.builtin.assert:
+        that:
+          - molecule_external_secret.resources | length > 0
+          - (molecule_external_secret.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0
+        fail_msg: "ExternalSecret 'molecule-secret' did not reach 'Ready' status."
+
+    - name: "Wait for the 'molecule-secret' Secret to be created."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "molecule-secret"
+        namespace: "external-secrets"
+      register: molecule_secret
+      until: molecule_secret.resources | length > 0
+      retries: 30
+      delay: 5
+
+    - name: "Assert that the 'molecule-secret' Secret holds the expected value."
+      ansible.builtin.assert:
+        that:
+          - molecule_secret.resources | length > 0
+          - (molecule_secret.resources[0].data.password | b64decode) == "s3cr3t"
+        fail_msg: "Secret 'molecule-secret' does not hold the expected value from the fake provider."

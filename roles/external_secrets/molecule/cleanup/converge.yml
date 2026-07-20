@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    external_secrets_enabled: false
+  tasks:
+    - name: "Remove External Secrets Operator"
+      ansible.builtin.import_role:
+        name: "external_secrets"

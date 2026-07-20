@@ -111,6 +111,17 @@
       "registryUrls": [
         "https://oauth2-proxy.github.io/manifests"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "external-secrets"
+      ],
+      "registryUrls": [
+        "https://charts.external-secrets.io"
+      ]
     }
   ],
   "customManagers": [
@@ -375,6 +386,43 @@
       ],
       "depNameTemplate": "oauth2-proxy",
       "autoReplaceStringTemplate": "OAuth2 Proxy         | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/external_secrets/defaults/main.yml$/",
+        "/roles/external_secrets/README.md$/"
+      ],
+      "matchStrings": [
+        "external_secrets_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "external-secrets",
+      "autoReplaceStringTemplate": "external_secrets_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/external_secrets/defaults/main.yml$/"
+      ],
+      "matchStrings": [
+        "external_secrets_crd_version:\\s*(?<quote>\")?v(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "external-secrets/external-secrets",
+      "autoReplaceStringTemplate": "external_secrets_crd_version: {{#if quote}}\"v{{newValue}}\"{{else}}v{{newValue}}{{/if}}",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "External Secrets Operator\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "external-secrets",
+      "autoReplaceStringTemplate": "External Secrets Operator | v{{newValue}}",
       "datasourceTemplate": "helm"
     }
   ]
