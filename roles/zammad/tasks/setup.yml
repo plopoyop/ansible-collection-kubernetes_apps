@@ -1,6 +1,7 @@
 ---
 - name: "Include precheck"
   ansible.builtin.include_tasks: "pre_check.yml"
+  tags: ["always"]
 
 - name: "Create zammad namespace"
   kubernetes.core.k8s:
