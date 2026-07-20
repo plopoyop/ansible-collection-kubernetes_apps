@@ -1,0 +1,17 @@
+---
+- name: "Uninstall External Secrets Operator helm package"
+  kubernetes.core.helm:
+    name: "{{ external_secrets_deployment_name }}"
+    namespace: "{{ external_secrets_namespace }}"
+    state: "absent"
+  tags:
+    - "helm_chart"
+
+- name: "Delete External Secrets Operator namespace"
+  kubernetes.core.k8s:
+    name: "{{ external_secrets_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"
+  tags:
+    - "namespace"

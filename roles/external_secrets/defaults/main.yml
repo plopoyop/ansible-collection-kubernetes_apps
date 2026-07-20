@@ -1,0 +1,158 @@
+---
+# @var external_secrets_enabled
+# @var external_secrets_enabled:type: boolean
+# @var external_secrets_enabled:description: >
+# Should External Secrets Operator helm chart be installed
+external_secrets_enabled: true
+
+# @var external_secrets_namespace
+# @var external_secrets_namespace:type: string
+# @var external_secrets_namespace:description: >
+# K8s namespace to install the External Secrets Operator chart
+external_secrets_namespace: "external-secrets"
+
+# @var external_secrets_helm_chart_version
+# @var external_secrets_helm_chart_version:type: string
+# @var external_secrets_helm_chart_version:description: >
+# Helm chart version to install
+external_secrets_helm_chart_version: "2.8.0"
+
+# @var external_secrets_deployment_name
+# @var external_secrets_deployment_name:type: string
+# @var external_secrets_deployment_name:description: >
+# Deployment name for External Secrets Operator helm chart
+external_secrets_deployment_name: "external-secrets"
+
+# @var external_secrets_wait_install
+# @var external_secrets_wait_install:type: boolean
+# @var external_secrets_wait_install:description: >
+# Wait for the helm release resources to be ready before completing the install
+external_secrets_wait_install: true
+
+# @var external_secrets_replica_count
+# @var external_secrets_replica_count:type: integer
+# @var external_secrets_replica_count:description: >
+# Number of External Secrets Operator controller replicas
+external_secrets_replica_count: 1
+
+# @var external_secrets_install_crds
+# @var external_secrets_install_crds:type: boolean
+# @var external_secrets_install_crds:description: >
+# Let the helm chart install and manage the External Secrets Operator CRDs
+external_secrets_install_crds: true
+
+# @var external_secrets_resources
+# @var external_secrets_resources:type: dict
+# @var external_secrets_resources:description: >
+# Resources requests and limits for the External Secrets Operator controller
+external_secrets_resources: {}
+
+# @var external_secrets_webhook_resources
+# @var external_secrets_webhook_resources:type: dict
+# @var external_secrets_webhook_resources:description: >
+# Resources requests and limits for the External Secrets Operator webhook
+external_secrets_webhook_resources: {}
+
+# @var external_secrets_cert_controller_resources
+# @var external_secrets_cert_controller_resources:type: dict
+# @var external_secrets_cert_controller_resources:description: >
+# Resources requests and limits for the External Secrets Operator cert controller
+external_secrets_cert_controller_resources: {}
+
+# @var external_secrets_service_account_annotations
+# @var external_secrets_service_account_annotations:type: dict
+# @var external_secrets_service_account_annotations:description: >
+# Annotations to add to the External Secrets Operator service account
+# (e.g. to bind a cloud IAM role for IRSA / Workload Identity)
+external_secrets_service_account_annotations: {}
+
+# @var external_secrets_additional_config
+# @var external_secrets_additional_config:type: dict
+# @var external_secrets_additional_config:description: >
+# Additional configuration to merge with the helm values.
+# This allows to add any configuration not explicitly exposed by this role.
+external_secrets_additional_config: {}
+
+# @var external_secrets_upgrade_crd
+# @var external_secrets_upgrade_crd:type: boolean
+# @var external_secrets_upgrade_crd:description: >
+# Upgrade the CRDs from the pinned upstream bundle manifest before the helm
+# upgrade. Useful when helm does not update the CRDs on chart upgrade.
+external_secrets_upgrade_crd: false
+
+# @var external_secrets_crd_version
+# @var external_secrets_crd_version:type: string
+# @var external_secrets_crd_version:description: >
+# Git ref (tag or branch) of the upstream CRDs bundle to apply
+external_secrets_crd_version: "v2.8.0"
+
+# @var external_secrets_crd_force_upgrade
+# @var external_secrets_crd_force_upgrade:type: boolean
+# @var external_secrets_crd_force_upgrade:description: >
+# Force CRDs upgrade, even if the helm release is not in a "deployed" state
+external_secrets_crd_force_upgrade: false
+
+# @var external_secrets_secret_stores
+# @var external_secrets_secret_stores:type: list
+# @var external_secrets_secret_stores:description: >
+# List of namespaced SecretStore resources to create
+# https://external-secrets.io/latest/api/secretstore/
+# @var external_secrets_secret_stores:example: >
+# external_secrets_secret_stores:
+#   - name: "vault-backend"
+#     namespace: "my-app"
+#     spec:
+#       provider:
+#         vault:
+#           server: "https://vault.example.com"
+#           path: "secret"
+#           version: "v2"
+#           auth:
+#             tokenSecretRef:
+#               name: "vault-token"
+#               key: "token"
+external_secrets_secret_stores: []
+
+# @var external_secrets_cluster_secret_stores
+# @var external_secrets_cluster_secret_stores:type: list
+# @var external_secrets_cluster_secret_stores:description: >
+# List of cluster-wide ClusterSecretStore resources to create
+# https://external-secrets.io/latest/api/clustersecretstore/
+external_secrets_cluster_secret_stores: []
+
+# @var external_secrets_external_secrets
+# @var external_secrets_external_secrets:type: list
+# @var external_secrets_external_secrets:description: >
+# List of namespaced ExternalSecret resources to create
+# https://external-secrets.io/latest/api/externalsecret/
+# @var external_secrets_external_secrets:example: >
+# external_secrets_external_secrets:
+#   - name: "database-credentials"
+#     namespace: "my-app"
+#     spec:
+#       refreshInterval: "1h"
+#       secretStoreRef:
+#         name: "vault-backend"
+#         kind: "SecretStore"
+#       target:
+#         name: "database-credentials"
+#       data:
+#         - secretKey: "password"
+#           remoteRef:
+#             key: "database/config"
+#             property: "password"
+external_secrets_external_secrets: []
+
+# @var external_secrets_cluster_external_secrets
+# @var external_secrets_cluster_external_secrets:type: list
+# @var external_secrets_cluster_external_secrets:description: >
+# List of cluster-wide ClusterExternalSecret resources to create
+# https://external-secrets.io/latest/api/clusterexternalsecret/
+external_secrets_cluster_external_secrets: []
+
+# @var external_secrets_push_secrets
+# @var external_secrets_push_secrets:type: list
+# @var external_secrets_push_secrets:description: >
+# List of namespaced PushSecret resources to create
+# https://external-secrets.io/latest/api/pushsecret/
+external_secrets_push_secrets: []

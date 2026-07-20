@@ -1,0 +1,107 @@
+---
+- name: "Create External Secrets Operator namespace"
+  kubernetes.core.k8s:
+    name: "{{ external_secrets_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+  tags:
+    - "namespace"
+
+- name: "Add External Secrets Operator helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ external_secrets_helm_repo_name }}"
+    repo_url: "{{ external_secrets_helm_repo_url }}"
+  tags:
+    - "helm_repository"
+
+- name: "Gather information about the current External Secrets Operator release"
+  kubernetes.core.helm_info:
+    name: "{{ external_secrets_deployment_name }}"
+    release_namespace: "{{ external_secrets_namespace }}"
+    release_state:
+      - "deployed"
+  register: "external_secrets_current_release"
+  tags:
+    - "helm_chart"
+
+- name: "Upgrade External Secrets Operator CRDs from upstream bundle"
+  ansible.builtin.include_tasks: "upgrade_crd.yml"
+  loop: "{{ external_secrets_crds_to_upgrade }}"
+  loop_control:
+    loop_var: "external_secrets_current_crd"
+  when:
+    - external_secrets_upgrade_crd
+    - external_secrets_current_release.status.status is defined or external_secrets_crd_force_upgrade
+  tags: ["always"]
+
+- name: "Install External Secrets Operator helm package"
+  kubernetes.core.helm:
+    name: "{{ external_secrets_deployment_name }}"
+    namespace: "{{ external_secrets_namespace }}"
+    state: "present"
+    chart_ref: "{{ external_secrets_helm_chart_ref }}"
+    chart_version: "{{ external_secrets_helm_chart_version }}"
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'external_secrets_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
+    wait: "{{ external_secrets_wait_install }}"
+  tags:
+    - "helm_chart"
+
+- name: "Create External Secrets Operator secret stores"
+  kubernetes.core.k8s:
+    namespace: "{{ external_secrets_secret_store.namespace | default(external_secrets_namespace) }}"
+    template: "resources/secret_store.yml.j2"
+    state: "{{ external_secrets_secret_store.state | default('present') }}"
+    apply: true
+  loop: "{{ external_secrets_secret_stores }}"
+  loop_control:
+    loop_var: "external_secrets_secret_store"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator cluster secret stores"
+  kubernetes.core.k8s:
+    template: "resources/cluster_secret_store.yml.j2"
+    state: "{{ external_secrets_cluster_secret_store.state | default('present') }}"
+    apply: true
+  loop: "{{ external_secrets_cluster_secret_stores }}"
+  loop_control:
+    loop_var: "external_secrets_cluster_secret_store"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator external secrets"
+  kubernetes.core.k8s:
+    namespace: "{{ external_secrets_external_secret.namespace | default(external_secrets_namespace) }}"
+    template: "resources/external_secret.yml.j2"
+    state: "{{ external_secrets_external_secret.state | default('present') }}"
+    apply: true
+  loop: "{{ external_secrets_external_secrets }}"
+  loop_control:
+    loop_var: "external_secrets_external_secret"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator cluster external secrets"
+  kubernetes.core.k8s:
+    template: "resources/cluster_external_secret.yml.j2"
+    state: "{{ external_secrets_cluster_external_secret.state | default('present') }}"
+    apply: true
+  loop: "{{ external_secrets_cluster_external_secrets }}"
+  loop_control:
+    loop_var: "external_secrets_cluster_external_secret"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator push secrets"
+  kubernetes.core.k8s:
+    namespace: "{{ external_secrets_push_secret.namespace | default(external_secrets_namespace) }}"
+    template: "resources/push_secret.yml.j2"
+    state: "{{ external_secrets_push_secret.state | default('present') }}"
+    apply: true
+  loop: "{{ external_secrets_push_secrets }}"
+  loop_control:
+    loop_var: "external_secrets_push_secret"
+  tags:
+    - "manifest"
