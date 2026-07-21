@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.1.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.1.2) (2026-07-21)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/9.1.1...9.1.2)
+
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart zammad \(16.4.4 → 16.4.5\) [\#253](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/253) ([plopoyop](https://github.com/plopoyop))
+
 ## [9.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.1.1) (2026-07-20)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/9.1.0...9.1.1)
