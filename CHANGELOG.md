@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/9.1.1...9.1.2)
 
+## 🐛 Bug Fixes
+
+- Propagate role/phase tags through dynamic include\_tasks [\#254](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/254) ([plopoyop](https://github.com/plopoyop))
+
 ## ⛵ Helm Charts
 
 - fix\(helm\): update chart zammad \(16.4.4 → 16.4.5\) [\#253](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/253) ([plopoyop](https://github.com/plopoyop))
