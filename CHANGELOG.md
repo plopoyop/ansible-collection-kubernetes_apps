@@ -1,6 +1,6 @@
 # Changelog
 
-## [9.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.3.0) (2026-07-29)
+## [9.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.3.0) (2026-07-30)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/9.2.0...9.3.0)
 
@@ -8,6 +8,10 @@
 
 - fix\(helm\): update chart zammad \(16.4.6 → 16.4.7\) [\#261](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/261) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart atlantis \(6.9.3 → 6.10.0\) [\#260](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/260) ([plopoyop](https://github.com/plopoyop))
+
+## ⚙️ Dependencies
+
+- fix\(ci\): update renovatebot/github-action action \(v46.1.20 → v46.1.21\) [\#262](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/262) ([plopoyop](https://github.com/plopoyop))
 
 ## [9.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/9.2.0) (2026-07-26)
 
