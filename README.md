@@ -52,7 +52,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | Gatus         | v1.5.0            | `gatus`          | [View README](roles/gatus/README.md)       |
 | GitLab Runner         | v0.91.0            | `gitlab_runner`  | [View README](roles/gitlab_runner/README.md)       |
 | Headlamp         | v0.44.0            | `headlamp`       | [View README](roles/headlamp/README.md)       |
-| Mailcrab         | v1.7.0            | `mailcrab`       | [View README](roles/mailcrab/README.md)       |
+| Mailcrab         | v1.9.0            | `mailcrab`       | [View README](roles/mailcrab/README.md)       |
 | OAuth2 Proxy         | v10.7.0            | `oauth2_proxy`   | [View README](roles/oauth2_proxy/README.md)       |
 | Warpgate         | v0.0.6            | `warpgate`       | [View README](roles/warpgate/README.md)       |
 | Zammad         | v16.4.7            | `zammad`         | [View README](roles/zammad/README.md)       |
