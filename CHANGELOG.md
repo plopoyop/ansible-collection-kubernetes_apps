@@ -13,6 +13,7 @@
 
 ## ⚙️ Dependencies
 
+- feat\(deps\): update tweedegolf/mailcrab \(v1.7.0 → v1.9.0\) [\#267](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/267) ([plopoyop](https://github.com/plopoyop))
 - feat\(ci\): update renovatebot/github-action action \(v46.1.21 → v46.2.0\) [\#266](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/266) ([plopoyop](https://github.com/plopoyop))
 - fix\(container\): update image ghcr.io/warp-tech/helm-charts/warpgate \(0.0.6 → 0.0.7\) [\#264](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/264) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.1.20 → v46.1.21\) [\#262](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/262) ([plopoyop](https://github.com/plopoyop))
