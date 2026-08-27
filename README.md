@@ -20,6 +20,12 @@ Before using this collection in production, ensure that the default configuratio
 - A running Kubernetes cluster
 - Administrator access to cluster nodes (if required for certain installations)
 
+Some roles rely on an operator being installed beforehand:
+
+| Role     | Operator                                                                            | Required when                      |
+| -------- | ----------------------------------------------------------------------------------- | ---------------------------------- |
+| `zammad` | [ECK](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-install-helm.html) >= 3.5.0 | `zammad_elasticsearch_enabled: true` |
+
 ## Installation
 
 To install this collection, use the following command:
@@ -55,7 +61,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | Mailcrab         | v1.9.0            | `mailcrab`       | [View README](roles/mailcrab/README.md)       |
 | OAuth2 Proxy         | v10.7.0            | `oauth2_proxy`   | [View README](roles/oauth2_proxy/README.md)       |
 | Warpgate         | v0.0.7            | `warpgate`       | [View README](roles/warpgate/README.md)       |
-| Zammad         | v16.4.10            | `zammad`         | [View README](roles/zammad/README.md)       |
+| Zammad         | v18.0.2            | `zammad`         | [View README](roles/zammad/README.md)       |
 
 ### Tags
 

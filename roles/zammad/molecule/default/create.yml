@@ -5,6 +5,7 @@
   gather_facts: false
   vars:
     cloud_provider: "{{ lookup('env', 'DEVENV_DOTFILE') }}/bin/cloud-provider-kind"
+    eck_operator_helm_version: "3.5.0"
   tasks:
     - name: Build a kind cluster (wait for control plane).
       ansible.builtin.command: >-
@@ -13,3 +14,18 @@
         --name molecule-test
         --kubeconfig {{ kubeconfig }}
       changed_when: true
+
+    - name: "Add elastic helm repo"
+      kubernetes.core.helm_repository:
+        name: "elastic"
+        repo_url: "https://helm.elastic.co"
+
+    - name: "Install ECK operator"
+      kubernetes.core.helm:
+        name: "elastic-operator"
+        namespace: "elastic-system"
+        chart_ref: "elastic/eck-operator"
+        chart_version: "{{ eck_operator_helm_version }}"
+        create_namespace: true
+        update_repo_cache: true
+        wait: true

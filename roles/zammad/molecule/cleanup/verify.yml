@@ -80,25 +80,26 @@
         that: websocket_deployment.resources | length == 0
         fail_msg: "Deployment 'zammad-websocket' is still present."
 
-    - name: "Wait for 'elasticsearch' StatefulSet to be removed."
+    - name: "Wait for 'elasticsearch' cluster to be removed."
       kubernetes.core.k8s_info:
-        kind: "StatefulSet"
-        name: "zammad-elasticsearch-master"
+        api_version: "elasticsearch.k8s.elastic.co/v1"
+        kind: "Elasticsearch"
+        name: "zammad-es"
         namespace: "zammad"
-      register: elasticsearch_statefullset
-      until: elasticsearch_statefullset.resources | length == 0
+      register: elasticsearch_cluster
+      until: elasticsearch_cluster.resources | length == 0
       retries: 30
       delay: 5
 
     - name: "Assert that 'elasticsearch' is removed."
       ansible.builtin.assert:
-        that: elasticsearch_statefullset.resources | length == 0
-        fail_msg: "StatefulSet 'zammad-elasticsearch-master' is still present."
+        that: elasticsearch_cluster.resources | length == 0
+        fail_msg: "Elasticsearch 'zammad-es' is still present."
 
     - name: "Wait for 'postgresql' StatefulSet to be removed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
-        name: "zammad-postgresql"
+        name: "zammad-postgres"
         namespace: "zammad"
       register: postgresql_statefullset
       until: postgresql_statefullset.resources | length == 0
@@ -108,12 +109,12 @@
     - name: "Assert that 'postgresql' is removed."
       ansible.builtin.assert:
         that: postgresql_statefullset.resources | length == 0
-        fail_msg: "StatefulSet 'zammad-postgresql' is still present."
+        fail_msg: "StatefulSet 'zammad-postgres' is still present."
 
     - name: "Wait for 'redis' StatefulSet to be removed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
-        name: "zammad-redis-master"
+        name: "zammad-redis"
         namespace: "zammad"
       register: redis_statefullset
       until: redis_statefullset.resources | length == 0
@@ -123,7 +124,7 @@
     - name: "Assert that 'redis' is removed."
       ansible.builtin.assert:
         that: redis_statefullset.resources | length == 0
-        fail_msg: "StatefulSet 'zammad-redis-master' is still present."
+        fail_msg: "StatefulSet 'zammad-redis' is still present."
 
     - name: "Wait for 'zammad' namespace to be removed."
       kubernetes.core.k8s_info:

@@ -23,10 +23,8 @@
     zammad_secrets_redis_secret_name: "redis-secret-name"
     zammad_redis_password: "zammad"
 
-    zammad_elasticsearch_password: "elastic"
 
     zammad_postgresql_password: "zammad_passwrd"
-    zammad_postgresql_replication_password: "repl_passwrd"
 
   tasks:
     - name: "Install Zammad"

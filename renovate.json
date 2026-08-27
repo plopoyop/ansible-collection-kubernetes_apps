@@ -111,6 +111,17 @@
       "registryUrls": [
         "https://oauth2-proxy.github.io/manifests"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "eck-operator"
+      ],
+      "registryUrls": [
+        "https://helm.elastic.co"
+      ]
     }
   ],
   "customManagers": [
@@ -375,6 +386,18 @@
       ],
       "depNameTemplate": "oauth2-proxy",
       "autoReplaceStringTemplate": "OAuth2 Proxy         | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/zammad/molecule/.+/create.yml$/"
+      ],
+      "matchStrings": [
+        "eck_operator_helm_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "eck-operator",
+      "autoReplaceStringTemplate": "eck_operator_helm_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
       "datasourceTemplate": "helm"
     }
   ]

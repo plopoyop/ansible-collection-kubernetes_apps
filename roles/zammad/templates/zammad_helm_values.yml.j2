@@ -50,13 +50,13 @@ zammadConfig:
     enabled: {{ zammad_elasticsearch_enabled }}
 {% if not zammad_elasticsearch_enabled %}
     host: {{ zammad_elasticsearch_host }}
+    pass: "{{ zammad_elasticsearch_password }}"
+    user: "{{ zammad_elasticsearch_user }}"
 {% endif %}
     initialisation: {{ zammad_elasticsearch_initialisation }}
-    pass: "{{ zammad_elasticsearch_password }}"
     port: {{ zammad_elasticsearch_port }}
     reindex: {{ zammad_elasticsearch_reindex }}
     schema: {{ zammad_elasticsearch_schema }}
-    user: "{{ zammad_elasticsearch_user }}"
 
   memcached:
     enabled: {{ zammad_memcached_enabled }}
