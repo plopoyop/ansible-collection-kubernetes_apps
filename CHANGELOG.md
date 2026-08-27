@@ -16,10 +16,12 @@
 
 ## ⚙️ Dependencies
 
+- fix\(ci\): update renovatebot/github-action action \(v46.2.2 → v46.2.4\) [\#291](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/291) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.2.1 → v46.2.2\) [\#279](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/279) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
 
+- fix\(deps\): update prek \(0.4.13 → 0.4.14\) [\#292](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/292) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update go-task \(3.48.0 → 3.52.0\) [\#287](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/287) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update ansible-doctor \(8.3.3 → 8.4.0\) [\#286](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/286) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update prek \(0.4.12 → 0.4.13\) [\#285](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/285) ([plopoyop](https://github.com/plopoyop))
