@@ -20,6 +20,12 @@ Before using this collection in production, ensure that the default configuratio
 - A running Kubernetes cluster
 - Administrator access to cluster nodes (if required for certain installations)
 
+Some roles rely on an operator being installed beforehand:
+
+| Role     | Operator                                                                            | Required when                      |
+| -------- | ----------------------------------------------------------------------------------- | ---------------------------------- |
+| `zammad` | [ECK](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-install-helm.html) >= 3.5.0 | `zammad_elasticsearch_enabled: true` |
+
 ## Installation
 
 To install this collection, use the following command:

@@ -1,6 +1,14 @@
 ---
 galaxy_info:
-  description: "Install and configure Zammad application on kubernetes"
+  description: >-
+    Install and configure Zammad application on kubernetes.
+    The bundled Elasticsearch is deployed through the ECK operator, so the operator
+    (version 3.5.0 or newer) must already be installed in the cluster when
+    `zammad_elasticsearch_enabled` is `true`:
+    `helm install elastic-operator elastic/eck-operator --namespace elastic-system --create-namespace`.
+    Because the operator owns fields on the `Elasticsearch` resource, `helm upgrade` with helm 4
+    server-side apply may report conflicts; `kubernetes.core.helm` cannot pass `--force-conflicts`,
+    so those upgrades need to be run manually with the helm CLI.
   role_name: "zammad"
   author: "Clément Hubert"
 

@@ -98,25 +98,31 @@
         that: websocket_deployment.resources[0].status.availableReplicas | default(0) == 1
         fail_msg: "Deployment 'zammad-websocket' is not deployed."
 
-    - name: "Wait for 'elasticsearch' StatefulSet to be deployed."
+    - name: "Wait for 'elasticsearch' cluster to be ready."
       kubernetes.core.k8s_info:
-        kind: "StatefulSet"
-        name: "zammad-elasticsearch-master"
+        api_version: "elasticsearch.k8s.elastic.co/v1"
+        kind: "Elasticsearch"
+        name: "zammad-es"
         namespace: "zammad"
-      register: elasticsearch_statefullset
-      until: elasticsearch_statefullset.resources[0].status.availableReplicas | default(0) == 1
-      retries: 30
+      register: elasticsearch_cluster
+      until:
+        - elasticsearch_cluster.resources | length > 0
+        - elasticsearch_cluster.resources[0].status.health | default("") == "green"
+        - elasticsearch_cluster.resources[0].status.availableNodes | default(0) == 1
+      retries: 60
       delay: 5
 
     - name: "Assert that 'elasticsearch' is deployed."
       ansible.builtin.assert:
-        that: elasticsearch_statefullset.resources[0].status.availableReplicas | default(0) == 1
-        fail_msg: "StatefulSet 'zammad-elasticsearch-master' is not deployed."
+        that:
+          - elasticsearch_cluster.resources | length > 0
+          - elasticsearch_cluster.resources[0].status.health | default("") == "green"
+        fail_msg: "Elasticsearch 'zammad-es' is not deployed."
 
     - name: "Wait for 'postgresql' StatefulSet to be deployed."
       kubernetes.core.k8s_info:
         kind: "StatefulSet"
-        name: "zammad-postgresql"
+        name: "zammad-postgres"
         namespace: "zammad"
       register: postgresql_statefullset
       until: postgresql_statefullset.resources[0].status.availableReplicas | default(0) == 1
@@ -126,7 +132,7 @@
     - name: "Assert that 'postgresql' is deployed."
       ansible.builtin.assert:
         that: postgresql_statefullset.resources[0].status.availableReplicas | default(0) == 1
-        fail_msg: "StatefulSet 'zammad-postgresql' is not deployed."
+        fail_msg: "StatefulSet 'zammad-postgres' is not deployed."
 
     - name: "Wait for 'redis' StatefulSet to be deployed."
       kubernetes.core.k8s_info:

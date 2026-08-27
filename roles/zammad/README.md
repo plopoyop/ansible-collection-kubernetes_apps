@@ -1,6 +1,6 @@
 # zammad
 
-Install and configure Zammad application on kubernetes
+Install and configure Zammad application on kubernetes. The bundled Elasticsearch is deployed through the ECK operator, so the operator (version 3.5.0 or newer) must already be installed in the cluster when `zammad_elasticsearch_enabled` is `true`: `helm install elastic-operator elastic/eck-operator --namespace elastic-system --create-namespace`. Because the operator owns fields on the `Elasticsearch` resource, `helm upgrade` with helm 4 server-side apply may report conflicts; `kubernetes.core.helm` cannot pass `--force-conflicts`, so those upgrades need to be run manually with the helm CLI.
 
 ## Table of contents
 
@@ -18,23 +18,26 @@ Install and configure Zammad application on kubernetes
   - [zammad_common_label](#zammad_common_label)
   - [zammad_deployment_name](#zammad_deployment_name)
   - [zammad_domain_name](#zammad_domain_name)
-  - [zammad_elasticsearch_cluster_name](#zammad_elasticsearch_cluster_name)
-  - [zammad_elasticsearch_coordinating_replica_count](#zammad_elasticsearch_coordinating_replica_count)
-  - [zammad_elasticsearch_data_replica_count](#zammad_elasticsearch_data_replica_count)
   - [zammad_elasticsearch_enabled](#zammad_elasticsearch_enabled)
   - [zammad_elasticsearch_host](#zammad_elasticsearch_host)
-  - [zammad_elasticsearch_ingest_replica_count](#zammad_elasticsearch_ingest_replica_count)
   - [zammad_elasticsearch_initialisation](#zammad_elasticsearch_initialisation)
-  - [zammad_elasticsearch_master_heap_size](#zammad_elasticsearch_master_heap_size)
-  - [zammad_elasticsearch_master_master_only](#zammad_elasticsearch_master_master_only)
-  - [zammad_elasticsearch_master_replica_count](#zammad_elasticsearch_master_replica_count)
-  - [zammad_elasticsearch_master_resources](#zammad_elasticsearch_master_resources)
-  - [zammad_elasticsearch_master_resources_preset](#zammad_elasticsearch_master_resources_preset)
+  - [zammad_elasticsearch_java_opts](#zammad_elasticsearch_java_opts)
+  - [zammad_elasticsearch_name_override](#zammad_elasticsearch_name_override)
+  - [zammad_elasticsearch_node_config](#zammad_elasticsearch_node_config)
+  - [zammad_elasticsearch_node_count](#zammad_elasticsearch_node_count)
+  - [zammad_elasticsearch_node_sets](#zammad_elasticsearch_node_sets)
+  - [zammad_elasticsearch_node_store_allow_mmap](#zammad_elasticsearch_node_store_allow_mmap)
   - [zammad_elasticsearch_password](#zammad_elasticsearch_password)
   - [zammad_elasticsearch_port](#zammad_elasticsearch_port)
   - [zammad_elasticsearch_reindex](#zammad_elasticsearch_reindex)
+  - [zammad_elasticsearch_resources](#zammad_elasticsearch_resources)
   - [zammad_elasticsearch_schema](#zammad_elasticsearch_schema)
+  - [zammad_elasticsearch_storage_class](#zammad_elasticsearch_storage_class)
+  - [zammad_elasticsearch_storage_size](#zammad_elasticsearch_storage_size)
+  - [zammad_elasticsearch_tls_enabled](#zammad_elasticsearch_tls_enabled)
   - [zammad_elasticsearch_user](#zammad_elasticsearch_user)
+  - [zammad_elasticsearch_version](#zammad_elasticsearch_version)
+  - [zammad_elasticsearch_volume_claim_delete_policy](#zammad_elasticsearch_volume_claim_delete_policy)
   - [zammad_enabled](#zammad_enabled)
   - [zammad_external_s3_url](#zammad_external_s3_url)
   - [zammad_extra_env](#zammad_extra_env)
@@ -87,9 +90,7 @@ Install and configure Zammad application on kubernetes
   - [zammad_postgresql_host](#zammad_postgresql_host)
   - [zammad_postgresql_password](#zammad_postgresql_password)
   - [zammad_postgresql_port](#zammad_postgresql_port)
-  - [zammad_postgresql_primary_resources](#zammad_postgresql_primary_resources)
-  - [zammad_postgresql_replication_password](#zammad_postgresql_replication_password)
-  - [zammad_postgresql_replication_username](#zammad_postgresql_replication_username)
+  - [zammad_postgresql_resources](#zammad_postgresql_resources)
   - [zammad_postgresql_username](#zammad_postgresql_username)
   - [zammad_railserver_liveness_probe](#zammad_railserver_liveness_probe)
   - [zammad_railserver_pod_annotations](#zammad_railserver_pod_annotations)
@@ -153,6 +154,7 @@ Install and configure Zammad application on kubernetes
   - [zammad_websocket_security_context](#zammad_websocket_security_context)
   - [zammad_websocket_sidecars](#zammad_websocket_sidecars)
   - [zammad_websocket_startup_probe](#zammad_websocket_startup_probe)
+- [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
 - [License](#license)
 - [Author](#author)
@@ -362,42 +364,6 @@ Domain name for ingress
 
 **_Type:_** string<br />
 
-### zammad_elasticsearch_cluster_name
-
-elasticsearch cluster name
-
-**_Type:_** string<br />
-
-#### Default value
-
-```YAML
-zammad_elasticsearch_cluster_name: zammad
-```
-
-### zammad_elasticsearch_coordinating_replica_count
-
-replica count for elasticsearch coordinator pods
-
-**_Type:_** int<br />
-
-#### Default value
-
-```YAML
-zammad_elasticsearch_coordinating_replica_count: 0
-```
-
-### zammad_elasticsearch_data_replica_count
-
-replica count for elasticsearch data pods
-
-**_Type:_** int<br />
-
-#### Default value
-
-```YAML
-zammad_elasticsearch_data_replica_count: 0
-```
-
 ### zammad_elasticsearch_enabled
 
 enable/disable elasticsearch chart dependency
@@ -416,18 +382,6 @@ elasticsearch host : only used when zammad_elasticsearch_enabled is false
 
 **_Type:_** booelan<br />
 
-### zammad_elasticsearch_ingest_replica_count
-
-replica count for elasticsearch ingest pods
-
-**_Type:_** int<br />
-
-#### Default value
-
-```YAML
-zammad_elasticsearch_ingest_replica_count: 0
-```
-
 ### zammad_elasticsearch_initialisation
 
 elasticsearch initialisation
@@ -440,81 +394,101 @@ elasticsearch initialisation
 zammad_elasticsearch_initialisation: true
 ```
 
-### zammad_elasticsearch_master_heap_size
+### zammad_elasticsearch_java_opts
 
-heap size for elasticsearch master pods
+ES_JAVA_OPTS for the Elasticsearch container, mainly used to size the JVM heap
 
 **_Type:_** string<br />
 
 #### Default value
 
 ```YAML
-zammad_elasticsearch_master_heap_size: 512m
+zammad_elasticsearch_java_opts: -Xms512m -Xmx512m
 ```
 
-### zammad_elasticsearch_master_master_only
+### zammad_elasticsearch_name_override
 
-elasticsearch master pods is master only
+name suffix of the ECK Elasticsearch resource, appended to the release name
 
-**_Type:_** boolean<br />
+**_Type:_** string<br />
 
 #### Default value
 
 ```YAML
-zammad_elasticsearch_master_master_only: false
+zammad_elasticsearch_name_override: es
 ```
 
-### zammad_elasticsearch_master_replica_count
+### zammad_elasticsearch_node_config
 
-replica count for elasticsearch master pods
+additional elasticsearch.yml settings for the default nodeSet
+
+**_Type:_** dict<br />
+
+#### Default value
+
+```YAML
+zammad_elasticsearch_node_config: {}
+```
+
+#### Example usage
+
+```YAML
+zammad_elasticsearch_node_config:
+  node.roles: ["master", "data"]
+```
+
+### zammad_elasticsearch_node_count
+
+number of Elasticsearch nodes in the default nodeSet
 
 **_Type:_** int<br />
 
 #### Default value
 
 ```YAML
-zammad_elasticsearch_master_replica_count: 1
+zammad_elasticsearch_node_count: 1
 ```
 
-### zammad_elasticsearch_master_resources
+### zammad_elasticsearch_node_sets
 
-elasticsearch master pods resources requests and limits
+full ECK nodeSets definition. When set, it replaces the single nodeSet built from
+the zammad_elasticsearch_node_* and zammad_elasticsearch_storage_* variables.
 
-**_Type:_** string<br />
+**_Type:_** list<br />
 
 #### Default value
 
 ```YAML
-zammad_elasticsearch_master_resources: {}
+zammad_elasticsearch_node_sets: []
 ```
 
 #### Example usage
 
 ```YAML
-zammad_elasticsearch_master_resources:
-  requests:
-    cpu: 50m
-    memory: 512Mi
-  limits:
-    cpu: 100m
-    memory: 1024Mi
+zammad_elasticsearch_node_sets:
+  - name: "master"
+    count: 3
+    config:
+      node.roles: ["master"]
 ```
 
-### zammad_elasticsearch_master_resources_preset
+### zammad_elasticsearch_node_store_allow_mmap
 
-elasticsearch master pods resources preset
+allow memory mapping for the Elasticsearch store. Requires vm.max_map_count to be
+raised to 1048576 on the nodes, which is recommended for production workloads.
 
-**_Type:_** string<br />
+**_Type:_** boolean<br />
 
 #### Default value
 
 ```YAML
-zammad_elasticsearch_master_resources_preset: medium
+zammad_elasticsearch_node_store_allow_mmap: false
 ```
 
 ### zammad_elasticsearch_password
 
-elasticsearch password
+elasticsearch password : only used when zammad_elasticsearch_enabled is false. The bundled
+ECK Elasticsearch password is generated by the operator and wired up by the chart.
 
 **_Type:_** string<br />
 
@@ -542,6 +516,34 @@ reindex elasticsearch
 zammad_elasticsearch_reindex: true
 ```
 
+### zammad_elasticsearch_resources
+
+Elasticsearch container resources requests and limits
+
+**_Type:_** dict<br />
+
+#### Default value
+
+```YAML
+zammad_elasticsearch_resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    memory: 1Gi
+```
+
+#### Example usage
+
+```YAML
+zammad_elasticsearch_resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    memory: 1Gi
+```
+
 ### zammad_elasticsearch_schema
 
 elasticsearch connection schema
@@ -554,9 +556,48 @@ elasticsearch connection schema
 zammad_elasticsearch_schema: http
 ```
 
+### zammad_elasticsearch_storage_class
+
+storage class of the Elasticsearch data volume. Uses the cluster default when undefined.
+
+**_Type:_** string<br />
+
+#### Example usage
+
+```YAML
+zammad_elasticsearch_storage_class: "longhorn"
+```
+
+### zammad_elasticsearch_storage_size
+
+size of the Elasticsearch data volume
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_elasticsearch_storage_size: 5Gi
+```
+
+### zammad_elasticsearch_tls_enabled
+
+enable the operator managed self signed certificate on the Elasticsearch HTTP layer.
+Zammad verifies TLS certificates and the chart does not mount the ECK CA into the
+Zammad pods, so enabling this is not supported yet and breaks the init job.
+
+**_Type:_** boolean<br />
+
+#### Default value
+
+```YAML
+zammad_elasticsearch_tls_enabled: false
+```
+
 ### zammad_elasticsearch_user
 
-elasticsearch user
+elasticsearch user : only used when zammad_elasticsearch_enabled is false. The bundled
+ECK Elasticsearch always uses the operator managed "elastic" superuser.
 
 **_Type:_** string<br />
 
@@ -564,6 +605,33 @@ elasticsearch user
 
 ```YAML
 zammad_elasticsearch_user: zammad
+```
+
+### zammad_elasticsearch_version
+
+Elasticsearch version deployed by the ECK operator. Defaults to the version
+shipped by the eck-elasticsearch subchart when left undefined.
+
+**_Type:_** string<br />
+
+#### Example usage
+
+```YAML
+zammad_elasticsearch_version: "9.5.0"
+```
+
+### zammad_elasticsearch_volume_claim_delete_policy
+
+policy for the Elasticsearch PersistentVolumeClaims, either "DeleteOnScaledownOnly"
+or "DeleteOnScaledownAndClusterDeletion". Leave empty to use the operator default
+("DeleteOnScaledownAndClusterDeletion", which deletes the data on release removal).
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_elasticsearch_volume_claim_delete_policy: ''
 ```
 
 ### zammad_enabled
@@ -1329,7 +1397,7 @@ postgresql port
 zammad_postgresql_port: 5432
 ```
 
-### zammad_postgresql_primary_resources
+### zammad_postgresql_resources
 
 postgresql resources requests and limits
 
@@ -1338,37 +1406,19 @@ postgresql resources requests and limits
 #### Default value
 
 ```YAML
-zammad_postgresql_primary_resources: {}
+zammad_postgresql_resources: {}
 ```
 
 #### Example usage
 
 ```YAML
- zammad_postgresql_primary_resources:
+ zammad_postgresql_resources:
   requests:
     cpu: 250m
     memory: 256Mi
   limits:
     cpu: 500m
     memory: 512Mi
-```
-
-### zammad_postgresql_replication_password
-
-postgresql replication password
-
-**_Type:_** string<br />
-
-### zammad_postgresql_replication_username
-
-postgresql replication username
-
-**_Type:_** string<br />
-
-#### Default value
-
-```YAML
-zammad_postgresql_replication_username: repl_user
 ```
 
 ### zammad_postgresql_username
@@ -2133,8 +2183,8 @@ readiness probe for websocket
 zammad_websocket_readiness_probe:
   tcpSocket:
     port: 6042
-    failureThreshold: 5
-    timeoutSeconds: 5
+  failureThreshold: 5
+  timeoutSeconds: 5
 ```
 
 ### zammad_websocket_resources
@@ -2206,6 +2256,16 @@ zammad_websocket_startup_probe:
   failureThreshold: 20
   periodSeconds: 4
 ```
+
+## Discovered Tags
+
+**_always_**
+
+**_helm_chart_**
+
+**_helm_repository_**
+
+**_namespace_**
 
 ## Dependencies
 
