@@ -1,5 +1,14 @@
 # Changelog
 
+## [10.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/10.0.1) (2026-08-28)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/10.0.0...10.0.1)
+
+**Merged pull requests:**
+
+- feat\(deps\): update python313packages.ansible \(14.2.0 → 14.3.1\) [\#295](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/295) ([plopoyop](https://github.com/plopoyop))
+- feat\(deps\): update go-task \(3.52.0 → 3.53.1\) [\#294](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/294) ([plopoyop](https://github.com/plopoyop))
+
 ## [10.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/10.0.0) (2026-08-27)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/9.4.0...10.0.0)
