@@ -1,0 +1,46 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    keda_previous_chart: "keda-2.20.0"
+
+  tasks:
+    - name: "Get the installed KEDA release."
+      kubernetes.core.helm_info:
+        name: "keda"
+        release_namespace: "keda"
+      register: keda_release
+
+    - name: "Assert that the KEDA release has been upgraded."
+      ansible.builtin.assert:
+        that: keda_release.status.chart != keda_previous_chart
+        fail_msg: "Release 'keda' still runs the previous chart '{{ keda_previous_chart }}'."
+
+    - name: "Wait for 'keda-operator' Deployment to be available."
+      kubernetes.core.k8s_info:
+        kind: "Deployment"
+        name: "keda-operator"
+        namespace: "keda"
+      register: keda_operator_deployment
+      until: keda_operator_deployment.resources[0].status.availableReplicas | default(0) == 1
+      retries: 60
+      delay: 5
+
+    - name: "Assert that 'keda-operator' Deployment is available."
+      ansible.builtin.assert:
+        that: keda_operator_deployment.resources[0].status.availableReplicas | default(0) == 1
+        fail_msg: "Deployment 'keda-operator' is not available."
+
+    - name: "Get the 'scaledobjects.keda.sh' CRD."
+      kubernetes.core.k8s_info:
+        api_version: "apiextensions.k8s.io/v1"
+        kind: "CustomResourceDefinition"
+        name: "scaledobjects.keda.sh"
+      register: keda_scaledobjects_crd
+
+    - name: "Assert that the 'scaledobjects.keda.sh' CRD is still installed."
+      ansible.builtin.assert:
+        that: keda_scaledobjects_crd.resources | length > 0
+        fail_msg: "CRD 'scaledobjects.keda.sh' is not installed."

@@ -1,0 +1,47 @@
+---
+- name: "Create KEDA namespace"
+  kubernetes.core.k8s:
+    name: "{{ keda_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+  tags:
+    - "namespace"
+
+- name: "Add KEDA helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ keda_helm_repo_name }}"
+    repo_url: "{{ keda_helm_repo_url }}"
+  tags:
+    - "helm_repository"
+
+- name: "Get currently installed KEDA release"
+  kubernetes.core.helm_info:
+    name: "{{ keda_deployment_name }}"
+    release_namespace: "{{ keda_namespace }}"
+  register: "keda_current_release"
+  tags:
+    - "helm_chart"
+    - "crds"
+
+- name: "Upgrade CRDs for existing release before helm upgrade"
+  ansible.builtin.include_tasks: "upgrade_crds.yml"
+  when:
+    - "keda_crds_install"
+    - "keda_crds_upgrade_enabled"
+    - "keda_current_release.status.chart is defined"
+  tags:
+    - "crds"
+
+- name: "Install KEDA helm package"
+  kubernetes.core.helm:
+    name: "{{ keda_deployment_name }}"
+    namespace: "{{ keda_namespace }}"
+    state: "present"
+    chart_ref: "{{ keda_helm_chart_ref }}"
+    chart_version: "{{ keda_helm_chart_version }}"
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'keda_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
+    wait: "{{ keda_wait_install }}"
+  tags:
+    - "helm_chart"

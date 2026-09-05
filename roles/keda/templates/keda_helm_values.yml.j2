@@ -1,0 +1,117 @@
+---
+clusterName: "{{ keda_cluster_name }}"
+clusterDomain: "{{ keda_cluster_domain }}"
+watchNamespace: "{{ keda_watch_namespace }}"
+
+crds:
+  install: {{ keda_crds_install | ansible.builtin.lower }}
+{% if keda_crds_additional_annotations != {} %}
+  additionalAnnotations: {{ keda_crds_additional_annotations | ansible.builtin.to_json }}
+{% endif %}
+
+{% if keda_image_pull_secrets | length > 0 %}
+imagePullSecrets: {{ keda_image_pull_secrets | ansible.builtin.to_json }}
+{% endif %}
+
+operator:
+  name: "{{ keda_operator_name }}"
+  replicaCount: {{ keda_operator_replica_count }}
+
+metricsServer:
+  enabled: {{ keda_metrics_server_enabled | ansible.builtin.lower }}
+  replicaCount: {{ keda_metrics_server_replica_count }}
+
+webhooks:
+  enabled: {{ keda_webhooks_enabled | ansible.builtin.lower }}
+  replicaCount: {{ keda_webhooks_replica_count }}
+  failurePolicy: "{{ keda_webhooks_failure_policy }}"
+
+logging:
+  operator:
+    level: "{{ keda_operator_log_level }}"
+    format: "{{ keda_operator_log_format }}"
+  webhooks:
+    level: "{{ keda_webhooks_log_level }}"
+    format: "{{ keda_webhooks_log_format }}"
+
+rbac:
+  create: {{ keda_rbac_create | ansible.builtin.lower }}
+  aggregateToDefaultRoles: {{ keda_rbac_aggregate_to_default_roles | ansible.builtin.lower }}
+{% if keda_rbac_scaled_ref_kinds | length > 0 %}
+  scaledRefKinds: {{ keda_rbac_scaled_ref_kinds | ansible.builtin.to_json }}
+{% endif %}
+
+{% if keda_operator_resources != {} or keda_metrics_server_resources != {} or keda_webhooks_resources != {} %}
+resources:
+{% if keda_operator_resources != {} %}
+  operator: {{ keda_operator_resources | ansible.builtin.to_json }}
+{% endif %}
+{% if keda_metrics_server_resources != {} %}
+  metricServer: {{ keda_metrics_server_resources | ansible.builtin.to_json }}
+{% endif %}
+{% if keda_webhooks_resources != {} %}
+  webhooks: {{ keda_webhooks_resources | ansible.builtin.to_json }}
+{% endif %}
+{% endif %}
+
+certificates:
+  certManager:
+    enabled: {{ keda_cert_manager_enabled | ansible.builtin.lower }}
+{% if keda_cert_manager_enabled and keda_cert_manager_issuer != {} %}
+    issuer: {{ keda_cert_manager_issuer | ansible.builtin.to_json }}
+{% endif %}
+
+prometheus:
+  operator:
+    enabled: {{ keda_prometheus_enabled | ansible.builtin.lower }}
+    serviceMonitor:
+      enabled: {{ keda_prometheus_service_monitor_enabled | ansible.builtin.lower }}
+{% if keda_prometheus_service_monitor_additional_labels != {} %}
+      additionalLabels: {{ keda_prometheus_service_monitor_additional_labels | ansible.builtin.to_json }}
+{% endif %}
+  metricServer:
+    enabled: {{ keda_prometheus_enabled | ansible.builtin.lower }}
+    serviceMonitor:
+      enabled: {{ keda_prometheus_service_monitor_enabled | ansible.builtin.lower }}
+{% if keda_prometheus_service_monitor_additional_labels != {} %}
+      additionalLabels: {{ keda_prometheus_service_monitor_additional_labels | ansible.builtin.to_json }}
+{% endif %}
+  webhooks:
+    enabled: {{ keda_prometheus_enabled | ansible.builtin.lower }}
+    serviceMonitor:
+      enabled: {{ keda_prometheus_service_monitor_enabled | ansible.builtin.lower }}
+{% if keda_prometheus_service_monitor_additional_labels != {} %}
+      additionalLabels: {{ keda_prometheus_service_monitor_additional_labels | ansible.builtin.to_json }}
+{% endif %}
+
+{% if keda_opentelemetry_collector_uri != "" %}
+opentelemetry:
+  collector:
+    uri: "{{ keda_opentelemetry_collector_uri }}"
+  operator:
+    enabled: true
+{% endif %}
+
+{% if keda_priority_class_name != "" %}
+priorityClassName: "{{ keda_priority_class_name }}"
+{% endif %}
+
+{% if keda_node_selector != {} %}
+nodeSelector: {{ keda_node_selector | ansible.builtin.to_json }}
+{% endif %}
+
+{% if keda_tolerations | length > 0 %}
+tolerations: {{ keda_tolerations | ansible.builtin.to_json }}
+{% endif %}
+
+{% if keda_affinity != {} %}
+affinity: {{ keda_affinity | ansible.builtin.to_json }}
+{% endif %}
+
+{% if keda_extra_objects | length > 0 %}
+extraObjects: {{ keda_extra_objects | ansible.builtin.to_json }}
+{% endif %}
+
+{% if keda_additional_helm_values %}
+{{ keda_additional_helm_values | ansible.builtin.to_nice_yaml }}
+{% endif %}
