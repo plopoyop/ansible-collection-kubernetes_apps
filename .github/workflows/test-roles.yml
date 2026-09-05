@@ -47,6 +47,10 @@ jobs:
     uses: ./.github/workflows/test-role.yaml
     with:
       role_name: "headlamp"
+  keda:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "keda"
   mailcrab:
     uses: ./.github/workflows/test-role.yaml
     with:

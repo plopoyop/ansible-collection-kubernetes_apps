@@ -1,0 +1,20 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: "Wait for 'keda' namespace to be removed."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "keda"
+      register: namespace_keda
+      until: namespace_keda.resources | length == 0
+      retries: 30
+      delay: 5
+
+    - name: "Assert that 'keda' namespace is removed."
+      ansible.builtin.assert:
+        that: namespace_keda.resources | length == 0
+        fail_msg: "Namespace 'keda' is still present."

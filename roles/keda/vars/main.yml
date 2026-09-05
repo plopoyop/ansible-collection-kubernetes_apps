@@ -1,0 +1,4 @@
+---
+keda_helm_repo_name: "kedacore"
+keda_helm_repo_url: "https://kedacore.github.io/charts"
+keda_helm_chart_ref: "{{ keda_helm_repo_name }}/keda"

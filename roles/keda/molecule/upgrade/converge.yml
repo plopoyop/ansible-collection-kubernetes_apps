@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    keda_crds_upgrade_enabled: true
+    keda_wait_install: false
+  tasks:
+    - name: "Upgrade KEDA"
+      ansible.builtin.import_role:
+        name: "keda"
