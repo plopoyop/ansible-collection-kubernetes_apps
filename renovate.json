@@ -83,6 +83,17 @@
     },
     {
       "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "keda"
+      ],
+      "registryUrls": [
+        "https://kedacore.github.io/charts"
+      ]
+    },
+    {
+      "matchDatasources": [
         "docker"
       ],
       "matchPackageNames": [
@@ -298,6 +309,31 @@
       ],
       "depNameTemplate": "headlamp",
       "autoReplaceStringTemplate": "Headlamp         | v{{newValue}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/roles/keda/defaults/main.yml$/",
+        "/roles/keda/README.md$/"
+      ],
+      "matchStrings": [
+        "keda_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "keda",
+      "autoReplaceStringTemplate": "keda_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "KEDA\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "keda",
+      "autoReplaceStringTemplate": "KEDA         | v{{newValue}}",
       "datasourceTemplate": "helm"
     },
     {

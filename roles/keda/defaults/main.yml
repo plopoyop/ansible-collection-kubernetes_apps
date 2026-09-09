@@ -1,0 +1,301 @@
+---
+# @var keda_enabled
+# @var keda_enabled:type: boolean
+# @var keda_enabled:description: >
+# Should KEDA helm chart be installed
+keda_enabled: true
+
+# @var keda_namespace
+# @var keda_namespace:type: string
+# @var keda_namespace:description: >
+# K8s namespace to install the KEDA chart
+keda_namespace: "keda"
+
+# @var keda_helm_chart_version
+# @var keda_helm_chart_version:type: string
+# @var keda_helm_chart_version:description: >
+# Helm chart version to install
+keda_helm_chart_version: 2.20.2
+
+# @var keda_deployment_name
+# @var keda_deployment_name:type: string
+# @var keda_deployment_name:description: >
+# Deployment name for KEDA helm chart
+keda_deployment_name: "keda"
+
+# @var keda_wait_install
+# @var keda_wait_install:type: boolean
+# @var keda_wait_install:description: >
+# Wait for helm install to finish
+keda_wait_install: true
+
+# @var keda_crds_install
+# @var keda_crds_install:type: boolean
+# @var keda_crds_install:description: >
+# Let the chart render the KEDA CRDs. Set to false when the CRDs are
+# managed outside of this role (e.g. applied from the released
+# `keda-<version>-crds.yaml` manifest)
+keda_crds_install: true
+
+# @var keda_crds_upgrade_enabled
+# @var keda_crds_upgrade_enabled:type: boolean
+# @var keda_crds_upgrade_enabled:description: >
+# Apply KEDA CRDs (server-side, force conflicts) before helm upgrade.
+# The KEDA CRDs exceed the 262144 bytes limit of the client-side
+# `last-applied-configuration` annotation, so we render the target chart with
+# `helm_template --include-crds` and apply only the CustomResourceDefinition
+# resources. Skipped on first install since `helm install` already applies the
+# CRDs rendered by the chart.
+keda_crds_upgrade_enabled: true
+
+# @var keda_crds_additional_annotations
+# @var keda_crds_additional_annotations:type: dict
+# @var keda_crds_additional_annotations:description: >
+# Custom annotations added to the KEDA CRDs only
+keda_crds_additional_annotations: {}
+
+# @var keda_cluster_name
+# @var keda_cluster_name:type: string
+# @var keda_cluster_name:description: >
+# Kubernetes cluster name, used in features such as emitting CloudEvents
+keda_cluster_name: "kubernetes-default"
+
+# @var keda_cluster_domain
+# @var keda_cluster_domain:type: string
+# @var keda_cluster_domain:description: >
+# Kubernetes cluster domain
+keda_cluster_domain: "cluster.local"
+
+# @var keda_watch_namespace
+# @var keda_watch_namespace:type: string
+# @var keda_watch_namespace:description: >
+# Kubernetes namespace to watch to scale its workloads.
+# Empty means every namespace is watched
+keda_watch_namespace: ""
+
+# @var keda_image_pull_secrets
+# @var keda_image_pull_secrets:type: list
+# @var keda_image_pull_secrets:description: >
+# Names of the secrets used to pull the KEDA container images
+keda_image_pull_secrets: []
+
+# Operator
+# @var keda_operator_name
+# @var keda_operator_name:type: string
+# @var keda_operator_name:description: >
+# Name of the KEDA operator
+keda_operator_name: "keda-operator"
+
+# @var keda_operator_replica_count
+# @var keda_operator_replica_count:type: integer
+# @var keda_operator_replica_count:description: >
+# Number of replicas for the KEDA operator.
+# Only one instance is the leader, extra replicas only reduce failover downtime
+keda_operator_replica_count: 1
+
+# @var keda_operator_resources
+# @var keda_operator_resources:type: dict
+# @var keda_operator_resources:description: >
+# Resource requests and limits of the KEDA operator pod
+# @var keda_operator_resources:example: >
+# keda_operator_resources:
+#   requests:
+#     cpu: 100m
+#     memory: 100Mi
+keda_operator_resources: {}
+
+# Metrics server
+# @var keda_metrics_server_enabled
+# @var keda_metrics_server_enabled:type: boolean
+# @var keda_metrics_server_enabled:description: >
+# Enable the KEDA metrics server and the external metrics API resources
+keda_metrics_server_enabled: true
+
+# @var keda_metrics_server_replica_count
+# @var keda_metrics_server_replica_count:type: integer
+# @var keda_metrics_server_replica_count:description: >
+# Number of replicas for the KEDA metrics server
+keda_metrics_server_replica_count: 1
+
+# @var keda_metrics_server_resources
+# @var keda_metrics_server_resources:type: dict
+# @var keda_metrics_server_resources:description: >
+# Resource requests and limits of the KEDA metrics apiserver pod
+keda_metrics_server_resources: {}
+
+# Admission webhooks
+# @var keda_webhooks_enabled
+# @var keda_webhooks_enabled:type: boolean
+# @var keda_webhooks_enabled:description: >
+# Enable the KEDA admission webhooks
+keda_webhooks_enabled: true
+
+# @var keda_webhooks_replica_count
+# @var keda_webhooks_replica_count:type: integer
+# @var keda_webhooks_replica_count:description: >
+# Number of replicas for the KEDA admission webhooks
+keda_webhooks_replica_count: 1
+
+# @var keda_webhooks_failure_policy
+# @var keda_webhooks_failure_policy:type: string
+# @var keda_webhooks_failure_policy:description: >
+# Failure policy used by the KEDA admission webhooks.
+# Allowed values: `Ignore`, `Fail`
+keda_webhooks_failure_policy: "Ignore"
+
+# @var keda_webhooks_resources
+# @var keda_webhooks_resources:type: dict
+# @var keda_webhooks_resources:description: >
+# Resource requests and limits of the KEDA admission webhooks pod
+keda_webhooks_resources: {}
+
+# Certificates
+# @var keda_cert_manager_enabled
+# @var keda_cert_manager_enabled:type: boolean
+# @var keda_cert_manager_enabled:description: >
+# Use cert-manager to issue and rotate the KEDA TLS certificates instead of
+# the certificates self-generated by the operator
+keda_cert_manager_enabled: false
+
+# @var keda_cert_manager_issuer
+# @var keda_cert_manager_issuer:type: dict
+# @var keda_cert_manager_issuer:description: >
+# Issuer used by cert-manager. When `generate` is false, `name`, `kind` and
+# `group` are required and must reference an existing issuer
+# @var keda_cert_manager_issuer:example: >
+# keda_cert_manager_issuer:
+#   generate: false
+#   name: "letsencrypt"
+#   kind: "ClusterIssuer"
+#   group: "cert-manager.io"
+keda_cert_manager_issuer: {}
+
+# Logging
+# @var keda_operator_log_level
+# @var keda_operator_log_level:type: string
+# @var keda_operator_log_level:description: >
+# Logging level of the KEDA operator.
+# Allowed values: `debug`, `info`, `error` or an integer greater than 0
+keda_operator_log_level: "info"
+
+# @var keda_operator_log_format
+# @var keda_operator_log_format:type: string
+# @var keda_operator_log_format:description: >
+# Logging format of the KEDA operator. Allowed values: `json`, `console`
+keda_operator_log_format: "console"
+
+# @var keda_webhooks_log_level
+# @var keda_webhooks_log_level:type: string
+# @var keda_webhooks_log_level:description: >
+# Logging level of the KEDA admission webhooks.
+# Allowed values: `debug`, `info`, `error` or an integer greater than 0
+keda_webhooks_log_level: "info"
+
+# @var keda_webhooks_log_format
+# @var keda_webhooks_log_format:type: string
+# @var keda_webhooks_log_format:description: >
+# Logging format of the KEDA admission webhooks. Allowed values: `json`, `console`
+keda_webhooks_log_format: "console"
+
+# RBAC
+# @var keda_rbac_create
+# @var keda_rbac_create:type: boolean
+# @var keda_rbac_create:description: >
+# Create the RBAC resources required by KEDA
+keda_rbac_create: true
+
+# @var keda_rbac_aggregate_to_default_roles
+# @var keda_rbac_aggregate_to_default_roles:type: boolean
+# @var keda_rbac_aggregate_to_default_roles:description: >
+# Aggregate the RBAC rules of the KEDA CRDs to the default `view`, `edit`
+# and `admin` cluster roles
+keda_rbac_aggregate_to_default_roles: false
+
+# @var keda_rbac_scaled_ref_kinds
+# @var keda_rbac_scaled_ref_kinds:type: list
+# @var keda_rbac_scaled_ref_kinds:description: >
+# Custom resources supporting the `scale` subresource that can be referenced
+# by `scaledobject.spec.scaleTargetRef`
+# @var keda_rbac_scaled_ref_kinds:example: >
+# keda_rbac_scaled_ref_kinds:
+#   - apiGroup: "argoproj.io"
+#     kind: "Rollout"
+keda_rbac_scaled_ref_kinds: []
+
+# Monitoring
+# @var keda_prometheus_enabled
+# @var keda_prometheus_enabled:type: boolean
+# @var keda_prometheus_enabled:description: >
+# Expose the Prometheus metrics of the operator, the metrics server and the
+# admission webhooks
+keda_prometheus_enabled: false
+
+# @var keda_prometheus_service_monitor_enabled
+# @var keda_prometheus_service_monitor_enabled:type: boolean
+# @var keda_prometheus_service_monitor_enabled:description: >
+# Create the ServiceMonitor resources for the Prometheus Operator.
+# Requires `keda_prometheus_enabled` and the Prometheus Operator CRDs
+keda_prometheus_service_monitor_enabled: false
+
+# @var keda_prometheus_service_monitor_additional_labels
+# @var keda_prometheus_service_monitor_additional_labels:type: dict
+# @var keda_prometheus_service_monitor_additional_labels:description: >
+# Additional labels added to the ServiceMonitor resources, typically used to
+# match the Prometheus Operator service monitor selector
+keda_prometheus_service_monitor_additional_labels: {}
+
+# @var keda_opentelemetry_collector_uri
+# @var keda_opentelemetry_collector_uri:type: string
+# @var keda_opentelemetry_collector_uri:description: >
+# URI of the OpenTelemetry Collector the operator pushes its telemetry to.
+# Setting it enables the OpenTelemetry export of the operator
+keda_opentelemetry_collector_uri: ""
+
+# Scheduling
+# @var keda_node_selector
+# @var keda_node_selector:type: dict
+# @var keda_node_selector:description: >
+# Node selector for the KEDA pods
+keda_node_selector: {}
+
+# @var keda_tolerations
+# @var keda_tolerations:type: list
+# @var keda_tolerations:description: >
+# Tolerations for the KEDA pods
+keda_tolerations: []
+
+# @var keda_affinity
+# @var keda_affinity:type: dict
+# @var keda_affinity:description: >
+# Affinity for the KEDA pods
+keda_affinity: {}
+
+# @var keda_priority_class_name
+# @var keda_priority_class_name:type: string
+# @var keda_priority_class_name:description: >
+# priorityClassName applied to all the KEDA components
+keda_priority_class_name: ""
+
+# @var keda_extra_objects
+# @var keda_extra_objects:type: list
+# @var keda_extra_objects:description: >
+# Extra Kubernetes manifests deployed along with the chart, useful to declare
+# cluster wide KEDA resources such as ClusterTriggerAuthentication
+# @var keda_extra_objects:example: >
+# keda_extra_objects:
+#   - apiVersion: "keda.sh/v1alpha1"
+#     kind: "ClusterTriggerAuthentication"
+#     metadata:
+#       name: "aws-credentials"
+#     spec:
+#       podIdentity:
+#         provider: "aws-eks"
+keda_extra_objects: []
+
+# @var keda_additional_helm_values
+# @var keda_additional_helm_values:type: dict
+# @var keda_additional_helm_values:description: >
+# Additional helm values to be passed to the chart.
+# Use this to configure any chart option not exposed as a dedicated variable.
+# ref: https://github.com/kedacore/charts/blob/main/keda/values.yaml
+keda_additional_helm_values: {}
