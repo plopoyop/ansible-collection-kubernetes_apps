@@ -1,8 +1,12 @@
 # Changelog
 
-## [10.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/10.1.1) (2026-09-09)
+## [10.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/10.2.0) (2026-09-09)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/10.1.0...10.1.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/10.1.0...10.2.0)
+
+## 🚀 New Features
+
+- feat\(roles\): Add KEDA role [\#303](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/303) ([plopoyop](https://github.com/plopoyop))
 
 ## ⛵ Helm Charts
 
