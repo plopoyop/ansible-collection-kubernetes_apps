@@ -6,6 +6,7 @@
 
 ## ⛵ Helm Charts
 
+- feat\(helm\): update chart zammad \(18.1.0 → 18.2.1\) [\#317](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/317) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart gitlab-runner \(0.92.1 → 0.92.2\) [\#316](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/316) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart atlantis \(6.15.0 → 6.15.1\) [\#315](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/315) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart zammad \(18.0.5 → 18.1.0\) [\#314](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/314) ([plopoyop](https://github.com/plopoyop))
