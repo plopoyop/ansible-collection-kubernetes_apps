@@ -1,5 +1,13 @@
 # Changelog
 
+## [10.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/10.3.1) (2026-09-17)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/10.3.0...10.3.1)
+
+## ⚙️ Dependencies
+
+- fix\(ci\): update renovatebot/github-action action \(v46.3.0 → v46.3.1\) [\#318](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/318) ([plopoyop](https://github.com/plopoyop))
+
 ## [10.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/10.3.0) (2026-09-16)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/10.2.1...10.3.0)
