@@ -6,6 +6,7 @@
 
 ## ⛵ Helm Charts
 
+- fix\(helm\): update chart argo-cd \(10.9.1 → 10.9.2\) [\#323](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/323) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart gitlab-runner \(0.92.2 → 0.93.0\) [\#321](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/321) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\)!: Update chart zammad \(18.2.1 → 19.0.0\) [\#319](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/319) ([plopoyop](https://github.com/plopoyop))
 
