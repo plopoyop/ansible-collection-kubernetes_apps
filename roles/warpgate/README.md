@@ -25,7 +25,6 @@ Install and configure Warpgate on kubernetes
   - [warpgate_external_ssh_host](#warpgate_external_ssh_host)
   - [warpgate_external_ssh_port](#warpgate_external_ssh_port)
   - [warpgate_extra_manifests](#warpgate_extra_manifests)
-  - [warpgate_force_upgrade](#warpgate_force_upgrade)
   - [warpgate_helm_chart_version](#warpgate_helm_chart_version)
   - [warpgate_ingress_annotations](#warpgate_ingress_annotations)
   - [warpgate_ingress_class_name](#warpgate_ingress_class_name)
@@ -47,6 +46,7 @@ Install and configure Warpgate on kubernetes
   - [warpgate_setup_enabled](#warpgate_setup_enabled)
   - [warpgate_setup_type](#warpgate_setup_type)
   - [warpgate_sso_providers](#warpgate_sso_providers)
+  - [warpgate_tls_cert_secret](#warpgate_tls_cert_secret)
   - [warpgate_wait_install](#warpgate_wait_install)
 - [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
@@ -294,18 +294,6 @@ Extra Kubernetes manifests to apply in the Warpgate namespace
 warpgate_extra_manifests: []
 ```
 
-### warpgate_force_upgrade
-
-Delete the immutable Warpgate setup Job before running `helm upgrade`.
-
-**_Type:_** boolean<br />
-
-#### Default value
-
-```YAML
-warpgate_force_upgrade: false
-```
-
 ### warpgate_helm_chart_version
 
 Helm chart version to install
@@ -538,14 +526,16 @@ warpgate_setup_enabled: true
 
 ### warpgate_setup_type
 
-Setup type: "job" or "podinit"
+Setup type: "podinit" or "job". "job" requires warpgate_tls_cert_secret: the role always renders
+overrides_config, so the pod writes /data/warpgate.yaml before the setup job runs and the job
+then skips `unattended-setup`, the step that would generate the self-signed certificate.
 
 **_Type:_** string<br />
 
 #### Default value
 
 ```YAML
-warpgate_setup_type: job
+warpgate_setup_type: podinit
 ```
 
 ### warpgate_sso_providers
@@ -559,6 +549,19 @@ Each item should have: name, label, provider (type, client_id, client_secret, te
 
 ```YAML
 warpgate_sso_providers: []
+```
+
+### warpgate_tls_cert_secret
+
+Name of a kubernetes.io/tls secret holding the certificate served by all Warpgate listeners.
+Leave empty to let the setup generate a self-signed one.
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+warpgate_tls_cert_secret: ''
 ```
 
 ### warpgate_wait_install
@@ -575,17 +578,13 @@ warpgate_wait_install: false
 
 ## Discovered Tags
 
-**_helm_chart_**
+**_always_**
 
-**_install_**
+**_helm_chart_**
 
 **_manifest_**
 
 **_namespace_**
-
-**_uninstall_**
-
-**_warpgate_**
 
 ## Dependencies
 

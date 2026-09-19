@@ -29,12 +29,6 @@ warpgate_deployment_name: "warpgate"
 # Wait for helm install to finish
 warpgate_wait_install: false
 
-# @var warpgate_force_upgrade
-# @var warpgate_force_upgrade:type: boolean
-# @var warpgate_force_upgrade:description: >
-# Delete the immutable Warpgate setup Job before running `helm upgrade`.
-warpgate_force_upgrade: false
-
 # @var warpgate_service_type
 # @var warpgate_service_type:type: string
 # @var warpgate_service_type:description: >
@@ -122,14 +116,23 @@ warpgate_setup_enabled: true
 # @var warpgate_setup_type
 # @var warpgate_setup_type:type: string
 # @var warpgate_setup_type:description: >
-# Setup type: "job" or "podinit"
-warpgate_setup_type: "job"
+# Setup type: "podinit" or "job". "job" requires warpgate_tls_cert_secret: the role always renders
+# overrides_config, so the pod writes /data/warpgate.yaml before the setup job runs and the job
+# then skips `unattended-setup`, the step that would generate the self-signed certificate.
+warpgate_setup_type: "podinit"
 
 # @var warpgate_setup_credentials_secret
 # @var warpgate_setup_credentials_secret:type: string
 # @var warpgate_setup_credentials_secret:description: >
 # Name of the secret containing setup credentials (WARPGATE_ADMIN_PASSWORD)
 warpgate_setup_credentials_secret: ""
+
+# @var warpgate_tls_cert_secret
+# @var warpgate_tls_cert_secret:type: string
+# @var warpgate_tls_cert_secret:description: >
+# Name of a kubernetes.io/tls secret holding the certificate served by all Warpgate listeners.
+# Leave empty to let the setup generate a self-signed one.
+warpgate_tls_cert_secret: ""
 
 # @var warpgate_data_pvc_enabled
 # @var warpgate_data_pvc_enabled:type: boolean

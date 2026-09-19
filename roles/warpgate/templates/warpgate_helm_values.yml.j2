@@ -41,6 +41,10 @@ setup:
   pgsql: {{ warpgate_service_port_pgsql }}
   kubernetes: {{ warpgate_service_port_kubernetes }}
 
+{% if warpgate_tls_cert_secret | default('') | length > 0 %}
+tls_cert_secret: "{{ warpgate_tls_cert_secret }}"
+{% endif %}
+
 data:
   pvc:
     enabled: {{ warpgate_data_pvc_enabled | lower }}

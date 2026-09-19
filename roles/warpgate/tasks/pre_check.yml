@@ -1,0 +1,13 @@
+---
+- name: "Check the setup job can provide a TLS certificate"
+  ansible.builtin.assert:
+    that: warpgate_tls_cert_secret | default("", true) | length > 0
+    fail_msg: >-
+      warpgate_setup_type: "job" requires warpgate_tls_cert_secret. The role always renders
+      overrides_config, so the deployment init container writes /data/warpgate.yaml before the
+      setup job runs, and the job then only creates the admin user instead of running
+      `unattended-setup` - the step that generates the self-signed certificate the listeners need.
+      Set warpgate_tls_cert_secret, or use warpgate_setup_type: "podinit".
+  when:
+    - warpgate_setup_enabled
+    - warpgate_setup_type == "job"
