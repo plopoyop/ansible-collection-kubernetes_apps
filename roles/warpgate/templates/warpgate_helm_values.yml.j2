@@ -40,6 +40,11 @@ setup:
   mysql: {{ warpgate_service_port_mysql }}
   pgsql: {{ warpgate_service_port_pgsql }}
   kubernetes: {{ warpgate_service_port_kubernetes }}
+  recordSessions: {{ warpgate_recordings_enabled | lower }}
+
+{% if warpgate_tls_cert_secret | default('') | length > 0 %}
+tls_cert_secret: "{{ warpgate_tls_cert_secret }}"
+{% endif %}
 
 data:
   pvc:
@@ -99,13 +104,6 @@ overrides_config: |
 {% endif %}
 {% endif %}
 {% endfor %}
-{% endif %}
-  recordings:
-    enable: {{ warpgate_recordings_enabled | default(true) | lower }}
-{% if warpgate_database_url | length > 0 %}
-    path: "database"
-{% else %}
-    path: "/data/recordings"
 {% endif %}
 {% if warpgate_external_host | default('') | length > 0 %}
   external_host: "{{ warpgate_external_host }}"

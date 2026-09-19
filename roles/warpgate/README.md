@@ -25,7 +25,6 @@ Install and configure Warpgate on kubernetes
   - [warpgate_external_ssh_host](#warpgate_external_ssh_host)
   - [warpgate_external_ssh_port](#warpgate_external_ssh_port)
   - [warpgate_extra_manifests](#warpgate_extra_manifests)
-  - [warpgate_force_upgrade](#warpgate_force_upgrade)
   - [warpgate_helm_chart_version](#warpgate_helm_chart_version)
   - [warpgate_ingress_annotations](#warpgate_ingress_annotations)
   - [warpgate_ingress_class_name](#warpgate_ingress_class_name)
@@ -47,6 +46,7 @@ Install and configure Warpgate on kubernetes
   - [warpgate_setup_enabled](#warpgate_setup_enabled)
   - [warpgate_setup_type](#warpgate_setup_type)
   - [warpgate_sso_providers](#warpgate_sso_providers)
+  - [warpgate_tls_cert_secret](#warpgate_tls_cert_secret)
   - [warpgate_wait_install](#warpgate_wait_install)
 - [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
@@ -294,18 +294,6 @@ Extra Kubernetes manifests to apply in the Warpgate namespace
 warpgate_extra_manifests: []
 ```
 
-### warpgate_force_upgrade
-
-Delete the immutable Warpgate setup Job before running `helm upgrade`.
-
-**_Type:_** boolean<br />
-
-#### Default value
-
-```YAML
-warpgate_force_upgrade: false
-```
-
 ### warpgate_helm_chart_version
 
 Helm chart version to install
@@ -315,7 +303,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-warpgate_helm_chart_version: 0.0.8
+warpgate_helm_chart_version: 0.1.0
 ```
 
 ### warpgate_ingress_annotations
@@ -404,9 +392,11 @@ warpgate_namespace: warpgate
 
 ### warpgate_recordings_enabled
 
-Enable Warpgate session recording. Disabling avoids known protocol-parser
-issues on some Kubernetes WebSocket subprotocols (e.g. `base64.binary.k8s.io`
-used by Headlamp) at the cost of losing audit trails.
+Enable Warpgate session recording.
+Maps to the chart's setup.recordSessions, so it only applies to the initial
+`unattended-setup`: Warpgate then keeps the flag in its database
+(`parameters.recordings_enable`). Use `plopoyop.warpgate.warpgate_parameters`
+to manage it, and the recordings storage backend, on an existing installation.
 
 **_Type:_** boolean<br />
 
@@ -538,14 +528,16 @@ warpgate_setup_enabled: true
 
 ### warpgate_setup_type
 
-Setup type: "job" or "podinit"
+Setup type: "podinit" or "job". "job" requires warpgate_tls_cert_secret: the role always renders
+overrides_config, so the pod writes /data/warpgate.yaml before the setup job runs and the job
+then skips `unattended-setup`, the step that would generate the self-signed certificate.
 
 **_Type:_** string<br />
 
 #### Default value
 
 ```YAML
-warpgate_setup_type: job
+warpgate_setup_type: podinit
 ```
 
 ### warpgate_sso_providers
@@ -559,6 +551,19 @@ Each item should have: name, label, provider (type, client_id, client_secret, te
 
 ```YAML
 warpgate_sso_providers: []
+```
+
+### warpgate_tls_cert_secret
+
+Name of a kubernetes.io/tls secret holding the certificate served by all Warpgate listeners.
+Leave empty to let the setup generate a self-signed one.
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+warpgate_tls_cert_secret: ''
 ```
 
 ### warpgate_wait_install
@@ -575,17 +580,13 @@ warpgate_wait_install: false
 
 ## Discovered Tags
 
-**_helm_chart_**
+**_always_**
 
-**_install_**
+**_helm_chart_**
 
 **_manifest_**
 
 **_namespace_**
-
-**_uninstall_**
-
-**_warpgate_**
 
 ## Dependencies
 
