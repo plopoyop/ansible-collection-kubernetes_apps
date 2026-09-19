@@ -13,6 +13,7 @@
 ## ⚙️ Dependencies
 
 - feat\(ci\)!: Update ubuntu \(24.04 → 26.04\) [\#322](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/322) ([plopoyop](https://github.com/plopoyop))
+- feat\(container\): update image ghcr.io/warp-tech/helm-charts/warpgate \(0.0.8 → 0.1.0\) [\#320](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/320) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.3.0 → v46.3.1\) [\#318](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/318) ([plopoyop](https://github.com/plopoyop))
 
 ## [10.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/10.3.0) (2026-09-16)
