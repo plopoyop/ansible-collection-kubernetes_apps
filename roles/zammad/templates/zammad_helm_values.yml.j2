@@ -172,7 +172,6 @@ zammadConfig:
       customInit: "{{ zammad_init_containers_zammad_custom_init }}"
 
   initJob:
-    randomName: true
     annotations: {{ zammad_init_job_annotations }}
     podLabels: {{ zammad_init_job_pod_labels }}
     podAnnotations: {{ zammad_init_job_pod_annotations }}
