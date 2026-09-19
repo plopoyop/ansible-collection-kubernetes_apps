@@ -1,4 +1,20 @@
 ---
+- name: "Fail when the removed minio variables are still set"
+  ansible.builtin.fail:
+    msg: >-
+      zammad_minio_enabled is set: the minio subchart was replaced by rustfs in chart 19.0.0 and
+      the minio variables no longer have any effect. Rename them to zammad_rustfs_enabled,
+      zammad_rustfs_access_key, zammad_rustfs_secret_key, zammad_rustfs_bucket and
+      zammad_rustfs_console_enabled (inverted logic of zammad_minio_disable_web_ui).
+      Attachments stored in the bundled minio instance are NOT migrated automatically: annotate the
+      "{{ zammad_deployment_name }}-minio" PVC with helm.sh/resource-policy=keep, then copy its
+      content over to the new "{{ zammad_deployment_name }}-rustfs-data" volume before enabling
+      rustfs. See the "Rustfs data migration" section of the chart README
+      (https://github.com/zammad/zammad-helm/tree/main/zammad#rustfs-data-migration).
+  when:
+    - zammad_minio_enabled is defined
+    - zammad_minio_enabled | bool
+
 - name: "Check passwords do not contain special characters"
   ansible.builtin.assert:
     that: secret_key_to_check is match(zammad_secret_key_regex)
