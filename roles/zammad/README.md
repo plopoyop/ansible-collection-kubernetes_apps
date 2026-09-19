@@ -61,11 +61,6 @@ Install and configure Zammad application on kubernetes. The bundled Elasticsearc
   - [zammad_memcached_port](#zammad_memcached_port)
   - [zammad_memcached_replica_count](#zammad_memcached_replica_count)
   - [zammad_memcached_resources](#zammad_memcached_resources)
-  - [zammad_minio_auth_root_user](#zammad_minio_auth_root_user)
-  - [zammad_minio_default_buckets](#zammad_minio_default_buckets)
-  - [zammad_minio_disable_web_ui](#zammad_minio_disable_web_ui)
-  - [zammad_minio_enabled](#zammad_minio_enabled)
-  - [zammad_minio_root_password](#zammad_minio_root_password)
   - [zammad_namespace](#zammad_namespace)
   - [zammad_nginx_extra_headers](#zammad_nginx_extra_headers)
   - [zammad_nginx_knowledge_base_url](#zammad_nginx_knowledge_base_url)
@@ -115,6 +110,16 @@ Install and configure Zammad application on kubernetes. The bundled Elasticsearc
   - [zammad_redis_sentinel_sentinels](#zammad_redis_sentinel_sentinels)
   - [zammad_redis_sentinel_username](#zammad_redis_sentinel_username)
   - [zammad_redis_username](#zammad_redis_username)
+  - [zammad_rustfs_access_key](#zammad_rustfs_access_key)
+  - [zammad_rustfs_bucket](#zammad_rustfs_bucket)
+  - [zammad_rustfs_bucket_initialisation](#zammad_rustfs_bucket_initialisation)
+  - [zammad_rustfs_console_enabled](#zammad_rustfs_console_enabled)
+  - [zammad_rustfs_enabled](#zammad_rustfs_enabled)
+  - [zammad_rustfs_existing_secret](#zammad_rustfs_existing_secret)
+  - [zammad_rustfs_region](#zammad_rustfs_region)
+  - [zammad_rustfs_secret_key](#zammad_rustfs_secret_key)
+  - [zammad_rustfs_storage_class](#zammad_rustfs_storage_class)
+  - [zammad_rustfs_storage_size](#zammad_rustfs_storage_size)
   - [zammad_scheduler_pod_annotations](#zammad_scheduler_pod_annotations)
   - [zammad_scheduler_pod_labels](#zammad_scheduler_pod_labels)
   - [zammad_scheduler_resources](#zammad_scheduler_resources)
@@ -994,60 +999,6 @@ zammad_memcached_resources:
     memory: 128Mi
 ```
 
-### zammad_minio_auth_root_user
-
-minio root username
-
-**_Type:_** string<br />
-
-#### Default value
-
-```YAML
-zammad_minio_auth_root_user: zammadadmin
-```
-
-### zammad_minio_default_buckets
-
-minio default bucket name
-
-**_Type:_** string<br />
-
-#### Default value
-
-```YAML
-zammad_minio_default_buckets: zammad
-```
-
-### zammad_minio_disable_web_ui
-
-enable/disable minio web UI for debugging.
-
-**_Type:_** boolean<br />
-
-#### Default value
-
-```YAML
-zammad_minio_disable_web_ui: true
-```
-
-### zammad_minio_enabled
-
-enable/disable minio chart dependency
-
-**_Type:_** boolean<br />
-
-#### Default value
-
-```YAML
-zammad_minio_enabled: false
-```
-
-### zammad_minio_root_password
-
-minio root password
-
-**_Type:_** string<br />
-
 ### zammad_namespace
 
 K8s namespace to install the zammad chart
@@ -1759,6 +1710,123 @@ redis username (leave empty if no username is required)
 
 ```YAML
 zammad_redis_username: ''
+```
+
+### zammad_rustfs_access_key
+
+rustfs access key
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_rustfs_access_key: zammadadmin
+```
+
+### zammad_rustfs_bucket
+
+bucket used for attachment storage in the bundled rustfs instance
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_rustfs_bucket: zammad
+```
+
+### zammad_rustfs_bucket_initialisation
+
+let the zammad init job create the bucket, as rustfs does not provision buckets itself.
+Only applies to the bundled instance, never to an external S3 service.
+
+**_Type:_** boolean<br />
+
+#### Default value
+
+```YAML
+zammad_rustfs_bucket_initialisation: true
+```
+
+### zammad_rustfs_console_enabled
+
+enable/disable rustfs web UI for debugging
+
+**_Type:_** boolean<br />
+
+#### Default value
+
+```YAML
+zammad_rustfs_console_enabled: false
+```
+
+### zammad_rustfs_enabled
+
+enable/disable rustfs chart dependency, the S3 storage provider for attachments
+(replaces the minio subchart removed in chart 19.0.0)
+
+**_Type:_** boolean<br />
+
+#### Default value
+
+```YAML
+zammad_rustfs_enabled: false
+```
+
+### zammad_rustfs_existing_secret
+
+existing secret holding the RUSTFS_ACCESS_KEY and RUSTFS_SECRET_KEY keys.
+Takes precedence over zammad_rustfs_access_key and zammad_rustfs_secret_key.
+
+**_Type:_** string<br />
+
+#### Example usage
+
+```YAML
+zammad_rustfs_existing_secret: "rustfs-credentials"
+```
+
+### zammad_rustfs_region
+
+S3 region of the bundled rustfs instance, also used to build the S3 URL
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_rustfs_region: zammad
+```
+
+### zammad_rustfs_secret_key
+
+rustfs secret key
+
+**_Type:_** string<br />
+
+### zammad_rustfs_storage_class
+
+storage class of the rustfs data volume. Uses the cluster default when undefined.
+
+**_Type:_** string<br />
+
+#### Example usage
+
+```YAML
+zammad_rustfs_storage_class: "longhorn"
+```
+
+### zammad_rustfs_storage_size
+
+size of the rustfs data volume
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+zammad_rustfs_storage_size: 10Gi
 ```
 
 ### zammad_scheduler_pod_annotations

@@ -1,0 +1,18 @@
+rustfs:
+  secret:
+{% if zammad_rustfs_existing_secret is defined %}
+    existingSecret: "{{ zammad_rustfs_existing_secret }}"
+{% else %}
+    rustfs:
+      access_key: "{{ zammad_rustfs_access_key }}"
+      secret_key: "{{ zammad_rustfs_secret_key }}"
+{% endif %}
+  config:
+    rustfs:
+      region: "{{ zammad_rustfs_region }}"
+      console_enable: "{{ zammad_rustfs_console_enabled | lower }}"
+  storageclass:
+{% if zammad_rustfs_storage_class is defined %}
+    name: "{{ zammad_rustfs_storage_class }}"
+{% endif %}
+    dataStorageSize: "{{ zammad_rustfs_storage_size }}"
