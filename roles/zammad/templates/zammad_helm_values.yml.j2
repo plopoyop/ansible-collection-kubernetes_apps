@@ -65,9 +65,11 @@ zammadConfig:
 {% endif %}
     port: {{ zammad_memcached_port }}
 
-  minio:
-    enabled: {{ zammad_minio_enabled }}
-{% if not zammad_minio_enabled and zammad_external_s3_url is defined %}
+  rustfs:
+    enabled: {{ zammad_rustfs_enabled }}
+    bucket: "{{ zammad_rustfs_bucket }}"
+    bucketInitialisation: {{ zammad_rustfs_bucket_initialisation }}
+{% if not zammad_rustfs_enabled and zammad_external_s3_url is defined %}
     externalS3Url: {{ zammad_external_s3_url }}
 {% endif %}
 
@@ -170,7 +172,6 @@ zammadConfig:
       customInit: "{{ zammad_init_containers_zammad_custom_init }}"
 
   initJob:
-    randomName: true
     annotations: {{ zammad_init_job_annotations }}
     podLabels: {{ zammad_init_job_pod_labels }}
     podAnnotations: {{ zammad_init_job_pod_annotations }}
@@ -218,8 +219,8 @@ initContainers: {{ zammad_additional_init_containers }}
 {% include 'memcached_helm_values.yml.j2' %}
 {% endif %}
 
-{% if zammad_minio_enabled %}
-{% include 'minio_helm_values.yml.j2' %}
+{% if zammad_rustfs_enabled %}
+{% include 'rustfs_helm_values.yml.j2' %}
 {% endif %}
 
 {% if zammad_postgresql_enabled %}
