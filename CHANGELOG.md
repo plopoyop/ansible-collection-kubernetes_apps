@@ -1,8 +1,12 @@
 # Changelog
 
-## [10.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/10.3.1) (2026-09-19)
+## [10.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/10.4.0) (2026-09-19)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/10.3.0...10.3.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/10.3.0...10.4.0)
+
+## ⛵ Helm Charts
+
+- feat\(helm\): update chart gitlab-runner \(0.92.2 → 0.93.0\) [\#321](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/321) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
