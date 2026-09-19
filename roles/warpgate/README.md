@@ -395,6 +395,10 @@ warpgate_namespace: warpgate
 Enable Warpgate session recording. Disabling avoids known protocol-parser
 issues on some Kubernetes WebSocket subprotocols (e.g. `base64.binary.k8s.io`
 used by Headlamp) at the cost of losing audit trails.
+Maps to the chart's setup.recordSessions, so it only applies to the initial
+`unattended-setup`: Warpgate keeps the flag in its database (parameters
+.recordings_enable), where it is then managed through the admin UI or the
+/parameters API. It has no effect on an existing installation.
 
 **_Type:_** boolean<br />
 
