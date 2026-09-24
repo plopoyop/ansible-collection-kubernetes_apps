@@ -7,6 +7,7 @@
 ## ⛵ Helm Charts
 
 - feat\(helm\): update chart atlantis \(6.15.1 → 6.16.0\) [\#325](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/325) ([plopoyop](https://github.com/plopoyop))
+- feat\(helm\): update chart zammad \(19.0.0 → 19.1.0\) [\#324](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/324) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
