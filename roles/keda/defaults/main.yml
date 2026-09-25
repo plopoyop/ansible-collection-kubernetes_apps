@@ -15,7 +15,7 @@ keda_namespace: "keda"
 # @var keda_helm_chart_version:type: string
 # @var keda_helm_chart_version:description: >
 # Helm chart version to install
-keda_helm_chart_version: 2.20.2
+keda_helm_chart_version: 2.21.0
 
 # @var keda_deployment_name
 # @var keda_deployment_name:type: string
