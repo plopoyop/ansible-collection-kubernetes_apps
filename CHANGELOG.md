@@ -1,8 +1,12 @@
 # Changelog
 
-## [11.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.1.1) (2026-09-25)
+## [11.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.2.0) (2026-09-26)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.1.0...11.1.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.1.0...11.2.0)
+
+## ⛵ Helm Charts
+
+- feat\(helm\): update chart keda \(2.20.2 → 2.21.0\) [\#328](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/328) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
