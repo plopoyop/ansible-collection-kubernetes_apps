@@ -1,11 +1,12 @@
 # Changelog
 
-## [11.2.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.2.2) (2026-10-03)
+## [11.2.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.2.2) (2026-10-04)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.2.1...11.2.2)
 
 ## ⛵ Helm Charts
 
+- fix\(helm\): update chart oauth2-proxy \(10.7.0 → 10.7.1\) [\#335](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/335) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart argo-cd \(10.9.4 → 10.9.6\) [\#333](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/333) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
