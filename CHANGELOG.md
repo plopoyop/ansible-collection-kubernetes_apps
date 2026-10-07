@@ -1,5 +1,13 @@
 # Changelog
 
+## [11.2.3](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.2.3) (2026-10-07)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.2.2...11.2.3)
+
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart zammad \(19.1.1 → 19.1.3\) [\#336](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/336) ([plopoyop](https://github.com/plopoyop))
+
 ## [11.2.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.2.2) (2026-10-04)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.2.1...11.2.2)
