@@ -1,5 +1,13 @@
 # Changelog
 
+## [11.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.3.1) (2026-10-11)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.3.0...11.3.1)
+
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart argo-cd \(10.10.1 → 10.10.2\) [\#342](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/342) ([plopoyop](https://github.com/plopoyop))
+
 ## [11.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.3.0) (2026-10-11)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.2.2...11.3.0)
