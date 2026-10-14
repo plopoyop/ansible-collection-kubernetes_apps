@@ -179,7 +179,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-argocd_helm_chart_version: 10.10.2
+argocd_helm_chart_version: 10.10.3
 ```
 
 ### argocd_namespace
