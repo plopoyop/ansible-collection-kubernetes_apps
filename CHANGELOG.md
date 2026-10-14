@@ -6,6 +6,7 @@
 
 ## ⛵ Helm Charts
 
+- fix\(helm\): update chart argo-cd \(10.10.2 → 10.10.3\) [\#345](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/345) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart argo-cd \(10.10.1 → 10.10.2\) [\#342](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/342) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
