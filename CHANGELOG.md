@@ -1,6 +1,6 @@
 # Changelog
 
-## [11.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.3.1) (2026-10-13)
+## [11.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.3.1) (2026-10-14)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.3.0...11.3.1)
 
@@ -10,6 +10,8 @@
 
 **Merged pull requests:**
 
+- feat\(deps\): update prek \(0.4.14 → 0.5.5\) [\#347](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/347) ([plopoyop](https://github.com/plopoyop))
+- feat\(deps\): update kubernetes-helm \(4.2.4 → 4.3.0\) [\#346](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/346) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update kubectl \(1.36.3 → 1.37.1\) [\#344](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/344) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update ansible-doctor \(8.4.0 → 8.4.2\) [\#343](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/343) ([plopoyop](https://github.com/plopoyop))
 
