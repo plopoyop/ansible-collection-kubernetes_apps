@@ -1,11 +1,12 @@
 # Changelog
 
-## [11.3.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.3.2) (2026-10-17)
+## [11.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.4.0) (2026-10-17)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.3.1...11.3.2)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.3.1...11.4.0)
 
 ## ⛵ Helm Charts
 
+- feat\(helm\): update chart gitlab-runner \(0.93.0 → 0.94.0\) [\#352](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/352) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart argo-cd \(10.10.3 → 10.10.5\) [\#350](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/350) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
