@@ -1,6 +1,6 @@
 # Changelog
 
-## [11.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.4.0) (2026-10-19)
+## [11.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.4.0) (2026-10-21)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.3.1...11.4.0)
 
@@ -17,6 +17,8 @@
 
 **Merged pull requests:**
 
+- feat\(deps\): update python313packages.molecule \(26.6.0 → 26.8.0\) [\#359](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/359) ([plopoyop](https://github.com/plopoyop))
+- feat\(deps\): update git \(2.55.0 → 2.56.0\) [\#358](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/358) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update kubernetes-helm \(4.3.0 → 4.3.1\) [\#355](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/355) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update python313packages.ansible \(14.3.1 → 14.4.0\) [\#354](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/354) ([plopoyop](https://github.com/plopoyop))
 - fix\(deps\): update ansible-doctor \(8.4.2 → 8.4.3\) [\#349](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/349) ([plopoyop](https://github.com/plopoyop))
