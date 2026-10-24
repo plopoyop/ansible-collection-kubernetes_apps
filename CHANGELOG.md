@@ -1,11 +1,12 @@
 # Changelog
 
-## [11.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.4.0) (2026-10-23)
+## [11.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/11.4.0) (2026-10-24)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.3.1...11.4.0)
 
 ## ⛵ Helm Charts
 
+- fix\(helm\): update chart atlantis \(6.16.1 → 6.16.2\) [\#361](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/361) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart zammad \(19.1.5 → 19.2.0\) [\#357](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/357) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart headlamp \(0.45.0 → 0.46.0\) [\#353](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/353) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart gitlab-runner \(0.93.0 → 0.94.0\) [\#352](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/352) ([plopoyop](https://github.com/plopoyop))
