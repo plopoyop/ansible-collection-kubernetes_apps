@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.3.1...11.4.0)
 
+## 🚀 New Features
+
+- Feature/add kargo role [\#189](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/189) ([plopoyop](https://github.com/plopoyop))
+
 ## ⛵ Helm Charts
 
 - feat\(helm\): update chart argo-cd \(10.10.5 → 10.11.1\) [\#365](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/365) ([plopoyop](https://github.com/plopoyop))
