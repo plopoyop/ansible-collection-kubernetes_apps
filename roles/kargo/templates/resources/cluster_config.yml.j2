@@ -1,0 +1,5 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: ClusterConfig
+metadata:
+  name: "cluster"
+spec: {{ kargo_cluster_config | ansible.builtin.to_json }}

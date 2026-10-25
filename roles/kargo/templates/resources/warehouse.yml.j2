@@ -1,0 +1,24 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Warehouse
+metadata:
+  name: "{{ kargo_warehouse.name }}"
+  namespace: "{{ kargo_warehouse.project }}"
+{% if kargo_warehouse.labels is defined %}
+  labels: {{ kargo_warehouse.labels | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_warehouse.annotations is defined %}
+  annotations: {{ kargo_warehouse.annotations | ansible.builtin.to_json }}
+{% endif %}
+spec:
+  interval: "{{ kargo_warehouse.interval | default(kargo_warehouses_default_interval) }}"
+  freightCreationPolicy: "{{ kargo_warehouse.freight_creation_policy | default('Automatic') }}"
+{% if kargo_warehouse.freight_creation_criteria is defined %}
+  freightCreationCriteria: {{ kargo_warehouse.freight_creation_criteria | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_warehouse.shard is defined %}
+  shard: "{{ kargo_warehouse.shard }}"
+{% endif %}
+  subscriptions: {{ kargo_warehouse.subscriptions | ansible.builtin.to_json }}
+{% for key, value in (kargo_warehouse.additional_config | default({})).items() %}
+  {{ key }}: {{ value | ansible.builtin.to_json }}
+{% endfor %}

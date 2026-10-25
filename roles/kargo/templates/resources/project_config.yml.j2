@@ -1,0 +1,21 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: ProjectConfig
+metadata:
+  name: "{{ kargo_project_config.project }}"
+  namespace: "{{ kargo_project_config.project }}"
+{% if kargo_project_config.labels is defined %}
+  labels: {{ kargo_project_config.labels | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_project_config.annotations is defined %}
+  annotations: {{ kargo_project_config.annotations | ansible.builtin.to_json }}
+{% endif %}
+spec:
+{% if kargo_project_config.promotion_policies is defined %}
+  promotionPolicies: {{ kargo_project_config.promotion_policies | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_project_config.webhook_receivers is defined %}
+  webhookReceivers: {{ kargo_project_config.webhook_receivers | ansible.builtin.to_json }}
+{% endif %}
+{% for key, value in (kargo_project_config.additional_config | default({})).items() %}
+  {{ key }}: {{ value | ansible.builtin.to_json }}
+{% endfor %}

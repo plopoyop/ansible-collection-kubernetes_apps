@@ -7,6 +7,8 @@
     # bcrypt hash for "molecule-admin-password"
     kargo_api_admin_password_hash: "$2a$10$Zrpo7AbzKCS24M77eEHo/.0XAuLeRGEZAkPJBnDR9LdGGtfCYxg9q"
     kargo_api_admin_token_signing_key: "molecule-token-signing-key-32chars"
+    kargo_projects:
+      - name: "molecule-project"
   tasks:
     - name: "Add jetstack helm repo"
       kubernetes.core.helm_repository:

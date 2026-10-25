@@ -60,3 +60,37 @@
           - kargo_controller_deployment.resources | length > 0
           - kargo_controller_deployment.resources[0].status.readyReplicas | default(0) >= 1
         fail_msg: "Deployment 'kargo-controller' is not ready."
+
+    - name: "Get Kargo custom resources."
+      kubernetes.core.k8s_info:
+        api_version: "{{ item.api_version | default('kargo.akuity.io/v1alpha1') }}"
+        kind: "{{ item.kind }}"
+        name: "{{ item.name }}"
+        namespace: "{{ item.namespace | default(omit) }}"
+      register: kargo_resources
+      loop:
+        - {kind: "ClusterPromotionTask", name: "molecule-cluster-task"}
+        - {kind: "Project", name: "molecule-project"}
+        - {kind: "ProjectConfig", name: "molecule-project", namespace: "molecule-project"}
+        - {kind: "PromotionTask", name: "molecule-task", namespace: "molecule-project"}
+        - {kind: "Warehouse", name: "molecule-warehouse", namespace: "molecule-project"}
+        - {kind: "Stage", name: "test", namespace: "molecule-project"}
+        - {api_version: "v1", kind: "Secret", name: "molecule-git-creds", namespace: "molecule-project"}
+        - {api_version: "v1", kind: "Secret", name: "molecule-shared-image-creds", namespace: "kargo-shared-resources"}
+      loop_control:
+        label: "{{ item.kind }}/{{ item.name }}"
+
+    - name: "Assert that Kargo custom resources exist."
+      ansible.builtin.assert:
+        that: item.resources | length == 1
+        fail_msg: "{{ item.item.kind }} '{{ item.item.name }}' is missing."
+      loop: "{{ kargo_resources.results }}"
+      loop_control:
+        label: "{{ item.item.kind }}/{{ item.item.name }}"
+
+    - name: "Assert that credentials carry the Kargo cred-type label."
+      ansible.builtin.assert:
+        that:
+          - kargo_resources.results[6].resources[0].metadata.labels['kargo.akuity.io/cred-type'] == "git"
+          - kargo_resources.results[7].resources[0].metadata.labels['kargo.akuity.io/cred-type'] == "image"
+        fail_msg: "Credentials Secrets are not labelled for Kargo."

@@ -1,4 +1,8 @@
 ---
+global:
+  sharedResources:
+    namespace: "{{ kargo_shared_resources_namespace }}"
+
 crds:
   install: {{ kargo_crds_install | lower }}
   keep: {{ kargo_crds_keep | lower }}
@@ -59,7 +63,3 @@ managementController:
 
 garbageCollector:
   enabled: {{ kargo_garbage_collector_enabled | lower }}
-
-{% if kargo_additional_config | default({}) != {} %}
-{{ kargo_additional_config | ansible.builtin.to_nice_yaml | indent(0) }}
-{% endif %}

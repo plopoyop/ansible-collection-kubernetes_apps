@@ -7,6 +7,72 @@
     # bcrypt hash for "molecule-admin-password"
     kargo_api_admin_password_hash: "$2a$10$Zrpo7AbzKCS24M77eEHo/.0XAuLeRGEZAkPJBnDR9LdGGtfCYxg9q"
     kargo_api_admin_token_signing_key: "molecule-token-signing-key-32chars"
+    kargo_cluster_promotion_tasks:
+      - name: "molecule-cluster-task"
+        steps:
+          - uses: "compose-output"
+            config:
+              scope: "cluster"
+    kargo_projects:
+      - name: "molecule-project"
+        labels:
+          molecule: "true"
+    kargo_project_configs:
+      - project: "molecule-project"
+        promotion_policies:
+          - stageSelector:
+              name: "test"
+            autoPromotionEnabled: true
+    kargo_credentials:
+      - name: "molecule-git-creds"
+        project: "molecule-project"
+        type: "git"
+        repo_url: "https://github.com/example/kargo-demo.git"
+        parameters:
+          username: "molecule"
+          password: "molecule-token"
+      - name: "molecule-shared-image-creds"
+        type: "image"
+        repo_url: "^public\\.ecr\\.aws/.*$"
+        repo_url_is_regex: true
+        parameters:
+          username: "molecule"
+          password: "molecule-token"
+    kargo_promotion_tasks:
+      - name: "molecule-task"
+        project: "molecule-project"
+        vars:
+          - name: "message"
+            value: "hello"
+        steps:
+          - uses: "compose-output"
+            config:
+              message: !unsafe "${{ vars.message }}"
+    kargo_warehouses:
+      - name: "molecule-warehouse"
+        project: "molecule-project"
+        freight_creation_policy: "Manual"
+        subscriptions:
+          - image:
+              repoURL: "public.ecr.aws/nginx/nginx"
+              constraint: "^1.26.0"
+    kargo_stages:
+      - name: "test"
+        project: "molecule-project"
+        requested_freight:
+          - origin:
+              kind: "Warehouse"
+              name: "molecule-warehouse"
+            sources:
+              direct: true
+        promotion_template:
+          spec:
+            steps:
+              - task:
+                  name: "molecule-task"
+              - task:
+                  name: "molecule-cluster-task"
+                  kind: "ClusterPromotionTask"
   tasks:
     - name: "Install Kargo"
       ansible.builtin.import_role:

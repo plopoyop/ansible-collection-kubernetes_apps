@@ -1,4 +1,32 @@
 ---
+# Avant le helm uninstall : le controller doit être là pour lever leurs finalizers.
+- name: "Remove Kargo projects"
+  kubernetes.core.k8s:
+    api_version: "kargo.akuity.io/v1alpha1"
+    kind: "Project"
+    name: "{{ kargo_project.name }}"
+    state: "absent"
+    wait: true
+  loop: "{{ kargo_projects }}"
+  loop_control:
+    loop_var: kargo_project
+    label: "{{ kargo_project.name }}"
+  tags:
+    - "manifest"
+
+- name: "Remove Kargo cluster promotion tasks"
+  kubernetes.core.k8s:
+    api_version: "kargo.akuity.io/v1alpha1"
+    kind: "ClusterPromotionTask"
+    name: "{{ kargo_cluster_promotion_task.name }}"
+    state: "absent"
+  loop: "{{ kargo_cluster_promotion_tasks }}"
+  loop_control:
+    loop_var: kargo_cluster_promotion_task
+    label: "{{ kargo_cluster_promotion_task.name }}"
+  tags:
+    - "manifest"
+
 - name: "Uninstall Kargo helm package"
   kubernetes.core.helm:
     name: "{{ kargo_deployment_name }}"

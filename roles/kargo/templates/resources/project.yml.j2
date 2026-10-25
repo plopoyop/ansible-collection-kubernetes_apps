@@ -1,0 +1,10 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Project
+metadata:
+  name: "{{ kargo_project.name }}"
+{% if kargo_project.labels is defined %}
+  labels: {{ kargo_project.labels | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_project.annotations is defined %}
+  annotations: {{ kargo_project.annotations | ansible.builtin.to_json }}
+{% endif %}

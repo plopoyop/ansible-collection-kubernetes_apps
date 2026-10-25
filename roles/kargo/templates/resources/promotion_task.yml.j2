@@ -1,0 +1,16 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: PromotionTask
+metadata:
+  name: "{{ kargo_promotion_task.name }}"
+  namespace: "{{ kargo_promotion_task.project }}"
+{% if kargo_promotion_task.labels is defined %}
+  labels: {{ kargo_promotion_task.labels | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_promotion_task.annotations is defined %}
+  annotations: {{ kargo_promotion_task.annotations | ansible.builtin.to_json }}
+{% endif %}
+spec:
+{% if kargo_promotion_task.vars is defined %}
+  vars: {{ kargo_promotion_task.vars | ansible.builtin.to_json }}
+{% endif %}
+  steps: {{ kargo_promotion_task.steps | ansible.builtin.to_json }}

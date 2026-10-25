@@ -28,9 +28,12 @@ Install and configure Kargo on kubernetes
   - [kargo_api_oidc_username_claim](#kargo_api_oidc_username_claim)
   - [kargo_api_secret_name](#kargo_api_secret_name)
   - [kargo_api_service_type](#kargo_api_service_type)
+  - [kargo_cluster_config](#kargo_cluster_config)
+  - [kargo_cluster_promotion_tasks](#kargo_cluster_promotion_tasks)
   - [kargo_controller_enabled](#kargo_controller_enabled)
   - [kargo_crds_install](#kargo_crds_install)
   - [kargo_crds_keep](#kargo_crds_keep)
+  - [kargo_credentials](#kargo_credentials)
   - [kargo_deployment_name](#kargo_deployment_name)
   - [kargo_enabled](#kargo_enabled)
   - [kargo_extra_manifests](#kargo_extra_manifests)
@@ -38,7 +41,15 @@ Install and configure Kargo on kubernetes
   - [kargo_helm_chart_version](#kargo_helm_chart_version)
   - [kargo_management_controller_enabled](#kargo_management_controller_enabled)
   - [kargo_namespace](#kargo_namespace)
+  - [kargo_project_configs](#kargo_project_configs)
+  - [kargo_projects](#kargo_projects)
+  - [kargo_projects_wait_timeout](#kargo_projects_wait_timeout)
+  - [kargo_promotion_tasks](#kargo_promotion_tasks)
+  - [kargo_shared_resources_namespace](#kargo_shared_resources_namespace)
+  - [kargo_stages](#kargo_stages)
   - [kargo_wait_install](#kargo_wait_install)
+  - [kargo_warehouses](#kargo_warehouses)
+  - [kargo_warehouses_default_interval](#kargo_warehouses_default_interval)
   - [kargo_webhooks_register](#kargo_webhooks_register)
 - [Discovered Tags](#discovered-tags)
 - [Dependencies](#dependencies)
@@ -55,7 +66,7 @@ Install and configure Kargo on kubernetes
 
 ### kargo_additional_config
 
-Additional configuration merged with the rendered helm values.
+Additional configuration recursively merged with the rendered helm values.
 Use it to set any chart option not explicitly exposed by this role.
 
 **_Type:_** dict<br />
@@ -332,6 +343,37 @@ Kubernetes service type for the Kargo API server
 kargo_api_service_type: ClusterIP
 ```
 
+### kargo_cluster_config
+
+Spec of the cluster-wide ClusterConfig (always named `cluster`).
+Not created when empty.
+https://docs.kargo.io/operator-guide/cluster-configuration
+
+**_Type:_** dict<br />
+
+#### Default value
+
+```YAML
+kargo_cluster_config: {}
+```
+
+### kargo_cluster_promotion_tasks
+
+List of ClusterPromotionTasks, reusable by every Project.
+Item keys: `name`, `steps`, optional `vars`, `labels`,
+`annotations` and `state`.
+Kargo expressions (`${{ ... }}`) must be tagged `!unsafe`, otherwise
+Ansible tries to template them.
+https://docs.kargo.io/user-guide/reference-docs/promotion-tasks
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+kargo_cluster_promotion_tasks: []
+```
+
 ### kargo_controller_enabled
 
 Whether the Kargo controller is enabled
@@ -369,6 +411,23 @@ release is uninstalled.
 
 ```YAML
 kargo_crds_keep: true
+```
+
+### kargo_credentials
+
+List of repository credentials. Item keys: `name`, `type`
+(git, helm, image or generic), `repo_url`, optional
+`repo_url_is_regex`, `project` (defaults to the shared resources
+namespace), `parameters` (extra stringData such as `username`
+and `password`), `labels` and `state`.
+https://docs.kargo.io/user-guide/security/managing-secrets
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+kargo_credentials: []
 ```
 
 ### kargo_deployment_name
@@ -456,6 +515,97 @@ K8s namespace to install the Kargo chart
 kargo_namespace: kargo
 ```
 
+### kargo_project_configs
+
+List of ProjectConfigs, at most one per Project. Item keys:
+`project`, optional `promotion_policies`, `webhook_receivers`,
+`additional_config` (merged into spec), `labels`, `annotations`
+and `state`.
+https://docs.kargo.io/user-guide/how-to-guides/working-with-projects
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+kargo_project_configs: []
+```
+
+### kargo_projects
+
+List of Kargo Projects. Kargo creates a namespace of the same
+name for each of them. Item keys: `name`, optional `labels`,
+`annotations` and `state`.
+https://docs.kargo.io/user-guide/how-to-guides/working-with-projects
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+kargo_projects: []
+```
+
+### kargo_projects_wait_timeout
+
+Seconds to wait for a Project (and its namespace) to be ready
+
+**_Type:_** number<br />
+
+#### Default value
+
+```YAML
+kargo_projects_wait_timeout: 120
+```
+
+### kargo_promotion_tasks
+
+List of PromotionTasks. Item keys: `name`, `project`, `steps`,
+optional `vars`, `labels`, `annotations` and `state`.
+Kargo expressions (`${{ ... }}`) must be tagged `!unsafe`, otherwise
+Ansible tries to template them.
+https://docs.kargo.io/user-guide/reference-docs/promotion-tasks
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+kargo_promotion_tasks: []
+```
+
+### kargo_shared_resources_namespace
+
+Namespace holding resources shared across Projects, such as
+credentials. Used as default namespace for `kargo_credentials`
+entries without a `project`.
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+kargo_shared_resources_namespace: kargo-shared-resources
+```
+
+### kargo_stages
+
+List of Stages. Item keys: `name`, `project`,
+`requested_freight`, optional `promotion_template`, `vars`,
+`verification`, `shard`, `additional_config` (merged into spec),
+`labels`, `annotations` and `state`.
+Kargo expressions (`${{ ... }}`) must be tagged `!unsafe`, otherwise
+Ansible tries to template them.
+https://docs.kargo.io/user-guide/how-to-guides/working-with-stages
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+kargo_stages: []
+```
+
 ### kargo_wait_install
 
 Wait for helm install to finish
@@ -466,6 +616,34 @@ Wait for helm install to finish
 
 ```YAML
 kargo_wait_install: true
+```
+
+### kargo_warehouses
+
+List of Warehouses. Item keys: `name`, `project`,
+`subscriptions`, optional `interval`, `freight_creation_policy`,
+`freight_creation_criteria`, `shard`, `additional_config`
+(merged into spec), `labels`, `annotations` and `state`.
+https://docs.kargo.io/user-guide/how-to-guides/working-with-warehouses
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+kargo_warehouses: []
+```
+
+### kargo_warehouses_default_interval
+
+Default polling interval of Warehouses
+
+**_Type:_** string<br />
+
+#### Default value
+
+```YAML
+kargo_warehouses_default_interval: 5m0s
 ```
 
 ### kargo_webhooks_register
@@ -483,17 +661,13 @@ kargo_webhooks_register: true
 
 ## Discovered Tags
 
+**_always_**
+
 **_helm_chart_**
-
-**_install_**
-
-**_kargo_**
 
 **_manifest_**
 
 **_namespace_**
-
-**_uninstall_**
 
 ## Dependencies
 

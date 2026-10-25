@@ -27,7 +27,150 @@
     state: "present"
     chart_ref: "{{ kargo_helm_chart_ref }}"
     chart_version: "{{ kargo_helm_chart_version }}"
-    values: "{{ lookup('ansible.builtin.template', 'kargo_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
+    values: >-
+      {{ lookup('ansible.builtin.template', 'kargo_helm_values.yml.j2')
+         | ansible.builtin.from_yaml
+         | ansible.builtin.combine(kargo_additional_config, recursive=true) }}
     wait: "{{ kargo_wait_install }}"
   tags:
     - "helm_chart"
+
+# Check mode : le chart n'a rien installé et les Projects ne créent pas leur
+# namespace, on n'applique que ce que le dry-run serveur peut accepter.
+- name: "Look up Kargo CRDs (check mode)"
+  kubernetes.core.k8s_info:
+    api_version: "apiextensions.k8s.io/v1"
+    kind: "CustomResourceDefinition"
+    name: "projects.kargo.akuity.io"
+  register: kargo_crd_lookup
+  when: ansible_check_mode
+  tags:
+    - "manifest"
+
+- name: "Look up existing namespaces (check mode)"
+  kubernetes.core.k8s_info:
+    api_version: "v1"
+    kind: "Namespace"
+  register: kargo_namespace_lookup
+  when: ansible_check_mode
+  tags:
+    - "manifest"
+
+# Server-side apply : les valeurs par défaut posées par les CRDs ne sont pas vues
+# comme un écart, sinon le client-side apply réécrit les Warehouses à chaque run.
+- name: "Create Kargo cluster config"
+  kubernetes.core.k8s:
+    template: "resources/cluster_config.yml.j2"
+    state: "present"
+    apply: true
+    server_side_apply: "{{ kargo_server_side_apply }}"
+  when:
+    - kargo_cluster_config | length > 0
+    - kargo_crds_ready
+  tags:
+    - "manifest"
+
+- name: "Create Kargo cluster promotion tasks"
+  kubernetes.core.k8s:
+    template: "resources/cluster_promotion_task.yml.j2"
+    state: "{{ kargo_cluster_promotion_task.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ kargo_server_side_apply }}"
+  loop: "{{ kargo_cluster_promotion_tasks }}"
+  loop_control:
+    loop_var: kargo_cluster_promotion_task
+    label: "{{ kargo_cluster_promotion_task.name }}"
+  when: kargo_crds_ready
+  tags:
+    - "manifest"
+
+# Le namespace du projet est créé par le controller : on attend qu'il soit prêt.
+- name: "Create Kargo projects"
+  kubernetes.core.k8s:
+    template: "resources/project.yml.j2"
+    state: "{{ kargo_project.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ kargo_server_side_apply }}"
+    wait: true
+    wait_condition:
+      type: "Ready"
+      status: "True"
+    wait_timeout: "{{ kargo_projects_wait_timeout }}"
+  loop: "{{ kargo_projects }}"
+  loop_control:
+    loop_var: kargo_project
+    label: "{{ kargo_project.name }}"
+  when: kargo_crds_ready
+  tags:
+    - "manifest"
+
+- name: "Create Kargo project configs"
+  kubernetes.core.k8s:
+    template: "resources/project_config.yml.j2"
+    state: "{{ kargo_project_config.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ kargo_server_side_apply }}"
+  loop: "{{ kargo_project_configs }}"
+  loop_control:
+    loop_var: kargo_project_config
+    label: "{{ kargo_project_config.project }}"
+  when: kargo_crds_ready and (not ansible_check_mode or kargo_project_config.project in kargo_existing_namespaces)
+  tags:
+    - "manifest"
+
+- name: "Create Kargo credentials"
+  kubernetes.core.k8s:
+    template: "resources/credentials.yml.j2"
+    state: "{{ kargo_credential.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ kargo_server_side_apply }}"
+  loop: "{{ kargo_credentials }}"
+  loop_control:
+    loop_var: kargo_credential
+    label: "{{ kargo_credential.name }}"
+  no_log: true
+  when: not ansible_check_mode or (kargo_credential.project | default(kargo_shared_resources_namespace)) in kargo_existing_namespaces
+  tags:
+    - "manifest"
+
+- name: "Create Kargo promotion tasks"
+  kubernetes.core.k8s:
+    template: "resources/promotion_task.yml.j2"
+    state: "{{ kargo_promotion_task.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ kargo_server_side_apply }}"
+  loop: "{{ kargo_promotion_tasks }}"
+  loop_control:
+    loop_var: kargo_promotion_task
+    label: "{{ kargo_promotion_task.project }}/{{ kargo_promotion_task.name }}"
+  when: kargo_crds_ready and (not ansible_check_mode or kargo_promotion_task.project in kargo_existing_namespaces)
+  tags:
+    - "manifest"
+
+- name: "Create Kargo warehouses"
+  kubernetes.core.k8s:
+    template: "resources/warehouse.yml.j2"
+    state: "{{ kargo_warehouse.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ kargo_server_side_apply }}"
+  loop: "{{ kargo_warehouses }}"
+  loop_control:
+    loop_var: kargo_warehouse
+    label: "{{ kargo_warehouse.project }}/{{ kargo_warehouse.name }}"
+  when: kargo_crds_ready and (not ansible_check_mode or kargo_warehouse.project in kargo_existing_namespaces)
+  tags:
+    - "manifest"
+
+- name: "Create Kargo stages"
+  kubernetes.core.k8s:
+    template: "resources/stage.yml.j2"
+    state: "{{ kargo_stage.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ kargo_server_side_apply }}"
+  loop: "{{ kargo_stages }}"
+  loop_control:
+    loop_var: kargo_stage
+    label: "{{ kargo_stage.project }}/{{ kargo_stage.name }}"
+  when: kargo_crds_ready and (not ansible_check_mode or kargo_stage.project in kargo_existing_namespaces)
+  tags:
+    - "manifest"

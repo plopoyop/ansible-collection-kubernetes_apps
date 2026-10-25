@@ -212,7 +212,7 @@ kargo_webhooks_register: true
 # @var kargo_additional_config
 # @var kargo_additional_config:type: dict
 # @var kargo_additional_config:description: >
-# Additional configuration merged with the rendered helm values.
+# Additional configuration recursively merged with the rendered helm values.
 # Use it to set any chart option not explicitly exposed by this role.
 kargo_additional_config: {}
 
@@ -222,3 +222,104 @@ kargo_additional_config: {}
 # Extra Kubernetes manifests to apply in the Kargo namespace
 # (e.g. additional Secrets, Projects, ServiceAccounts).
 kargo_extra_manifests: []
+
+# @var kargo_shared_resources_namespace
+# @var kargo_shared_resources_namespace:type: string
+# @var kargo_shared_resources_namespace:description: >
+# Namespace holding resources shared across Projects, such as
+# credentials. Used as default namespace for `kargo_credentials`
+# entries without a `project`.
+kargo_shared_resources_namespace: "kargo-shared-resources"
+
+# @var kargo_cluster_config
+# @var kargo_cluster_config:type: dict
+# @var kargo_cluster_config:description: >
+# Spec of the cluster-wide ClusterConfig (always named `cluster`).
+# Not created when empty.
+# https://docs.kargo.io/operator-guide/cluster-configuration
+kargo_cluster_config: {}
+
+# @var kargo_cluster_promotion_tasks
+# @var kargo_cluster_promotion_tasks:type: list
+# @var kargo_cluster_promotion_tasks:description: >
+# List of ClusterPromotionTasks, reusable by every Project.
+# Item keys: `name`, `steps`, optional `vars`, `labels`,
+# `annotations` and `state`.
+# Kargo expressions (`${{ ... }}`) must be tagged `!unsafe`, otherwise
+# Ansible tries to template them.
+# https://docs.kargo.io/user-guide/reference-docs/promotion-tasks
+kargo_cluster_promotion_tasks: []
+
+# @var kargo_projects
+# @var kargo_projects:type: list
+# @var kargo_projects:description: >
+# List of Kargo Projects. Kargo creates a namespace of the same
+# name for each of them. Item keys: `name`, optional `labels`,
+# `annotations` and `state`.
+# https://docs.kargo.io/user-guide/how-to-guides/working-with-projects
+kargo_projects: []
+
+# @var kargo_projects_wait_timeout
+# @var kargo_projects_wait_timeout:type: number
+# @var kargo_projects_wait_timeout:description: >
+# Seconds to wait for a Project (and its namespace) to be ready
+kargo_projects_wait_timeout: 120
+
+# @var kargo_project_configs
+# @var kargo_project_configs:type: list
+# @var kargo_project_configs:description: >
+# List of ProjectConfigs, at most one per Project. Item keys:
+# `project`, optional `promotion_policies`, `webhook_receivers`,
+# `additional_config` (merged into spec), `labels`, `annotations`
+# and `state`.
+# https://docs.kargo.io/user-guide/how-to-guides/working-with-projects
+kargo_project_configs: []
+
+# @var kargo_credentials
+# @var kargo_credentials:type: list
+# @var kargo_credentials:description: >
+# List of repository credentials. Item keys: `name`, `type`
+# (git, helm, image or generic), `repo_url`, optional
+# `repo_url_is_regex`, `project` (defaults to the shared resources
+# namespace), `parameters` (extra stringData such as `username`
+# and `password`), `labels` and `state`.
+# https://docs.kargo.io/user-guide/security/managing-secrets
+kargo_credentials: []
+
+# @var kargo_promotion_tasks
+# @var kargo_promotion_tasks:type: list
+# @var kargo_promotion_tasks:description: >
+# List of PromotionTasks. Item keys: `name`, `project`, `steps`,
+# optional `vars`, `labels`, `annotations` and `state`.
+# Kargo expressions (`${{ ... }}`) must be tagged `!unsafe`, otherwise
+# Ansible tries to template them.
+# https://docs.kargo.io/user-guide/reference-docs/promotion-tasks
+kargo_promotion_tasks: []
+
+# @var kargo_warehouses
+# @var kargo_warehouses:type: list
+# @var kargo_warehouses:description: >
+# List of Warehouses. Item keys: `name`, `project`,
+# `subscriptions`, optional `interval`, `freight_creation_policy`,
+# `freight_creation_criteria`, `shard`, `additional_config`
+# (merged into spec), `labels`, `annotations` and `state`.
+# https://docs.kargo.io/user-guide/how-to-guides/working-with-warehouses
+kargo_warehouses: []
+
+# @var kargo_warehouses_default_interval
+# @var kargo_warehouses_default_interval:type: string
+# @var kargo_warehouses_default_interval:description: >
+# Default polling interval of Warehouses
+kargo_warehouses_default_interval: "5m0s"
+
+# @var kargo_stages
+# @var kargo_stages:type: list
+# @var kargo_stages:description: >
+# List of Stages. Item keys: `name`, `project`,
+# `requested_freight`, optional `promotion_template`, `vars`,
+# `verification`, `shard`, `additional_config` (merged into spec),
+# `labels`, `annotations` and `state`.
+# Kargo expressions (`${{ ... }}`) must be tagged `!unsafe`, otherwise
+# Ansible tries to template them.
+# https://docs.kargo.io/user-guide/how-to-guides/working-with-stages
+kargo_stages: []

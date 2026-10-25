@@ -1,2 +1,7 @@
 ---
 kargo_helm_chart_ref: "oci://ghcr.io/akuity/kargo-charts/kargo"
+kargo_server_side_apply:
+  field_manager: "ansible-kargo"
+  force_conflicts: true
+kargo_crds_ready: "{{ not ansible_check_mode or (kargo_crd_lookup.resources | default([]) | length > 0) }}"
+kargo_existing_namespaces: "{{ kargo_namespace_lookup.resources | default([]) | map(attribute='metadata.name') | list }}"
