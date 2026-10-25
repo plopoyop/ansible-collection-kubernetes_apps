@@ -1,7 +1,7 @@
 ---
 - name: "Create"
-  hosts: localhost
-  connection: local
+  hosts: "localhost"
+  connection: "local"
   gather_facts: false
   tasks:
     - name: "Build a kind cluster (wait for control plane)."

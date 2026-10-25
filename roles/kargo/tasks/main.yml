@@ -6,7 +6,7 @@
       tags:
         - "kargo"
         - "install"
-  when: kargo_enabled
+  when: "kargo_enabled"
   tags: ["always"]
 
 - name: "Include cleanup when disabled"
@@ -16,5 +16,5 @@
       tags:
         - "kargo"
         - "uninstall"
-  when: not kargo_enabled
+  when: "not kargo_enabled"
   tags: ["always"]

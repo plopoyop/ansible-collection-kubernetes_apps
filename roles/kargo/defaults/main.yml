@@ -29,6 +29,14 @@ kargo_deployment_name: "kargo"
 # Wait for helm install to finish
 kargo_wait_install: true
 
+# @var kargo_components_wait_timeout
+# @var kargo_components_wait_timeout:type: number
+# @var kargo_components_wait_timeout:description: >
+# Seconds to wait for the webhooks server and the management controller
+# to be available before applying Kargo resources, when
+# `kargo_wait_install` is false.
+kargo_components_wait_timeout: 300
+
 # @var kargo_crds_install
 # @var kargo_crds_install:type: boolean
 # @var kargo_crds_install:description: >
@@ -219,8 +227,10 @@ kargo_additional_config: {}
 # @var kargo_extra_manifests
 # @var kargo_extra_manifests:type: list
 # @var kargo_extra_manifests:description: >
-# Extra Kubernetes manifests to apply in the Kargo namespace
-# (e.g. additional Secrets, Projects, ServiceAccounts).
+# Extra Kubernetes manifests to apply in the Kargo namespace, before the
+# helm chart is installed (e.g. the Secret referenced by
+# `kargo_api_secret_name`, additional ServiceAccounts). Kargo resources
+# depend on the chart CRDs: use the dedicated variables below instead.
 kargo_extra_manifests: []
 
 # @var kargo_shared_resources_namespace
@@ -279,8 +289,8 @@ kargo_project_configs: []
 # @var kargo_credentials:type: list
 # @var kargo_credentials:description: >
 # List of repository credentials. Item keys: `name`, `type`
-# (git, helm, image or generic), `repo_url`, optional
-# `repo_url_is_regex`, `project` (defaults to the shared resources
+# (git, helm, image or generic), `repo_url` (not used by generic
+# credentials), optional `repo_url_is_regex`, `project` (defaults to the shared resources
 # namespace), `parameters` (extra stringData such as `username`
 # and `password`), `labels` and `state`.
 # https://docs.kargo.io/user-guide/security/managing-secrets

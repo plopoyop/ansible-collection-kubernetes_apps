@@ -1,7 +1,7 @@
 ---
 - name: "Destroy"
-  hosts: localhost
-  connection: local
+  hosts: "localhost"
+  connection: "local"
   gather_facts: false
   tasks:
     - name: "Delete the kind cluster."

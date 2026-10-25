@@ -5,3 +5,11 @@ kargo_server_side_apply:
   force_conflicts: true
 kargo_crds_ready: "{{ not ansible_check_mode or (kargo_crd_lookup.resources | default([]) | length > 0) }}"
 kargo_existing_namespaces: "{{ kargo_namespace_lookup.resources | default([]) | map(attribute='metadata.name') | list }}"
+kargo_declarative_resources_defined: >-
+  {{ kargo_cluster_config | length > 0
+     or ([kargo_cluster_promotion_tasks, kargo_projects, kargo_project_configs, kargo_credentials,
+          kargo_promotion_tasks, kargo_warehouses, kargo_stages] | ansible.builtin.flatten(levels=1) | length > 0) }}
+kargo_components_to_wait: >-
+  {{ (['kargo-webhooks-server'] if kargo_helm_values.webhooksServer.enabled | default(true) else [])
+     + (['kargo-management-controller'] if kargo_helm_values.managementController.enabled | default(true) else []) }}
+kargo_installed_crds: "{{ kargo_crd_list.resources | default([]) | map(attribute='metadata.name') | list }}"

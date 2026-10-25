@@ -1,7 +1,7 @@
 ---
 - name: "Verify"
-  hosts: localhost
-  connection: local
+  hosts: "localhost"
+  connection: "local"
   gather_facts: true
 
   tasks:
@@ -9,7 +9,7 @@
       kubernetes.core.k8s_info:
         kind: "Namespace"
         name: "kargo"
-      register: namespace_kargo
+      register: "namespace_kargo"
       until:
         - namespace_kargo.resources | length > 0
         - namespace_kargo.resources[0].status.phase == "Active"
@@ -28,7 +28,7 @@
         kind: "Deployment"
         name: "kargo-api"
         namespace: "kargo"
-      register: kargo_api_deployment
+      register: "kargo_api_deployment"
       until:
         - kargo_api_deployment.resources | length > 0
         - kargo_api_deployment.resources[0].status.readyReplicas | default(0) >= 1
@@ -47,7 +47,7 @@
         kind: "Deployment"
         name: "kargo-controller"
         namespace: "kargo"
-      register: kargo_controller_deployment
+      register: "kargo_controller_deployment"
       until:
         - kargo_controller_deployment.resources | length > 0
         - kargo_controller_deployment.resources[0].status.readyReplicas | default(0) >= 1
@@ -67,7 +67,7 @@
         kind: "{{ item.kind }}"
         name: "{{ item.name }}"
         namespace: "{{ item.namespace | default(omit) }}"
-      register: kargo_resources
+      register: "kargo_resources"
       loop:
         - {kind: "ClusterPromotionTask", name: "molecule-cluster-task"}
         - {kind: "Project", name: "molecule-project"}
@@ -77,6 +77,7 @@
         - {kind: "Stage", name: "test", namespace: "molecule-project"}
         - {api_version: "v1", kind: "Secret", name: "molecule-git-creds", namespace: "molecule-project"}
         - {api_version: "v1", kind: "Secret", name: "molecule-shared-image-creds", namespace: "kargo-shared-resources"}
+        - {api_version: "v1", kind: "Secret", name: "molecule-generic-creds", namespace: "molecule-project"}
       loop_control:
         label: "{{ item.kind }}/{{ item.name }}"
 
@@ -93,4 +94,6 @@
         that:
           - kargo_resources.results[6].resources[0].metadata.labels['kargo.akuity.io/cred-type'] == "git"
           - kargo_resources.results[7].resources[0].metadata.labels['kargo.akuity.io/cred-type'] == "image"
+          - kargo_resources.results[8].resources[0].metadata.labels['kargo.akuity.io/cred-type'] == "generic"
+          - "'repoURL' not in kargo_resources.results[8].resources[0].data"
         fail_msg: "Credentials Secrets are not labelled for Kargo."

@@ -1,16 +1,52 @@
 ---
-# Avant le helm uninstall : le controller doit être là pour lever leurs finalizers.
+- name: "List installed CRDs"
+  kubernetes.core.k8s_info:
+    api_version: "apiextensions.k8s.io/v1"
+    kind: "CustomResourceDefinition"
+  register: "kargo_crd_list"
+  tags:
+    - "manifest"
+
+# Sans keep, les CRDs partent avec le chart : tous les Projects doivent être
+# supprimés tant que le controller est là pour lever leurs finalizers.
+- name: "List existing Kargo projects"
+  kubernetes.core.k8s_info:
+    api_version: "kargo.akuity.io/v1alpha1"
+    kind: "Project"
+  register: "kargo_existing_projects"
+  when:
+    - "'projects.kargo.akuity.io' in kargo_installed_crds"
+    - "not kargo_crds_keep"
+  tags:
+    - "manifest"
+
 - name: "Remove Kargo projects"
   kubernetes.core.k8s:
     api_version: "kargo.akuity.io/v1alpha1"
     kind: "Project"
-    name: "{{ kargo_project.name }}"
+    name: "{{ kargo_project_name }}"
     state: "absent"
     wait: true
-  loop: "{{ kargo_projects }}"
+  loop: >-
+    {{ (kargo_projects | map(attribute='name') | list
+        + kargo_existing_projects.resources | default([]) | map(attribute='metadata.name') | list)
+       | ansible.builtin.unique }}
   loop_control:
-    loop_var: kargo_project
-    label: "{{ kargo_project.name }}"
+    loop_var: "kargo_project_name"
+  when: "'projects.kargo.akuity.io' in kargo_installed_crds"
+  tags:
+    - "manifest"
+
+- name: "Remove Kargo cluster config"
+  kubernetes.core.k8s:
+    api_version: "kargo.akuity.io/v1alpha1"
+    kind: "ClusterConfig"
+    name: "cluster"
+    state: "absent"
+    wait: true
+  when:
+    - "'clusterconfigs.kargo.akuity.io' in kargo_installed_crds"
+    - "kargo_cluster_config | length > 0 or not kargo_crds_keep"
   tags:
     - "manifest"
 
@@ -22,8 +58,9 @@
     state: "absent"
   loop: "{{ kargo_cluster_promotion_tasks }}"
   loop_control:
-    loop_var: kargo_cluster_promotion_task
+    loop_var: "kargo_cluster_promotion_task"
     label: "{{ kargo_cluster_promotion_task.name }}"
+  when: "'clusterpromotiontasks.kargo.akuity.io' in kargo_installed_crds"
   tags:
     - "manifest"
 
@@ -40,7 +77,7 @@
     api_version: "v1"
     kind: "ServiceAccount"
     namespace: "{{ kargo_namespace }}"
-  register: kargo_leftover_serviceaccounts
+  register: "kargo_leftover_serviceaccounts"
   failed_when: false
   tags:
     - "manifest"
@@ -52,9 +89,12 @@
     namespace: "{{ kargo_namespace }}"
     name: "{{ kargo_leftover_sa.metadata.name }}"
     patch:
+      - op: "test"
+        path: "/metadata/finalizers"
+        value: "{{ kargo_leftover_sa.metadata.finalizers }}"
       - op: "replace"
         path: "/metadata/finalizers"
-        value: []
+        value: "{{ kargo_leftover_sa.metadata.finalizers | ansible.builtin.difference(['kargo.akuity.io/finalizer']) }}"
   loop: "{{ kargo_leftover_serviceaccounts.resources | default([]) }}"
   loop_control:
     loop_var: "kargo_leftover_sa"

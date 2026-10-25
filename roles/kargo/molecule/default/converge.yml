@@ -1,7 +1,7 @@
 ---
 - name: "Converge"
-  hosts: localhost
-  connection: local
+  hosts: "localhost"
+  connection: "local"
   gather_facts: false
   vars:
     # bcrypt hash for "molecule-admin-password"
@@ -38,6 +38,11 @@
         parameters:
           username: "molecule"
           password: "molecule-token"
+      - name: "molecule-generic-creds"
+        project: "molecule-project"
+        type: "generic"
+        parameters:
+          token: "molecule-token"
     kargo_promotion_tasks:
       - name: "molecule-task"
         project: "molecule-project"

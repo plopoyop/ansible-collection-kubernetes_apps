@@ -4,7 +4,7 @@ galaxy_info:
   role_name: "kargo"
   author: "Clément Hubert"
 
-  license: MPL-2.0
+  license: "MPL-2.0"
 
   min_ansible_version: "2.17"
 

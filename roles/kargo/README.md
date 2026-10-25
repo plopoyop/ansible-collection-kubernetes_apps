@@ -30,6 +30,7 @@ Install and configure Kargo on kubernetes
   - [kargo_api_service_type](#kargo_api_service_type)
   - [kargo_cluster_config](#kargo_cluster_config)
   - [kargo_cluster_promotion_tasks](#kargo_cluster_promotion_tasks)
+  - [kargo_components_wait_timeout](#kargo_components_wait_timeout)
   - [kargo_controller_enabled](#kargo_controller_enabled)
   - [kargo_crds_install](#kargo_crds_install)
   - [kargo_crds_keep](#kargo_crds_keep)
@@ -374,6 +375,20 @@ https://docs.kargo.io/user-guide/reference-docs/promotion-tasks
 kargo_cluster_promotion_tasks: []
 ```
 
+### kargo_components_wait_timeout
+
+Seconds to wait for the webhooks server and the management controller
+to be available before applying Kargo resources, when
+`kargo_wait_install` is false.
+
+**_Type:_** number<br />
+
+#### Default value
+
+```YAML
+kargo_components_wait_timeout: 300
+```
+
 ### kargo_controller_enabled
 
 Whether the Kargo controller is enabled
@@ -416,8 +431,8 @@ kargo_crds_keep: true
 ### kargo_credentials
 
 List of repository credentials. Item keys: `name`, `type`
-(git, helm, image or generic), `repo_url`, optional
-`repo_url_is_regex`, `project` (defaults to the shared resources
+(git, helm, image or generic), `repo_url` (not used by generic
+credentials), optional `repo_url_is_regex`, `project` (defaults to the shared resources
 namespace), `parameters` (extra stringData such as `username`
 and `password`), `labels` and `state`.
 https://docs.kargo.io/user-guide/security/managing-secrets
@@ -456,8 +471,10 @@ kargo_enabled: true
 
 ### kargo_extra_manifests
 
-Extra Kubernetes manifests to apply in the Kargo namespace
-(e.g. additional Secrets, Projects, ServiceAccounts).
+Extra Kubernetes manifests to apply in the Kargo namespace, before the
+helm chart is installed (e.g. the Secret referenced by
+`kargo_api_secret_name`, additional ServiceAccounts). Kargo resources
+depend on the chart CRDs: use the dedicated variables below instead.
 
 **_Type:_** list<br />
 

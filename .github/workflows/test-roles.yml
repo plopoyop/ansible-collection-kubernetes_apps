@@ -8,19 +8,19 @@ on:
     paths:
       - "roles/**"
       - ".github/**"
-      - devbox.json
-      - devbox.lock
-      - flake.nix
-      - flake.lock
+      - "devbox.json"
+      - "devbox.lock"
+      - "flake.nix"
+      - "flake.lock"
   pull_request:
     branches: [main]
     paths:
       - "roles/**"
       - ".github/**"
-      - devbox.json
-      - devbox.lock
-      - flake.nix
-      - flake.lock
+      - "devbox.json"
+      - "devbox.lock"
+      - "flake.nix"
+      - "flake.lock"
 
 jobs:
   argocd:

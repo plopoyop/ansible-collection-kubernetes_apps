@@ -1,7 +1,7 @@
 ---
 global:
   sharedResources:
-    namespace: "{{ kargo_shared_resources_namespace }}"
+    namespace: {{ kargo_shared_resources_namespace | ansible.builtin.to_json }}
 
 crds:
   install: {{ kargo_crds_install | lower }}
@@ -12,28 +12,28 @@ webhooks:
 
 api:
   enabled: {{ kargo_api_enabled | lower }}
-  host: "{{ kargo_api_host }}"
-  logLevel: "{{ kargo_api_log_level }}"
+  host: {{ kargo_api_host | ansible.builtin.to_json }}
+  logLevel: {{ kargo_api_log_level | ansible.builtin.to_json }}
 {% if kargo_api_secret_name | length > 0 %}
   secret:
-    name: "{{ kargo_api_secret_name }}"
+    name: {{ kargo_api_secret_name | ansible.builtin.to_json }}
 {% endif %}
   adminAccount:
     enabled: {{ kargo_api_admin_account_enabled | lower }}
 {% if kargo_api_admin_password_hash | length > 0 %}
-    passwordHash: "{{ kargo_api_admin_password_hash }}"
+    passwordHash: {{ kargo_api_admin_password_hash | ansible.builtin.to_json }}
 {% endif %}
 {% if kargo_api_admin_token_signing_key | length > 0 %}
-    tokenSigningKey: "{{ kargo_api_admin_token_signing_key }}"
+    tokenSigningKey: {{ kargo_api_admin_token_signing_key | ansible.builtin.to_json }}
 {% endif %}
-    tokenTTL: "{{ kargo_api_admin_token_ttl }}"
+    tokenTTL: {{ kargo_api_admin_token_ttl | ansible.builtin.to_json }}
   service:
-    type: "{{ kargo_api_service_type }}"
+    type: {{ kargo_api_service_type | ansible.builtin.to_json }}
   ingress:
     enabled: {{ kargo_api_ingress_enabled | lower }}
 {% if kargo_api_ingress_enabled %}
 {% if kargo_api_ingress_class_name %}
-    ingressClassName: "{{ kargo_api_ingress_class_name }}"
+    ingressClassName: {{ kargo_api_ingress_class_name | ansible.builtin.to_json }}
 {% endif %}
 {% if kargo_api_ingress_annotations | length > 0 %}
     annotations: {{ kargo_api_ingress_annotations | ansible.builtin.to_json }}
@@ -41,18 +41,18 @@ api:
     tls:
       enabled: {{ kargo_api_ingress_tls_enabled | lower }}
       selfSignedCert: {{ kargo_api_ingress_tls_self_signed_cert | lower }}
-      secretName: "{{ kargo_api_ingress_tls_secret_name }}"
+      secretName: {{ kargo_api_ingress_tls_secret_name | ansible.builtin.to_json }}
 {% endif %}
   oidc:
     enabled: {{ kargo_api_oidc_enabled | lower }}
 {% if kargo_api_oidc_enabled %}
-    issuerURL: "{{ kargo_api_oidc_issuer_url }}"
-    clientID: "{{ kargo_api_oidc_client_id }}"
+    issuerURL: {{ kargo_api_oidc_issuer_url | ansible.builtin.to_json }}
+    clientID: {{ kargo_api_oidc_client_id | ansible.builtin.to_json }}
 {% if kargo_api_oidc_cli_client_id | length > 0 %}
-    cliClientID: "{{ kargo_api_oidc_cli_client_id }}"
+    cliClientID: {{ kargo_api_oidc_cli_client_id | ansible.builtin.to_json }}
 {% endif %}
     additionalScopes: {{ kargo_api_oidc_additional_scopes | ansible.builtin.to_json }}
-    usernameClaim: "{{ kargo_api_oidc_username_claim }}"
+    usernameClaim: {{ kargo_api_oidc_username_claim | ansible.builtin.to_json }}
 {% endif %}
 
 controller:
