@@ -38,7 +38,7 @@
         sources:
           - repoURL: "https://github.com/tweedegolf/mailcrab"
             path: "charts/mailcrab"
-            targetRevision: "main"
+            targetRevision: "v1.9.0"
         destination:
           name: "molecule"
           namespace: "mailcrab"
