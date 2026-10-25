@@ -1,0 +1,113 @@
+---
+- name: "List installed CRDs"
+  kubernetes.core.k8s_info:
+    api_version: "apiextensions.k8s.io/v1"
+    kind: "CustomResourceDefinition"
+  register: "kargo_crd_list"
+  tags:
+    - "manifest"
+
+# Sans keep, les CRDs partent avec le chart : tous les Projects doivent être
+# supprimés tant que le controller est là pour lever leurs finalizers.
+- name: "List existing Kargo projects"
+  kubernetes.core.k8s_info:
+    api_version: "kargo.akuity.io/v1alpha1"
+    kind: "Project"
+  register: "kargo_existing_projects"
+  when:
+    - "'projects.kargo.akuity.io' in kargo_installed_crds"
+    - "not kargo_crds_keep"
+  tags:
+    - "manifest"
+
+- name: "Remove Kargo projects"
+  kubernetes.core.k8s:
+    api_version: "kargo.akuity.io/v1alpha1"
+    kind: "Project"
+    name: "{{ kargo_project_name }}"
+    state: "absent"
+    wait: true
+  loop: >-
+    {{ (kargo_projects | map(attribute='name') | list
+        + kargo_existing_projects.resources | default([]) | map(attribute='metadata.name') | list)
+       | ansible.builtin.unique }}
+  loop_control:
+    loop_var: "kargo_project_name"
+  when: "'projects.kargo.akuity.io' in kargo_installed_crds"
+  tags:
+    - "manifest"
+
+- name: "Remove Kargo cluster config"
+  kubernetes.core.k8s:
+    api_version: "kargo.akuity.io/v1alpha1"
+    kind: "ClusterConfig"
+    name: "cluster"
+    state: "absent"
+    wait: true
+  when:
+    - "'clusterconfigs.kargo.akuity.io' in kargo_installed_crds"
+    - "kargo_cluster_config | length > 0 or not kargo_crds_keep"
+  tags:
+    - "manifest"
+
+- name: "Remove Kargo cluster promotion tasks"
+  kubernetes.core.k8s:
+    api_version: "kargo.akuity.io/v1alpha1"
+    kind: "ClusterPromotionTask"
+    name: "{{ kargo_cluster_promotion_task.name }}"
+    state: "absent"
+  loop: "{{ kargo_cluster_promotion_tasks }}"
+  loop_control:
+    loop_var: "kargo_cluster_promotion_task"
+    label: "{{ kargo_cluster_promotion_task.name }}"
+  when: "'clusterpromotiontasks.kargo.akuity.io' in kargo_installed_crds"
+  tags:
+    - "manifest"
+
+- name: "Uninstall Kargo helm package"
+  kubernetes.core.helm:
+    name: "{{ kargo_deployment_name }}"
+    namespace: "{{ kargo_namespace }}"
+    state: "absent"
+  tags:
+    - "helm_chart"
+
+- name: "List leftover ServiceAccounts holding the Kargo finalizer"
+  kubernetes.core.k8s_info:
+    api_version: "v1"
+    kind: "ServiceAccount"
+    namespace: "{{ kargo_namespace }}"
+  register: "kargo_leftover_serviceaccounts"
+  failed_when: false
+  tags:
+    - "manifest"
+
+- name: "Strip Kargo finalizer from leftover ServiceAccounts"
+  kubernetes.core.k8s_json_patch:
+    api_version: "v1"
+    kind: "ServiceAccount"
+    namespace: "{{ kargo_namespace }}"
+    name: "{{ kargo_leftover_sa.metadata.name }}"
+    patch:
+      - op: "test"
+        path: "/metadata/finalizers"
+        value: "{{ kargo_leftover_sa.metadata.finalizers }}"
+      - op: "replace"
+        path: "/metadata/finalizers"
+        value: "{{ kargo_leftover_sa.metadata.finalizers | ansible.builtin.difference(['kargo.akuity.io/finalizer']) }}"
+  loop: "{{ kargo_leftover_serviceaccounts.resources | default([]) }}"
+  loop_control:
+    loop_var: "kargo_leftover_sa"
+    label: "{{ kargo_leftover_sa.metadata.name }}"
+  when: "'kargo.akuity.io/finalizer' in (kargo_leftover_sa.metadata.finalizers | default([]))"
+  tags:
+    - "manifest"
+
+- name: "Remove Kargo namespace"
+  kubernetes.core.k8s:
+    name: "{{ kargo_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"
+  tags:
+    - "namespace"

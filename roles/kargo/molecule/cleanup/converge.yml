@@ -1,0 +1,13 @@
+---
+- name: "Converge"
+  hosts: "localhost"
+  connection: "local"
+  gather_facts: false
+  vars:
+    kargo_enabled: false
+    kargo_projects:
+      - name: "molecule-project"
+  tasks:
+    - name: "Remove Kargo"
+      ansible.builtin.import_role:
+        name: "kargo"

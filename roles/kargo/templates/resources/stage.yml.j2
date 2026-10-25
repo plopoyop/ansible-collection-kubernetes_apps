@@ -1,0 +1,28 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: "{{ kargo_stage.name }}"
+  namespace: "{{ kargo_stage.project }}"
+{% if kargo_stage.labels is defined %}
+  labels: {{ kargo_stage.labels | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_stage.annotations is defined %}
+  annotations: {{ kargo_stage.annotations | ansible.builtin.to_json }}
+{% endif %}
+spec:
+  requestedFreight: {{ kargo_stage.requested_freight | ansible.builtin.to_json }}
+{% if kargo_stage.vars is defined %}
+  vars: {{ kargo_stage.vars | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_stage.promotion_template is defined %}
+  promotionTemplate: {{ kargo_stage.promotion_template | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_stage.verification is defined %}
+  verification: {{ kargo_stage.verification | ansible.builtin.to_json }}
+{% endif %}
+{% if kargo_stage.shard is defined %}
+  shard: "{{ kargo_stage.shard }}"
+{% endif %}
+{% for key, value in (kargo_stage.additional_config | default({})).items() %}
+  {{ key }}: {{ value | ansible.builtin.to_json }}
+{% endfor %}
