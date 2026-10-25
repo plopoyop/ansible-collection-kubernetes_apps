@@ -18,6 +18,7 @@
 ## ⚙️ Dependencies
 
 - fix\(ci\): update renovatebot/github-action action \(v46.3.8 → v46.3.9\) [\#360](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/360) ([plopoyop](https://github.com/plopoyop))
+- feat\(container\): update image ghcr.io/warp-tech/helm-charts/warpgate \(0.1.0 → 0.2.0\) [\#356](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/356) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.3.7 → v46.3.8\) [\#348](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/348) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
