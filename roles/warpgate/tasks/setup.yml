@@ -1,8 +1,4 @@
 ---
-- name: "Include precheck"
-  ansible.builtin.include_tasks: "pre_check.yml"
-  tags: ["always"]
-
 - name: "Create Warpgate namespace"
   kubernetes.core.k8s:
     name: "{{ warpgate_namespace }}"

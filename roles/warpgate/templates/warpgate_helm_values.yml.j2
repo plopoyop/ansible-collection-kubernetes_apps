@@ -22,7 +22,6 @@ service:
 
 setup:
   enabled: {{ warpgate_setup_enabled | lower }}
-  type: "{{ warpgate_setup_type }}"
   envFromSecret:
 {% if warpgate_setup_credentials_secret | length > 0 %}
     WARPGATE_ADMIN_PASSWORD: "{{ warpgate_setup_credentials_secret }}/admin-password"
@@ -44,7 +43,13 @@ setup:
 
 {% if warpgate_tls_cert_secret | default('') | length > 0 %}
 tls_cert_secret: "{{ warpgate_tls_cert_secret }}"
+{% else %}
+{# Le chart ne génère son certificat que s'il produit lui-même la config, jamais le cas ici. #}
+tls_cert_secret: "{{ warpgate_deployment_name }}-tls"
 {% endif %}
+
+extraObjects: {{ (([] if warpgate_tls_cert_secret | default('') | length > 0 else [lookup('ansible.builtin.file', 'self_signed_tls_secret.yaml.tpl')])
+                 + warpgate_additional_config.extraObjects | default([])) | ansible.builtin.to_json }}
 
 data:
   pvc:
@@ -212,6 +217,8 @@ ingress:
 {% endif %}
 {% endif %}
 
-{% if warpgate_additional_config %}
-{{ warpgate_additional_config | ansible.builtin.to_nice_yaml | indent(0) }}
+{% set warpgate_additional_config_without_extra_objects = warpgate_additional_config
+   | ansible.builtin.dict2items | rejectattr('key', 'equalto', 'extraObjects') | ansible.builtin.items2dict %}
+{% if warpgate_additional_config_without_extra_objects %}
+{{ warpgate_additional_config_without_extra_objects | ansible.builtin.to_nice_yaml | indent(0) }}
 {% endif %}

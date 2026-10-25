@@ -44,7 +44,6 @@ Install and configure Warpgate on kubernetes
   - [warpgate_service_type](#warpgate_service_type)
   - [warpgate_setup_credentials_secret](#warpgate_setup_credentials_secret)
   - [warpgate_setup_enabled](#warpgate_setup_enabled)
-  - [warpgate_setup_type](#warpgate_setup_type)
   - [warpgate_sso_providers](#warpgate_sso_providers)
   - [warpgate_tls_cert_secret](#warpgate_tls_cert_secret)
   - [warpgate_wait_install](#warpgate_wait_install)
@@ -526,20 +525,6 @@ Enable automatic setup (creates initial admin user)
 warpgate_setup_enabled: true
 ```
 
-### warpgate_setup_type
-
-Setup type: "podinit" or "job". "job" requires warpgate_tls_cert_secret: the role always renders
-overrides_config, so the pod writes /data/warpgate.yaml before the setup job runs and the job
-then skips `unattended-setup`, the step that would generate the self-signed certificate.
-
-**_Type:_** string<br />
-
-#### Default value
-
-```YAML
-warpgate_setup_type: podinit
-```
-
 ### warpgate_sso_providers
 
 SSO providers configuration for Warpgate.
@@ -556,7 +541,7 @@ warpgate_sso_providers: []
 ### warpgate_tls_cert_secret
 
 Name of a kubernetes.io/tls secret holding the certificate served by all Warpgate listeners.
-Leave empty to let the setup generate a self-signed one.
+Leave empty to let the role generate a self-signed one, kept across upgrades.
 
 **_Type:_** string<br />
 
