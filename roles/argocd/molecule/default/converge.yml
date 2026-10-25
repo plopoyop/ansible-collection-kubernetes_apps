@@ -6,6 +6,12 @@
   vars:
     argocd_server_ingress_hostname: "argocd.local"
 
+    # ECR Public limite les pulls anonymes depuis les IP partagées des runners GitHub.
+    argocd_additional_config:
+      redis:
+        image:
+          repository: "mirror.gcr.io/library/redis"
+
     argocd_clusters:
       - name: "molecule"
         server: "https://kubernetes.default.svc"
