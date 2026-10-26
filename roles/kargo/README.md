@@ -505,7 +505,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-kargo_helm_chart_version: 1.10.4
+kargo_helm_chart_version: 1.12.4
 ```
 
 ### kargo_management_controller_enabled
