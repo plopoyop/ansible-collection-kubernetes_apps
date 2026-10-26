@@ -1,5 +1,13 @@
 # Changelog
 
+## [12.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/12.0.1) (2026-10-26)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/12.0.0...12.0.1)
+
+## ⚙️ Dependencies
+
+- feat\(container\): update image ghcr.io/akuity/kargo-charts/kargo \(1.10.4 → 1.12.4\) [\#366](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/366) ([plopoyop](https://github.com/plopoyop))
+
 ## [12.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/12.0.0) (2026-10-25)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/11.3.1...12.0.0)
