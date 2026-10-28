@@ -9,6 +9,10 @@
 - fix\(helm\): update chart zammad \(20.0.0 → 20.0.1\) [\#368](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/368) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart argo-cd \(10.11.1 → 10.11.3\) [\#367](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/367) ([plopoyop](https://github.com/plopoyop))
 
+## ⚙️ Dependencies
+
+- fix\(container\): update image ghcr.io/akuity/kargo-charts/kargo \(1.12.4 → 1.12.5\) [\#369](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/369) ([plopoyop](https://github.com/plopoyop))
+
 ## [12.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/12.0.1) (2026-10-26)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/12.0.0...12.0.1)
