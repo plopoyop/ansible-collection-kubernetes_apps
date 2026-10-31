@@ -64,7 +64,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | Mailcrab         | v1.9.0            | `mailcrab`       | [View README](roles/mailcrab/README.md)       |
 | OAuth2 Proxy         | v10.7.1            | `oauth2_proxy`   | [View README](roles/oauth2_proxy/README.md)       |
 | Warpgate         | v0.2.0            | `warpgate`       | [View README](roles/warpgate/README.md)       |
-| Zammad         | v20.0.1            | `zammad`         | [View README](roles/zammad/README.md)       |
+| Zammad         | v20.0.2            | `zammad`         | [View README](roles/zammad/README.md)       |
 
 ### Tags
 
