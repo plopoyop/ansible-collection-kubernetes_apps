@@ -76,20 +76,18 @@ external_secrets_additional_config: {}
 # @var external_secrets_upgrade_crd
 # @var external_secrets_upgrade_crd:type: boolean
 # @var external_secrets_upgrade_crd:description: >
-# Upgrade the CRDs from the pinned upstream bundle manifest before the helm
+# Upgrade the CRDs, rendered from the chart with the role values, before the helm
 # upgrade. Useful when helm does not update the CRDs on chart upgrade.
+# Ignored when external_secrets_install_crds is false.
+# Once enabled, keep it enabled: the CRD fields are then co-owned by the
+# "ansible-external-secrets-crds" field manager and a later helm upgrade alone
+# would fail on server-side apply conflicts.
 external_secrets_upgrade_crd: false
-
-# @var external_secrets_crd_version
-# @var external_secrets_crd_version:type: string
-# @var external_secrets_crd_version:description: >
-# Git ref (tag or branch) of the upstream CRDs bundle to apply
-external_secrets_crd_version: "v2.8.0"
 
 # @var external_secrets_crd_force_upgrade
 # @var external_secrets_crd_force_upgrade:type: boolean
 # @var external_secrets_crd_force_upgrade:description: >
-# Force CRDs upgrade, even if the helm release is not in a "deployed" state
+# Force CRDs upgrade, even if the helm release is not in a "deployed" state.
 external_secrets_crd_force_upgrade: false
 
 # @var external_secrets_secret_stores

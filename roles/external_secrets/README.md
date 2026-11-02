@@ -11,7 +11,6 @@ Install and configure External Secrets Operator on kubernetes
   - [external_secrets_cluster_external_secrets](#external_secrets_cluster_external_secrets)
   - [external_secrets_cluster_secret_stores](#external_secrets_cluster_secret_stores)
   - [external_secrets_crd_force_upgrade](#external_secrets_crd_force_upgrade)
-  - [external_secrets_crd_version](#external_secrets_crd_version)
   - [external_secrets_deployment_name](#external_secrets_deployment_name)
   - [external_secrets_enabled](#external_secrets_enabled)
   - [external_secrets_external_secrets](#external_secrets_external_secrets)
@@ -92,7 +91,7 @@ external_secrets_cluster_secret_stores: []
 
 ### external_secrets_crd_force_upgrade
 
-Force CRDs upgrade, even if the helm release is not in a "deployed" state
+Force CRDs upgrade, even if the helm release is not in a "deployed" state.
 
 **_Type:_** boolean<br />
 
@@ -100,18 +99,6 @@ Force CRDs upgrade, even if the helm release is not in a "deployed" state
 
 ```YAML
 external_secrets_crd_force_upgrade: false
-```
-
-### external_secrets_crd_version
-
-Git ref (tag or branch) of the upstream CRDs bundle to apply
-
-**_Type:_** string<br />
-
-#### Default value
-
-```YAML
-external_secrets_crd_version: v2.8.0
 ```
 
 ### external_secrets_deployment_name
@@ -290,8 +277,12 @@ external_secrets_service_account_annotations: {}
 
 ### external_secrets_upgrade_crd
 
-Upgrade the CRDs from the pinned upstream bundle manifest before the helm
+Upgrade the CRDs, rendered from the chart with the role values, before the helm
 upgrade. Useful when helm does not update the CRDs on chart upgrade.
+Ignored when external_secrets_install_crds is false.
+Once enabled, keep it enabled: the CRD fields are then co-owned by the
+"ansible-external-secrets-crds" field manager and a later helm upgrade alone
+would fail on server-side apply conflicts.
 
 **_Type:_** boolean<br />
 
@@ -327,21 +318,17 @@ external_secrets_webhook_resources: {}
 
 ## Discovered Tags
 
-**_crds_**
+**_always_**
 
-**_external_secrets_**
+**_crds_**
 
 **_helm_chart_**
 
 **_helm_repository_**
 
-**_install_**
-
 **_manifest_**
 
 **_namespace_**
-
-**_uninstall_**
 
 ## Dependencies
 
