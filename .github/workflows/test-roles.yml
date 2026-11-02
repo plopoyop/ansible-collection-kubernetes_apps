@@ -35,6 +35,10 @@ jobs:
     uses: ./.github/workflows/test-role.yaml
     with:
       role_name: "clamav"
+  external_secrets:
+    uses: ./.github/workflows/test-role.yaml
+    with:
+      role_name: "external_secrets"
   gatus:
     uses: ./.github/workflows/test-role.yaml
     with:
