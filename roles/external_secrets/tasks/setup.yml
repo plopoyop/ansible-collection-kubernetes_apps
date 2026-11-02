@@ -24,15 +24,14 @@
   register: "external_secrets_current_release"
   tags:
     - "helm_chart"
+    - "crds"
 
-- name: "Upgrade External Secrets Operator CRDs from upstream bundle"
+- name: "Upgrade External Secrets Operator CRDs from the chart"
   ansible.builtin.include_tasks: "upgrade_crd.yml"
-  loop: "{{ external_secrets_crds_to_upgrade }}"
-  loop_control:
-    loop_var: "external_secrets_current_crd"
   when:
-    - external_secrets_upgrade_crd
-    - external_secrets_current_release.status.status is defined or external_secrets_crd_force_upgrade
+    - "external_secrets_upgrade_crd"
+    - "external_secrets_install_crds"
+    - "external_secrets_current_release.status.status is defined or external_secrets_crd_force_upgrade"
   tags: ["always"]
 
 - name: "Install External Secrets Operator helm package"

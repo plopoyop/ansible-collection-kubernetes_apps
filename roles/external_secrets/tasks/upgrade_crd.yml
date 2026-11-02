@@ -1,21 +1,41 @@
 ---
-- name: "Validate CRD URL"
-  ansible.builtin.uri:
-    url: "{{ external_secrets_current_crd }}"
-    method: "HEAD"
-    return_content: false
-    status_code: 200
+- name: "Render External Secrets Operator chart with CRDs"
+  kubernetes.core.helm_template:
+    chart_ref: "{{ external_secrets_helm_chart_ref }}"
+    chart_version: "{{ external_secrets_helm_chart_version }}"
+    release_name: "{{ external_secrets_deployment_name }}"
+    release_namespace: "{{ external_secrets_namespace }}"
+    values: "{{ lookup('ansible.builtin.template', 'external_secrets_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
+    include_crds: true
+    update_repo_cache: true
+  register: "external_secrets_chart_render"
+  check_mode: false
   changed_when: false
-
-- name: "Apply CRD"
-  kubernetes.core.k8s:
-    state: "patched"
-    force: true
-    apply: true
-    definition: "{{ lookup('ansible.builtin.url', external_secrets_current_crd, split_lines=false) }}"
-  register: "external_secrets_current_crd_apply_results"
-  retries: 3
-  delay: 5
-  until: external_secrets_current_crd_apply_results is succeeded
+  no_log: true
   tags:
     - "crds"
+    - "helm_chart"
+
+- name: "Apply External Secrets Operator CRDs"
+  kubernetes.core.k8s:
+    state: "present"
+    apply: true
+    server_side_apply:
+      field_manager: "ansible-external-secrets-crds"
+      force_conflicts: true
+    definition: "{{ item | ansible.builtin.combine(external_secrets_crd_helm_ownership, recursive=true) }}"
+  loop: >-
+    {{ (external_secrets_chart_render.stdout | default(''))
+       | ansible.builtin.from_yaml_all
+       | select
+       | selectattr('kind', 'equalto', 'CustomResourceDefinition')
+       | list }}
+  loop_control:
+    label: "{{ item.metadata.name }}"
+  register: "external_secrets_crd_apply_results"
+  retries: 3
+  delay: 5
+  until: "external_secrets_crd_apply_results is ansible.builtin.succeeded"
+  tags:
+    - "crds"
+    - "helm_chart"

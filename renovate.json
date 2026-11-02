@@ -476,18 +476,6 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/roles/external_secrets/defaults/main.yml$/"
-      ],
-      "matchStrings": [
-        "external_secrets_crd_version:\\s*(?<quote>\")?v(?<currentValue>[0-9\\.]+)\"?"
-      ],
-      "depNameTemplate": "external-secrets/external-secrets",
-      "autoReplaceStringTemplate": "external_secrets_crd_version: {{#if quote}}\"v{{newValue}}\"{{else}}v{{newValue}}{{/if}}",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
         "/^README.md$/"
       ],
       "matchStrings": [
