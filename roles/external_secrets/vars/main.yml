@@ -12,3 +12,40 @@ external_secrets_crd_helm_ownership:
 external_secrets_server_side_apply:
   field_manager: "ansible-external-secrets"
   force_conflicts: true
+external_secrets_managed_resources:
+  - api_version: "external-secrets.io/v1alpha1"
+    kind: "ClusterPushSecret"
+    namespaced: false
+    resources: "{{ external_secrets_cluster_push_secrets }}"
+  - api_version: "external-secrets.io/v1alpha1"
+    kind: "PushSecret"
+    namespaced: true
+    resources: "{{ external_secrets_push_secrets }}"
+  - api_version: "external-secrets.io/v1"
+    kind: "ClusterExternalSecret"
+    namespaced: false
+    resources: "{{ external_secrets_cluster_external_secrets }}"
+  - api_version: "external-secrets.io/v1"
+    kind: "ExternalSecret"
+    namespaced: true
+    resources: "{{ external_secrets_external_secrets }}"
+  - api_version: "generators.external-secrets.io/v1alpha1"
+    kind: "ClusterGenerator"
+    namespaced: false
+    resources: "{{ external_secrets_cluster_generators }}"
+  - api_version: "generators.external-secrets.io/v1alpha1"
+    namespaced: true
+    resources: "{{ external_secrets_generators }}"
+  - api_version: "external-secrets.io/v1"
+    kind: "ClusterSecretStore"
+    namespaced: false
+    resources: "{{ external_secrets_cluster_secret_stores }}"
+  - api_version: "external-secrets.io/v1"
+    kind: "SecretStore"
+    namespaced: true
+    resources: "{{ external_secrets_secret_stores }}"
+external_secrets_declared_resource_keys: >-
+  {%- for group in external_secrets_managed_resources -%}
+  {%- for r in group.resources -%}
+  |{{ r.kind | default(group.kind) }}/{{ (r.namespace | default(external_secrets_namespace)) if group.namespaced else '' }}/{{ r.name }}{%- endfor -%}
+  {%- endfor -%}|

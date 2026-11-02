@@ -47,6 +47,25 @@
   tags:
     - "helm_chart"
 
+- name: "Delete absent External Secrets Operator resources in dependency order"
+  kubernetes.core.k8s:
+    api_version: "{{ item.0.api_version }}"
+    kind: "{{ item.1.kind | default(item.0.kind) }}"
+    name: "{{ item.1.name }}"
+    namespace: "{{ (item.1.namespace | default(external_secrets_namespace)) if item.0.namespaced else omit }}"
+    state: "absent"
+    wait: true
+  loop: >-
+    {{ external_secrets_managed_resources
+       | ansible.builtin.subelements('resources')
+       | selectattr('1.state', 'defined')
+       | selectattr('1.state', 'equalto', 'absent')
+       | list }}
+  loop_control:
+    label: "{{ item.1.kind | default(item.0.kind) }}/{{ item.1.name }}"
+  tags:
+    - "manifest"
+
 - name: "Check External Secrets Operator provider credentials secrets have no null values"
   ansible.builtin.assert:
     that: "not external_secrets_null_value_secrets"

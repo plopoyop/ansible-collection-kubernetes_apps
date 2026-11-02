@@ -8,6 +8,7 @@ Install and configure External Secrets Operator on kubernetes
 - [Default Variables](#default-variables)
   - [external_secrets_additional_config](#external_secrets_additional_config)
   - [external_secrets_cert_controller_resources](#external_secrets_cert_controller_resources)
+  - [external_secrets_cleanup_force_remove_finalizers](#external_secrets_cleanup_force_remove_finalizers)
   - [external_secrets_cluster_external_secrets](#external_secrets_cluster_external_secrets)
   - [external_secrets_cluster_generators](#external_secrets_cluster_generators)
   - [external_secrets_cluster_push_secrets](#external_secrets_cluster_push_secrets)
@@ -65,6 +66,27 @@ Resources requests and limits for the External Secrets Operator cert controller
 
 ```YAML
 external_secrets_cert_controller_resources: {}
+```
+
+### external_secrets_cleanup_force_remove_finalizers
+
+When external_secrets_enabled is false, scale every Deployment of the release to 0
+(the operator stays down if the run fails afterwards), delete the release validating webhooks,
+remove the finalizers of every External Secrets Operator resource in the cluster (including
+children of ClusterExternalSecrets and ClusterPushSecrets) and the
+externalsecrets.external-secrets.io/ces-* finalizers of every namespace,
+then delete the declared resources without waiting for the controller.
+Use it when the operator is broken and cleanup cannot complete.
+Provider-side cleanup (e.g. PushSecret deletionPolicy Delete) is skipped.
+In every case, cleanup refuses to run while the cluster holds External Secrets Operator resources
+that are not declared in the role variables, since uninstalling the CRDs would delete them.
+
+**_Type:_** boolean<br />
+
+#### Default value
+
+```YAML
+external_secrets_cleanup_force_remove_finalizers: false
 ```
 
 ### external_secrets_cluster_external_secrets
@@ -339,7 +361,7 @@ external_secrets_secret_stores:
 
 List of Kubernetes Secrets holding provider credentials referenced by secret stores.
 Each item accepts name, namespace, type, labels, annotations, data and stringData.
-Secrets are applied server-side.
+Secrets are applied server-side and deleted when external_secrets_enabled is false.
 type is immutable: changing it requires state absent then a new run.
 A Secret previously created with client-side apply keeps its
 kubectl.kubernetes.io/last-applied-configuration annotation (which contains the data)
