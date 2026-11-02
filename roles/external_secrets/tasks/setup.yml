@@ -1,0 +1,240 @@
+---
+- name: "Create External Secrets Operator namespace"
+  kubernetes.core.k8s:
+    name: "{{ external_secrets_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "present"
+  tags:
+    - "namespace"
+
+- name: "Add External Secrets Operator helm repo"
+  kubernetes.core.helm_repository:
+    name: "{{ external_secrets_helm_repo_name }}"
+    repo_url: "{{ external_secrets_helm_repo_url }}"
+  tags:
+    - "helm_repository"
+
+- name: "Gather information about the current External Secrets Operator release"
+  kubernetes.core.helm_info:
+    name: "{{ external_secrets_deployment_name }}"
+    release_namespace: "{{ external_secrets_namespace }}"
+    release_state:
+      - "deployed"
+  register: "external_secrets_current_release"
+  tags:
+    - "helm_chart"
+    - "crds"
+
+- name: "Upgrade External Secrets Operator CRDs from the chart"
+  ansible.builtin.include_tasks: "upgrade_crd.yml"
+  when:
+    - "external_secrets_upgrade_crd"
+    - "external_secrets_install_crds"
+    - "external_secrets_current_release.status.status is defined or external_secrets_crd_force_upgrade"
+  tags: ["always"]
+
+- name: "Install External Secrets Operator helm package"
+  kubernetes.core.helm:
+    name: "{{ external_secrets_deployment_name }}"
+    namespace: "{{ external_secrets_namespace }}"
+    state: "present"
+    chart_ref: "{{ external_secrets_helm_chart_ref }}"
+    chart_version: "{{ external_secrets_helm_chart_version }}"
+    update_repo_cache: true
+    values: "{{ lookup('ansible.builtin.template', 'external_secrets_helm_values.yml.j2') | ansible.builtin.from_yaml }}"
+    wait: "{{ external_secrets_wait_install }}"
+  tags:
+    - "helm_chart"
+
+- name: "Delete absent External Secrets Operator resources in dependency order"
+  kubernetes.core.k8s:
+    api_version: "{{ item.0.api_version }}"
+    kind: "{{ item.1.kind | default(item.0.kind) }}"
+    name: "{{ item.1.name }}"
+    namespace: "{{ (item.1.namespace | default(external_secrets_namespace)) if item.0.namespaced else omit }}"
+    state: "absent"
+    wait: true
+  loop: >-
+    {{ external_secrets_managed_resources
+       | ansible.builtin.subelements('resources')
+       | selectattr('1.state', 'defined')
+       | selectattr('1.state', 'equalto', 'absent')
+       | list }}
+  loop_control:
+    label: "{{ item.1.kind | default(item.0.kind) }}/{{ item.1.name }}"
+  tags:
+    - "manifest"
+
+- name: "Check External Secrets Operator provider credentials secrets have no null values"
+  ansible.builtin.assert:
+    that: "not external_secrets_null_value_secrets"
+    fail_msg: "Secrets with null values in data or stringData: {{ external_secrets_null_value_secrets }}"
+    quiet: true
+  vars:
+    external_secrets_null_value_secrets: >-
+      {%- for s in external_secrets_secrets
+            if s.state | default('present') == 'present'
+            and ((s.data | default({}, true)).values() | list
+                 + (s.stringData | default({}, true)).values() | list) | select('none') | list -%}
+      '{{ s.name }}'{{ ', ' if not loop.last }}
+      {%- endfor %}
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator provider credentials secrets"
+  kubernetes.core.k8s:
+    namespace: "{{ external_secrets_secret.namespace | default(external_secrets_namespace) }}"
+    template: "resources/secret.yml.j2"
+    state: "{{ external_secrets_secret.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ external_secrets_server_side_apply }}"
+  loop: "{{ external_secrets_secrets }}"
+  loop_control:
+    loop_var: "external_secrets_secret"
+    label: "{{ external_secrets_secret.name }}"
+  no_log: true
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator secret stores"
+  kubernetes.core.k8s:
+    namespace: "{{ external_secrets_secret_store.namespace | default(external_secrets_namespace) }}"
+    template: "resources/secret_store.yml.j2"
+    state: "{{ external_secrets_secret_store.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ external_secrets_server_side_apply }}"
+  loop: "{{ external_secrets_secret_stores }}"
+  loop_control:
+    loop_var: "external_secrets_secret_store"
+    label: "{{ external_secrets_secret_store.name }}"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator cluster secret stores"
+  kubernetes.core.k8s:
+    template: "resources/cluster_secret_store.yml.j2"
+    state: "{{ external_secrets_cluster_secret_store.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ external_secrets_server_side_apply }}"
+  loop: "{{ external_secrets_cluster_secret_stores }}"
+  loop_control:
+    loop_var: "external_secrets_cluster_secret_store"
+    label: "{{ external_secrets_cluster_secret_store.name }}"
+  tags:
+    - "manifest"
+
+- name: "Check External Secrets Operator generator kinds"
+  when: "external_secrets_generators | length > 0"
+  tags:
+    - "manifest"
+  block:
+    - name: "List External Secrets Operator generator CRDs"
+      kubernetes.core.k8s_info:
+        api_version: "apiextensions.k8s.io/v1"
+        kind: "CustomResourceDefinition"
+        label_selectors:
+          - "external-secrets.io/component=controller"
+      register: "external_secrets_generator_crds"
+      no_log: true
+
+    - name: "Assert that every generator kind matches a CRD kind"
+      ansible.builtin.assert:
+        that: "external_secrets_unknown_generator_kinds | length == 0 or external_secrets_known_generator_kinds | length == 0"
+        fail_msg: >-
+          Unknown generator kinds {{ external_secrets_unknown_generator_kinds }}.
+          Use the exact CRD kind, one of {{ external_secrets_known_generator_kinds }}.
+        quiet: true
+      vars:
+        external_secrets_known_generator_kinds: >-
+          {{ external_secrets_generator_crds.resources
+             | selectattr('spec.group', 'equalto', 'generators.external-secrets.io')
+             | selectattr('spec.scope', 'equalto', 'Namespaced')
+             | map(attribute='spec.names.kind')
+             | list }}
+        external_secrets_unknown_generator_kinds: >-
+          {{ external_secrets_generators
+             | map(attribute='kind')
+             | ansible.builtin.difference(external_secrets_known_generator_kinds)
+             | list }}
+
+- name: "Create External Secrets Operator generators"
+  kubernetes.core.k8s:
+    namespace: "{{ external_secrets_generator.namespace | default(external_secrets_namespace) }}"
+    template: "resources/generator.yml.j2"
+    state: "{{ external_secrets_generator.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ external_secrets_server_side_apply }}"
+  loop: "{{ external_secrets_generators }}"
+  loop_control:
+    loop_var: "external_secrets_generator"
+    label: "{{ external_secrets_generator.name }}"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator cluster generators"
+  kubernetes.core.k8s:
+    template: "resources/cluster_generator.yml.j2"
+    state: "{{ external_secrets_cluster_generator.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ external_secrets_server_side_apply }}"
+  loop: "{{ external_secrets_cluster_generators }}"
+  loop_control:
+    loop_var: "external_secrets_cluster_generator"
+    label: "{{ external_secrets_cluster_generator.name }}"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator external secrets"
+  kubernetes.core.k8s:
+    namespace: "{{ external_secrets_external_secret.namespace | default(external_secrets_namespace) }}"
+    template: "resources/external_secret.yml.j2"
+    state: "{{ external_secrets_external_secret.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ external_secrets_server_side_apply }}"
+  loop: "{{ external_secrets_external_secrets }}"
+  loop_control:
+    loop_var: "external_secrets_external_secret"
+    label: "{{ external_secrets_external_secret.name }}"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator cluster external secrets"
+  kubernetes.core.k8s:
+    template: "resources/cluster_external_secret.yml.j2"
+    state: "{{ external_secrets_cluster_external_secret.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ external_secrets_server_side_apply }}"
+  loop: "{{ external_secrets_cluster_external_secrets }}"
+  loop_control:
+    loop_var: "external_secrets_cluster_external_secret"
+    label: "{{ external_secrets_cluster_external_secret.name }}"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator push secrets"
+  kubernetes.core.k8s:
+    namespace: "{{ external_secrets_push_secret.namespace | default(external_secrets_namespace) }}"
+    template: "resources/push_secret.yml.j2"
+    state: "{{ external_secrets_push_secret.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ external_secrets_server_side_apply }}"
+  loop: "{{ external_secrets_push_secrets }}"
+  loop_control:
+    loop_var: "external_secrets_push_secret"
+    label: "{{ external_secrets_push_secret.name }}"
+  tags:
+    - "manifest"
+
+- name: "Create External Secrets Operator cluster push secrets"
+  kubernetes.core.k8s:
+    template: "resources/cluster_push_secret.yml.j2"
+    state: "{{ external_secrets_cluster_push_secret.state | default('present') }}"
+    apply: true
+    server_side_apply: "{{ external_secrets_server_side_apply }}"
+  loop: "{{ external_secrets_cluster_push_secrets }}"
+  loop_control:
+    loop_var: "external_secrets_cluster_push_secret"
+    label: "{{ external_secrets_cluster_push_secret.name }}"
+  tags:
+    - "manifest"

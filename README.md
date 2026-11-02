@@ -56,6 +56,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | Argo CD | v10.11.6            | `argocd`         | [View README](roles/argocd/README.md)       |
 | Atlantis | v6.16.2            | `atlantis`       | [View README](roles/atlantis/README.md)       |
 | ClamAV         | v3.7.3            | `clamav`         | [View README](roles/clamav/README.md)       |
+| External Secrets Operator | v2.8.0            | `external_secrets` | [View README](roles/external_secrets/README.md)       |
 | Gatus         | v1.5.0            | `gatus`          | [View README](roles/gatus/README.md)       |
 | GitLab Runner         | v0.94.2            | `gitlab_runner`  | [View README](roles/gitlab_runner/README.md)       |
 | Headlamp         | v0.46.0            | `headlamp`       | [View README](roles/headlamp/README.md)       |
@@ -72,7 +73,7 @@ Every role in this collection ships tagged tasks so you can selectively run only
 
 Three kinds of tags are exposed:
 
-- **Role tag** — named after the role itself (e.g. `argocd`, `atlantis`, `clamav`, `gatus`, `gitlab_runner`, `headlamp`, `kargo`, `keda`, `mailcrab`, `oauth2_proxy`, `warpgate`, `zammad`). Use it to scope a run to a single application.
+- **Role tag** — named after the role itself (e.g. `argocd`, `atlantis`, `clamav`, `external_secrets`, `gatus`, `gitlab_runner`, `headlamp`, `kargo`, `keda`, `mailcrab`, `oauth2_proxy`, `warpgate`, `zammad`). Use it to scope a run to a single application.
 - **Action tag** — `install` or `uninstall`. The role's `*_enabled` variable controls which one runs:
   - When `<role>_enabled: true`, the setup tasks (tagged `install`) are executed.
   - When `<role>_enabled: false`, the cleanup tasks (tagged `uninstall`) are executed.

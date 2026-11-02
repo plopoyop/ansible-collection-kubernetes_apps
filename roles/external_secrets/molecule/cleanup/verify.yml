@@ -1,0 +1,38 @@
+---
+- name: "Verify"
+  hosts: "localhost"
+  connection: "local"
+  gather_facts: false
+
+  tasks:
+    - name: "Wait for 'external-secrets' namespace to be removed."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "external-secrets"
+      register: "namespace_eso"
+      until: "namespace_eso.resources | length == 0"
+      retries: 30
+      delay: 5
+
+    - name: "Read the namespace selected by the ClusterExternalSecret."
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "eso-cleanup"
+      register: "cleanup_namespace"
+
+    - name: "Assert that no External Secrets Operator finalizer is left on the namespace."
+      ansible.builtin.assert:
+        that: "cleanup_namespace.resources[0].metadata.finalizers | default([]) | select('ansible.builtin.match', 'externalsecrets.external-secrets.io/') | list | length == 0"
+        fail_msg: "Namespace 'eso-cleanup' still has External Secrets Operator finalizers."
+
+    - name: "Read provider credentials secret."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "provider-credentials"
+        namespace: "eso-cleanup"
+      register: "provider_credentials"
+
+    - name: "Assert that provider credentials secret is removed."
+      ansible.builtin.assert:
+        that: "provider_credentials.resources | length == 0"
+        fail_msg: "Secret 'eso-cleanup/provider-credentials' is still present."

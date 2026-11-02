@@ -1,0 +1,83 @@
+---
+- name: "Prepare"
+  hosts: "localhost"
+  connection: "local"
+  gather_facts: false
+
+  tasks:
+    - name: "Create test namespaces."
+      kubernetes.core.k8s:
+        state: "present"
+        definition:
+          apiVersion: "v1"
+          kind: "Namespace"
+          metadata:
+            name: "{{ item.name }}"
+            labels: "{{ item.labels | default({}) }}"
+      loop:
+        - name: "eso-backend"
+        - name: "eso-app"
+        - name: "eso-tenant-a"
+          labels:
+            molecule.eso/tenant: "true"
+        - name: "eso-tenant-b"
+          labels:
+            molecule.eso/tenant: "true"
+
+    - name: "Create the ServiceAccount used by the Kubernetes provider."
+      kubernetes.core.k8s:
+        state: "present"
+        definition:
+          apiVersion: "v1"
+          kind: "ServiceAccount"
+          metadata:
+            name: "eso-store"
+            namespace: "eso-backend"
+
+    - name: "Grant the ServiceAccount access to secrets in 'eso-backend'."
+      kubernetes.core.k8s:
+        state: "present"
+        definition:
+          apiVersion: "rbac.authorization.k8s.io/v1"
+          kind: "Role"
+          metadata:
+            name: "eso-store"
+            namespace: "eso-backend"
+          rules:
+            - apiGroups: [""]
+              resources: ["secrets"]
+              verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+            - apiGroups: ["authorization.k8s.io"]
+              resources: ["selfsubjectrulesreviews"]
+              verbs: ["create"]
+
+    - name: "Bind the Role to the ServiceAccount."
+      kubernetes.core.k8s:
+        state: "present"
+        definition:
+          apiVersion: "rbac.authorization.k8s.io/v1"
+          kind: "RoleBinding"
+          metadata:
+            name: "eso-store"
+            namespace: "eso-backend"
+          roleRef:
+            apiGroup: "rbac.authorization.k8s.io"
+            kind: "Role"
+            name: "eso-store"
+          subjects:
+            - kind: "ServiceAccount"
+              name: "eso-store"
+              namespace: "eso-backend"
+
+    - name: "Create the source secret in the backend namespace."
+      kubernetes.core.k8s:
+        state: "present"
+        definition:
+          apiVersion: "v1"
+          kind: "Secret"
+          metadata:
+            name: "app-credentials"
+            namespace: "eso-backend"
+          stringData:
+            username: "molecule"
+            password: "initial-password"

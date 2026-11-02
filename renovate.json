@@ -133,6 +133,17 @@
       "registryUrls": [
         "https://helm.elastic.co"
       ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "external-secrets"
+      ],
+      "registryUrls": [
+        "https://charts.external-secrets.io"
+      ]
     }
   ],
   "customManagers": [
@@ -439,6 +450,19 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
+        "/roles/external_secrets/defaults/main.yml$/",
+        "/roles/external_secrets/README.md$/"
+      ],
+      "matchStrings": [
+        "external_secrets_helm_chart_version:\\s*(?<quote>\")?(?<currentValue>[0-9\\.]+)\"?"
+      ],
+      "depNameTemplate": "external-secrets",
+      "autoReplaceStringTemplate": "external_secrets_helm_chart_version: {{#if quote}}\"{{newValue}}\"{{else}}{{newValue}}{{/if}}",
+      "datasourceTemplate": "helm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
         "/roles/kargo/defaults/main.yml$/",
         "/roles/kargo/README.md$/"
       ],
@@ -460,6 +484,18 @@
       "depNameTemplate": "ghcr.io/akuity/kargo-charts/kargo",
       "autoReplaceStringTemplate": "Kargo         | v{{newValue}}",
       "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^README.md$/"
+      ],
+      "matchStrings": [
+        "External Secrets Operator\\s*\\|\\s*v?(?<currentValue>[0-9\\.]+)"
+      ],
+      "depNameTemplate": "external-secrets",
+      "autoReplaceStringTemplate": "External Secrets Operator | v{{newValue}}",
+      "datasourceTemplate": "helm"
     }
   ]
 }
