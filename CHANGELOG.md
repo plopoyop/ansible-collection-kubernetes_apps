@@ -1,6 +1,6 @@
 # Changelog
 
-## [12.0.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/12.0.2) (2026-10-31)
+## [12.0.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/12.0.2) (2026-11-02)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/12.0.1...12.0.2)
 
@@ -16,6 +16,10 @@
 
 - fix\(ci\): update renovatebot/github-action action \(v46.3.9 → v46.3.10\) [\#372](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/372) ([plopoyop](https://github.com/plopoyop))
 - fix\(container\): update image ghcr.io/akuity/kargo-charts/kargo \(1.12.4 → 1.12.5\) [\#369](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/369) ([plopoyop](https://github.com/plopoyop))
+
+**Merged pull requests:**
+
+- fix\(deps\): update prek \(0.5.5 → 0.5.7\) [\#374](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/374) ([plopoyop](https://github.com/plopoyop))
 
 ## [12.0.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/12.0.1) (2026-10-26)
 
