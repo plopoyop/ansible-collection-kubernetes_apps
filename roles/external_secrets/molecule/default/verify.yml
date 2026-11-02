@@ -1,26 +1,26 @@
 ---
-- name: Verify
-  hosts: localhost
-  connection: local
-  gather_facts: true
+- name: "Verify"
+  hosts: "localhost"
+  connection: "local"
+  gather_facts: false
 
   tasks:
     - name: "Wait for 'external-secrets' namespace to be active."
       kubernetes.core.k8s_info:
-        kind: Namespace
+        kind: "Namespace"
         name: "external-secrets"
-      register: namespace_eso
+      register: "namespace_eso"
       until:
-        - namespace_eso.resources | length > 0
-        - namespace_eso.resources[0].status.phase == "Active"
+        - "namespace_eso.resources | length > 0"
+        - "namespace_eso.resources[0].status.phase == 'Active'"
       retries: 30
       delay: 5
 
     - name: "Assert that 'external-secrets' namespace is active."
       ansible.builtin.assert:
         that:
-          - namespace_eso.resources | length > 0
-          - namespace_eso.resources[0].status.phase == "Active"
+          - "namespace_eso.resources | length > 0"
+          - "namespace_eso.resources[0].status.phase == 'Active'"
         fail_msg: "Namespace 'external-secrets' is not active."
 
     - name: "Wait for 'external-secrets' Deployment to have ready replicas."
@@ -28,14 +28,14 @@
         kind: "Deployment"
         name: "external-secrets"
         namespace: "external-secrets"
-      register: eso_deployment
-      until: eso_deployment.resources[0].status.readyReplicas | default(0) >= 1
+      register: "eso_deployment"
+      until: "eso_deployment.resources[0].status.readyReplicas | default(0) >= 1"
       retries: 30
       delay: 5
 
     - name: "Assert that 'external-secrets' Deployment has ready replicas."
       ansible.builtin.assert:
-        that: eso_deployment.resources[0].status.readyReplicas | default(0) >= 1
+        that: "eso_deployment.resources[0].status.readyReplicas | default(0) >= 1"
         fail_msg: "Deployment 'external-secrets' has no ready replicas."
 
     - name: "Assert that the 'externalsecrets' CRD is registered."
@@ -43,8 +43,8 @@
         api_version: "apiextensions.k8s.io/v1"
         kind: "CustomResourceDefinition"
         name: "externalsecrets.external-secrets.io"
-      register: eso_crd
-      until: eso_crd.resources | length > 0
+      register: "eso_crd"
+      until: "eso_crd.resources | length > 0"
       retries: 30
       delay: 5
 
@@ -54,18 +54,18 @@
         kind: "SecretStore"
         name: "fake-backend"
         namespace: "external-secrets"
-      register: fake_store
+      register: "fake_store"
       until:
-        - fake_store.resources | length > 0
-        - (fake_store.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0
+        - "fake_store.resources | length > 0"
+        - "(fake_store.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0"
       retries: 30
       delay: 5
 
     - name: "Assert that 'fake-backend' SecretStore is ready."
       ansible.builtin.assert:
         that:
-          - fake_store.resources | length > 0
-          - (fake_store.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0
+          - "fake_store.resources | length > 0"
+          - "(fake_store.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0"
         fail_msg: "SecretStore 'fake-backend' is not ready."
 
     - name: "Wait for 'molecule-secret' ExternalSecret to be synced."
@@ -74,18 +74,18 @@
         kind: "ExternalSecret"
         name: "molecule-secret"
         namespace: "external-secrets"
-      register: molecule_external_secret
+      register: "molecule_external_secret"
       until:
-        - molecule_external_secret.resources | length > 0
-        - (molecule_external_secret.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0
+        - "molecule_external_secret.resources | length > 0"
+        - "(molecule_external_secret.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0"
       retries: 30
       delay: 5
 
     - name: "Assert that 'molecule-secret' ExternalSecret is synced."
       ansible.builtin.assert:
         that:
-          - molecule_external_secret.resources | length > 0
-          - (molecule_external_secret.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0
+          - "molecule_external_secret.resources | length > 0"
+          - "(molecule_external_secret.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length) > 0"
         fail_msg: "ExternalSecret 'molecule-secret' did not reach 'Ready' status."
 
     - name: "Wait for the 'molecule-secret' Secret to be created."
@@ -93,14 +93,263 @@
         kind: "Secret"
         name: "molecule-secret"
         namespace: "external-secrets"
-      register: molecule_secret
-      until: molecule_secret.resources | length > 0
+      register: "molecule_secret"
+      until: "molecule_secret.resources | length > 0"
       retries: 30
       delay: 5
 
     - name: "Assert that the 'molecule-secret' Secret holds the expected value."
       ansible.builtin.assert:
         that:
-          - molecule_secret.resources | length > 0
-          - (molecule_secret.resources[0].data.password | b64decode) == "s3cr3t"
+          - "molecule_secret.resources | length > 0"
+          - "(molecule_secret.resources[0].data.password | ansible.builtin.b64decode) == 's3cr3t'"
         fail_msg: "Secret 'molecule-secret' does not hold the expected value from the fake provider."
+
+    - name: "Read the 'externalsecrets' CRD after the CRD upgrade."
+      kubernetes.core.k8s_info:
+        api_version: "apiextensions.k8s.io/v1"
+        kind: "CustomResourceDefinition"
+        name: "externalsecrets.external-secrets.io"
+      register: "eso_crd_upgraded"
+
+    - name: "Assert that the CRD upgrade applied the CRD server-side."
+      ansible.builtin.assert:
+        that:
+          - "'ansible-external-secrets-crds' in (eso_crd_upgraded.resources[0].metadata.managedFields | map(attribute='manager') | list)"
+          - "eso_crd_role_fields['f:labels']['f:app.kubernetes.io/managed-by'] is defined"
+          - "eso_crd_role_fields['f:annotations']['f:meta.helm.sh/release-name'] is defined"
+        fail_msg: "CRD 'externalsecrets.external-secrets.io' was not applied by the role's CRD upgrade."
+      vars:
+        eso_crd_role_fields: "{{ (eso_crd_upgraded.resources[0].metadata.managedFields | selectattr('manager', 'equalto', 'ansible-external-secrets-crds') | first).fieldsV1['f:metadata'] }}"
+
+    - name: "Wait for 'k8s-backend' ClusterSecretStore to be ready."
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1"
+        kind: "ClusterSecretStore"
+        name: "k8s-backend"
+      register: "k8s_store"
+      until:
+        - "k8s_store.resources | length > 0"
+        - "k8s_store.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length > 0"
+      retries: 30
+      delay: 5
+
+    - name: "Wait for 'app-credentials' ExternalSecret to be synced."
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1"
+        kind: "ExternalSecret"
+        name: "app-credentials"
+        namespace: "eso-app"
+      register: "app_external_secret"
+      until:
+        - "app_external_secret.resources | length > 0"
+        - "app_external_secret.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length > 0"
+      retries: 30
+      delay: 5
+
+    - name: "Wait for 'app-credentials' to hold the values from the backend."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "app-credentials"
+        namespace: "eso-app"
+      register: "app_secret"
+      until:
+        - "app_secret.resources | length > 0"
+        - "(app_secret.resources[0].data.username | ansible.builtin.b64decode) == 'molecule'"
+        - "(app_secret.resources[0].data.password | ansible.builtin.b64decode) == 'initial-password'"
+      retries: 18
+      delay: 5
+
+    - name: "Wait for 'tenant-credentials' to be propagated to labelled namespaces."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "tenant-credentials"
+        namespace: "{{ item }}"
+      register: "tenant_secret"
+      until:
+        - "tenant_secret.resources | length > 0"
+        - "(tenant_secret.resources[0].data.password | ansible.builtin.b64decode) == 'initial-password'"
+      retries: 30
+      delay: 5
+      loop:
+        - "eso-tenant-a"
+        - "eso-tenant-b"
+
+    - name: "Read the 'tenant-credentials' ExternalSecret in the unlabelled namespace."
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1"
+        kind: "ExternalSecret"
+        name: "tenant-credentials"
+        namespace: "eso-app"
+      register: "unlabelled_tenant_secret"
+
+    - name: "Assert that 'tenant-credentials' is not created outside the namespace selector."
+      ansible.builtin.assert:
+        that: "unlabelled_tenant_secret.resources | length == 0"
+        fail_msg: "ClusterExternalSecret 'tenant-credentials' leaked into namespace 'eso-app'."
+
+    - name: "Wait for 'push-token' PushSecret to be synced."
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1alpha1"
+        kind: "PushSecret"
+        name: "push-token"
+        namespace: "eso-app"
+      register: "push_secret"
+      until:
+        - "push_secret.resources | length > 0"
+        - "push_secret.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length > 0"
+      retries: 30
+      delay: 5
+
+    - name: "Read the pushed 'pushed-token' Secret in the backend."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "pushed-token"
+        namespace: "eso-backend"
+      register: "pushed_secret"
+
+    - name: "Assert that 'pushed-token' holds the local value."
+      ansible.builtin.assert:
+        that:
+          - "pushed_secret.resources | length > 0"
+          - "(pushed_secret.resources[0].data.token | ansible.builtin.b64decode) == 'pushed-token-value'"
+        fail_msg: "PushSecret did not write the expected value to 'eso-backend/pushed-token'."
+
+    - name: "Read the 'local-token' Secret created by the role."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "local-token"
+        namespace: "eso-app"
+      register: "local_token"
+
+    - name: "Assert that non-string values are stringified and not leaked in annotations."
+      ansible.builtin.assert:
+        that:
+          - "(local_token.resources[0].data.port | ansible.builtin.b64decode) == '5432'"
+          - "local_token.resources[0].metadata.labels['molecule.eso/revision'] == '1'"
+          - "'kubectl.kubernetes.io/last-applied-configuration' not in (local_token.resources[0].metadata.annotations | default({}))"
+        fail_msg: "Secret 'eso-app/local-token' was not rendered as expected."
+
+    - name: "Wait for 'k8s-backend-token' ClusterSecretStore (bearer token auth) to be ready."
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1"
+        kind: "ClusterSecretStore"
+        name: "k8s-backend-token"
+      register: "k8s_token_store"
+      until:
+        - "k8s_token_store.resources | length > 0"
+        - "k8s_token_store.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length > 0"
+      retries: 30
+      delay: 5
+
+    - name: "Wait for 'app-credentials-token-auth' to be synced through the bearer token store."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "app-credentials-token-auth"
+        namespace: "eso-app"
+      register: "token_auth_secret"
+      until:
+        - "token_auth_secret.resources | length > 0"
+        - "(token_auth_secret.resources[0].data.username | ansible.builtin.b64decode) == 'molecule'"
+      retries: 30
+      delay: 5
+
+    - name: "Wait for the 'generated-password' Secret from the Password generator."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "generated-password"
+        namespace: "eso-app"
+      register: "generated_password"
+      until:
+        - "generated_password.resources | length > 0"
+        - "(generated_password.resources[0].data.password | ansible.builtin.b64decode | length) == 32"
+      retries: 30
+      delay: 5
+
+    - name: "Wait for the 'generated-uuid' Secret from the UUID ClusterGenerator."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "generated-uuid"
+        namespace: "eso-app"
+      register: "generated_uuid"
+      until:
+        - "generated_uuid.resources | length > 0"
+        - "(generated_uuid.resources[0].data.uuid | ansible.builtin.b64decode) is ansible.builtin.regex('^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')"
+      retries: 30
+      delay: 5
+
+    - name: "Wait for 'cluster-pushed' Secret written by the ClusterPushSecret."
+      kubernetes.core.k8s_info:
+        kind: "Secret"
+        name: "cluster-pushed"
+        namespace: "eso-backend"
+      register: "cluster_pushed_secret"
+      until:
+        - "cluster_pushed_secret.resources | length > 0"
+        - "(cluster_pushed_secret.resources[0].data.username | ansible.builtin.b64decode) == 'molecule'"
+      retries: 30
+      delay: 5
+
+    - name: "Read PushSecrets created by the ClusterPushSecret."
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1alpha1"
+        kind: "PushSecret"
+        field_selectors:
+          - "metadata.name=tenant-a-push"
+      register: "cluster_push_children"
+
+    - name: "Assert that the ClusterPushSecret only targets 'eso-tenant-a'."
+      ansible.builtin.assert:
+        that: "cluster_push_children.resources | map(attribute='metadata.namespace') | list == ['eso-tenant-a']"
+        fail_msg: "ClusterPushSecret 'tenant-a-push' did not respect its namespace selector."
+
+    - name: "Rotate the backend password and check propagation."
+      block:
+        - name: "Rotate the password in the backend secret."
+          kubernetes.core.k8s:
+            state: "present"
+            definition:
+              apiVersion: "v1"
+              kind: "Secret"
+              metadata:
+                name: "app-credentials"
+                namespace: "eso-backend"
+              stringData:
+                username: "molecule"
+                password: "rotated-password"
+
+        - name: "Wait for the rotated password to be synced to 'app-credentials'."
+          kubernetes.core.k8s_info:
+            kind: "Secret"
+            name: "app-credentials"
+            namespace: "eso-app"
+          register: "rotated_secret"
+          until: "(rotated_secret.resources[0].data.password | ansible.builtin.b64decode) == 'rotated-password'"
+          retries: 18
+          delay: 5
+
+        - name: "Wait for the rotated password to be synced to tenant namespaces."
+          kubernetes.core.k8s_info:
+            kind: "Secret"
+            name: "tenant-credentials"
+            namespace: "{{ item }}"
+          register: "rotated_tenant_secret"
+          until: "(rotated_tenant_secret.resources[0].data.password | ansible.builtin.b64decode) == 'rotated-password'"
+          retries: 18
+          delay: 5
+          loop:
+            - "eso-tenant-a"
+            - "eso-tenant-b"
+      always:
+        - name: "Restore the initial password in the backend secret."
+          kubernetes.core.k8s:
+            state: "present"
+            definition:
+              apiVersion: "v1"
+              kind: "Secret"
+              metadata:
+                name: "app-credentials"
+                namespace: "eso-backend"
+              stringData:
+                username: "molecule"
+                password: "initial-password"

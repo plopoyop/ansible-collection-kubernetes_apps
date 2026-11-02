@@ -1,10 +1,10 @@
 ---
-- name: Create
-  hosts: localhost
-  connection: local
+- name: "Create"
+  hosts: "localhost"
+  connection: "local"
   gather_facts: false
   tasks:
-    - name: Build a kind cluster (wait for control plane).
+    - name: "Build a kind cluster (wait for control plane)."
       ansible.builtin.command: >-
         kind create cluster
         --wait 300s
