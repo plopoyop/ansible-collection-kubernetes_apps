@@ -9,3 +9,6 @@ external_secrets_crd_helm_ownership:
     annotations:
       meta.helm.sh/release-name: "{{ external_secrets_deployment_name }}"
       meta.helm.sh/release-namespace: "{{ external_secrets_namespace }}"
+external_secrets_server_side_apply:
+  field_manager: "ansible-external-secrets"
+  force_conflicts: true

@@ -9,11 +9,14 @@ Install and configure External Secrets Operator on kubernetes
   - [external_secrets_additional_config](#external_secrets_additional_config)
   - [external_secrets_cert_controller_resources](#external_secrets_cert_controller_resources)
   - [external_secrets_cluster_external_secrets](#external_secrets_cluster_external_secrets)
+  - [external_secrets_cluster_generators](#external_secrets_cluster_generators)
+  - [external_secrets_cluster_push_secrets](#external_secrets_cluster_push_secrets)
   - [external_secrets_cluster_secret_stores](#external_secrets_cluster_secret_stores)
   - [external_secrets_crd_force_upgrade](#external_secrets_crd_force_upgrade)
   - [external_secrets_deployment_name](#external_secrets_deployment_name)
   - [external_secrets_enabled](#external_secrets_enabled)
   - [external_secrets_external_secrets](#external_secrets_external_secrets)
+  - [external_secrets_generators](#external_secrets_generators)
   - [external_secrets_helm_chart_version](#external_secrets_helm_chart_version)
   - [external_secrets_install_crds](#external_secrets_install_crds)
   - [external_secrets_namespace](#external_secrets_namespace)
@@ -21,6 +24,7 @@ Install and configure External Secrets Operator on kubernetes
   - [external_secrets_replica_count](#external_secrets_replica_count)
   - [external_secrets_resources](#external_secrets_resources)
   - [external_secrets_secret_stores](#external_secrets_secret_stores)
+  - [external_secrets_secrets](#external_secrets_secrets)
   - [external_secrets_service_account_annotations](#external_secrets_service_account_annotations)
   - [external_secrets_upgrade_crd](#external_secrets_upgrade_crd)
   - [external_secrets_wait_install](#external_secrets_wait_install)
@@ -74,6 +78,46 @@ https://external-secrets.io/latest/api/clusterexternalsecret/
 
 ```YAML
 external_secrets_cluster_external_secrets: []
+```
+
+### external_secrets_cluster_generators
+
+List of cluster-wide ClusterGenerator resources to create
+https://external-secrets.io/latest/api/generator/cluster/
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+external_secrets_cluster_generators: []
+```
+
+#### Example usage
+
+```YAML
+external_secrets_cluster_generators:
+  - name: "password"
+    spec:
+      kind: "Password"
+      generator:
+        passwordSpec:
+          length: 32
+          allowRepeat: true
+          noUpper: false
+```
+
+### external_secrets_cluster_push_secrets
+
+List of cluster-wide ClusterPushSecret resources to create
+https://external-secrets.io/latest/api/clusterpushsecret/
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+external_secrets_cluster_push_secrets: []
 ```
 
 ### external_secrets_cluster_secret_stores
@@ -156,6 +200,35 @@ external_secrets_external_secrets:
           remoteRef:
             key: "database/config"
             property: "password"
+```
+
+### external_secrets_generators
+
+List of namespaced generator resources (Password, ECRAuthorizationToken, UUID, ...) to create.
+The kind of each item is required.
+https://external-secrets.io/latest/api/generator/
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+external_secrets_generators: []
+```
+
+#### Example usage
+
+```YAML
+external_secrets_generators:
+  - name: "my-password-generator"
+    namespace: "my-app"
+    kind: "Password"
+    spec:
+      length: 32
+      digits: 5
+      symbols: 5
+      noUpper: false
+      allowRepeat: true
 ```
 
 ### external_secrets_helm_chart_version
@@ -260,6 +333,34 @@ external_secrets_secret_stores:
             tokenSecretRef:
               name: "vault-token"
               key: "token"
+```
+
+### external_secrets_secrets
+
+List of Kubernetes Secrets holding provider credentials referenced by secret stores.
+Each item accepts name, namespace, type, labels, annotations, data and stringData.
+Secrets are applied server-side.
+type is immutable: changing it requires state absent then a new run.
+A Secret previously created with client-side apply keeps its
+kubectl.kubernetes.io/last-applied-configuration annotation (which contains the data)
+and must be deleted and recreated to be fully managed by this role.
+
+**_Type:_** list<br />
+
+#### Default value
+
+```YAML
+external_secrets_secrets: []
+```
+
+#### Example usage
+
+```YAML
+external_secrets_secrets:
+  - name: "ovh-token"
+    namespace: "my-app"
+    stringData:
+      token: "{{ vault_ovh_okms_token }}"
 ```
 
 ### external_secrets_service_account_annotations
