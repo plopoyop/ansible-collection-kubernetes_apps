@@ -95,7 +95,7 @@ external_secrets_crd_force_upgrade: false
 # @var external_secrets_secrets:description: >
 # List of Kubernetes Secrets holding provider credentials referenced by secret stores.
 # Each item accepts name, namespace, type, labels, annotations, data and stringData.
-# Secrets are applied server-side.
+# Secrets are applied server-side and deleted when external_secrets_enabled is false.
 # type is immutable: changing it requires state absent then a new run.
 # A Secret previously created with client-side apply keeps its
 # kubectl.kubernetes.io/last-applied-configuration annotation (which contains the data)
@@ -215,3 +215,18 @@ external_secrets_push_secrets: []
 # List of cluster-wide ClusterPushSecret resources to create
 # https://external-secrets.io/latest/api/clusterpushsecret/
 external_secrets_cluster_push_secrets: []
+
+# @var external_secrets_cleanup_force_remove_finalizers
+# @var external_secrets_cleanup_force_remove_finalizers:type: boolean
+# @var external_secrets_cleanup_force_remove_finalizers:description: >
+# When external_secrets_enabled is false, scale every Deployment of the release to 0
+# (the operator stays down if the run fails afterwards), delete the release validating webhooks,
+# remove the finalizers of every External Secrets Operator resource in the cluster (including
+# children of ClusterExternalSecrets and ClusterPushSecrets) and the
+# externalsecrets.external-secrets.io/ces-* finalizers of every namespace,
+# then delete the declared resources without waiting for the controller.
+# Use it when the operator is broken and cleanup cannot complete.
+# Provider-side cleanup (e.g. PushSecret deletionPolicy Delete) is skipped.
+# In every case, cleanup refuses to run while the cluster holds External Secrets Operator resources
+# that are not declared in the role variables, since uninstalling the CRDs would delete them.
+external_secrets_cleanup_force_remove_finalizers: false
