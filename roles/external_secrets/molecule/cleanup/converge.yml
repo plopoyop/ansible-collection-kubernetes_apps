@@ -1,11 +1,281 @@
 ---
-- name: Converge
-  hosts: localhost
-  connection: local
+- name: "Converge"
+  hosts: "localhost"
+  connection: "local"
   gather_facts: false
   vars:
-    external_secrets_enabled: false
+    external_secrets_secrets:
+      - name: "provider-credentials"
+        namespace: "eso-cleanup"
+        stringData:
+          token: "cleanup-token"
+    external_secrets_cluster_secret_stores:
+      - name: "fake-backend"
+        spec:
+          provider:
+            fake:
+              data:
+                - key: "/cleanup/token"
+                  value: "cleanup-token"
+    external_secrets_cluster_external_secrets:
+      - name: "cleanup-credentials"
+        spec:
+          externalSecretName: "cleanup-credentials"
+          namespaceSelectors:
+            - matchLabels:
+                molecule.eso/cleanup: "true"
+          refreshTime: "10s"
+          externalSecretSpec:
+            refreshInterval: "10s"
+            secretStoreRef:
+              name: "fake-backend"
+              kind: "ClusterSecretStore"
+            target:
+              name: "cleanup-credentials"
+            data:
+              - secretKey: "token"
+                remoteRef:
+                  key: "/cleanup/token"
+    external_secrets_push_secrets:
+      - name: "cleanup-push"
+        namespace: "eso-cleanup"
+        spec:
+          deletionPolicy: "Delete"
+          refreshInterval: "10s"
+          secretStoreRefs:
+            - name: "fake-backend"
+              kind: "ClusterSecretStore"
+          selector:
+            secret:
+              name: "cleanup-credentials"
+          data:
+            - match:
+                secretKey: "token"
+                remoteRef:
+                  remoteKey: "/cleanup/pushed"
   tasks:
-    - name: "Remove External Secrets Operator"
-      ansible.builtin.import_role:
+    - name: "Create a namespace selected by the ClusterExternalSecret"
+      kubernetes.core.k8s:
+        state: "present"
+        definition:
+          apiVersion: "v1"
+          kind: "Namespace"
+          metadata:
+            name: "eso-cleanup"
+            labels:
+              molecule.eso/cleanup: "true"
+
+    - name: "Install External Secrets Operator with resources"
+      ansible.builtin.include_role:
         name: "external_secrets"
+      vars:
+        external_secrets_enabled: true
+
+    - name: "Wait for the ClusterExternalSecret finalizer on the selected namespace"
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "eso-cleanup"
+      register: "cleanup_namespace"
+      until: "cleanup_namespace.resources[0].metadata.finalizers | default([]) | select('ansible.builtin.match', 'externalsecrets.external-secrets.io/') | list | length > 0"
+      retries: 30
+      delay: 5
+
+    - name: "Wait for the PushSecret to be synced with its deletion finalizer"
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1alpha1"
+        kind: "PushSecret"
+        name: "cleanup-push"
+        namespace: "eso-cleanup"
+      register: "cleanup_push"
+      until:
+        - "cleanup_push.resources | length > 0"
+        - "cleanup_push.resources[0].metadata.finalizers | default([]) | select('ansible.builtin.match', 'pushsecret.externalsecrets.io/') | list | length > 0"
+        - "cleanup_push.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length > 0"
+      retries: 30
+      delay: 5
+
+    - name: "Create an ExternalSecret not declared in the role"
+      kubernetes.core.k8s:
+        state: "present"
+        definition:
+          apiVersion: "external-secrets.io/v1"
+          kind: "ExternalSecret"
+          metadata:
+            name: "unmanaged"
+            namespace: "eso-cleanup"
+          spec:
+            secretStoreRef:
+              name: "fake-backend"
+              kind: "ClusterSecretStore"
+            target:
+              name: "unmanaged"
+            data:
+              - secretKey: "token"
+                remoteRef:
+                  key: "/cleanup/token"
+
+    - name: "Create a Password generator not declared in the role"
+      kubernetes.core.k8s:
+        state: "present"
+        definition:
+          apiVersion: "generators.external-secrets.io/v1alpha1"
+          kind: "Password"
+          metadata:
+            name: "unmanaged-password"
+            namespace: "eso-cleanup"
+          spec:
+            length: 16
+            noUpper: false
+            allowRepeat: true
+
+    - name: "Check that cleanup refuses to run with undeclared resources"
+      block:
+        - name: "Remove External Secrets Operator with an undeclared ExternalSecret"
+          ansible.builtin.include_role:
+            name: "external_secrets"
+          vars:
+            external_secrets_enabled: false
+
+        - name: "Fail because cleanup did not refuse to run"
+          ansible.builtin.fail:
+            msg: "Cleanup ran despite the undeclared ExternalSecret 'eso-cleanup/unmanaged'."
+      rescue:
+        - name: "Assert that cleanup failed on the undeclared ExternalSecret"
+          ansible.builtin.assert:
+            that:
+              - "'ExternalSecret/eso-cleanup/unmanaged' in ansible_failed_result.msg | default('')"
+              - "'Password/eso-cleanup/unmanaged-password' in ansible_failed_result.msg | default('')"
+            fail_msg: "Unexpected failure: {{ ansible_failed_result.msg | default('') }}"
+
+    - name: "Delete the undeclared ExternalSecret"
+      kubernetes.core.k8s:
+        api_version: "external-secrets.io/v1"
+        kind: "ExternalSecret"
+        name: "unmanaged"
+        namespace: "eso-cleanup"
+        state: "absent"
+        wait: true
+
+    - name: "Delete the undeclared Password generator"
+      kubernetes.core.k8s:
+        api_version: "generators.external-secrets.io/v1alpha1"
+        kind: "Password"
+        name: "unmanaged-password"
+        namespace: "eso-cleanup"
+        state: "absent"
+        wait: true
+
+    - name: "Remove External Secrets Operator"
+      ansible.builtin.include_role:
+        name: "external_secrets"
+      vars:
+        external_secrets_enabled: false
+
+    - name: "Wait for External Secrets Operator CRDs to be removed"
+      kubernetes.core.k8s_info:
+        api_version: "apiextensions.k8s.io/v1"
+        kind: "CustomResourceDefinition"
+        label_selectors:
+          - "external-secrets.io/component=controller"
+      register: "remaining_crds"
+      until: "remaining_crds.resources | length == 0"
+      retries: 30
+      delay: 5
+
+    - name: "Remove External Secrets Operator again once CRDs are gone"
+      ansible.builtin.include_role:
+        name: "external_secrets"
+      vars:
+        external_secrets_enabled: false
+
+    - name: "Read the selected namespace after the regular cleanup"
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "eso-cleanup"
+      register: "cleanup_namespace_after_regular"
+
+    - name: "Assert that the regular cleanup released the namespace finalizers"
+      ansible.builtin.assert:
+        that: "cleanup_namespace_after_regular.resources[0].metadata.finalizers | default([]) | select('ansible.builtin.match', 'externalsecrets.external-secrets.io/') | list | length == 0"
+        fail_msg: "Regular cleanup left External Secrets Operator finalizers on namespace 'eso-cleanup'."
+
+    - name: "Wait for 'external-secrets' namespace to be removed before reinstalling"
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "external-secrets"
+      register: "eso_namespace"
+      until: "eso_namespace.resources | length == 0"
+      retries: 30
+      delay: 5
+
+    - name: "Reinstall External Secrets Operator with CRDs applied by the role before helm"
+      ansible.builtin.include_role:
+        name: "external_secrets"
+      vars:
+        external_secrets_enabled: true
+        external_secrets_upgrade_crd: true
+        external_secrets_crd_force_upgrade: true
+
+    - name: "Read the 'externalsecrets' CRD after the reinstall"
+      kubernetes.core.k8s_info:
+        api_version: "apiextensions.k8s.io/v1"
+        kind: "CustomResourceDefinition"
+        name: "externalsecrets.external-secrets.io"
+      register: "reinstalled_crd"
+
+    - name: "Assert that the role applied the CRDs before helm adopted them"
+      ansible.builtin.assert:
+        that:
+          - "'ansible-external-secrets-crds' in (reinstalled_crd.resources[0].metadata.managedFields | map(attribute='manager') | list)"
+          - "reinstalled_crd.resources[0].metadata.annotations['meta.helm.sh/release-name'] == 'external-secrets'"
+        fail_msg: "CRDs were not applied by the role before the helm install."
+
+    - name: "Wait again for the ClusterExternalSecret finalizer on the selected namespace"
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "eso-cleanup"
+      register: "cleanup_namespace"
+      until: "cleanup_namespace.resources[0].metadata.finalizers | default([]) | select('ansible.builtin.match', 'externalsecrets.external-secrets.io/') | list | length > 0"
+      retries: 30
+      delay: 5
+
+    - name: "Wait again for the PushSecret to be synced with its deletion finalizer"
+      kubernetes.core.k8s_info:
+        api_version: "external-secrets.io/v1alpha1"
+        kind: "PushSecret"
+        name: "cleanup-push"
+        namespace: "eso-cleanup"
+      register: "cleanup_push"
+      until:
+        - "cleanup_push.resources | length > 0"
+        - "cleanup_push.resources[0].metadata.finalizers | default([]) | select('ansible.builtin.match', 'pushsecret.externalsecrets.io/') | list | length > 0"
+        - "cleanup_push.resources[0].status.conditions | default([]) | selectattr('type', 'equalto', 'Ready') | selectattr('status', 'equalto', 'True') | list | length > 0"
+      retries: 30
+      delay: 5
+
+    - name: "Force-remove External Secrets Operator while it is running"
+      ansible.builtin.include_role:
+        name: "external_secrets"
+      vars:
+        external_secrets_enabled: false
+        external_secrets_cleanup_force_remove_finalizers: true
+
+    - name: "Wait for External Secrets Operator CRDs to be removed after the forced cleanup"
+      kubernetes.core.k8s_info:
+        api_version: "apiextensions.k8s.io/v1"
+        kind: "CustomResourceDefinition"
+        label_selectors:
+          - "external-secrets.io/component=controller"
+      register: "remaining_crds"
+      until: "remaining_crds.resources | length == 0"
+      retries: 30
+      delay: 5
+
+    - name: "Wait for 'external-secrets' namespace to be removed after the forced cleanup"
+      kubernetes.core.k8s_info:
+        kind: "Namespace"
+        name: "external-secrets"
+      register: "eso_namespace"
+      until: "eso_namespace.resources | length == 0"
+      retries: 30
+      delay: 5
