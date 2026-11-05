@@ -1,6 +1,6 @@
 # Changelog
 
-## [13.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.0.0) (2026-11-04)
+## [13.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.0.0) (2026-11-05)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/12.0.2...13.0.0)
 
@@ -10,6 +10,7 @@
 
 ## ⚙️ Dependencies
 
+- fix\(ci\): update renovatebot/github-action action \(v46.3.11 → v46.3.12\) [\#379](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/379) ([plopoyop](https://github.com/plopoyop))
 - fix\(container\): update image ghcr.io/warp-tech/helm-charts/warpgate \(0.2.0 → 0.2.1\) [\#376](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/376) ([plopoyop](https://github.com/plopoyop))
 - fix\(ci\): update renovatebot/github-action action \(v46.3.10 → v46.3.11\) [\#375](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/375) ([plopoyop](https://github.com/plopoyop))
 
