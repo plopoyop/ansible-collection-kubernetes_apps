@@ -1,11 +1,12 @@
 # Changelog
 
-## [13.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.0.0) (2026-11-05)
+## [13.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.0.0) (2026-11-06)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/12.0.2...13.0.0)
 
 ## ⛵ Helm Charts
 
+- feat\(helm\): update chart argo-cd \(10.11.6 → 10.14.0\) [\#380](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/380) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\)!: Update chart atlantis \(6.16.2 → 7.0.0\) [\#378](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/378) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
