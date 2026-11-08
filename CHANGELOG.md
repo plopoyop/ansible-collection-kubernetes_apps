@@ -1,11 +1,12 @@
 # Changelog
 
-## [13.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.0.0) (2026-11-07)
+## [13.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.0.0) (2026-11-08)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/12.0.2...13.0.0)
 
 ## ⛵ Helm Charts
 
+- fix\(helm\): update chart atlantis \(7.0.0 → 7.0.1\) [\#382](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/382) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart oauth2-proxy \(10.7.1 → 10.7.2\) [\#381](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/381) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart argo-cd \(10.11.6 → 10.14.0\) [\#380](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/380) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\)!: Update chart atlantis \(6.16.2 → 7.0.0\) [\#378](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/378) ([plopoyop](https://github.com/plopoyop))
