@@ -6,6 +6,7 @@
 
 ## ⛵ Helm Charts
 
+- fix\(helm\): update chart gitlab-runner \(0.94.2 → 0.94.3\) [\#383](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/383) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart atlantis \(7.0.0 → 7.0.1\) [\#382](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/382) ([plopoyop](https://github.com/plopoyop))
 - fix\(helm\): update chart oauth2-proxy \(10.7.1 → 10.7.2\) [\#381](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/381) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart argo-cd \(10.11.6 → 10.14.0\) [\#380](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/380) ([plopoyop](https://github.com/plopoyop))
