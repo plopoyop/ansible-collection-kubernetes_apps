@@ -1,6 +1,6 @@
 # Changelog
 
-## [13.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.1.0) (2026-11-10)
+## [13.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.1.0) (2026-11-12)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.0.0...13.1.0)
 
@@ -8,6 +8,11 @@
 
 - feat\(helm\): update chart argo-cd \(10.15.0 → 10.17.0\) [\#385](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/385) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart argo-cd \(10.14.0 → 10.15.0\) [\#384](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/384) ([plopoyop](https://github.com/plopoyop))
+
+## ⚙️ Dependencies
+
+- feat\(ci\): update jetify-com/devbox-install-action action \(v0.15.0 → v0.16.0\) [\#390](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/390) ([plopoyop](https://github.com/plopoyop))
+- fix\(ci\): update renovatebot/github-action action \(v46.3.12 → v46.3.13\) [\#388](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/388) ([plopoyop](https://github.com/plopoyop))
 
 ## [13.0.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.0.0) (2026-11-08)
 
