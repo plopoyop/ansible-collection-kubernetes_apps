@@ -1,5 +1,13 @@
 # Changelog
 
+## [13.1.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.1.1) (2026-11-13)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.1.0...13.1.1)
+
+**Merged pull requests:**
+
+- feat\(deps\): update python313packages.ansible \(14.4.0 → 14.6.0\) [\#391](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/391) ([plopoyop](https://github.com/plopoyop))
+
 ## [13.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.1.0) (2026-11-12)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.0.0...13.1.0)
