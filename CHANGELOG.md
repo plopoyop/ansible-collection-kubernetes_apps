@@ -1,6 +1,6 @@
 # Changelog
 
-## [13.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.2.0) (2026-11-14)
+## [13.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.2.0) (2026-11-15)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.1.0...13.2.0)
 
@@ -11,6 +11,7 @@
 
 **Merged pull requests:**
 
+- fix\(deps\): update prek \(0.5.7 → 0.5.10\) [\#394](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/394) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update python313packages.ansible \(14.4.0 → 14.6.0\) [\#391](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/391) ([plopoyop](https://github.com/plopoyop))
 
 ## [13.1.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.1.0) (2026-11-12)
