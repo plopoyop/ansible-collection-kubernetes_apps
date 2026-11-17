@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.2.0...13.2.1)
 
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart keda \(2.21.0 → 2.21.1\) [\#398](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/398) ([plopoyop](https://github.com/plopoyop))
+
 **Merged pull requests:**
 
 - fix\(deps\): update ansible-doctor \(8.4.3 → 8.4.4\) [\#397](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/397) ([plopoyop](https://github.com/plopoyop))
