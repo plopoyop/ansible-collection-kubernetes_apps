@@ -1,5 +1,13 @@
 # Changelog
 
+## [13.2.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.2.1) (2026-11-17)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.2.0...13.2.1)
+
+**Merged pull requests:**
+
+- fix\(deps\): update ansible-doctor \(8.4.3 → 8.4.4\) [\#397](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/397) ([plopoyop](https://github.com/plopoyop))
+
 ## [13.2.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.2.0) (2026-11-15)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.1.0...13.2.0)
