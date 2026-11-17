@@ -249,7 +249,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-keda_helm_chart_version: 2.21.0
+keda_helm_chart_version: 2.21.1
 ```
 
 ### keda_image_pull_secrets
