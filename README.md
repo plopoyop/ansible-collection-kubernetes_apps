@@ -60,7 +60,7 @@ You can call the roles from this collection in your Ansible playbooks as follows
 | GitLab Runner         | v0.94.3            | `gitlab_runner`  | [View README](roles/gitlab_runner/README.md)       |
 | Headlamp         | v0.46.0            | `headlamp`       | [View README](roles/headlamp/README.md)       |
 | Kargo         | v1.12.5            | `kargo`          | [View README](roles/kargo/README.md)       |
-| KEDA         | v2.21.0            | `keda`           | [View README](roles/keda/README.md)       |
+| KEDA         | v2.21.1            | `keda`           | [View README](roles/keda/README.md)       |
 | Mailcrab         | v1.9.0            | `mailcrab`       | [View README](roles/mailcrab/README.md)       |
 | OAuth2 Proxy         | v10.7.4            | `oauth2_proxy`   | [View README](roles/oauth2_proxy/README.md)       |
 | Warpgate         | v0.2.1            | `warpgate`       | [View README](roles/warpgate/README.md)       |
