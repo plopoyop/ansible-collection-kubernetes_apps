@@ -8,6 +8,10 @@
 
 - fix\(helm\): update chart keda \(2.21.0 → 2.21.1\) [\#398](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/398) ([plopoyop](https://github.com/plopoyop))
 
+## ⚙️ Dependencies
+
+- fix\(container\): update image ghcr.io/akuity/kargo-charts/kargo \(1.12.5 → 1.12.6\) [\#396](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/396) ([plopoyop](https://github.com/plopoyop))
+
 **Merged pull requests:**
 
 - fix\(deps\): update ansible-doctor \(8.4.3 → 8.4.4\) [\#397](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/397) ([plopoyop](https://github.com/plopoyop))
