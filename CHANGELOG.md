@@ -1,5 +1,13 @@
 # Changelog
 
+## [13.2.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.2.2) (2026-11-18)
+
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.2.1...13.2.2)
+
+**Merged pull requests:**
+
+- fix\(deps\): update kubernetes-helm \(4.3.1 → 4.3.2\) [\#399](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/399) ([plopoyop](https://github.com/plopoyop))
+
 ## [13.2.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.2.1) (2026-11-17)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.2.0...13.2.1)
