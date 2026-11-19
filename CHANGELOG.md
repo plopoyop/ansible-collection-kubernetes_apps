@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.2.1...13.2.2)
 
+## ⛵ Helm Charts
+
+- fix\(helm\): update chart argo-cd \(10.18.0 → 10.18.1\) [\#401](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/401) ([plopoyop](https://github.com/plopoyop))
+
 ## ⚙️ Dependencies
 
 - fix\(ci\): update renovatebot/github-action action \(v46.3.13 → v46.3.14\) [\#400](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/400) ([plopoyop](https://github.com/plopoyop))
