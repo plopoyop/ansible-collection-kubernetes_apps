@@ -8,6 +8,10 @@
 
 - fix\(helm\): update chart argo-cd \(10.18.1 → 10.18.2\) [\#403](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/403) ([plopoyop](https://github.com/plopoyop))
 
+## ⚙️ Dependencies
+
+- fix\(container\): update image ghcr.io/warp-tech/helm-charts/warpgate \(0.2.1 → 0.2.2\) [\#402](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/402) ([plopoyop](https://github.com/plopoyop))
+
 ## [13.2.2](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.2.2) (2026-11-19)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.2.1...13.2.2)
