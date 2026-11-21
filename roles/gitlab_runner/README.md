@@ -438,7 +438,7 @@ Helm chart version to install
 #### Default value
 
 ```YAML
-gitlab_runner_helm_chart_version: 0.94.3
+gitlab_runner_helm_chart_version: 0.95.0
 ```
 
 ### gitlab_runner_host_aliases
