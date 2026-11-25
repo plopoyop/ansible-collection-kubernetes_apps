@@ -9,8 +9,8 @@ on:
       - 'plugins/**'
       - 'tests/**'
       - '.github/workflows/lint.yml'
-      - '.ansible-lint.yml'
-      - '.yamllint.yml'
+      - ".ansible-lint"
+      - ".yamllint"
   pull_request:
     branches: [main]
     paths:
@@ -18,8 +18,8 @@ on:
       - 'plugins/**'
       - 'tests/**'
       - '.github/workflows/lint.yml'
-      - '.ansible-lint.yml'
-      - '.yamllint.yml'
+      - ".ansible-lint"
+      - ".yamllint"
 
 jobs:
   lint:
