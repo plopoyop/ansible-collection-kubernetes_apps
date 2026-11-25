@@ -1,8 +1,12 @@
 # Changelog
 
-## [13.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.3.1) (2026-11-23)
+## [13.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.3.1) (2026-11-25)
 
 [Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.3.0...13.3.1)
+
+## 🐛 Bug Fixes
+
+- fix\(ci\): only run molecule for the roles a change touches [\#409](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/409) ([plopoyop](https://github.com/plopoyop))
 
 **Merged pull requests:**
 
