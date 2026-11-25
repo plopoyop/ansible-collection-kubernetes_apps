@@ -8,6 +8,12 @@
   ],
   "packageRules": [
     {
+      "description": "Automerge only once every check, roles-ok included, has passed: main has no required check",
+      "matchPackageNames": ["*"],
+      "ignoreTests": false,
+      "platformAutomerge": false
+    },
+    {
       "matchDatasources": [
         "helm"
       ],
