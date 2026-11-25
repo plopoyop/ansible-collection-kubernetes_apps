@@ -10,6 +10,7 @@
 
 ## ⛵ Helm Charts
 
+- feat\(helm\): update chart atlantis \(7.4.0 → 7.5.1\) [\#408](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/408) ([plopoyop](https://github.com/plopoyop))
 - feat\(helm\): update chart argo-cd \(10.18.2 → 10.19.0\) [\#407](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/407) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
