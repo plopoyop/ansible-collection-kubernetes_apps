@@ -1,12 +1,16 @@
 # Changelog
 
-## [13.3.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.3.1) (2026-11-25)
+## [13.4.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.4.0) (2026-11-25)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.3.0...13.3.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.3.0...13.4.0)
 
 ## 🐛 Bug Fixes
 
 - fix\(ci\): only run molecule for the roles a change touches [\#409](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/409) ([plopoyop](https://github.com/plopoyop))
+
+## ⛵ Helm Charts
+
+- feat\(helm\): update chart argo-cd \(10.18.2 → 10.19.0\) [\#407](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/407) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
