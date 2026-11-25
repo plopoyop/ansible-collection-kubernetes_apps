@@ -8,6 +8,10 @@
 
 - fix\(ci\): only run molecule for the roles a change touches [\#409](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/409) ([plopoyop](https://github.com/plopoyop))
 
+## ⚙️ Dependencies
+
+- fix\(container\): update image ghcr.io/akuity/kargo-charts/kargo \(1.12.6 → 1.12.7\) [\#406](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/406) ([plopoyop](https://github.com/plopoyop))
+
 **Merged pull requests:**
 
 - feat\(deps\): update yamllint \(1.37.1 → 1.38.0\) [\#405](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/405) ([plopoyop](https://github.com/plopoyop))
