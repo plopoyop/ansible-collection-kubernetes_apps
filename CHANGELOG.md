@@ -19,6 +19,7 @@
 
 **Merged pull requests:**
 
+- fix\(deps\): update prek \(0.5.10 → 0.5.11\) [\#410](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/410) ([plopoyop](https://github.com/plopoyop))
 - feat\(deps\): update yamllint \(1.37.1 → 1.38.0\) [\#405](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/405) ([plopoyop](https://github.com/plopoyop))
 
 ## [13.3.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.3.0) (2026-11-21)
