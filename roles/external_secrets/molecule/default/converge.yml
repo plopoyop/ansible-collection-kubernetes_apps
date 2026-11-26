@@ -1,0 +1,225 @@
+---
+- name: "Converge"
+  hosts: "localhost"
+  connection: "local"
+  gather_facts: false
+  vars:
+    external_secrets_upgrade_crd: true
+
+    external_secrets_secret_stores:
+      - name: "fake-backend"
+        namespace: "external-secrets"
+        spec:
+          provider:
+            fake:
+              data:
+                - key: "/molecule/password"
+                  value: "s3cr3t"
+
+    external_secrets_secrets:
+      - name: "eso-store-token"
+        namespace: "eso-backend"
+        type: "kubernetes.io/service-account-token"
+        annotations:
+          kubernetes.io/service-account.name: "eso-store"
+      - name: "local-token"
+        namespace: "eso-app"
+        labels:
+          molecule.eso/revision: 1
+        stringData:
+          token: "pushed-token-value"
+          port: 5432
+
+    external_secrets_cluster_secret_stores:
+      - name: "k8s-backend"
+        spec:
+          provider:
+            kubernetes:
+              remoteNamespace: "eso-backend"
+              server:
+                url: "https://kubernetes.default.svc"
+                caProvider:
+                  type: "ConfigMap"
+                  name: "kube-root-ca.crt"
+                  key: "ca.crt"
+                  namespace: "eso-backend"
+              auth:
+                serviceAccount:
+                  name: "eso-store"
+                  namespace: "eso-backend"
+      - name: "k8s-backend-token"
+        spec:
+          provider:
+            kubernetes:
+              remoteNamespace: "eso-backend"
+              server:
+                url: "https://kubernetes.default.svc"
+                caProvider:
+                  type: "ConfigMap"
+                  name: "kube-root-ca.crt"
+                  key: "ca.crt"
+                  namespace: "eso-backend"
+              auth:
+                token:
+                  bearerToken:
+                    name: "eso-store-token"
+                    key: "token"
+                    namespace: "eso-backend"
+
+    external_secrets_generators:
+      - name: "molecule-password"
+        namespace: "eso-app"
+        kind: "Password"
+        spec:
+          length: 32
+          digits: 5
+          symbols: 0
+          noUpper: false
+          allowRepeat: true
+
+    external_secrets_cluster_generators:
+      - name: "molecule-uuid"
+        spec:
+          kind: "UUID"
+          generator:
+            uuidSpec: {}
+
+    external_secrets_external_secrets:
+      - name: "molecule-secret"
+        namespace: "external-secrets"
+        spec:
+          refreshInterval: "1h"
+          secretStoreRef:
+            name: "fake-backend"
+            kind: "SecretStore"
+          target:
+            name: "molecule-secret"
+            creationPolicy: "Owner"
+          data:
+            - secretKey: "password"
+              remoteRef:
+                key: "/molecule/password"
+      - name: "app-credentials"
+        namespace: "eso-app"
+        spec:
+          refreshInterval: "10s"
+          secretStoreRef:
+            name: "k8s-backend"
+            kind: "ClusterSecretStore"
+          target:
+            name: "app-credentials"
+            creationPolicy: "Owner"
+          data:
+            - secretKey: "username"
+              remoteRef:
+                key: "app-credentials"
+                property: "username"
+            - secretKey: "password"
+              remoteRef:
+                key: "app-credentials"
+                property: "password"
+      - name: "app-credentials-token-auth"
+        namespace: "eso-app"
+        spec:
+          refreshInterval: "10s"
+          secretStoreRef:
+            name: "k8s-backend-token"
+            kind: "ClusterSecretStore"
+          target:
+            name: "app-credentials-token-auth"
+          data:
+            - secretKey: "username"
+              remoteRef:
+                key: "app-credentials"
+                property: "username"
+      - name: "generated-password"
+        namespace: "eso-app"
+        spec:
+          refreshInterval: "0"
+          refreshPolicy: "CreatedOnce"
+          target:
+            name: "generated-password"
+          dataFrom:
+            - sourceRef:
+                generatorRef:
+                  apiVersion: "generators.external-secrets.io/v1alpha1"
+                  kind: "Password"
+                  name: "molecule-password"
+      - name: "generated-uuid"
+        namespace: "eso-app"
+        spec:
+          refreshInterval: "0"
+          refreshPolicy: "CreatedOnce"
+          target:
+            name: "generated-uuid"
+          dataFrom:
+            - sourceRef:
+                generatorRef:
+                  apiVersion: "generators.external-secrets.io/v1alpha1"
+                  kind: "ClusterGenerator"
+                  name: "molecule-uuid"
+
+    external_secrets_cluster_external_secrets:
+      - name: "tenant-credentials"
+        spec:
+          externalSecretName: "tenant-credentials"
+          namespaceSelectors:
+            - matchLabels:
+                molecule.eso/tenant: "true"
+          refreshTime: "10s"
+          externalSecretSpec:
+            refreshInterval: "10s"
+            secretStoreRef:
+              name: "k8s-backend"
+              kind: "ClusterSecretStore"
+            target:
+              name: "tenant-credentials"
+            dataFrom:
+              - extract:
+                  key: "app-credentials"
+
+    external_secrets_push_secrets:
+      - name: "push-token"
+        namespace: "eso-app"
+        spec:
+          refreshInterval: "10s"
+          secretStoreRefs:
+            - name: "k8s-backend"
+              kind: "ClusterSecretStore"
+          selector:
+            secret:
+              name: "local-token"
+          data:
+            - match:
+                secretKey: "token"
+                remoteRef:
+                  remoteKey: "pushed-token"
+                  property: "token"
+
+    external_secrets_cluster_push_secrets:
+      - name: "tenant-a-push"
+        spec:
+          pushSecretName: "tenant-a-push"
+          namespaceSelectors:
+            - matchLabels:
+                kubernetes.io/metadata.name: "eso-tenant-a"
+          refreshTime: "10s"
+          pushSecretSpec:
+            refreshInterval: "10s"
+            secretStoreRefs:
+              - name: "k8s-backend"
+                kind: "ClusterSecretStore"
+            selector:
+              secret:
+                name: "tenant-credentials"
+            data:
+              - match:
+                  secretKey: "username"
+                  remoteRef:
+                    remoteKey: "cluster-pushed"
+                    property: "username"
+
+  tasks:
+    - name: "Install External Secrets Operator with Kubernetes provider resources"
+      ansible.builtin.import_role:
+        name: "external_secrets"

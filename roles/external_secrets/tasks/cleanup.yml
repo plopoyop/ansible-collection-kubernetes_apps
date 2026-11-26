@@ -1,0 +1,219 @@
+---
+- name: "List External Secrets Operator CRDs"
+  kubernetes.core.k8s_info:
+    api_version: "apiextensions.k8s.io/v1"
+    kind: "CustomResourceDefinition"
+    label_selectors:
+      - "external-secrets.io/component=controller"
+  register: "external_secrets_crds"
+  no_log: true
+  tags:
+    - "always"
+
+- name: "List External Secrets Operator resources in the cluster"
+  kubernetes.core.k8s_info:
+    api_version: "{{ item.spec.group }}/{{ (item.spec.versions | selectattr('storage') | first).name }}"
+    kind: "{{ item.spec.names.kind }}"
+  loop: "{{ external_secrets_crds.resources }}"
+  loop_control:
+    label: "{{ item.spec.names.kind }}"
+  register: "external_secrets_cluster_resources"
+  no_log: true
+  tags:
+    - "always"
+
+- name: "Check that every External Secrets Operator resource is declared in the role"
+  ansible.builtin.assert:
+    that: "not external_secrets_undeclared_resources"
+    fail_msg: >-
+      Undeclared External Secrets Operator resources would be deleted with the CRDs:
+      {{ external_secrets_undeclared_resources | trim }}. Delete them or declare them in the role variables.
+    quiet: true
+  vars:
+    external_secrets_undeclared_resources: >-
+      {%- for result in external_secrets_cluster_resources.results -%}
+      {%- for r in result.resources | default([])
+            if ('|' ~ r.kind ~ '/' ~ (r.metadata.namespace | default('')) ~ '/' ~ r.metadata.name ~ '|') not in external_secrets_declared_resource_keys
+            and r.metadata.deletionTimestamp is not defined
+            and not (r.metadata.ownerReferences | default([]) | selectattr('apiVersion', 'ansible.builtin.search', 'external-secrets\.io/') | list) -%}
+      '{{ r.kind }}/{{ r.metadata.namespace | default('') }}/{{ r.metadata.name }}'{{ ' ' }}
+      {%- endfor -%}
+      {%- endfor -%}
+  tags:
+    - "always"
+
+- name: "Force-remove External Secrets Operator finalizers"
+  when: "external_secrets_cleanup_force_remove_finalizers"
+  tags:
+    - "manifest"
+    - "helm_chart"
+    - "namespace"
+  block:
+    - name: "Stop External Secrets Operator controllers"
+      kubernetes.core.k8s_scale:
+        api_version: "apps/v1"
+        kind: "Deployment"
+        namespace: "{{ external_secrets_namespace }}"
+        label_selectors:
+          - "app.kubernetes.io/instance={{ external_secrets_deployment_name }}"
+        replicas: 0
+        wait: false
+
+    - name: "Wait for External Secrets Operator pods to be gone"
+      kubernetes.core.k8s_info:
+        api_version: "v1"
+        kind: "Pod"
+        namespace: "{{ external_secrets_namespace }}"
+        label_selectors:
+          - "app.kubernetes.io/instance={{ external_secrets_deployment_name }}"
+      register: "external_secrets_remaining_pods"
+      until: "external_secrets_remaining_pods.resources | length == 0"
+      retries: 24
+      delay: 5
+      when: "not ansible_check_mode"
+
+    - name: "List External Secrets Operator resources once the operator is stopped"
+      kubernetes.core.k8s_info:
+        api_version: "{{ item.spec.group }}/{{ (item.spec.versions | selectattr('storage') | first).name }}"
+        kind: "{{ item.spec.names.kind }}"
+      loop: "{{ external_secrets_crds.resources }}"
+      loop_control:
+        label: "{{ item.spec.names.kind }}"
+      register: "external_secrets_stopped_resources"
+      no_log: true
+
+    - name: "Delete External Secrets Operator validating webhooks"
+      kubernetes.core.k8s:
+        api_version: "admissionregistration.k8s.io/v1"
+        kind: "ValidatingWebhookConfiguration"
+        label_selectors:
+          - "app.kubernetes.io/instance={{ external_secrets_deployment_name }}"
+        delete_all: true
+        state: "absent"
+
+    - name: "Remove finalizers from External Secrets Operator resources"
+      kubernetes.core.k8s:
+        state: "patched"
+        merge_type: "merge"
+        definition:
+          apiVersion: "{{ item.apiVersion }}"
+          kind: "{{ item.kind }}"
+          metadata:
+            name: "{{ item.metadata.name }}"
+            namespace: "{{ item.metadata.namespace | default(omit) }}"
+            finalizers: []
+      loop: "{{ external_secrets_stopped_resources.results | map(attribute='resources', default=[]) | ansible.builtin.flatten(levels=1) }}"
+      loop_control:
+        label: "{{ item.kind }}/{{ item.metadata.namespace | default('') }}/{{ item.metadata.name }}"
+      when: "item.metadata.finalizers | default([]) | length > 0"
+
+    - name: "List namespaces"
+      kubernetes.core.k8s_info:
+        api_version: "v1"
+        kind: "Namespace"
+      register: "external_secrets_namespaces"
+
+    - name: "Remove External Secrets Operator finalizers from namespaces"
+      kubernetes.core.k8s:
+        state: "patched"
+        merge_type: "merge"
+        definition:
+          apiVersion: "v1"
+          kind: "Namespace"
+          metadata:
+            name: "{{ item.metadata.name }}"
+            finalizers: "{{ item.metadata.finalizers | reject('ansible.builtin.match', 'externalsecrets\\.external-secrets\\.io/') | list }}"
+      loop: "{{ external_secrets_namespaces.resources | selectattr('metadata.finalizers', 'defined') | list }}"
+      loop_control:
+        label: "{{ item.metadata.name }}"
+      when: "item.metadata.finalizers | select('ansible.builtin.match', 'externalsecrets\\.external-secrets\\.io/') | list | length > 0"
+
+- name: "Delete External Secrets Operator custom resources"
+  kubernetes.core.k8s:
+    api_version: "{{ item.0.api_version }}"
+    kind: "{{ item.1.kind | default(item.0.kind) }}"
+    name: "{{ item.1.name }}"
+    namespace: "{{ (item.1.namespace | default(external_secrets_namespace)) if item.0.namespaced else omit }}"
+    state: "absent"
+    wait: "{{ not external_secrets_cleanup_force_remove_finalizers }}"
+  loop: "{{ external_secrets_managed_resources | ansible.builtin.subelements('resources') }}"
+  loop_control:
+    label: "{{ item.1.kind | default(item.0.kind) }}/{{ item.1.name }}"
+  register: "external_secrets_cleanup_result"
+  failed_when:
+    - "external_secrets_cleanup_result is ansible.builtin.failed"
+    - "'Failed to find exact match' not in external_secrets_cleanup_result.msg | default('')"
+    - "'Timed out waiting on resource' not in external_secrets_cleanup_result.msg | default('')"
+  tags:
+    - "manifest"
+    - "helm_chart"
+    - "namespace"
+
+- name: "Wait for External Secrets Operator resources to be removed by the controller"
+  kubernetes.core.k8s_info:
+    api_version: "{{ item.spec.group }}/{{ (item.spec.versions | selectattr('storage') | first).name }}"
+    kind: "{{ item.spec.names.kind }}"
+  loop: "{{ external_secrets_crds.resources }}"
+  loop_control:
+    label: "{{ item.spec.names.kind }}"
+  register: "external_secrets_remaining_resources"
+  until: "external_secrets_remaining_resources is ansible.builtin.succeeded and external_secrets_remaining_resources.resources | default([]) | length == 0"
+  retries: 24
+  delay: 5
+  when: "not ansible_check_mode"
+  ignore_errors: true
+  no_log: true
+  tags:
+    - "always"
+
+- name: "Check that no External Secrets Operator resource is left"
+  ansible.builtin.assert:
+    that:
+      - "not external_secrets_remaining"
+      - "external_secrets_remaining_resources.results | default([]) | selectattr('failed', 'defined') | selectattr('failed') | list | length == 0"
+    fail_msg: >-
+      External Secrets Operator resources are still present after cleanup:
+      {{ external_secrets_remaining | trim }}. Check that the cleanup tasks were not skipped
+      and the controller logs, or set external_secrets_cleanup_force_remove_finalizers if the operator is broken.
+    quiet: true
+  vars:
+    external_secrets_remaining: >-
+      {%- for result in external_secrets_remaining_resources.results | default([]) -%}
+      {%- for r in result.resources | default([]) -%}
+      '{{ r.kind }}/{{ r.metadata.namespace | default('') }}/{{ r.metadata.name }}'{{ ' ' }}{%- endfor -%}
+      {%- endfor -%}
+  when: "not ansible_check_mode"
+  tags:
+    - "always"
+
+- name: "Delete External Secrets Operator provider credentials secrets"
+  kubernetes.core.k8s:
+    name: "{{ external_secrets_secret.name }}"
+    namespace: "{{ external_secrets_secret.namespace | default(external_secrets_namespace) }}"
+    api_version: "v1"
+    kind: "Secret"
+    state: "absent"
+  loop: "{{ external_secrets_secrets }}"
+  loop_control:
+    loop_var: "external_secrets_secret"
+    label: "{{ external_secrets_secret.name }}"
+  no_log: true
+  tags:
+    - "manifest"
+
+- name: "Uninstall External Secrets Operator helm package"
+  kubernetes.core.helm:
+    name: "{{ external_secrets_deployment_name }}"
+    namespace: "{{ external_secrets_namespace }}"
+    state: "absent"
+  tags:
+    - "helm_chart"
+
+- name: "Delete External Secrets Operator namespace"
+  kubernetes.core.k8s:
+    name: "{{ external_secrets_namespace }}"
+    api_version: "v1"
+    kind: "Namespace"
+    state: "absent"
+  tags:
+    - "namespace"
