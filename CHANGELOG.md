@@ -1,8 +1,12 @@
 # Changelog
 
-## [13.5.1](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.5.1) (2026-11-28)
+## [13.6.0](https://github.com/plopoyop/ansible-collection-kubernetes_apps/tree/13.6.0) (2026-11-28)
 
-[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.5.0...13.5.1)
+[Full Changelog](https://github.com/plopoyop/ansible-collection-kubernetes_apps/compare/13.5.0...13.6.0)
+
+## ⛵ Helm Charts
+
+- feat\(helm\): update chart atlantis \(7.6.0 → 7.7.0\) [\#417](https://github.com/plopoyop/ansible-collection-kubernetes_apps/pull/417) ([plopoyop](https://github.com/plopoyop))
 
 ## ⚙️ Dependencies
 
